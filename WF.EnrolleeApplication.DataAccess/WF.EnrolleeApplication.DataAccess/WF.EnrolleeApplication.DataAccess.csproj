@@ -64,8 +64,10 @@
     <Compile Include="EntityFramework\Document.cs" />
     <Compile Include="EntityFramework\Employee.cs" />
     <Compile Include="EntityFramework\EmployeePost.cs" />
+    <Compile Include="EntityFramework\EmployeeView.cs" />
     <Compile Include="EntityFramework\Enrollee.cs" />
     <Compile Include="EntityFramework\EnrolleeContext.cs" />
+    <Compile Include="EntityFramework\EnrolleeView.cs" />
     <Compile Include="EntityFramework\EstimationString.cs" />
     <Compile Include="EntityFramework\ExamSchema.cs" />
     <Compile Include="EntityFramework\Faculty.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="EntityFramework\ReasonForAddmission.cs" />
     <Compile Include="EntityFramework\SecondarySpeciality.cs" />
     <Compile Include="EntityFramework\Speciality.cs" />
+    <Compile Include="EntityFramework\SpecialityView.cs" />
     <Compile Include="EntityFramework\SystemConfiguration.cs" />
     <Compile Include="EntityFramework\TargetWorkPlace.cs" />
     <Compile Include="EntityFramework\TypeOfFinance.cs" />

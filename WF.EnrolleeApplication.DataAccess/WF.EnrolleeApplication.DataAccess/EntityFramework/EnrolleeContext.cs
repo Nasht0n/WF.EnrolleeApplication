@@ -45,6 +45,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         public virtual DbSet<TypeOfSettlement> TypeOfSettlement { get; set; }
         public virtual DbSet<TypeOfState> TypeOfState { get; set; }
         public virtual DbSet<TypeOfStreet> TypeOfStreet { get; set; }
+        public virtual DbSet<EmployeeView> EmployeeView { get; set; }
+        public virtual DbSet<EnrolleeView> EnrolleeView { get; set; }
+        public virtual DbSet<SpecialityView> SpecialityView { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -109,8 +112,8 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 
             modelBuilder.Entity<SecondarySpeciality>()
                 .HasMany(e => e.IntegrationOfSpecialities)
-                .WithRequired(e => e.SecondarySpeciality1)
-                .HasForeignKey(e => e.SecondarySpeciality);
+                .WithRequired(e => e.SecondarySpeciality)
+                .HasForeignKey(e => e.SecondarySpecialityId);
 
             modelBuilder.Entity<Speciality>()
                 .HasMany(e => e.IntegrationOfSpecialities)
