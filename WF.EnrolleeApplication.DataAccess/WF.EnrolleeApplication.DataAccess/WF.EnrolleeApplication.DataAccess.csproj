@@ -152,6 +152,7 @@
     <Compile Include="Interfaces\ITypeOfSettlementService.cs" />
     <Compile Include="Interfaces\ITypeOfStateService.cs" />
     <Compile Include="Interfaces\ITypeOfStreetService.cs" />
+    <Compile Include="Interfaces\IViewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AreaService.cs" />
     <Compile Include="Services\AssessmentService.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Services\TypeOfSettlementService.cs" />
     <Compile Include="Services\TypeOfStateService.cs" />
     <Compile Include="Services\TypeOfStreetService.cs" />
+    <Compile Include="Services\ViewService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
