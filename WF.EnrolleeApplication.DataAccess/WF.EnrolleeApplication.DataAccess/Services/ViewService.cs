@@ -21,9 +21,15 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             return employees;
         }
 
-        public List<EnrolleeView> GetEnrollees()
+        public List<EnrolleeView> GetEnrollees(Employee employee)
         {
-            List<EnrolleeView> enrollees = context.EnrolleeView.ToList();
+            List<EnrolleeView> enrollees = context.EnrolleeView.Where(e=>e.EmployeeId == employee.EmployeeId).OrderByDescending(e=>e.EnrolleeId).ToList();
+            return enrollees;
+        }
+
+        public List<EnrolleeView> GetEnrollees(Speciality speciality)
+        {
+            List<EnrolleeView> enrollees = context.EnrolleeView.Where(e=>e.SpecialityId == speciality.SpecialityId).OrderBy(e=>e.NumberOfDeal).ToList();
             return enrollees;
         }
 

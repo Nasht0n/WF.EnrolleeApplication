@@ -40,7 +40,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         {
             List<IntegrationOfSpecialities> integrationOfSpecialities = context.IntegrationOfSpecialities.Where(ios => ios.FirstSpecialityId == speciality.SpecialityId).ToList();
             foreach (var integrationOfSpeciality in integrationOfSpecialities)
-            {
+            {            
                 integrationOfSpeciality.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == integrationOfSpeciality.FirstSpecialityId);
                 integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
                 integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);

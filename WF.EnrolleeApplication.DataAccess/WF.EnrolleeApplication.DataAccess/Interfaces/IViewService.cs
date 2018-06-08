@@ -10,7 +10,8 @@ namespace WF.EnrolleeApplication.DataAccess.Interfaces
     interface IViewService
     {     
         List<EmployeeView> GetEmployees();
-        List<EnrolleeView> GetEnrollees();
+        List<EnrolleeView> GetEnrollees(Employee employee);
+        List<EnrolleeView> GetEnrollees(Speciality speciality);
         List<SpecialityView> GetSpecialities();
     }
 }

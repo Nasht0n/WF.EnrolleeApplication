@@ -110,11 +110,6 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
                 .WithOptional(e => e.SecondarySpeciality)
                 .WillCascadeOnDelete();
 
-            modelBuilder.Entity<SecondarySpeciality>()
-                .HasMany(e => e.IntegrationOfSpecialities)
-                .WithRequired(e => e.SecondarySpeciality)
-                .HasForeignKey(e => e.SecondarySpecialityId);
-
             modelBuilder.Entity<Speciality>()
                 .HasMany(e => e.IntegrationOfSpecialities)
                 .WithRequired(e => e.Speciality)

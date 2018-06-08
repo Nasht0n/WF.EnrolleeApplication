@@ -16,36 +16,76 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 
         [Key]
         [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int SpecialityId { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ContestId { get; set; }
+
+        [Key]
+        [Column(Order = 3)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ReasonForAddmissionId { get; set; }
+
+        [Key]
+        [Column(Order = 4)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int FinanceTypeId { get; set; }
+
+        [Key]
+        [Column(Order = 5)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StateId { get; set; }
+
+        [Key]
+        [Column(Order = 6)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int EmployeeId { get; set; }
+
+        [Key]
+        [Column(Order = 7)]
         [StringLength(255)]
         public string FormOfStudy { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 8)]
         public string Speciality { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 9)]
         [StringLength(255)]
         public string Surname { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 10)]
         [StringLength(255)]
         public string Name { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 11)]
         [StringLength(255)]
         public string Contest { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 12)]
+        [StringLength(255)]
+        public string ReasonForAddmission { get; set; }
+
+        [Key]
+        [Column(Order = 13)]
         [StringLength(255)]
         public string Finance { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 14)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int NumberOfDeal { get; set; }
+
+        [Key]
+        [Column(Order = 15)]
+        [StringLength(255)]
+        public string Status { get; set; }
     }
 }
