@@ -85,6 +85,10 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
                 .IsFixedLength();
 
             modelBuilder.Entity<Enrollee>()
+                .Property(e => e.Seniority)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Enrollee>()
                 .Property(e => e.CurrentNumberCurs)
                 .IsFixedLength();
 
@@ -138,6 +142,11 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
             modelBuilder.Entity<TypeOfStreet>()
                 .Property(e => e.Shortname)
                 .IsFixedLength();
+
+            modelBuilder.Entity<TypeOfStreet>()
+                .HasMany(e => e.Enrollee)
+                .WithRequired(e => e.TypeOfStreet)
+                .HasForeignKey(e => e.StreetTypeId);
         }
     }
 }

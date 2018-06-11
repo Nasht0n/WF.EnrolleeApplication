@@ -38,7 +38,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 assessment.Enrollee.Area = context.Area.FirstOrDefault(a=>a.AreaId == assessment.Enrollee.AreaId);
                 assessment.Enrollee.District = context.District.FirstOrDefault(d=>d.DistrictId == assessment.Enrollee.DistrictId);
                 assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts=>ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts=>ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts=>ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                 assessment.Enrollee.Document = context.Document.FirstOrDefault(d=>d.DocumentId == assessment.Enrollee.DocumentId);
                 assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts=>ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                 assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl=>fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -71,7 +71,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                 assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                 assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                 assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                 assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                 assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -104,7 +104,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                 assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                 assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                 assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                 assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                 assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -137,7 +137,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                 assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                 assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                 assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                 assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                 assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -173,7 +173,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                         assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                         assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                         assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                        assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                        assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                         assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                         assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                         assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -210,7 +210,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                     assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                     assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                     assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                     assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                     assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                     assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -247,7 +247,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                     assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                     assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                     assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                     assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                     assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                     assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -284,7 +284,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                     assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                     assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                     assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                     assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                     assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                     assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);
@@ -321,7 +321,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                     assessment.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == assessment.Enrollee.AreaId);
                     assessment.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == assessment.Enrollee.DistrictId);
                     assessment.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == assessment.Enrollee.SettlementTypeId);
-                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == assessment.Enrollee.SteetTypeId);
+                    assessment.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == assessment.Enrollee.StreetTypeId);
                     assessment.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == assessment.Enrollee.DocumentId);
                     assessment.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == assessment.Enrollee.SchoolTypeId);
                     assessment.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == assessment.Enrollee.ForeignLanguageId);

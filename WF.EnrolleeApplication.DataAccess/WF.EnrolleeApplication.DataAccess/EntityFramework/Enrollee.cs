@@ -31,7 +31,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 
         public int SettlementTypeId { get; set; }
 
-        public int SteetTypeId { get; set; }
+        public int StreetTypeId { get; set; }
 
         public int DocumentId { get; set; }
 
@@ -84,18 +84,14 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         [Column(TypeName = "date")]
         public DateTime DateOfBirthday { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string FatherFullname { get; set; }
 
-        [Required]
         public string FatherAddress { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string MotherFullname { get; set; }
 
-        [Required]
         public string MotherAddress { get; set; }
 
         [Required]
@@ -166,35 +162,28 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         [Required]
         public string PersonInCharge { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string WorkPlace { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string WorkPost { get; set; }
 
-        public int Seniority { get; set; }
+        [StringLength(10)]
+        public string Seniority { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string CurrentNumberCurs { get; set; }
 
-        [Required]
         public string CurrentUniversity { get; set; }
 
-        [Required]
         public string CurrentSpeciality { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string AttestatEstimationString { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string DiplomPtuEstimationString { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string DiplomSusEstimationString { get; set; }
 

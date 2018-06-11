@@ -39,7 +39,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                     priorityOfSpeciality.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == priorityOfSpeciality.Enrollee.AreaId);
                     priorityOfSpeciality.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == priorityOfSpeciality.Enrollee.DistrictId);
                     priorityOfSpeciality.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == priorityOfSpeciality.Enrollee.SettlementTypeId);
-                    priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == priorityOfSpeciality.Enrollee.SteetTypeId);
+                    priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == priorityOfSpeciality.Enrollee.StreetTypeId);
                     priorityOfSpeciality.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == priorityOfSpeciality.Enrollee.DocumentId);
                     priorityOfSpeciality.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == priorityOfSpeciality.Enrollee.SchoolTypeId);
                     priorityOfSpeciality.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == priorityOfSpeciality.Enrollee.ForeignLanguageId);
@@ -76,7 +76,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                     priorityOfSpeciality.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == priorityOfSpeciality.Enrollee.AreaId);
                     priorityOfSpeciality.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == priorityOfSpeciality.Enrollee.DistrictId);
                     priorityOfSpeciality.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == priorityOfSpeciality.Enrollee.SettlementTypeId);
-                    priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == priorityOfSpeciality.Enrollee.SteetTypeId);
+                    priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == priorityOfSpeciality.Enrollee.StreetTypeId);
                     priorityOfSpeciality.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == priorityOfSpeciality.Enrollee.DocumentId);
                     priorityOfSpeciality.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == priorityOfSpeciality.Enrollee.SchoolTypeId);
                     priorityOfSpeciality.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == priorityOfSpeciality.Enrollee.ForeignLanguageId);
@@ -109,7 +109,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             priorityOfSpeciality.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == priorityOfSpeciality.Enrollee.AreaId);
             priorityOfSpeciality.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == priorityOfSpeciality.Enrollee.DistrictId);
             priorityOfSpeciality.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == priorityOfSpeciality.Enrollee.SettlementTypeId);
-            priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == priorityOfSpeciality.Enrollee.SteetTypeId);
+            priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == priorityOfSpeciality.Enrollee.StreetTypeId);
             priorityOfSpeciality.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == priorityOfSpeciality.Enrollee.DocumentId);
             priorityOfSpeciality.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == priorityOfSpeciality.Enrollee.SchoolTypeId);
             priorityOfSpeciality.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == priorityOfSpeciality.Enrollee.ForeignLanguageId);
@@ -140,7 +140,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             priorityOfSpeciality.Enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == priorityOfSpeciality.Enrollee.AreaId);
             priorityOfSpeciality.Enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == priorityOfSpeciality.Enrollee.DistrictId);
             priorityOfSpeciality.Enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == priorityOfSpeciality.Enrollee.SettlementTypeId);
-            priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == priorityOfSpeciality.Enrollee.SteetTypeId);
+            priorityOfSpeciality.Enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == priorityOfSpeciality.Enrollee.StreetTypeId);
             priorityOfSpeciality.Enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == priorityOfSpeciality.Enrollee.DocumentId);
             priorityOfSpeciality.Enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == priorityOfSpeciality.Enrollee.SchoolTypeId);
             priorityOfSpeciality.Enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == priorityOfSpeciality.Enrollee.ForeignLanguageId);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WF.EnrolleeApplication.App.Services;
 using WF.EnrolleeApplication.DataAccess.EntityFramework;
 using WF.EnrolleeApplication.DataAccess.Services;
 
@@ -15,6 +16,8 @@ namespace WF.EnrolleeApplication.App.Views
 {
     public partial class frmDashboard : Form
     {
+        private string connectionString;
+
         private bool ToolBoxVisible;
         private bool SearchToolBoxVisible;
         private bool FilterToolBoxVisible;
@@ -29,6 +32,9 @@ namespace WF.EnrolleeApplication.App.Views
         private FormOfStudy currentFormOfStudy;
         private Speciality currentSpeciality;
 
+        private AssessmentService assessmentService;
+        private PriorityOfSpecialityService priorityOfSpecialityService;
+        private AtributeForEnrolleeService atributeForEnrolleeService;
         private FacultyService facultyService;
         private FormOfStudyService formOfStudyService;
         private SpecialityService specialityService;
@@ -178,12 +184,15 @@ namespace WF.EnrolleeApplication.App.Views
 
         private void InitializeDataAccessServices()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
+            connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
             facultyService = new FacultyService(connectionString);
             formOfStudyService = new FormOfStudyService(connectionString);
             specialityService = new SpecialityService(connectionString);
             enrolleeService = new EnrolleeService(connectionString);
             viewService = new ViewService(connectionString);
+            assessmentService = new AssessmentService(connectionString);
+            priorityOfSpecialityService = new PriorityOfSpecialityService(connectionString);
+            atributeForEnrolleeService = new AtributeForEnrolleeService(connectionString);
         }
 
         private void InitializeStatusStrip()
@@ -312,12 +321,65 @@ namespace WF.EnrolleeApplication.App.Views
 
         private void ShowNewEnrolleeCard(object sender, EventArgs e)
         {
-            frmEnrolleeCard enrolleeCard = new frmEnrolleeCard();
+            frmEnrolleeCard enrolleeCard = new frmEnrolleeCard(activeEmployee);
             DialogResult enrolleeCardResult = enrolleeCard.ShowDialog();
             if(enrolleeCardResult == DialogResult.OK)
             {
-
+                InitializeEnrolleeGrid(SearchMode);
             }
+        }
+
+        private void EditCurrentEnrolleeCard(object sender, EventArgs e)
+        {
+            DialogResult youSure = MessageBox.Show(this, "Редактировать профиль выбранного абитуриента?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (youSure == DialogResult.Yes)
+            {
+                int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                enrollee = enrolleeService.GetEnrollee(id);
+                frmEnrolleeCard enrolleeCard = new frmEnrolleeCard(activeEmployee, enrollee);
+                DialogResult enrolleeCardResult = enrolleeCard.ShowDialog();
+                if (enrolleeCardResult == DialogResult.OK)
+                {
+                    InitializeEnrolleeGrid(SearchMode);
+                }
+            }
+        }
+
+        private void DeleteCurrentEnrollee(object sender, EventArgs e)
+        {
+            DialogResult youSure = MessageBox.Show(this, "Удалить выбранного абитуриента?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (youSure == DialogResult.Yes)
+            {
+                int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                enrollee = enrolleeService.GetEnrollee(id);
+                List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+                foreach (var assessment in assessments)
+                    assessmentService.DeleteAssessment(assessment);
+                List<AtributeForEnrollee> atributes = atributeForEnrolleeService.GetAtributeForEnrollees(enrollee);
+                foreach (var atribute in atributes)
+                    atributeForEnrolleeService.DeleteAtributeForEnrollee(atribute);
+                List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                foreach (var priority in priorities)
+                    priorityOfSpecialityService.DeletePriorityOfSpeciality(priority);
+                enrolleeService.DeleteEnrollee(enrollee);
+                InitializeEnrolleeGrid(SearchMode);
+            }
+        }
+
+        private void PrintStatement(object sender, EventArgs e)
+        {
+            ReportManager.ConnectionString = connectionString;
+            int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            enrollee = enrolleeService.GetEnrollee(id);
+            ReportManager.PrintStatement(enrollee);
+        }
+
+        private void PrintTitle(object sender, EventArgs e)
+        {
+            ReportManager.ConnectionString = connectionString;
+            int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            enrollee = enrolleeService.GetEnrollee(id);
+            ReportManager.PrintTitle(enrollee);
         }
     }
 }

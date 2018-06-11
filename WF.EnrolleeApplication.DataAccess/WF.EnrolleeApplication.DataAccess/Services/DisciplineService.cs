@@ -67,7 +67,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public List<Discipline> GetDisciplines(BasisForAssessing basisForAssessing, bool IsGroup)
         {
-            List<Discipline> disciplines = context.Discipline.Where(d => d.IsGroup == IsGroup && d.BasisForAssessing == basisForAssessing).ToList();
+            List<Discipline> disciplines = context.Discipline.Where(d => d.IsGroup == IsGroup && d.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
             if (disciplines.Count != 0)
             {
                 foreach (var discipline in disciplines)

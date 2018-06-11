@@ -86,39 +86,6 @@
     <Compile Include="EntityFramework\TypeOfSettlement.cs" />
     <Compile Include="EntityFramework\TypeOfState.cs" />
     <Compile Include="EntityFramework\TypeOfStreet.cs" />
-    <Compile Include="EntityPartial\Area.cs" />
-    <Compile Include="EntityPartial\Assessment.cs" />
-    <Compile Include="EntityPartial\Atribute.cs" />
-    <Compile Include="EntityPartial\AtributeForEnrollee.cs" />
-    <Compile Include="EntityPartial\BasisForAssessing.cs" />
-    <Compile Include="EntityPartial\Citizenship.cs" />
-    <Compile Include="EntityPartial\Contest.cs" />
-    <Compile Include="EntityPartial\ConversionSystem.cs" />
-    <Compile Include="EntityPartial\Country.cs" />
-    <Compile Include="EntityPartial\Decree.cs" />
-    <Compile Include="EntityPartial\Discipline.cs" />
-    <Compile Include="EntityPartial\District.cs" />
-    <Compile Include="EntityPartial\Document.cs" />
-    <Compile Include="EntityPartial\Employee.cs" />
-    <Compile Include="EntityPartial\EmployeePost.cs" />
-    <Compile Include="EntityPartial\Enrollee.cs" />
-    <Compile Include="EntityPartial\EstimationString.cs" />
-    <Compile Include="EntityPartial\ExamSchema.cs" />
-    <Compile Include="EntityPartial\Faculty.cs" />
-    <Compile Include="EntityPartial\ForeignLanguage.cs" />
-    <Compile Include="EntityPartial\FormOfStudy.cs" />
-    <Compile Include="EntityPartial\IntegrationOfSpecialities.cs" />
-    <Compile Include="EntityPartial\PriorityOfSpeciality.cs" />
-    <Compile Include="EntityPartial\ReasonForAddmission.cs" />
-    <Compile Include="EntityPartial\SecondarySpeciality.cs" />
-    <Compile Include="EntityPartial\Speciality.cs" />
-    <Compile Include="EntityPartial\SystemConfiguration.cs" />
-    <Compile Include="EntityPartial\TargetWorkPlace.cs" />
-    <Compile Include="EntityPartial\TypeOfFinance.cs" />
-    <Compile Include="EntityPartial\TypeOfSchool.cs" />
-    <Compile Include="EntityPartial\TypeOfSettlement.cs" />
-    <Compile Include="EntityPartial\TypeOfState.cs" />
-    <Compile Include="EntityPartial\TypeOfStreet.cs" />
     <Compile Include="Interfaces\IAreaService.cs" />
     <Compile Include="Interfaces\IAssessmentService.cs" />
     <Compile Include="Interfaces\IAtributeForEnrolleeService.cs" />
@@ -189,7 +156,9 @@
     <Compile Include="Services\TypeOfStreetService.cs" />
     <Compile Include="Services\ViewService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="EntityPartial\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

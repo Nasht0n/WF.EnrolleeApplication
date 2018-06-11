@@ -18,14 +18,14 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfStreet(TypeOfStreet typeOfStreet)
         {
-            TypeOfStreet typeOfStreetToDelete = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == typeOfStreet.SteetTypeId);
+            TypeOfStreet typeOfStreetToDelete = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == typeOfStreet.StreetTypeId);
             context.TypeOfStreet.Remove(typeOfStreet);
             context.SaveChanges();
         }
 
         public TypeOfStreet GetTypeOfStreet(int id)
         {
-            TypeOfStreet typeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == id);
+            TypeOfStreet typeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == id);
             return typeOfStreet;
         }
 
@@ -50,7 +50,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public TypeOfStreet UpdateTypeOfStreet(TypeOfStreet typeOfStreet)
         {
-            TypeOfStreet typeOfStreetToUpdate = context.TypeOfStreet.FirstOrDefault(ts => ts.SteetTypeId == typeOfStreet.SteetTypeId);
+            TypeOfStreet typeOfStreetToUpdate = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == typeOfStreet.StreetTypeId);
             typeOfStreetToUpdate.Fullname = typeOfStreet.Fullname;
             typeOfStreetToUpdate.Shortname = typeOfStreet.Shortname;
             context.SaveChanges();

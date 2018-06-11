@@ -29,8 +29,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             foreach (var integrationOfSpeciality in integrationOfSpecialities)
             {
                 integrationOfSpeciality.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == integrationOfSpeciality.FirstSpecialityId);
-                integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f=>f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
-                integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f=>f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);
+                integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
+                integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);
                 integrationOfSpeciality.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == integrationOfSpeciality.SecondarySpecialityId);
             }
             return integrationOfSpecialities;

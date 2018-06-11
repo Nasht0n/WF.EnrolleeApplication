@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEnrolleeCard));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -39,8 +41,8 @@
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.btSave = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.InformationPage = new System.Windows.Forms.TabPage();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox21 = new System.Windows.Forms.GroupBox();
@@ -78,7 +80,7 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tbBlrPatronymic = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbBrlName = new System.Windows.Forms.TextBox();
+            this.tbBlrName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbBlrSurname = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -92,25 +94,27 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox35 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox49 = new System.Windows.Forms.GroupBox();
+            this.gbDateDeal = new System.Windows.Forms.GroupBox();
+            this.dtDateDeal = new System.Windows.Forms.DateTimePicker();
+            this.gbWorkPost = new System.Windows.Forms.GroupBox();
             this.tbWorkPost = new System.Windows.Forms.TextBox();
-            this.groupBox48 = new System.Windows.Forms.GroupBox();
+            this.gbWorkPlace = new System.Windows.Forms.GroupBox();
             this.tbWorkPlace = new System.Windows.Forms.TextBox();
-            this.groupBox47 = new System.Windows.Forms.GroupBox();
+            this.gbSeniority = new System.Windows.Forms.GroupBox();
             this.tbSeniority = new System.Windows.Forms.TextBox();
             this.groupBox46 = new System.Windows.Forms.GroupBox();
             this.cbForeignLanguage = new System.Windows.Forms.ComboBox();
             this.groupBox45 = new System.Windows.Forms.GroupBox();
             this.cbBrsm = new System.Windows.Forms.CheckBox();
-            this.groupBox44 = new System.Windows.Forms.GroupBox();
+            this.gbCurrentUniversity = new System.Windows.Forms.GroupBox();
             this.tbCurrentUniversity = new System.Windows.Forms.TextBox();
-            this.groupBox43 = new System.Windows.Forms.GroupBox();
+            this.gbCurrentSpeciality = new System.Windows.Forms.GroupBox();
             this.tbCurrentSpeciality = new System.Windows.Forms.TextBox();
-            this.groupBox42 = new System.Windows.Forms.GroupBox();
+            this.gbCurrentCurs = new System.Windows.Forms.GroupBox();
             this.tbCurrentNumberCurs = new System.Windows.Forms.TextBox();
             this.groupBox41 = new System.Windows.Forms.GroupBox();
             this.cbSecondEducation = new System.Windows.Forms.CheckBox();
-            this.groupBox40 = new System.Windows.Forms.GroupBox();
+            this.gbSecondarySpeciality = new System.Windows.Forms.GroupBox();
             this.cbSecondarySpeciality = new System.Windows.Forms.ComboBox();
             this.groupBox39 = new System.Windows.Forms.GroupBox();
             this.tbSchoolAdres = new System.Windows.Forms.TextBox();
@@ -120,8 +124,8 @@
             this.tbSchoolYear = new System.Windows.Forms.TextBox();
             this.groupBox37 = new System.Windows.Forms.GroupBox();
             this.cbTypeOfSchool = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.gbDecree = new System.Windows.Forms.GroupBox();
+            this.cbDecree = new System.Windows.Forms.ComboBox();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox34 = new System.Windows.Forms.GroupBox();
@@ -143,11 +147,11 @@
             this.groupBox26 = new System.Windows.Forms.GroupBox();
             this.cbTypeOfSettlement = new System.Windows.Forms.ComboBox();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
-            this.tbArea = new System.Windows.Forms.TextBox();
+            this.cbArea = new System.Windows.Forms.ComboBox();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
-            this.tbDistrict = new System.Windows.Forms.TextBox();
+            this.cbDistrict = new System.Windows.Forms.ComboBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
-            this.tbCountry = new System.Windows.Forms.TextBox();
+            this.cbCountry = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox64 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -155,12 +159,12 @@
             this.tbPersonInCharge = new System.Windows.Forms.TextBox();
             this.groupBox74 = new System.Windows.Forms.GroupBox();
             this.cbTypeOfState = new System.Windows.Forms.ComboBox();
-            this.groupBox73 = new System.Windows.Forms.GroupBox();
+            this.gbNumberOfDeal = new System.Windows.Forms.GroupBox();
             this.tbNumberOfDeal = new System.Windows.Forms.TextBox();
             this.groupBox65 = new System.Windows.Forms.GroupBox();
             this.tbAverage = new System.Windows.Forms.TextBox();
             this.groupBox66 = new System.Windows.Forms.GroupBox();
-            this.tbTargetWorkPlace = new System.Windows.Forms.TextBox();
+            this.cbTargetWorkPlace = new System.Windows.Forms.ComboBox();
             this.cbTarget = new System.Windows.Forms.CheckBox();
             this.groupBox55 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
@@ -198,8 +202,9 @@
             this.groupBox63 = new System.Windows.Forms.GroupBox();
             this.SertificateGrid = new System.Windows.Forms.DataGridView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btChooseSertificate = new System.Windows.Forms.Button();
-            this.btDeleteSertificate = new System.Windows.Forms.Button();
+            this.btGetExamSchema = new System.Windows.Forms.Button();
+            this.btChangeDiscipline = new System.Windows.Forms.Button();
+            this.btDeleteDiscipline = new System.Windows.Forms.Button();
             this.groupBox50 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox53 = new System.Windows.Forms.GroupBox();
@@ -213,11 +218,6 @@
             this.groupBox72 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.PriorityGrid = new System.Windows.Forms.DataGridView();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btTop = new System.Windows.Forms.Button();
-            this.btRaise = new System.Windows.Forms.Button();
-            this.btLower = new System.Windows.Forms.Button();
-            this.btBottom = new System.Windows.Forms.Button();
             this.groupBox67 = new System.Windows.Forms.GroupBox();
             this.chkAtributeList = new System.Windows.Forms.CheckedListBox();
             this.tableLayoutPanel.SuspendLayout();
@@ -225,8 +225,8 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.InformationPage.SuspendLayout();
             this.groupBox17.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox21.SuspendLayout();
@@ -252,20 +252,22 @@
             this.tabPage2.SuspendLayout();
             this.groupBox35.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
-            this.groupBox49.SuspendLayout();
-            this.groupBox48.SuspendLayout();
-            this.groupBox47.SuspendLayout();
+            this.gbDateDeal.SuspendLayout();
+            this.gbWorkPost.SuspendLayout();
+            this.gbWorkPlace.SuspendLayout();
+            this.gbSeniority.SuspendLayout();
             this.groupBox46.SuspendLayout();
             this.groupBox45.SuspendLayout();
-            this.groupBox44.SuspendLayout();
-            this.groupBox43.SuspendLayout();
-            this.groupBox42.SuspendLayout();
+            this.gbCurrentUniversity.SuspendLayout();
+            this.gbCurrentSpeciality.SuspendLayout();
+            this.gbCurrentCurs.SuspendLayout();
             this.groupBox41.SuspendLayout();
-            this.groupBox40.SuspendLayout();
+            this.gbSecondarySpeciality.SuspendLayout();
             this.groupBox39.SuspendLayout();
             this.groupBox38.SuspendLayout();
             this.groupBox36.SuspendLayout();
             this.groupBox37.SuspendLayout();
+            this.gbDecree.SuspendLayout();
             this.groupBox22.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox34.SuspendLayout();
@@ -285,7 +287,7 @@
             this.tableLayoutPanel9.SuspendLayout();
             this.groupBox75.SuspendLayout();
             this.groupBox74.SuspendLayout();
-            this.groupBox73.SuspendLayout();
+            this.gbNumberOfDeal.SuspendLayout();
             this.groupBox65.SuspendLayout();
             this.groupBox66.SuspendLayout();
             this.groupBox55.SuspendLayout();
@@ -322,7 +324,6 @@
             this.groupBox72.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PriorityGrid)).BeginInit();
-            this.flowLayoutPanel2.SuspendLayout();
             this.groupBox67.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -429,6 +430,7 @@
             this.btSave.TabIndex = 0;
             this.btSave.Text = "Сохранить запись";
             this.btSave.UseVisualStyleBackColor = true;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
             // btCancel
             // 
@@ -438,32 +440,33 @@
             this.btCancel.TabIndex = 1;
             this.btCancel.Text = "Отмена";
             this.btCancel.UseVisualStyleBackColor = true;
+            this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 51);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(984, 481);
-            this.tabControl1.TabIndex = 2;
+            this.tabControl.Controls.Add(this.InformationPage);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tabPage3);
+            this.tabControl.Controls.Add(this.tabPage5);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(0, 51);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(984, 481);
+            this.tabControl.TabIndex = 2;
             // 
-            // tabPage1
+            // InformationPage
             // 
-            this.tabPage1.Controls.Add(this.groupBox17);
-            this.tabPage1.Controls.Add(this.groupBox10);
-            this.tabPage1.Controls.Add(this.groupBox4);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(976, 453);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Информация об абитуриенте";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.InformationPage.Controls.Add(this.groupBox17);
+            this.InformationPage.Controls.Add(this.groupBox10);
+            this.InformationPage.Controls.Add(this.groupBox4);
+            this.InformationPage.Location = new System.Drawing.Point(4, 24);
+            this.InformationPage.Name = "InformationPage";
+            this.InformationPage.Padding = new System.Windows.Forms.Padding(3);
+            this.InformationPage.Size = new System.Drawing.Size(976, 453);
+            this.InformationPage.TabIndex = 0;
+            this.InformationPage.Text = "Информация об абитуриенте";
+            this.InformationPage.UseVisualStyleBackColor = true;
             // 
             // groupBox17
             // 
@@ -695,6 +698,7 @@
             this.tbDocNumber.Name = "tbDocNumber";
             this.tbDocNumber.Size = new System.Drawing.Size(182, 23);
             this.tbDocNumber.TabIndex = 0;
+            this.tbDocNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox12
             // 
@@ -714,6 +718,7 @@
             this.tbDocSeria.Name = "tbDocSeria";
             this.tbDocSeria.Size = new System.Drawing.Size(180, 23);
             this.tbDocSeria.TabIndex = 0;
+            this.tbDocSeria.Enter += new System.EventHandler(this.SetEnglishLanguage);
             // 
             // groupBox11
             // 
@@ -808,13 +813,13 @@
             this.rbFemale.Name = "rbFemale";
             this.rbFemale.Size = new System.Drawing.Size(75, 19);
             this.rbFemale.TabIndex = 1;
-            this.rbFemale.TabStop = true;
             this.rbFemale.Text = "Женский";
             this.rbFemale.UseVisualStyleBackColor = true;
             // 
             // rbMale
             // 
             this.rbMale.AutoSize = true;
+            this.rbMale.Checked = true;
             this.rbMale.Location = new System.Drawing.Point(42, 21);
             this.rbMale.Name = "rbMale";
             this.rbMale.Size = new System.Drawing.Size(77, 19);
@@ -847,7 +852,7 @@
             // 
             this.groupBox6.Controls.Add(this.tbBlrPatronymic);
             this.groupBox6.Controls.Add(this.label4);
-            this.groupBox6.Controls.Add(this.tbBrlName);
+            this.groupBox6.Controls.Add(this.tbBlrName);
             this.groupBox6.Controls.Add(this.label5);
             this.groupBox6.Controls.Add(this.tbBlrSurname);
             this.groupBox6.Controls.Add(this.label6);
@@ -867,6 +872,7 @@
             this.tbBlrPatronymic.Name = "tbBlrPatronymic";
             this.tbBlrPatronymic.Size = new System.Drawing.Size(255, 23);
             this.tbBlrPatronymic.TabIndex = 2;
+            this.tbBlrPatronymic.Enter += new System.EventHandler(this.SetBelorussianLanguage);
             // 
             // label4
             // 
@@ -877,14 +883,15 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Отчество";
             // 
-            // tbBrlName
+            // tbBlrName
             // 
-            this.tbBrlName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbBrlName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbBrlName.Location = new System.Drawing.Point(376, 16);
-            this.tbBrlName.Name = "tbBrlName";
-            this.tbBrlName.Size = new System.Drawing.Size(255, 23);
-            this.tbBrlName.TabIndex = 1;
+            this.tbBlrName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbBlrName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbBlrName.Location = new System.Drawing.Point(376, 16);
+            this.tbBlrName.Name = "tbBlrName";
+            this.tbBlrName.Size = new System.Drawing.Size(255, 23);
+            this.tbBlrName.TabIndex = 1;
+            this.tbBlrName.Enter += new System.EventHandler(this.SetBelorussianLanguage);
             // 
             // label5
             // 
@@ -903,6 +910,7 @@
             this.tbBlrSurname.Name = "tbBlrSurname";
             this.tbBlrSurname.Size = new System.Drawing.Size(255, 23);
             this.tbBlrSurname.TabIndex = 0;
+            this.tbBlrSurname.Enter += new System.EventHandler(this.SetBelorussianLanguage);
             // 
             // label6
             // 
@@ -937,6 +945,7 @@
             this.tbRuPatronymic.Name = "tbRuPatronymic";
             this.tbRuPatronymic.Size = new System.Drawing.Size(255, 23);
             this.tbRuPatronymic.TabIndex = 2;
+            this.tbRuPatronymic.Enter += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // label3
             // 
@@ -955,6 +964,7 @@
             this.tbRuName.Name = "tbRuName";
             this.tbRuName.Size = new System.Drawing.Size(255, 23);
             this.tbRuName.TabIndex = 1;
+            this.tbRuName.Enter += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // label2
             // 
@@ -973,6 +983,7 @@
             this.tbRuSurname.Name = "tbRuSurname";
             this.tbRuSurname.Size = new System.Drawing.Size(255, 23);
             this.tbRuSurname.TabIndex = 0;
+            this.tbRuSurname.Enter += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // label1
             // 
@@ -987,10 +998,10 @@
             // 
             this.tabPage2.Controls.Add(this.groupBox35);
             this.tabPage2.Controls.Add(this.groupBox22);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(976, 453);
+            this.tabPage2.Size = new System.Drawing.Size(976, 455);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Дополнительная информация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1001,7 +1012,7 @@
             this.groupBox35.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox35.Location = new System.Drawing.Point(3, 179);
             this.groupBox35.Name = "groupBox35";
-            this.groupBox35.Size = new System.Drawing.Size(970, 271);
+            this.groupBox35.Size = new System.Drawing.Size(970, 273);
             this.groupBox35.TabIndex = 1;
             this.groupBox35.TabStop = false;
             this.groupBox35.Text = "Дополнительные сведения";
@@ -1014,22 +1025,22 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel5.Controls.Add(this.groupBox49, 3, 4);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox48, 2, 4);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox47, 0, 4);
+            this.tableLayoutPanel5.Controls.Add(this.gbDateDeal, 4, 3);
+            this.tableLayoutPanel5.Controls.Add(this.gbWorkPost, 3, 4);
+            this.tableLayoutPanel5.Controls.Add(this.gbWorkPlace, 2, 4);
+            this.tableLayoutPanel5.Controls.Add(this.gbSeniority, 0, 4);
             this.tableLayoutPanel5.Controls.Add(this.groupBox46, 1, 3);
             this.tableLayoutPanel5.Controls.Add(this.groupBox45, 0, 3);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox44, 2, 2);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox43, 2, 2);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox42, 1, 2);
+            this.tableLayoutPanel5.Controls.Add(this.gbCurrentUniversity, 2, 2);
+            this.tableLayoutPanel5.Controls.Add(this.gbCurrentSpeciality, 2, 2);
+            this.tableLayoutPanel5.Controls.Add(this.gbCurrentCurs, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.groupBox41, 0, 2);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox40, 2, 1);
+            this.tableLayoutPanel5.Controls.Add(this.gbSecondarySpeciality, 2, 1);
             this.tableLayoutPanel5.Controls.Add(this.groupBox39, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.groupBox38, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox36, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.groupBox37, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.panel1, 3, 3);
-            this.tableLayoutPanel5.Controls.Add(this.panel2, 4, 3);
+            this.tableLayoutPanel5.Controls.Add(this.gbDecree, 3, 3);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -1039,20 +1050,41 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(964, 249);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(964, 251);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
-            // groupBox49
+            // gbDateDeal
             // 
-            this.tableLayoutPanel5.SetColumnSpan(this.groupBox49, 2);
-            this.groupBox49.Controls.Add(this.tbWorkPost);
-            this.groupBox49.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox49.Location = new System.Drawing.Point(580, 199);
-            this.groupBox49.Name = "groupBox49";
-            this.groupBox49.Size = new System.Drawing.Size(381, 47);
-            this.groupBox49.TabIndex = 21;
-            this.groupBox49.TabStop = false;
-            this.groupBox49.Text = "Должность";
+            this.gbDateDeal.Controls.Add(this.dtDateDeal);
+            this.gbDateDeal.Location = new System.Drawing.Point(772, 153);
+            this.gbDateDeal.Name = "gbDateDeal";
+            this.gbDateDeal.Size = new System.Drawing.Size(186, 43);
+            this.gbDateDeal.TabIndex = 23;
+            this.gbDateDeal.TabStop = false;
+            this.gbDateDeal.Text = "Дата подачи документов";
+            this.gbDateDeal.Visible = false;
+            // 
+            // dtDateDeal
+            // 
+            this.dtDateDeal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtDateDeal.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtDateDeal.Location = new System.Drawing.Point(3, 19);
+            this.dtDateDeal.Name = "dtDateDeal";
+            this.dtDateDeal.Size = new System.Drawing.Size(180, 23);
+            this.dtDateDeal.TabIndex = 1;
+            // 
+            // gbWorkPost
+            // 
+            this.tableLayoutPanel5.SetColumnSpan(this.gbWorkPost, 2);
+            this.gbWorkPost.Controls.Add(this.tbWorkPost);
+            this.gbWorkPost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbWorkPost.Location = new System.Drawing.Point(580, 203);
+            this.gbWorkPost.Name = "gbWorkPost";
+            this.gbWorkPost.Size = new System.Drawing.Size(381, 45);
+            this.gbWorkPost.TabIndex = 21;
+            this.gbWorkPost.TabStop = false;
+            this.gbWorkPost.Text = "Должность";
+            this.gbWorkPost.Visible = false;
             // 
             // tbWorkPost
             // 
@@ -1064,16 +1096,17 @@
             this.tbWorkPost.Size = new System.Drawing.Size(375, 23);
             this.tbWorkPost.TabIndex = 1;
             // 
-            // groupBox48
+            // gbWorkPlace
             // 
-            this.groupBox48.Controls.Add(this.tbWorkPlace);
-            this.groupBox48.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox48.Location = new System.Drawing.Point(243, 199);
-            this.groupBox48.Name = "groupBox48";
-            this.groupBox48.Size = new System.Drawing.Size(331, 47);
-            this.groupBox48.TabIndex = 20;
-            this.groupBox48.TabStop = false;
-            this.groupBox48.Text = "Место работы";
+            this.gbWorkPlace.Controls.Add(this.tbWorkPlace);
+            this.gbWorkPlace.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbWorkPlace.Location = new System.Drawing.Point(243, 203);
+            this.gbWorkPlace.Name = "gbWorkPlace";
+            this.gbWorkPlace.Size = new System.Drawing.Size(331, 45);
+            this.gbWorkPlace.TabIndex = 20;
+            this.gbWorkPlace.TabStop = false;
+            this.gbWorkPlace.Text = "Место работы";
+            this.gbWorkPlace.Visible = false;
             // 
             // tbWorkPlace
             // 
@@ -1085,17 +1118,18 @@
             this.tbWorkPlace.Size = new System.Drawing.Size(325, 23);
             this.tbWorkPlace.TabIndex = 1;
             // 
-            // groupBox47
+            // gbSeniority
             // 
-            this.tableLayoutPanel5.SetColumnSpan(this.groupBox47, 2);
-            this.groupBox47.Controls.Add(this.tbSeniority);
-            this.groupBox47.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox47.Location = new System.Drawing.Point(3, 199);
-            this.groupBox47.Name = "groupBox47";
-            this.groupBox47.Size = new System.Drawing.Size(234, 47);
-            this.groupBox47.TabIndex = 19;
-            this.groupBox47.TabStop = false;
-            this.groupBox47.Text = "Трудовой стаж (полных месяцев)";
+            this.tableLayoutPanel5.SetColumnSpan(this.gbSeniority, 2);
+            this.gbSeniority.Controls.Add(this.tbSeniority);
+            this.gbSeniority.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbSeniority.Location = new System.Drawing.Point(3, 203);
+            this.gbSeniority.Name = "gbSeniority";
+            this.gbSeniority.Size = new System.Drawing.Size(234, 45);
+            this.gbSeniority.TabIndex = 19;
+            this.gbSeniority.TabStop = false;
+            this.gbSeniority.Text = "Трудовой стаж (полных месяцев)";
+            this.gbSeniority.Visible = false;
             // 
             // tbSeniority
             // 
@@ -1104,15 +1138,16 @@
             this.tbSeniority.Name = "tbSeniority";
             this.tbSeniority.Size = new System.Drawing.Size(228, 23);
             this.tbSeniority.TabIndex = 1;
+            this.tbSeniority.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox46
             // 
             this.tableLayoutPanel5.SetColumnSpan(this.groupBox46, 2);
             this.groupBox46.Controls.Add(this.cbForeignLanguage);
             this.groupBox46.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox46.Location = new System.Drawing.Point(147, 150);
+            this.groupBox46.Location = new System.Drawing.Point(147, 153);
             this.groupBox46.Name = "groupBox46";
-            this.groupBox46.Size = new System.Drawing.Size(427, 43);
+            this.groupBox46.Size = new System.Drawing.Size(427, 44);
             this.groupBox46.TabIndex = 18;
             this.groupBox46.TabStop = false;
             this.groupBox46.Text = "Основной иностранный язык";
@@ -1132,9 +1167,9 @@
             // 
             this.groupBox45.Controls.Add(this.cbBrsm);
             this.groupBox45.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox45.Location = new System.Drawing.Point(3, 150);
+            this.groupBox45.Location = new System.Drawing.Point(3, 153);
             this.groupBox45.Name = "groupBox45";
-            this.groupBox45.Size = new System.Drawing.Size(138, 43);
+            this.groupBox45.Size = new System.Drawing.Size(138, 44);
             this.groupBox45.TabIndex = 11;
             this.groupBox45.TabStop = false;
             this.groupBox45.Text = "БРСМ";
@@ -1145,21 +1180,23 @@
             this.cbBrsm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbBrsm.Location = new System.Drawing.Point(3, 19);
             this.cbBrsm.Name = "cbBrsm";
-            this.cbBrsm.Size = new System.Drawing.Size(132, 21);
+            this.cbBrsm.Size = new System.Drawing.Size(132, 22);
             this.cbBrsm.TabIndex = 0;
             this.cbBrsm.Text = "БРСМ";
             this.cbBrsm.UseVisualStyleBackColor = true;
+            this.cbBrsm.CheckedChanged += new System.EventHandler(this.cbBrsm_CheckedChanged);
             // 
-            // groupBox44
+            // gbCurrentUniversity
             // 
-            this.groupBox44.Controls.Add(this.tbCurrentUniversity);
-            this.groupBox44.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox44.Location = new System.Drawing.Point(243, 101);
-            this.groupBox44.Name = "groupBox44";
-            this.groupBox44.Size = new System.Drawing.Size(331, 43);
-            this.groupBox44.TabIndex = 10;
-            this.groupBox44.TabStop = false;
-            this.groupBox44.Text = "Наименование учреждения образования";
+            this.gbCurrentUniversity.Controls.Add(this.tbCurrentUniversity);
+            this.gbCurrentUniversity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbCurrentUniversity.Location = new System.Drawing.Point(772, 103);
+            this.gbCurrentUniversity.Name = "gbCurrentUniversity";
+            this.gbCurrentUniversity.Size = new System.Drawing.Size(189, 44);
+            this.gbCurrentUniversity.TabIndex = 10;
+            this.gbCurrentUniversity.TabStop = false;
+            this.gbCurrentUniversity.Text = "Наименование учреждения образования";
+            this.gbCurrentUniversity.Visible = false;
             // 
             // tbCurrentUniversity
             // 
@@ -1168,20 +1205,21 @@
             this.tbCurrentUniversity.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbCurrentUniversity.Location = new System.Drawing.Point(3, 19);
             this.tbCurrentUniversity.Name = "tbCurrentUniversity";
-            this.tbCurrentUniversity.Size = new System.Drawing.Size(325, 23);
+            this.tbCurrentUniversity.Size = new System.Drawing.Size(183, 23);
             this.tbCurrentUniversity.TabIndex = 1;
             // 
-            // groupBox43
+            // gbCurrentSpeciality
             // 
-            this.tableLayoutPanel5.SetColumnSpan(this.groupBox43, 2);
-            this.groupBox43.Controls.Add(this.tbCurrentSpeciality);
-            this.groupBox43.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox43.Location = new System.Drawing.Point(580, 101);
-            this.groupBox43.Name = "groupBox43";
-            this.groupBox43.Size = new System.Drawing.Size(381, 43);
-            this.groupBox43.TabIndex = 8;
-            this.groupBox43.TabStop = false;
-            this.groupBox43.Text = "Специальность учреждения образования";
+            this.tableLayoutPanel5.SetColumnSpan(this.gbCurrentSpeciality, 2);
+            this.gbCurrentSpeciality.Controls.Add(this.tbCurrentSpeciality);
+            this.gbCurrentSpeciality.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbCurrentSpeciality.Location = new System.Drawing.Point(243, 103);
+            this.gbCurrentSpeciality.Name = "gbCurrentSpeciality";
+            this.gbCurrentSpeciality.Size = new System.Drawing.Size(523, 44);
+            this.gbCurrentSpeciality.TabIndex = 8;
+            this.gbCurrentSpeciality.TabStop = false;
+            this.gbCurrentSpeciality.Text = "Специальность учреждения образования";
+            this.gbCurrentSpeciality.Visible = false;
             // 
             // tbCurrentSpeciality
             // 
@@ -1190,19 +1228,20 @@
             this.tbCurrentSpeciality.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbCurrentSpeciality.Location = new System.Drawing.Point(3, 19);
             this.tbCurrentSpeciality.Name = "tbCurrentSpeciality";
-            this.tbCurrentSpeciality.Size = new System.Drawing.Size(375, 23);
+            this.tbCurrentSpeciality.Size = new System.Drawing.Size(517, 23);
             this.tbCurrentSpeciality.TabIndex = 1;
             // 
-            // groupBox42
+            // gbCurrentCurs
             // 
-            this.groupBox42.Controls.Add(this.tbCurrentNumberCurs);
-            this.groupBox42.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox42.Location = new System.Drawing.Point(147, 101);
-            this.groupBox42.Name = "groupBox42";
-            this.groupBox42.Size = new System.Drawing.Size(90, 43);
-            this.groupBox42.TabIndex = 7;
-            this.groupBox42.TabStop = false;
-            this.groupBox42.Text = "Курс";
+            this.gbCurrentCurs.Controls.Add(this.tbCurrentNumberCurs);
+            this.gbCurrentCurs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbCurrentCurs.Location = new System.Drawing.Point(147, 103);
+            this.gbCurrentCurs.Name = "gbCurrentCurs";
+            this.gbCurrentCurs.Size = new System.Drawing.Size(90, 44);
+            this.gbCurrentCurs.TabIndex = 7;
+            this.gbCurrentCurs.TabStop = false;
+            this.gbCurrentCurs.Text = "Курс";
+            this.gbCurrentCurs.Visible = false;
             // 
             // tbCurrentNumberCurs
             // 
@@ -1211,14 +1250,15 @@
             this.tbCurrentNumberCurs.Name = "tbCurrentNumberCurs";
             this.tbCurrentNumberCurs.Size = new System.Drawing.Size(84, 23);
             this.tbCurrentNumberCurs.TabIndex = 1;
+            this.tbCurrentNumberCurs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox41
             // 
             this.groupBox41.Controls.Add(this.cbSecondEducation);
             this.groupBox41.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox41.Location = new System.Drawing.Point(3, 101);
+            this.groupBox41.Location = new System.Drawing.Point(3, 103);
             this.groupBox41.Name = "groupBox41";
-            this.groupBox41.Size = new System.Drawing.Size(138, 43);
+            this.groupBox41.Size = new System.Drawing.Size(138, 44);
             this.groupBox41.TabIndex = 6;
             this.groupBox41.TabStop = false;
             this.groupBox41.Text = "Второе высшее";
@@ -1229,22 +1269,24 @@
             this.cbSecondEducation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbSecondEducation.Location = new System.Drawing.Point(3, 19);
             this.cbSecondEducation.Name = "cbSecondEducation";
-            this.cbSecondEducation.Size = new System.Drawing.Size(132, 21);
+            this.cbSecondEducation.Size = new System.Drawing.Size(132, 22);
             this.cbSecondEducation.TabIndex = 0;
             this.cbSecondEducation.Text = "Второе высшее образование";
             this.cbSecondEducation.UseVisualStyleBackColor = true;
+            this.cbSecondEducation.CheckedChanged += new System.EventHandler(this.cbSecondEducation_CheckedChanged);
             // 
-            // groupBox40
+            // gbSecondarySpeciality
             // 
-            this.tableLayoutPanel5.SetColumnSpan(this.groupBox40, 2);
-            this.groupBox40.Controls.Add(this.cbSecondarySpeciality);
-            this.groupBox40.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox40.Location = new System.Drawing.Point(580, 52);
-            this.groupBox40.Name = "groupBox40";
-            this.groupBox40.Size = new System.Drawing.Size(381, 43);
-            this.groupBox40.TabIndex = 5;
-            this.groupBox40.TabStop = false;
-            this.groupBox40.Text = "Специальность второй ступени";
+            this.tableLayoutPanel5.SetColumnSpan(this.gbSecondarySpeciality, 2);
+            this.gbSecondarySpeciality.Controls.Add(this.cbSecondarySpeciality);
+            this.gbSecondarySpeciality.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbSecondarySpeciality.Location = new System.Drawing.Point(580, 53);
+            this.gbSecondarySpeciality.Name = "gbSecondarySpeciality";
+            this.gbSecondarySpeciality.Size = new System.Drawing.Size(381, 44);
+            this.gbSecondarySpeciality.TabIndex = 5;
+            this.gbSecondarySpeciality.TabStop = false;
+            this.gbSecondarySpeciality.Text = "Специальность второй ступени";
+            this.gbSecondarySpeciality.Visible = false;
             // 
             // cbSecondarySpeciality
             // 
@@ -1262,9 +1304,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.groupBox39, 3);
             this.groupBox39.Controls.Add(this.tbSchoolAdres);
             this.groupBox39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox39.Location = new System.Drawing.Point(3, 52);
+            this.groupBox39.Location = new System.Drawing.Point(3, 53);
             this.groupBox39.Name = "groupBox39";
-            this.groupBox39.Size = new System.Drawing.Size(571, 43);
+            this.groupBox39.Size = new System.Drawing.Size(571, 44);
             this.groupBox39.TabIndex = 4;
             this.groupBox39.TabStop = false;
             this.groupBox39.Text = "Адрес учебного заведения";
@@ -1286,7 +1328,7 @@
             this.groupBox38.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox38.Location = new System.Drawing.Point(580, 3);
             this.groupBox38.Name = "groupBox38";
-            this.groupBox38.Size = new System.Drawing.Size(381, 43);
+            this.groupBox38.Size = new System.Drawing.Size(381, 44);
             this.groupBox38.TabIndex = 3;
             this.groupBox38.TabStop = false;
             this.groupBox38.Text = "Наименование учебного заведения";
@@ -1307,7 +1349,7 @@
             this.groupBox36.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox36.Location = new System.Drawing.Point(3, 3);
             this.groupBox36.Name = "groupBox36";
-            this.groupBox36.Size = new System.Drawing.Size(138, 43);
+            this.groupBox36.Size = new System.Drawing.Size(138, 44);
             this.groupBox36.TabIndex = 1;
             this.groupBox36.TabStop = false;
             this.groupBox36.Text = "Год окончания";
@@ -1319,6 +1361,7 @@
             this.tbSchoolYear.Name = "tbSchoolYear";
             this.tbSchoolYear.Size = new System.Drawing.Size(132, 23);
             this.tbSchoolYear.TabIndex = 1;
+            this.tbSchoolYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox37
             // 
@@ -1327,7 +1370,7 @@
             this.groupBox37.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox37.Location = new System.Drawing.Point(147, 3);
             this.groupBox37.Name = "groupBox37";
-            this.groupBox37.Size = new System.Drawing.Size(427, 43);
+            this.groupBox37.Size = new System.Drawing.Size(427, 44);
             this.groupBox37.TabIndex = 2;
             this.groupBox37.TabStop = false;
             this.groupBox37.Text = "Тип учебного заведения";
@@ -1343,19 +1386,27 @@
             this.cbTypeOfSchool.TabIndex = 2;
             this.cbTypeOfSchool.SelectedValueChanged += new System.EventHandler(this.cbTypeOfSchool_SelectedValueChanged);
             // 
-            // panel1
+            // gbDecree
             // 
-            this.panel1.Location = new System.Drawing.Point(580, 150);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(186, 43);
-            this.panel1.TabIndex = 16;
+            this.gbDecree.Controls.Add(this.cbDecree);
+            this.gbDecree.Location = new System.Drawing.Point(580, 153);
+            this.gbDecree.Name = "gbDecree";
+            this.gbDecree.Size = new System.Drawing.Size(186, 43);
+            this.gbDecree.TabIndex = 22;
+            this.gbDecree.TabStop = false;
+            this.gbDecree.Text = "Приказ";
+            this.gbDecree.Visible = false;
             // 
-            // panel2
+            // cbDecree
             // 
-            this.panel2.Location = new System.Drawing.Point(772, 150);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(189, 43);
-            this.panel2.TabIndex = 17;
+            this.cbDecree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbDecree.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDecree.FormattingEnabled = true;
+            this.cbDecree.Location = new System.Drawing.Point(3, 19);
+            this.cbDecree.Name = "cbDecree";
+            this.cbDecree.Size = new System.Drawing.Size(180, 23);
+            this.cbDecree.TabIndex = 2;
+            this.cbDecree.SelectedValueChanged += new System.EventHandler(this.cbDecree_SelectedValueChanged);
             // 
             // groupBox22
             // 
@@ -1536,6 +1587,7 @@
             this.tbSettlementIndex.Name = "tbSettlementIndex";
             this.tbSettlementIndex.Size = new System.Drawing.Size(229, 23);
             this.tbSettlementIndex.TabIndex = 1;
+            this.tbSettlementIndex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox27
             // 
@@ -1582,7 +1634,7 @@
             // 
             // groupBox24
             // 
-            this.groupBox24.Controls.Add(this.tbArea);
+            this.groupBox24.Controls.Add(this.cbArea);
             this.groupBox24.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox24.Location = new System.Drawing.Point(3, 54);
             this.groupBox24.Name = "groupBox24";
@@ -1591,19 +1643,20 @@
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Область";
             // 
-            // tbArea
+            // cbArea
             // 
-            this.tbArea.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbArea.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbArea.Location = new System.Drawing.Point(3, 19);
-            this.tbArea.Name = "tbArea";
-            this.tbArea.Size = new System.Drawing.Size(229, 23);
-            this.tbArea.TabIndex = 1;
+            this.cbArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbArea.FormattingEnabled = true;
+            this.cbArea.Location = new System.Drawing.Point(3, 19);
+            this.cbArea.Name = "cbArea";
+            this.cbArea.Size = new System.Drawing.Size(229, 23);
+            this.cbArea.TabIndex = 2;
+            this.cbArea.SelectedValueChanged += new System.EventHandler(this.cbArea_SelectedValueChanged);
             // 
             // groupBox25
             // 
-            this.groupBox25.Controls.Add(this.tbDistrict);
+            this.groupBox25.Controls.Add(this.cbDistrict);
             this.groupBox25.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox25.Location = new System.Drawing.Point(3, 105);
             this.groupBox25.Name = "groupBox25";
@@ -1612,19 +1665,20 @@
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Район";
             // 
-            // tbDistrict
+            // cbDistrict
             // 
-            this.tbDistrict.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbDistrict.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbDistrict.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDistrict.Location = new System.Drawing.Point(3, 19);
-            this.tbDistrict.Name = "tbDistrict";
-            this.tbDistrict.Size = new System.Drawing.Size(229, 23);
-            this.tbDistrict.TabIndex = 1;
+            this.cbDistrict.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbDistrict.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDistrict.FormattingEnabled = true;
+            this.cbDistrict.Location = new System.Drawing.Point(3, 19);
+            this.cbDistrict.Name = "cbDistrict";
+            this.cbDistrict.Size = new System.Drawing.Size(229, 23);
+            this.cbDistrict.TabIndex = 2;
+            this.cbDistrict.SelectedValueChanged += new System.EventHandler(this.cbDistrict_SelectedValueChanged);
             // 
             // groupBox23
             // 
-            this.groupBox23.Controls.Add(this.tbCountry);
+            this.groupBox23.Controls.Add(this.cbCountry);
             this.groupBox23.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox23.Location = new System.Drawing.Point(3, 3);
             this.groupBox23.Name = "groupBox23";
@@ -1633,25 +1687,26 @@
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Страна";
             // 
-            // tbCountry
+            // cbCountry
             // 
-            this.tbCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCountry.Location = new System.Drawing.Point(3, 19);
-            this.tbCountry.Name = "tbCountry";
-            this.tbCountry.Size = new System.Drawing.Size(229, 23);
-            this.tbCountry.TabIndex = 1;
+            this.cbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCountry.FormattingEnabled = true;
+            this.cbCountry.Location = new System.Drawing.Point(3, 19);
+            this.cbCountry.Name = "cbCountry";
+            this.cbCountry.Size = new System.Drawing.Size(229, 23);
+            this.cbCountry.TabIndex = 2;
+            this.cbCountry.SelectedValueChanged += new System.EventHandler(this.cbCountry_SelectedValueChanged);
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.groupBox64);
             this.tabPage3.Controls.Add(this.groupBox55);
             this.tabPage3.Controls.Add(this.groupBox50);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(976, 455);
+            this.tabPage3.Size = new System.Drawing.Size(976, 453);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Поступление";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1675,7 +1730,7 @@
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel9.Controls.Add(this.groupBox75, 2, 1);
             this.tableLayoutPanel9.Controls.Add(this.groupBox74, 1, 1);
-            this.tableLayoutPanel9.Controls.Add(this.groupBox73, 0, 1);
+            this.tableLayoutPanel9.Controls.Add(this.gbNumberOfDeal, 0, 1);
             this.tableLayoutPanel9.Controls.Add(this.groupBox65, 2, 0);
             this.tableLayoutPanel9.Controls.Add(this.groupBox66, 0, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1729,17 +1784,19 @@
             this.cbTypeOfState.Name = "cbTypeOfState";
             this.cbTypeOfState.Size = new System.Drawing.Size(373, 23);
             this.cbTypeOfState.TabIndex = 2;
+            this.cbTypeOfState.SelectedValueChanged += new System.EventHandler(this.cbTypeOfState_SelectedValueChanged);
             // 
-            // groupBox73
+            // gbNumberOfDeal
             // 
-            this.groupBox73.Controls.Add(this.tbNumberOfDeal);
-            this.groupBox73.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox73.Location = new System.Drawing.Point(3, 58);
-            this.groupBox73.Name = "groupBox73";
-            this.groupBox73.Size = new System.Drawing.Size(186, 49);
-            this.groupBox73.TabIndex = 10;
-            this.groupBox73.TabStop = false;
-            this.groupBox73.Text = "Номер личного дела";
+            this.gbNumberOfDeal.Controls.Add(this.tbNumberOfDeal);
+            this.gbNumberOfDeal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbNumberOfDeal.Location = new System.Drawing.Point(3, 58);
+            this.gbNumberOfDeal.Name = "gbNumberOfDeal";
+            this.gbNumberOfDeal.Size = new System.Drawing.Size(186, 49);
+            this.gbNumberOfDeal.TabIndex = 10;
+            this.gbNumberOfDeal.TabStop = false;
+            this.gbNumberOfDeal.Text = "Номер личного дела";
+            this.gbNumberOfDeal.Visible = false;
             // 
             // tbNumberOfDeal
             // 
@@ -1773,7 +1830,7 @@
             // groupBox66
             // 
             this.tableLayoutPanel9.SetColumnSpan(this.groupBox66, 2);
-            this.groupBox66.Controls.Add(this.tbTargetWorkPlace);
+            this.groupBox66.Controls.Add(this.cbTargetWorkPlace);
             this.groupBox66.Controls.Add(this.cbTarget);
             this.groupBox66.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox66.Location = new System.Drawing.Point(3, 3);
@@ -1783,15 +1840,17 @@
             this.groupBox66.TabStop = false;
             this.groupBox66.Text = "Целевое направление";
             // 
-            // tbTargetWorkPlace
+            // cbTargetWorkPlace
             // 
-            this.tbTargetWorkPlace.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbTargetWorkPlace.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbTargetWorkPlace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbTargetWorkPlace.Location = new System.Drawing.Point(151, 19);
-            this.tbTargetWorkPlace.Name = "tbTargetWorkPlace";
-            this.tbTargetWorkPlace.Size = new System.Drawing.Size(417, 23);
-            this.tbTargetWorkPlace.TabIndex = 2;
+            this.cbTargetWorkPlace.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbTargetWorkPlace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTargetWorkPlace.FormattingEnabled = true;
+            this.cbTargetWorkPlace.Location = new System.Drawing.Point(151, 19);
+            this.cbTargetWorkPlace.Name = "cbTargetWorkPlace";
+            this.cbTargetWorkPlace.Size = new System.Drawing.Size(417, 23);
+            this.cbTargetWorkPlace.TabIndex = 1;
+            this.cbTargetWorkPlace.Visible = false;
+            this.cbTargetWorkPlace.SelectedValueChanged += new System.EventHandler(this.cbTargetWorkPlace_SelectedValueChanged);
             // 
             // cbTarget
             // 
@@ -1803,6 +1862,7 @@
             this.cbTarget.TabIndex = 0;
             this.cbTarget.Text = "Целевое направление";
             this.cbTarget.UseVisualStyleBackColor = true;
+            this.cbTarget.CheckedChanged += new System.EventHandler(this.cbTarget_CheckedChanged);
             // 
             // groupBox55
             // 
@@ -1818,10 +1878,10 @@
             // tableLayoutPanel10
             // 
             this.tableLayoutPanel10.ColumnCount = 5;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel10.Controls.Add(this.tabControl3, 2, 0);
             this.tableLayoutPanel10.Controls.Add(this.groupBox63, 0, 0);
@@ -1845,11 +1905,11 @@
             this.tabControl3.Controls.Add(this.tabPage8);
             this.tabControl3.Controls.Add(this.tabPage4);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl3.Location = new System.Drawing.Point(387, 3);
+            this.tabControl3.Location = new System.Drawing.Point(484, 3);
             this.tabControl3.Name = "tabControl3";
             this.tableLayoutPanel10.SetRowSpan(this.tabControl3, 5);
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(574, 195);
+            this.tabControl3.Size = new System.Drawing.Size(477, 195);
             this.tabControl3.TabIndex = 1;
             // 
             // tabPage7
@@ -1858,7 +1918,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(566, 167);
+            this.tabPage7.Size = new System.Drawing.Size(469, 167);
             this.tabPage7.TabIndex = 0;
             this.tabPage7.Text = "Аттестат";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1880,7 +1940,7 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(560, 161);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(463, 161);
             this.tableLayoutPanel11.TabIndex = 0;
             // 
             // groupBox71
@@ -1890,7 +1950,7 @@
             this.groupBox71.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox71.Location = new System.Drawing.Point(3, 109);
             this.groupBox71.Name = "groupBox71";
-            this.groupBox71.Size = new System.Drawing.Size(554, 49);
+            this.groupBox71.Size = new System.Drawing.Size(457, 49);
             this.groupBox71.TabIndex = 24;
             this.groupBox71.TabStop = false;
             this.groupBox71.Text = "Вторая строка оценок аттестата";
@@ -1900,8 +1960,11 @@
             this.tbSecondAttestatString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSecondAttestatString.Location = new System.Drawing.Point(3, 19);
             this.tbSecondAttestatString.Name = "tbSecondAttestatString";
-            this.tbSecondAttestatString.Size = new System.Drawing.Size(548, 23);
+            this.tbSecondAttestatString.Size = new System.Drawing.Size(451, 23);
             this.tbSecondAttestatString.TabIndex = 1;
+            this.tbSecondAttestatString.TextChanged += new System.EventHandler(this.tbSecondAttestatString_TextChanged);
+            this.tbSecondAttestatString.Enter += new System.EventHandler(this.ClearClipboard);
+            this.tbSecondAttestatString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericAttestat);
             // 
             // groupBox70
             // 
@@ -1910,7 +1973,7 @@
             this.groupBox70.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox70.Location = new System.Drawing.Point(3, 56);
             this.groupBox70.Name = "groupBox70";
-            this.groupBox70.Size = new System.Drawing.Size(554, 47);
+            this.groupBox70.Size = new System.Drawing.Size(457, 47);
             this.groupBox70.TabIndex = 23;
             this.groupBox70.TabStop = false;
             this.groupBox70.Text = "Первая строка оценок аттестата";
@@ -1920,16 +1983,19 @@
             this.tbFirstAttestatString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbFirstAttestatString.Location = new System.Drawing.Point(3, 19);
             this.tbFirstAttestatString.Name = "tbFirstAttestatString";
-            this.tbFirstAttestatString.Size = new System.Drawing.Size(548, 23);
+            this.tbFirstAttestatString.Size = new System.Drawing.Size(451, 23);
             this.tbFirstAttestatString.TabIndex = 1;
+            this.tbFirstAttestatString.TextChanged += new System.EventHandler(this.tbFirstAttestatString_TextChanged);
+            this.tbFirstAttestatString.Enter += new System.EventHandler(this.ClearClipboard);
+            this.tbFirstAttestatString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericAttestat);
             // 
             // groupBox69
             // 
             this.groupBox69.Controls.Add(this.tbAverageAttestat);
             this.groupBox69.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox69.Location = new System.Drawing.Point(339, 3);
+            this.groupBox69.Location = new System.Drawing.Point(280, 3);
             this.groupBox69.Name = "groupBox69";
-            this.groupBox69.Size = new System.Drawing.Size(218, 47);
+            this.groupBox69.Size = new System.Drawing.Size(180, 47);
             this.groupBox69.TabIndex = 3;
             this.groupBox69.TabStop = false;
             this.groupBox69.Text = "Средний балл аттестата";
@@ -1939,8 +2005,9 @@
             this.tbAverageAttestat.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbAverageAttestat.Location = new System.Drawing.Point(3, 19);
             this.tbAverageAttestat.Name = "tbAverageAttestat";
-            this.tbAverageAttestat.Size = new System.Drawing.Size(212, 23);
+            this.tbAverageAttestat.Size = new System.Drawing.Size(174, 23);
             this.tbAverageAttestat.TabIndex = 2;
+            this.tbAverageAttestat.TextChanged += new System.EventHandler(this.tbAverageAttestat_TextChanged);
             // 
             // groupBox68
             // 
@@ -1948,19 +2015,21 @@
             this.groupBox68.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox68.Location = new System.Drawing.Point(3, 3);
             this.groupBox68.Name = "groupBox68";
-            this.groupBox68.Size = new System.Drawing.Size(218, 47);
+            this.groupBox68.Size = new System.Drawing.Size(179, 47);
             this.groupBox68.TabIndex = 1;
             this.groupBox68.TabStop = false;
             this.groupBox68.Text = "Система перевода";
             // 
             // cbSystemAttestat
             // 
+            this.cbSystemAttestat.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbSystemAttestat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSystemAttestat.FormattingEnabled = true;
             this.cbSystemAttestat.Location = new System.Drawing.Point(3, 19);
             this.cbSystemAttestat.Name = "cbSystemAttestat";
-            this.cbSystemAttestat.Size = new System.Drawing.Size(212, 23);
+            this.cbSystemAttestat.Size = new System.Drawing.Size(173, 23);
             this.cbSystemAttestat.TabIndex = 2;
+            this.cbSystemAttestat.SelectedValueChanged += new System.EventHandler(this.cbSystemAttestat_SelectedValueChanged);
             // 
             // tabPage8
             // 
@@ -1968,7 +2037,7 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(566, 172);
+            this.tabPage8.Size = new System.Drawing.Size(469, 172);
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "Диплом ПТУ";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1990,7 +2059,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(560, 166);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(463, 166);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // groupBox54
@@ -2000,7 +2069,7 @@
             this.groupBox54.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox54.Location = new System.Drawing.Point(3, 113);
             this.groupBox54.Name = "groupBox54";
-            this.groupBox54.Size = new System.Drawing.Size(554, 50);
+            this.groupBox54.Size = new System.Drawing.Size(457, 50);
             this.groupBox54.TabIndex = 24;
             this.groupBox54.TabStop = false;
             this.groupBox54.Text = "Вторая строка диплома ПТУ";
@@ -2010,8 +2079,11 @@
             this.tbSecondDiplomPtuString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSecondDiplomPtuString.Location = new System.Drawing.Point(3, 19);
             this.tbSecondDiplomPtuString.Name = "tbSecondDiplomPtuString";
-            this.tbSecondDiplomPtuString.Size = new System.Drawing.Size(548, 23);
+            this.tbSecondDiplomPtuString.Size = new System.Drawing.Size(451, 23);
             this.tbSecondDiplomPtuString.TabIndex = 1;
+            this.tbSecondDiplomPtuString.TextChanged += new System.EventHandler(this.tbSecondDiplomPtuString_TextChanged);
+            this.tbSecondDiplomPtuString.Enter += new System.EventHandler(this.ClearClipboard);
+            this.tbSecondDiplomPtuString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomPtu);
             // 
             // groupBox56
             // 
@@ -2020,7 +2092,7 @@
             this.groupBox56.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox56.Location = new System.Drawing.Point(3, 58);
             this.groupBox56.Name = "groupBox56";
-            this.groupBox56.Size = new System.Drawing.Size(554, 49);
+            this.groupBox56.Size = new System.Drawing.Size(457, 49);
             this.groupBox56.TabIndex = 23;
             this.groupBox56.TabStop = false;
             this.groupBox56.Text = "Первая строка диплома ПТУ";
@@ -2030,16 +2102,19 @@
             this.tbFirstDiplomPtuString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbFirstDiplomPtuString.Location = new System.Drawing.Point(3, 19);
             this.tbFirstDiplomPtuString.Name = "tbFirstDiplomPtuString";
-            this.tbFirstDiplomPtuString.Size = new System.Drawing.Size(548, 23);
+            this.tbFirstDiplomPtuString.Size = new System.Drawing.Size(451, 23);
             this.tbFirstDiplomPtuString.TabIndex = 1;
+            this.tbFirstDiplomPtuString.TextChanged += new System.EventHandler(this.tbFirstDiplomPtuString_TextChanged);
+            this.tbFirstDiplomPtuString.Enter += new System.EventHandler(this.ClearClipboard);
+            this.tbFirstDiplomPtuString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomPtu);
             // 
             // groupBox57
             // 
             this.groupBox57.Controls.Add(this.tbAverageDiplomPtu);
             this.groupBox57.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox57.Location = new System.Drawing.Point(339, 3);
+            this.groupBox57.Location = new System.Drawing.Point(280, 3);
             this.groupBox57.Name = "groupBox57";
-            this.groupBox57.Size = new System.Drawing.Size(218, 49);
+            this.groupBox57.Size = new System.Drawing.Size(180, 49);
             this.groupBox57.TabIndex = 3;
             this.groupBox57.TabStop = false;
             this.groupBox57.Text = "Средний балл диплома ПТУ";
@@ -2049,8 +2124,9 @@
             this.tbAverageDiplomPtu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbAverageDiplomPtu.Location = new System.Drawing.Point(3, 19);
             this.tbAverageDiplomPtu.Name = "tbAverageDiplomPtu";
-            this.tbAverageDiplomPtu.Size = new System.Drawing.Size(212, 23);
+            this.tbAverageDiplomPtu.Size = new System.Drawing.Size(174, 23);
             this.tbAverageDiplomPtu.TabIndex = 2;
+            this.tbAverageDiplomPtu.TextChanged += new System.EventHandler(this.tbAverageDiplomPtu_TextChanged);
             // 
             // groupBox58
             // 
@@ -2058,7 +2134,7 @@
             this.groupBox58.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox58.Location = new System.Drawing.Point(3, 3);
             this.groupBox58.Name = "groupBox58";
-            this.groupBox58.Size = new System.Drawing.Size(218, 49);
+            this.groupBox58.Size = new System.Drawing.Size(179, 49);
             this.groupBox58.TabIndex = 1;
             this.groupBox58.TabStop = false;
             this.groupBox58.Text = "Система перевода";
@@ -2068,10 +2144,14 @@
             this.cbSystemDiplomPtu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbSystemDiplomPtu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSystemDiplomPtu.FormattingEnabled = true;
+            this.cbSystemDiplomPtu.Items.AddRange(new object[] {
+            "10 в 100",
+            "5 в 100"});
             this.cbSystemDiplomPtu.Location = new System.Drawing.Point(3, 19);
             this.cbSystemDiplomPtu.Name = "cbSystemDiplomPtu";
-            this.cbSystemDiplomPtu.Size = new System.Drawing.Size(212, 23);
+            this.cbSystemDiplomPtu.Size = new System.Drawing.Size(173, 23);
             this.cbSystemDiplomPtu.TabIndex = 2;
+            this.cbSystemDiplomPtu.SelectedValueChanged += new System.EventHandler(this.cbSystemDiplomPtu_SelectedValueChanged);
             // 
             // tabPage4
             // 
@@ -2079,7 +2159,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(566, 172);
+            this.tabPage4.Size = new System.Drawing.Size(469, 172);
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "Диплом ССУЗ";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2101,7 +2181,7 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(560, 166);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(463, 166);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // groupBox59
@@ -2111,7 +2191,7 @@
             this.groupBox59.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox59.Location = new System.Drawing.Point(3, 113);
             this.groupBox59.Name = "groupBox59";
-            this.groupBox59.Size = new System.Drawing.Size(554, 50);
+            this.groupBox59.Size = new System.Drawing.Size(457, 50);
             this.groupBox59.TabIndex = 24;
             this.groupBox59.TabStop = false;
             this.groupBox59.Text = "Вторая строка оценок диплома ССУЗ";
@@ -2121,8 +2201,11 @@
             this.tbSecondDiplomSsuzString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSecondDiplomSsuzString.Location = new System.Drawing.Point(3, 19);
             this.tbSecondDiplomSsuzString.Name = "tbSecondDiplomSsuzString";
-            this.tbSecondDiplomSsuzString.Size = new System.Drawing.Size(548, 23);
+            this.tbSecondDiplomSsuzString.Size = new System.Drawing.Size(451, 23);
             this.tbSecondDiplomSsuzString.TabIndex = 1;
+            this.tbSecondDiplomSsuzString.TextChanged += new System.EventHandler(this.tbSecondDiplomSsuzString_TextChanged);
+            this.tbSecondDiplomSsuzString.Enter += new System.EventHandler(this.ClearClipboard);
+            this.tbSecondDiplomSsuzString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomSsuz);
             // 
             // groupBox60
             // 
@@ -2131,7 +2214,7 @@
             this.groupBox60.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox60.Location = new System.Drawing.Point(3, 58);
             this.groupBox60.Name = "groupBox60";
-            this.groupBox60.Size = new System.Drawing.Size(554, 49);
+            this.groupBox60.Size = new System.Drawing.Size(457, 49);
             this.groupBox60.TabIndex = 23;
             this.groupBox60.TabStop = false;
             this.groupBox60.Text = "Первая строка оценок диплома ССУЗ";
@@ -2141,27 +2224,31 @@
             this.tbFirstDiplomSsuzString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbFirstDiplomSsuzString.Location = new System.Drawing.Point(3, 19);
             this.tbFirstDiplomSsuzString.Name = "tbFirstDiplomSsuzString";
-            this.tbFirstDiplomSsuzString.Size = new System.Drawing.Size(548, 23);
+            this.tbFirstDiplomSsuzString.Size = new System.Drawing.Size(451, 23);
             this.tbFirstDiplomSsuzString.TabIndex = 1;
+            this.tbFirstDiplomSsuzString.TextChanged += new System.EventHandler(this.tbFirstDiplomSsuzString_TextChanged);
+            this.tbFirstDiplomSsuzString.Enter += new System.EventHandler(this.ClearClipboard);
+            this.tbFirstDiplomSsuzString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomSsuz);
             // 
             // groupBox61
             // 
             this.groupBox61.Controls.Add(this.tbAverageDiplomSsuz);
             this.groupBox61.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox61.Location = new System.Drawing.Point(339, 3);
+            this.groupBox61.Location = new System.Drawing.Point(280, 3);
             this.groupBox61.Name = "groupBox61";
-            this.groupBox61.Size = new System.Drawing.Size(218, 49);
+            this.groupBox61.Size = new System.Drawing.Size(180, 49);
             this.groupBox61.TabIndex = 3;
             this.groupBox61.TabStop = false;
-            this.groupBox61.Text = "Средний балл диплома ССУЗ";
+            this.groupBox61.Text = "Средний балл диплом ССУЗ";
             // 
             // tbAverageDiplomSsuz
             // 
             this.tbAverageDiplomSsuz.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbAverageDiplomSsuz.Location = new System.Drawing.Point(3, 19);
             this.tbAverageDiplomSsuz.Name = "tbAverageDiplomSsuz";
-            this.tbAverageDiplomSsuz.Size = new System.Drawing.Size(212, 23);
+            this.tbAverageDiplomSsuz.Size = new System.Drawing.Size(174, 23);
             this.tbAverageDiplomSsuz.TabIndex = 2;
+            this.tbAverageDiplomSsuz.TextChanged += new System.EventHandler(this.tbAverageDiplomSsuz_TextChanged);
             // 
             // groupBox62
             // 
@@ -2169,7 +2256,7 @@
             this.groupBox62.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox62.Location = new System.Drawing.Point(3, 3);
             this.groupBox62.Name = "groupBox62";
-            this.groupBox62.Size = new System.Drawing.Size(218, 49);
+            this.groupBox62.Size = new System.Drawing.Size(179, 49);
             this.groupBox62.TabIndex = 1;
             this.groupBox62.TabStop = false;
             this.groupBox62.Text = "Система перевода";
@@ -2179,10 +2266,14 @@
             this.cbSystemDiplomSsuz.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbSystemDiplomSsuz.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSystemDiplomSsuz.FormattingEnabled = true;
+            this.cbSystemDiplomSsuz.Items.AddRange(new object[] {
+            "10 в 100",
+            "5 в 100"});
             this.cbSystemDiplomSsuz.Location = new System.Drawing.Point(3, 19);
             this.cbSystemDiplomSsuz.Name = "cbSystemDiplomSsuz";
-            this.cbSystemDiplomSsuz.Size = new System.Drawing.Size(212, 23);
+            this.cbSystemDiplomSsuz.Size = new System.Drawing.Size(173, 23);
             this.cbSystemDiplomSsuz.TabIndex = 2;
+            this.cbSystemDiplomSsuz.SelectedValueChanged += new System.EventHandler(this.cbSystemDiplomSsuz_SelectedValueChanged);
             // 
             // groupBox63
             // 
@@ -2192,52 +2283,79 @@
             this.groupBox63.Location = new System.Drawing.Point(3, 3);
             this.groupBox63.Name = "groupBox63";
             this.tableLayoutPanel10.SetRowSpan(this.groupBox63, 4);
-            this.groupBox63.Size = new System.Drawing.Size(378, 154);
+            this.groupBox63.Size = new System.Drawing.Size(475, 154);
             this.groupBox63.TabIndex = 2;
             this.groupBox63.TabStop = false;
-            this.groupBox63.Text = "Сертификаты абитуриента";
+            this.groupBox63.Text = "Экзаменнационная схема абитуриента";
             // 
             // SertificateGrid
             // 
             this.SertificateGrid.AllowUserToAddRows = false;
             this.SertificateGrid.AllowUserToDeleteRows = false;
+            this.SertificateGrid.AllowUserToResizeColumns = false;
+            this.SertificateGrid.AllowUserToResizeRows = false;
+            this.SertificateGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.SertificateGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.SertificateGrid.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.SertificateGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.SertificateGrid.DefaultCellStyle = dataGridViewCellStyle1;
             this.SertificateGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SertificateGrid.Location = new System.Drawing.Point(3, 19);
+            this.SertificateGrid.MultiSelect = false;
             this.SertificateGrid.Name = "SertificateGrid";
-            this.SertificateGrid.ReadOnly = true;
-            this.SertificateGrid.Size = new System.Drawing.Size(372, 132);
+            this.SertificateGrid.RowHeadersVisible = false;
+            this.SertificateGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.SertificateGrid.Size = new System.Drawing.Size(469, 132);
             this.SertificateGrid.TabIndex = 0;
             // 
             // flowLayoutPanel1
             // 
             this.tableLayoutPanel10.SetColumnSpan(this.flowLayoutPanel1, 2);
-            this.flowLayoutPanel1.Controls.Add(this.btChooseSertificate);
-            this.flowLayoutPanel1.Controls.Add(this.btDeleteSertificate);
+            this.flowLayoutPanel1.Controls.Add(this.btGetExamSchema);
+            this.flowLayoutPanel1.Controls.Add(this.btChangeDiscipline);
+            this.flowLayoutPanel1.Controls.Add(this.btDeleteDiscipline);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 163);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(378, 35);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(475, 35);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
-            // btChooseSertificate
+            // btGetExamSchema
             // 
-            this.btChooseSertificate.Location = new System.Drawing.Point(3, 3);
-            this.btChooseSertificate.Name = "btChooseSertificate";
-            this.btChooseSertificate.Size = new System.Drawing.Size(139, 28);
-            this.btChooseSertificate.TabIndex = 0;
-            this.btChooseSertificate.Text = "Добавить сертификат";
-            this.btChooseSertificate.UseVisualStyleBackColor = true;
-            this.btChooseSertificate.Click += new System.EventHandler(this.btChooseSertificate_Click);
+            this.btGetExamSchema.Location = new System.Drawing.Point(3, 3);
+            this.btGetExamSchema.Name = "btGetExamSchema";
+            this.btGetExamSchema.Size = new System.Drawing.Size(200, 28);
+            this.btGetExamSchema.TabIndex = 0;
+            this.btGetExamSchema.Text = "Экзаменнационная схема";
+            this.btGetExamSchema.UseVisualStyleBackColor = true;
+            this.btGetExamSchema.Click += new System.EventHandler(this.btGetExamSchema_Click);
             // 
-            // btDeleteSertificate
+            // btChangeDiscipline
             // 
-            this.btDeleteSertificate.Location = new System.Drawing.Point(148, 3);
-            this.btDeleteSertificate.Name = "btDeleteSertificate";
-            this.btDeleteSertificate.Size = new System.Drawing.Size(130, 28);
-            this.btDeleteSertificate.TabIndex = 1;
-            this.btDeleteSertificate.Text = "Удалить сертификат";
-            this.btDeleteSertificate.UseVisualStyleBackColor = true;
+            this.btChangeDiscipline.Location = new System.Drawing.Point(209, 3);
+            this.btChangeDiscipline.Name = "btChangeDiscipline";
+            this.btChangeDiscipline.Size = new System.Drawing.Size(80, 28);
+            this.btChangeDiscipline.TabIndex = 1;
+            this.btChangeDiscipline.Text = "Замена";
+            this.btChangeDiscipline.UseVisualStyleBackColor = true;
+            this.btChangeDiscipline.Click += new System.EventHandler(this.btChangeDiscipline_Click);
+            // 
+            // btDeleteDiscipline
+            // 
+            this.btDeleteDiscipline.Location = new System.Drawing.Point(295, 3);
+            this.btDeleteDiscipline.Name = "btDeleteDiscipline";
+            this.btDeleteDiscipline.Size = new System.Drawing.Size(80, 28);
+            this.btDeleteDiscipline.TabIndex = 2;
+            this.btDeleteDiscipline.Text = "Удалить";
+            this.btDeleteDiscipline.UseVisualStyleBackColor = true;
+            this.btDeleteDiscipline.Click += new System.EventHandler(this.btDeleteDiscipline_Click);
             // 
             // groupBox50
             // 
@@ -2287,6 +2405,7 @@
             this.cbReasonForAddmission.Name = "cbReasonForAddmission";
             this.cbReasonForAddmission.Size = new System.Drawing.Size(310, 23);
             this.cbReasonForAddmission.TabIndex = 2;
+            this.cbReasonForAddmission.SelectedValueChanged += new System.EventHandler(this.cbReasonForAddmission_SelectedValueChanged);
             // 
             // groupBox52
             // 
@@ -2308,6 +2427,7 @@
             this.cbContest.Name = "cbContest";
             this.cbContest.Size = new System.Drawing.Size(309, 23);
             this.cbContest.TabIndex = 2;
+            this.cbContest.SelectedValueChanged += new System.EventHandler(this.cbContest_SelectedValueChanged);
             // 
             // groupBox51
             // 
@@ -2329,14 +2449,15 @@
             this.cbTypeOfFinance.Name = "cbTypeOfFinance";
             this.cbTypeOfFinance.Size = new System.Drawing.Size(309, 23);
             this.cbTypeOfFinance.TabIndex = 2;
+            this.cbTypeOfFinance.SelectedValueChanged += new System.EventHandler(this.cbTypeOfFinance_SelectedValueChanged);
             // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.tableLayoutPanel13);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(976, 455);
+            this.tabPage5.Size = new System.Drawing.Size(976, 453);
             this.tabPage5.TabIndex = 3;
             this.tabPage5.Text = "Разное";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2344,8 +2465,8 @@
             // tableLayoutPanel13
             // 
             this.tableLayoutPanel13.ColumnCount = 2;
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
             this.tableLayoutPanel13.Controls.Add(this.groupBox72, 1, 0);
             this.tableLayoutPanel13.Controls.Add(this.groupBox67, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2354,17 +2475,17 @@
             this.tableLayoutPanel13.RowCount = 2;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 449);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 447);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // groupBox72
             // 
             this.groupBox72.Controls.Add(this.tableLayoutPanel14);
             this.groupBox72.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox72.Location = new System.Drawing.Point(488, 3);
+            this.groupBox72.Location = new System.Drawing.Point(342, 3);
             this.groupBox72.Name = "groupBox72";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox72, 2);
-            this.groupBox72.Size = new System.Drawing.Size(479, 443);
+            this.groupBox72.Size = new System.Drawing.Size(625, 441);
             this.groupBox72.TabIndex = 1;
             this.groupBox72.TabStop = false;
             this.groupBox72.Text = "Приоритет специальностей";
@@ -2375,77 +2496,47 @@
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel14.Controls.Add(this.PriorityGrid, 0, 0);
-            this.tableLayoutPanel14.Controls.Add(this.flowLayoutPanel2, 1, 0);
             this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel14.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel14.Name = "tableLayoutPanel14";
             this.tableLayoutPanel14.RowCount = 2;
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(473, 421);
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(619, 419);
             this.tableLayoutPanel14.TabIndex = 0;
             // 
             // PriorityGrid
             // 
             this.PriorityGrid.AllowUserToAddRows = false;
             this.PriorityGrid.AllowUserToDeleteRows = false;
+            this.PriorityGrid.AllowUserToResizeColumns = false;
+            this.PriorityGrid.AllowUserToResizeRows = false;
+            this.PriorityGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.PriorityGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.PriorityGrid.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.PriorityGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableLayoutPanel14.SetColumnSpan(this.PriorityGrid, 2);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PriorityGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.PriorityGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PriorityGrid.Location = new System.Drawing.Point(3, 3);
+            this.PriorityGrid.MultiSelect = false;
             this.PriorityGrid.Name = "PriorityGrid";
             this.PriorityGrid.ReadOnly = true;
+            this.PriorityGrid.RowHeadersVisible = false;
             this.tableLayoutPanel14.SetRowSpan(this.PriorityGrid, 2);
-            this.PriorityGrid.Size = new System.Drawing.Size(396, 415);
+            this.PriorityGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.PriorityGrid.Size = new System.Drawing.Size(613, 413);
             this.PriorityGrid.TabIndex = 0;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.btTop);
-            this.flowLayoutPanel2.Controls.Add(this.btRaise);
-            this.flowLayoutPanel2.Controls.Add(this.btLower);
-            this.flowLayoutPanel2.Controls.Add(this.btBottom);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(405, 3);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(65, 204);
-            this.flowLayoutPanel2.TabIndex = 1;
-            // 
-            // btTop
-            // 
-            this.btTop.Location = new System.Drawing.Point(3, 3);
-            this.btTop.Name = "btTop";
-            this.btTop.Size = new System.Drawing.Size(62, 30);
-            this.btTop.TabIndex = 1;
-            this.btTop.Text = "⇈";
-            this.btTop.UseVisualStyleBackColor = true;
-            // 
-            // btRaise
-            // 
-            this.btRaise.Location = new System.Drawing.Point(3, 39);
-            this.btRaise.Name = "btRaise";
-            this.btRaise.Size = new System.Drawing.Size(62, 30);
-            this.btRaise.TabIndex = 2;
-            this.btRaise.Text = "↑";
-            this.btRaise.UseVisualStyleBackColor = true;
-            // 
-            // btLower
-            // 
-            this.btLower.Location = new System.Drawing.Point(3, 75);
-            this.btLower.Name = "btLower";
-            this.btLower.Size = new System.Drawing.Size(62, 30);
-            this.btLower.TabIndex = 3;
-            this.btLower.Text = "↓";
-            this.btLower.UseVisualStyleBackColor = true;
-            // 
-            // btBottom
-            // 
-            this.btBottom.Location = new System.Drawing.Point(3, 111);
-            this.btBottom.Name = "btBottom";
-            this.btBottom.Size = new System.Drawing.Size(62, 30);
-            this.btBottom.TabIndex = 4;
-            this.btBottom.Text = "⇊\t";
-            this.btBottom.UseVisualStyleBackColor = true;
+            this.PriorityGrid.VirtualMode = true;
+            this.PriorityGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PriorityGrid_KeyDown);
             // 
             // groupBox67
             // 
@@ -2454,26 +2545,28 @@
             this.groupBox67.Location = new System.Drawing.Point(3, 3);
             this.groupBox67.Name = "groupBox67";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox67, 2);
-            this.groupBox67.Size = new System.Drawing.Size(479, 443);
+            this.groupBox67.Size = new System.Drawing.Size(333, 441);
             this.groupBox67.TabIndex = 0;
             this.groupBox67.TabStop = false;
             this.groupBox67.Text = "Выбор дополнительных сведений (льгот) ";
             // 
             // chkAtributeList
             // 
+            this.chkAtributeList.CheckOnClick = true;
             this.chkAtributeList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chkAtributeList.FormattingEnabled = true;
             this.chkAtributeList.Location = new System.Drawing.Point(3, 19);
             this.chkAtributeList.Name = "chkAtributeList";
-            this.chkAtributeList.Size = new System.Drawing.Size(473, 421);
+            this.chkAtributeList.Size = new System.Drawing.Size(327, 419);
             this.chkAtributeList.TabIndex = 0;
+            this.chkAtributeList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkAtributeList_ItemCheck);
             // 
             // frmEnrolleeCard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(984, 571);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.tableLayoutPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2489,8 +2582,8 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.flowLayoutPanel.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
+            this.InformationPage.ResumeLayout(false);
             this.groupBox17.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox21.ResumeLayout(false);
@@ -2527,24 +2620,25 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox35.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
-            this.groupBox49.ResumeLayout(false);
-            this.groupBox49.PerformLayout();
-            this.groupBox48.ResumeLayout(false);
-            this.groupBox48.PerformLayout();
-            this.groupBox47.ResumeLayout(false);
-            this.groupBox47.PerformLayout();
+            this.gbDateDeal.ResumeLayout(false);
+            this.gbWorkPost.ResumeLayout(false);
+            this.gbWorkPost.PerformLayout();
+            this.gbWorkPlace.ResumeLayout(false);
+            this.gbWorkPlace.PerformLayout();
+            this.gbSeniority.ResumeLayout(false);
+            this.gbSeniority.PerformLayout();
             this.groupBox46.ResumeLayout(false);
             this.groupBox45.ResumeLayout(false);
             this.groupBox45.PerformLayout();
-            this.groupBox44.ResumeLayout(false);
-            this.groupBox44.PerformLayout();
-            this.groupBox43.ResumeLayout(false);
-            this.groupBox43.PerformLayout();
-            this.groupBox42.ResumeLayout(false);
-            this.groupBox42.PerformLayout();
+            this.gbCurrentUniversity.ResumeLayout(false);
+            this.gbCurrentUniversity.PerformLayout();
+            this.gbCurrentSpeciality.ResumeLayout(false);
+            this.gbCurrentSpeciality.PerformLayout();
+            this.gbCurrentCurs.ResumeLayout(false);
+            this.gbCurrentCurs.PerformLayout();
             this.groupBox41.ResumeLayout(false);
             this.groupBox41.PerformLayout();
-            this.groupBox40.ResumeLayout(false);
+            this.gbSecondarySpeciality.ResumeLayout(false);
             this.groupBox39.ResumeLayout(false);
             this.groupBox39.PerformLayout();
             this.groupBox38.ResumeLayout(false);
@@ -2552,6 +2646,7 @@
             this.groupBox36.ResumeLayout(false);
             this.groupBox36.PerformLayout();
             this.groupBox37.ResumeLayout(false);
+            this.gbDecree.ResumeLayout(false);
             this.groupBox22.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.groupBox34.ResumeLayout(false);
@@ -2571,19 +2666,16 @@
             this.groupBox27.PerformLayout();
             this.groupBox26.ResumeLayout(false);
             this.groupBox24.ResumeLayout(false);
-            this.groupBox24.PerformLayout();
             this.groupBox25.ResumeLayout(false);
-            this.groupBox25.PerformLayout();
             this.groupBox23.ResumeLayout(false);
-            this.groupBox23.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.groupBox64.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
             this.groupBox75.ResumeLayout(false);
             this.groupBox75.PerformLayout();
             this.groupBox74.ResumeLayout(false);
-            this.groupBox73.ResumeLayout(false);
-            this.groupBox73.PerformLayout();
+            this.gbNumberOfDeal.ResumeLayout(false);
+            this.gbNumberOfDeal.PerformLayout();
             this.groupBox65.ResumeLayout(false);
             this.groupBox65.PerformLayout();
             this.groupBox66.ResumeLayout(false);
@@ -2631,7 +2723,6 @@
             this.groupBox72.ResumeLayout(false);
             this.tableLayoutPanel14.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PriorityGrid)).EndInit();
-            this.flowLayoutPanel2.ResumeLayout(false);
             this.groupBox67.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -2649,8 +2740,8 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage InformationPage;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -2676,7 +2767,7 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.TextBox tbBlrPatronymic;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbBrlName;
+        private System.Windows.Forms.TextBox tbBlrName;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbBlrSurname;
         private System.Windows.Forms.Label label6;
@@ -2721,20 +2812,17 @@
         private System.Windows.Forms.GroupBox groupBox26;
         private System.Windows.Forms.ComboBox cbTypeOfSettlement;
         private System.Windows.Forms.GroupBox groupBox24;
-        private System.Windows.Forms.TextBox tbArea;
         private System.Windows.Forms.GroupBox groupBox25;
-        private System.Windows.Forms.TextBox tbDistrict;
         private System.Windows.Forms.GroupBox groupBox23;
-        private System.Windows.Forms.TextBox tbCountry;
         private System.Windows.Forms.GroupBox groupBox35;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.GroupBox groupBox43;
+        private System.Windows.Forms.GroupBox gbCurrentSpeciality;
         private System.Windows.Forms.TextBox tbCurrentSpeciality;
-        private System.Windows.Forms.GroupBox groupBox42;
+        private System.Windows.Forms.GroupBox gbCurrentCurs;
         private System.Windows.Forms.TextBox tbCurrentNumberCurs;
         private System.Windows.Forms.GroupBox groupBox41;
         private System.Windows.Forms.CheckBox cbSecondEducation;
-        private System.Windows.Forms.GroupBox groupBox40;
+        private System.Windows.Forms.GroupBox gbSecondarySpeciality;
         private System.Windows.Forms.ComboBox cbSecondarySpeciality;
         private System.Windows.Forms.GroupBox groupBox39;
         private System.Windows.Forms.TextBox tbSchoolAdres;
@@ -2744,20 +2832,18 @@
         private System.Windows.Forms.TextBox tbSchoolYear;
         private System.Windows.Forms.GroupBox groupBox37;
         private System.Windows.Forms.ComboBox cbTypeOfSchool;
-        private System.Windows.Forms.GroupBox groupBox44;
+        private System.Windows.Forms.GroupBox gbCurrentUniversity;
         private System.Windows.Forms.TextBox tbCurrentUniversity;
         private System.Windows.Forms.GroupBox groupBox45;
         private System.Windows.Forms.CheckBox cbBrsm;
-        private System.Windows.Forms.GroupBox groupBox49;
+        private System.Windows.Forms.GroupBox gbWorkPost;
         private System.Windows.Forms.TextBox tbWorkPost;
-        private System.Windows.Forms.GroupBox groupBox48;
+        private System.Windows.Forms.GroupBox gbWorkPlace;
         private System.Windows.Forms.TextBox tbWorkPlace;
-        private System.Windows.Forms.GroupBox groupBox47;
+        private System.Windows.Forms.GroupBox gbSeniority;
         private System.Windows.Forms.TextBox tbSeniority;
         private System.Windows.Forms.GroupBox groupBox46;
         private System.Windows.Forms.ComboBox cbForeignLanguage;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.GroupBox groupBox50;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
@@ -2808,8 +2894,8 @@
         private System.Windows.Forms.TextBox tbAverage;
         private System.Windows.Forms.GroupBox groupBox66;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button btChooseSertificate;
-        private System.Windows.Forms.Button btDeleteSertificate;
+        private System.Windows.Forms.Button btGetExamSchema;
+        private System.Windows.Forms.Button btChangeDiscipline;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
         private System.Windows.Forms.GroupBox groupBox72;
@@ -2817,18 +2903,21 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
         private System.Windows.Forms.DataGridView PriorityGrid;
         private System.Windows.Forms.CheckedListBox chkAtributeList;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.Button btTop;
-        private System.Windows.Forms.Button btRaise;
-        private System.Windows.Forms.Button btLower;
-        private System.Windows.Forms.Button btBottom;
-        private System.Windows.Forms.TextBox tbTargetWorkPlace;
         private System.Windows.Forms.CheckBox cbTarget;
         private System.Windows.Forms.GroupBox groupBox75;
         private System.Windows.Forms.TextBox tbPersonInCharge;
         private System.Windows.Forms.GroupBox groupBox74;
         private System.Windows.Forms.ComboBox cbTypeOfState;
-        private System.Windows.Forms.GroupBox groupBox73;
+        private System.Windows.Forms.GroupBox gbNumberOfDeal;
         private System.Windows.Forms.TextBox tbNumberOfDeal;
+        private System.Windows.Forms.Button btDeleteDiscipline;
+        private System.Windows.Forms.ComboBox cbArea;
+        private System.Windows.Forms.ComboBox cbDistrict;
+        private System.Windows.Forms.ComboBox cbCountry;
+        private System.Windows.Forms.GroupBox gbDecree;
+        private System.Windows.Forms.ComboBox cbDecree;
+        private System.Windows.Forms.ComboBox cbTargetWorkPlace;
+        private System.Windows.Forms.GroupBox gbDateDeal;
+        private System.Windows.Forms.DateTimePicker dtDateDeal;
     }
 }
