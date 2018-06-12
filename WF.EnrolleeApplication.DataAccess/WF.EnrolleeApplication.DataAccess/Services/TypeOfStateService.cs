@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfState(TypeOfState typeOfState)
         {
-            TypeOfState typeOfStateToDelete = context.TypeOfState.FirstOrDefault(ts => ts.StateId == typeOfState.StateId);
+            TypeOfState typeOfStateToDelete = context.TypeOfState.AsNoTracking().FirstOrDefault(ts => ts.StateId == typeOfState.StateId);
             context.TypeOfState.Remove(typeOfStateToDelete);
             context.SaveChanges();
         }
 
         public TypeOfState GetTypeOfState(int id)
         {
-            TypeOfState typeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == id);
+            TypeOfState typeOfState = context.TypeOfState.AsNoTracking().FirstOrDefault(ts => ts.StateId == id);
             return typeOfState;
         }
 
         public TypeOfState GetTypeOfState(string name)
         {
-            TypeOfState typeOfState = context.TypeOfState.FirstOrDefault(ts => ts.Name == name);
+            TypeOfState typeOfState = context.TypeOfState.AsNoTracking().FirstOrDefault(ts => ts.Name == name);
             return typeOfState;
         }
 
         public List<TypeOfState> GetTypeOfStates()
         {
-            List<TypeOfState> typeOfStates = context.TypeOfState.ToList();
+            List<TypeOfState> typeOfStates = context.TypeOfState.AsNoTracking().ToList();
             return typeOfStates;
         }
 

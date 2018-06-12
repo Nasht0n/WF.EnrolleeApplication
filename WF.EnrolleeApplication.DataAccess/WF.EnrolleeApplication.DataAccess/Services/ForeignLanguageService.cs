@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteForeignLanguage(ForeignLanguage foreignLanguage)
         {
-            ForeignLanguage foreignLanguageToDelete = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == foreignLanguage.LanguageId);
+            ForeignLanguage foreignLanguageToDelete = context.ForeignLanguage.AsNoTracking().FirstOrDefault(fl => fl.LanguageId == foreignLanguage.LanguageId);
             context.ForeignLanguage.Remove(foreignLanguageToDelete);
             context.SaveChanges();
         }
 
         public ForeignLanguage GetForeignLanguage(int id)
         {
-            ForeignLanguage foreignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == id);
+            ForeignLanguage foreignLanguage = context.ForeignLanguage.AsNoTracking().FirstOrDefault(fl => fl.LanguageId == id);
             return foreignLanguage;
         }
 
         public ForeignLanguage GetForeignLanguage(string name)
         {
-            ForeignLanguage foreignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.Name == name);
+            ForeignLanguage foreignLanguage = context.ForeignLanguage.AsNoTracking().FirstOrDefault(fl => fl.Name == name);
             return foreignLanguage;
         }
 
         public List<ForeignLanguage> GetForeignLanguages()
         {
-            List<ForeignLanguage> foreignLanguages = context.ForeignLanguage.ToList();
+            List<ForeignLanguage> foreignLanguages = context.ForeignLanguage.AsNoTracking().ToList();
             return foreignLanguages;
         }
 

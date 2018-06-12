@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfSettlement(TypeOfSettlement typeOfSettlement)
         {
-            TypeOfSettlement typeOfSettlementToDelete = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == typeOfSettlement.SettlementTypeId);
+            TypeOfSettlement typeOfSettlementToDelete = context.TypeOfSettlement.AsNoTracking().FirstOrDefault(ts => ts.SettlementTypeId == typeOfSettlement.SettlementTypeId);
             context.TypeOfSettlement.Remove(typeOfSettlementToDelete);
             context.SaveChanges();
         }
 
         public TypeOfSettlement GetTypeOfSettlement(int id)
         {
-            TypeOfSettlement typeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == id);
+            TypeOfSettlement typeOfSettlement = context.TypeOfSettlement.AsNoTracking().FirstOrDefault(ts => ts.SettlementTypeId == id);
             return typeOfSettlement;
         }
 
         public TypeOfSettlement GetTypeOfSettlement(string fullname)
         {
-            TypeOfSettlement typeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.Fullname == fullname);
+            TypeOfSettlement typeOfSettlement = context.TypeOfSettlement.AsNoTracking().FirstOrDefault(ts => ts.Fullname == fullname);
             return typeOfSettlement;
         }
 
         public List<TypeOfSettlement> GetTypeOfSettlements()
         {
-            List<TypeOfSettlement> typeOfSettlements = context.TypeOfSettlement.ToList();
+            List<TypeOfSettlement> typeOfSettlements = context.TypeOfSettlement.AsNoTracking().ToList();
             return typeOfSettlements;
         }
 

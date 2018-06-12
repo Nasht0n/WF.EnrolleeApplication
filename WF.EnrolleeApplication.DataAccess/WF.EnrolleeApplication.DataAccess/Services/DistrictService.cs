@@ -17,26 +17,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDistrict(District district)
         {
-            District districtToDelete = context.District.FirstOrDefault(d => d.DistrictId == district.DistrictId);
+            District districtToDelete = context.District.AsNoTracking().FirstOrDefault(d => d.DistrictId == district.DistrictId);
             context.District.Remove(districtToDelete);
             context.SaveChanges();
         }
 
         public District GetDistrict(int id)
         {
-            District districtById = context.District.FirstOrDefault(d => d.DistrictId == id);
+            District districtById = context.District.AsNoTracking().FirstOrDefault(d => d.DistrictId == id);
             return districtById;
         }
 
         public District GetDistrict(string name)
         {
-            District districtByName = context.District.FirstOrDefault(d => d.Name == name);
+            District districtByName = context.District.AsNoTracking().FirstOrDefault(d => d.Name == name);
             return districtByName;
         }
 
         public List<District> GetDistricts()
         {
-            List<District> districts = context.District.ToList();
+            List<District> districts = context.District.AsNoTracking().ToList();
             return districts;
         }
 

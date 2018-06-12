@@ -25,7 +25,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <param name="area">Удаляемая область</param>
         public void DeleteArea(Area area)
         {
-            Area areaToDelete = context.Area.FirstOrDefault(a => a.AreaId == area.AreaId);
+            Area areaToDelete = context.Area.AsNoTracking().FirstOrDefault(a => a.AreaId == area.AreaId);
             if (areaToDelete != null)
             {
                 context.Area.Remove(areaToDelete);
@@ -39,7 +39,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Объект области</returns>
         public Area GetArea(int id)
         {
-            Area areaById = context.Area.FirstOrDefault(a => a.AreaId == id);
+            Area areaById = context.Area.AsNoTracking().FirstOrDefault(a => a.AreaId == id);
             return areaById;
         }
         /// <summary>
@@ -49,7 +49,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Объект области</returns>
         public Area GetArea(string name)
         {
-            Area areaById = context.Area.FirstOrDefault(a => a.Name == name);
+            Area areaById = context.Area.AsNoTracking().FirstOrDefault(a => a.Name == name);
             return areaById;
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Список областей</returns>
         public List<Area> GetAreas()
         {
-            List<Area> areas = context.Area.ToList();
+            List<Area> areas = context.Area.AsNoTracking().ToList();
             return areas;
         }
         /// <summary>

@@ -27,7 +27,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <param name="employee">Объект удаляемой записи</param>
         public void DeleteEmployee(Employee employee)
         {
-            Employee employeeToDelete = context.Employee.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
+            Employee employeeToDelete = context.Employee.AsNoTracking().FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
             context.Employee.Remove(employeeToDelete);
             context.SaveChanges();
         }
@@ -38,11 +38,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Возвращаем объект сотрудника</returns>
         public Employee GetEmployee(int id)
         {
-            Employee employeeById = context.Employee.FirstOrDefault(e => e.EmployeeId == id);
-            if (employeeById != null)
-            {
-                employeeById.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == employeeById.PostId);
-            }
+            Employee employeeById = context.Employee.AsNoTracking().FirstOrDefault(e => e.EmployeeId == id);
             return employeeById;
         }
         /// <summary>
@@ -54,11 +50,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Возвращаем объект сотрудника</returns>
         public Employee GetEmployee(string username, string password)
         {
-            Employee employeeForAuth = context.Employee.FirstOrDefault(e => e.Username == username && e.Password == password);
-            if (employeeForAuth != null)
-            {
-                employeeForAuth.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == employeeForAuth.PostId);
-            }
+            Employee employeeForAuth = context.Employee.AsNoTracking().FirstOrDefault(e => e.Username == username && e.Password == password);
             return employeeForAuth;
         }
         /// <summary>
@@ -67,9 +59,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Список сотрудников</returns>
         public List<Employee> GetEmployees()
         {
-            List<Employee> employees = context.Employee.ToList();
-            foreach (var employee in employees)
-                employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == employee.PostId);
+            List<Employee> employees = context.Employee.AsNoTracking().ToList();
             return employees;
         }
         /// <summary>
@@ -79,9 +69,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Список сотрудников</returns>
         public List<Employee> GetEmployees(EmployeePost post)
         {
-            List<Employee> employees = context.Employee.Where(e => e.PostId == post.PostId).ToList();
-            foreach (var employee in employees)
-                employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == employee.PostId);
+            List<Employee> employees = context.Employee.AsNoTracking().Where(e => e.PostId == post.PostId).ToList();
             return employees;
         }
         /// <summary>

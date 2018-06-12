@@ -19,34 +19,32 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteAtribute(Atribute atribute)
         {
-            Atribute atributeToDelete = context.Atribute.FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
+            Atribute atributeToDelete = context.Atribute.AsNoTracking().FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
             context.Atribute.Remove(atributeToDelete);
             context.SaveChanges();
         }
 
         public Atribute GetAtribute(int id)
         {
-            Atribute atributeById = context.Atribute.FirstOrDefault(a => a.AtributeId == id);
+            Atribute atributeById = context.Atribute.AsNoTracking().FirstOrDefault(a => a.AtributeId == id);
             return atributeById;
         }
 
         public Atribute GetAtribute(string fullname)
         {
-            Atribute atributeByFullname = context.Atribute.FirstOrDefault(a => a.Fullname == fullname);
+            Atribute atributeByFullname = context.Atribute.AsNoTracking().FirstOrDefault(a => a.Fullname == fullname);
             return atributeByFullname;
         }
 
         public List<Atribute> GetAtributes()
         {
-            List<Atribute> atributes = null;
-            atributes = context.Atribute.ToList();
+            List<Atribute> atributes = context.Atribute.AsNoTracking().ToList();
             return atributes;
         }
 
         public List<Atribute> GetAtributes(bool IsDiscount)
         {
-            List<Atribute> atributes = null;
-            atributes = context.Atribute.Where(a => a.IsDiscount == IsDiscount).ToList();
+            List<Atribute> atributes = context.Atribute.AsNoTracking().Where(a => a.IsDiscount == IsDiscount).ToList();
             return atributes;
         }
 

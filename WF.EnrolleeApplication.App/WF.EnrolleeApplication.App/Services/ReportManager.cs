@@ -14,6 +14,7 @@ namespace WF.EnrolleeApplication.App.Services
     {
         public static string ConnectionString;
 
+        // Заявление
         public static void PrintStatement(Enrollee enrollee)
         {
             string path = Environment.CurrentDirectory + "\\Templates\\Заявление абитуриента.dotx";
@@ -135,7 +136,6 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
-
         // Титульный лист
         public static void PrintTitle(Enrollee enrollee)
         {
@@ -309,5 +309,226 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
+        // Экзаменнационный лист
+        public static void PrintExamSheet(Enrollee enrollee)
+        {
+            string path = Environment.CurrentDirectory + "\\Templates\\Экзаменнационный лист.dotx";
+            Word.Application wordApp = new Word.Application();
+            wordApp.Visible = false;
+            try
+            {
+                Object template = path; // - имя шаблона, по которому создается новый документ
+                Object newTemplate = false; // при true новый документ открывается как шаблон.
+                Object documentType = Word.WdNewDocumentType.wdNewBlankDocument; // документ Word (по умолчанию)
+                Object visible = true;//видимость документа. При true (по умолчанию) документ отображается.
+                Word.Document wordDocument = wordApp.Documents.Add(ref template, ref newTemplate, ref documentType, ref visible);
+                string numberOfDeal = null;
+                if (string.IsNullOrWhiteSpace(enrollee.Speciality.FormOfStudy.Shortname.Trim())) numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                else numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                wordDocument.Variables["Номер личного дела"].Value = numberOfDeal;
+                wordDocument.Variables["Фамилия"].Value = enrollee.RuSurname.Trim();
+                wordDocument.Variables["Имя"].Value = enrollee.RuName.Trim();
+                wordDocument.Variables["Отчество"].Value = enrollee.RuPatronymic.Trim();
+                wordDocument.Variables["Факультет"].Value = enrollee.Speciality.Faculty.Fullname.Trim();
+                wordDocument.Variables["Специальность"].Value = enrollee.Speciality.Fullname.Trim();
+                wordDocument.Variables["Группа"].Value = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}";
+                SystemConfigurationService configurationService = new SystemConfigurationService(ConnectionString);
+                SystemConfiguration systemConfiguration = configurationService.GetSystemConfiguration("SOKR_SEKR");
+                wordDocument.Variables["Секретарь приемной комиссии"].Value = systemConfiguration.Value;
+                Word.Table table = wordDocument.Tables[4];
+                AssessmentService assessmentService = new AssessmentService(ConnectionString);
+                List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+                int index = 1;
+                foreach (var assessment in assessments)
+                {
+                    table.Rows.Add();
+                    // index
+                    table.Cell(index + 2, 1).Range.Text = index.ToString();
+                    BasisForAssessingService basisForAssessingService = new BasisForAssessingService(ConnectionString);
+                    BasisForAssessing basisForAssessing = basisForAssessingService.GetBasisForAssessing(assessment.Discipline.BasisForAssessingId.Value);
+                    if (basisForAssessing.BasisForAssessingId == 1)
+                    {
+                        table.Cell(index + 2, 2).Range.Text = "Средний балл";
+                        table.Cell(index + 2, 4).Range.Text = assessment.Estimation.ToString();
+                        EstimationStringService estimationService = new EstimationStringService(ConnectionString);
+                        string estimationString = estimationService.EstimationAsText(assessment.Estimation);
+                        table.Cell(index + 2, 5).Range.Text = estimationString;
+                    }
+                    else
+                    {
+                        table.Cell(index + 2, 2).Range.Text = assessment.Discipline.Name.Trim();
+                        table.Cell(index + 2, 3).Range.Text = assessment.SertDate;
+                        if (assessment.Estimation == 0) table.Cell(index + 2, 4).Range.Text = " ";
+                        else table.Cell(index + 2, 4).Range.Text = assessment.Estimation.ToString();
+                        EstimationStringService estimationService = new EstimationStringService(ConnectionString);
+                        string estimationString = estimationService.EstimationAsText(assessment.Estimation);
+                        table.Cell(index + 2, 5).Range.Text = estimationString;
+                    }
+                    index++;
+                }
+                wordDocument.Fields.Update();
+                wordApp.Visible = true;
+                wordApp.Activate();
+            }
+            catch (Exception ex)
+            {
+                Object saveChanges = Word.WdSaveOptions.wdPromptToSaveChanges;
+                Object originalFormat = Word.WdOriginalFormat.wdWordDocument;
+                Object routeDocument = Type.Missing;
+                ((Word._Application)wordApp).Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                wordApp = null;
+            }
+            finally
+            {
+                //  wordApp.Quit(false);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+        // Расписка
+        public static void PrintReceipt(Enrollee enrollee, string documentOfStudy, string documentOfDiscount, string documentOther)
+        {
+            string path = Environment.CurrentDirectory + "\\Templates\\Расписка.dotx";
+            Word.Application wordApp = new Word.Application();
+            wordApp.Visible = false;
+            try
+            {
+                Object template = path; // - имя шаблона, по которому создается новый документ
+                Object newTemplate = false; // при true новый документ открывается как шаблон.
+                Object documentType = Word.WdNewDocumentType.wdNewBlankDocument; // документ Word (по умолчанию)
+                Object visible = true;//видимость документа. При true (по умолчанию) документ отображается.
+                Word.Document wordDocument = wordApp.Documents.Add(ref template, ref newTemplate, ref documentType, ref visible);
+                string numberOfDeal = null;
+                if (string.IsNullOrWhiteSpace(enrollee.Speciality.FormOfStudy.Shortname.Trim())) numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                else numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                wordDocument.Variables["Номер личного дела"].Value = numberOfDeal;
+                wordDocument.Variables["Факультет"].Value = enrollee.Speciality.Faculty.Fullname.Trim();
+                wordDocument.Variables["Шифр"].Value = $" {enrollee.Speciality.Cipher.Trim()} ";
+                wordDocument.Variables["Специальность"].Value = $"{enrollee.Speciality.Fullname.Trim()}";
+                wordDocument.Variables["ФИО Абитуриента"].Value = string.Format("{0} {1} {2}", enrollee.RuSurname.ToUpper().Trim(), enrollee.RuName.Trim(), enrollee.RuPatronymic.Trim());
+                wordDocument.Variables["Секретарь приемной комиссии"].Value = enrollee.PersonInCharge.Trim();
+                wordDocument.Variables["Документ об образовании"].Value = $" {documentOfStudy} ";
+                AssessmentService assessmentService = new AssessmentService(ConnectionString);
+                List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+                for (int j = 1; j < 4; j++)
+                {
+                    string field = string.Format("Сертификат {0}", j);
+                    wordDocument.Variables[field].Value = " ";
+                }
+                int index = 1;
+                foreach (var assessment in assessments)
+                {
+                    string field = string.Format("Сертификат {0}", index);
+                    if (assessment.Discipline.BasisForAssessingId.Value == 3)
+                    {
+                        wordDocument.Variables[field].Value = $"Сертификат {assessment.SertCode} {assessment.Discipline.Name.Trim()}";
+                        index++;
+                    }
+                }
+                if (enrollee.TargetWorkPlaceId.HasValue)
+                {
+                    wordDocument.Variables["Договор целевой"].Value = enrollee.TargetWorkPlace.Name.Trim();
+                    wordDocument.Variables["Направление"].Value = "Да";
+                }
+                else
+                {
+                    wordDocument.Variables["Договор целевой"].Value = " ";
+                    wordDocument.Variables["Направление"].Value = "Нет";
+                }
+                wordDocument.Variables["Документы на льготы"].Value = $" {documentOfDiscount} ";
+                wordDocument.Variables["Иные документы"].Value = $" {documentOther} ";
+                wordDocument.Fields.Update();
+                wordApp.Visible = true;
+                wordApp.Activate();
+            }
+            catch (Exception ex)
+            {
+                Object saveChanges = Word.WdSaveOptions.wdPromptToSaveChanges;
+                Object originalFormat = Word.WdOriginalFormat.wdWordDocument;
+                Object routeDocument = Type.Missing;
+                ((Word._Application)wordApp).Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                wordApp = null;
+            }
+            finally
+            {
+                //  wordApp.Quit(false);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+        // Извещение
+        public static void PrintNotice(Enrollee enrollee)
+        {
+            string path = Environment.CurrentDirectory + "\\Templates\\Извещение.dotx";
+            Word.Application wordApp = new Word.Application();
+            wordApp.Visible = false;
+            try
+            {
+                Object template = path; // - имя шаблона, по которому создается новый документ
+                Object newTemplate = false; // при true новый документ открывается как шаблон.
+                Object documentType = Word.WdNewDocumentType.wdNewBlankDocument; // документ Word (по умолчанию)
+                Object visible = true;//видимость документа. При true (по умолчанию) документ отображается.
+                Word.Document wordDocument = wordApp.Documents.Add(ref template, ref newTemplate, ref documentType, ref visible);
+                string numberOfDeal = null;
+                if (string.IsNullOrWhiteSpace(enrollee.Speciality.FormOfStudy.Shortname.Trim())) numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                else numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                wordDocument.Variables["Номер личного дела"].Value = numberOfDeal;
+                wordDocument.Variables["ФИО Абитуриента"].Value = string.Format("{0} {1} {2}", enrollee.RuSurname.ToUpper().Trim(), enrollee.RuName.Trim(), enrollee.RuPatronymic.Trim());
+                wordDocument.Variables["Страна"].Value = enrollee.Country.Name.Trim();
+                wordDocument.Variables["Область"].Value = enrollee.Area.Name.Trim();
+                wordDocument.Variables["Район"].Value = enrollee.District.Name.Trim();
+                wordDocument.Variables["Город"].Value = $"{enrollee.TypeOfSettlement.Shortname.Trim()} {enrollee.SettlementName.Trim()}";
+                wordDocument.Variables["Улица"].Value = enrollee.StreetName.Trim();
+                wordDocument.Variables["Номер дома"].Value = $"д. {enrollee.NumberHouse}";
+                wordDocument.Variables["Номер квартиры"].Value = $"кв. {enrollee.NumberFlat} ";
+                wordDocument.Variables["Номер протокола"].Value = "1";
+                for (int j = 1; j < 4; j++)
+                {
+                    string field = string.Format("Вступительное испытание {0}", j);
+                    wordDocument.Variables[field].Value = " ";
+                }
+                AssessmentService assessmentService = new AssessmentService(ConnectionString);
+                List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+                int index = 1;
+                foreach (var assessment in assessments)
+                {
+                    if (assessment.Discipline.BasisForAssessingId == 2)
+                    {
+                        string field = string.Format("Вступительное испытание {0}", index);
+                        string text = string.Format("{0} — {1}", assessment.Discipline.Name.Trim(), assessment.Discipline.EntryExamDate.Trim());
+                        wordDocument.Variables[field].Value = text;
+                        wordDocument.Variables["Дата консультации"].Value = assessment.Discipline.ConsultDate.Trim();
+                        index++;
+                    }
+                }
+                wordDocument.Variables["Вид конкурса"].Value = enrollee.ReasonForAddmission.Contest.Name.Trim();
+                SystemConfigurationService configurationService = new SystemConfigurationService(ConnectionString);
+                SystemConfiguration systemConfiguration = configurationService.GetSystemConfiguration("SOKR_SEKR");
+                wordDocument.Variables["Секретарь приемной комиссии"].Value = systemConfiguration.Value;
+                wordDocument.Fields.Update();
+                wordApp.Visible = true;
+                wordApp.Activate();
+            }
+            catch (Exception ex)
+            {
+                Object saveChanges = Word.WdSaveOptions.wdPromptToSaveChanges;
+                Object originalFormat = Word.WdOriginalFormat.wdWordDocument;
+                Object routeDocument = Type.Missing;
+                ((Word._Application)wordApp).Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                wordApp = null;
+            }
+            finally
+            {
+                //  wordApp.Quit(false);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
     }
-}
+    }

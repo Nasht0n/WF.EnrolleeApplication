@@ -27,7 +27,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <param name="post">Объект сотрудника</param>
         public void DeleteEmployeePost(EmployeePost post)
         {
-            EmployeePost postToDelete = context.EmployeePost.FirstOrDefault(ep => ep.PostId == post.PostId);
+            EmployeePost postToDelete = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.PostId == post.PostId);
             context.EmployeePost.Remove(postToDelete);
             context.SaveChanges();
         }
@@ -38,7 +38,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Возвращается объект должности сотрудника</returns>
         public EmployeePost GetEmployeePost(int id)
         {
-            EmployeePost postById = context.EmployeePost.FirstOrDefault(ep => ep.PostId == id);
+            EmployeePost postById = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.PostId == id);
             return postById;
         }
         /// <summary>
@@ -48,7 +48,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Возвращается объект должности сотрудника</returns>
         public EmployeePost GetEmployeePost(string name)
         {
-            EmployeePost postByName = context.EmployeePost.FirstOrDefault(ep => ep.Name == name);
+            EmployeePost postByName = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.Name == name);
             return postByName;
         }
         /// <summary>
@@ -57,7 +57,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Список должностей сотрудников</returns>
         public List<EmployeePost> GetEmployeePosts()
         {
-            List<EmployeePost> posts = context.EmployeePost.ToList();
+            List<EmployeePost> posts = context.EmployeePost.AsNoTracking().ToList();
             return posts;
         }
         /// <summary>

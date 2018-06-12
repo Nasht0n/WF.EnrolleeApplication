@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfFinance(TypeOfFinance typeOfFinance)
         {
-            TypeOfFinance typeOfFinanceToDelete = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == typeOfFinance.FinanceTypeId);
+            TypeOfFinance typeOfFinanceToDelete = context.TypeOfFinance.AsNoTracking().FirstOrDefault(tf => tf.FinanceTypeId == typeOfFinance.FinanceTypeId);
             context.TypeOfFinance.Remove(typeOfFinanceToDelete);
             context.SaveChanges();
         }
 
         public TypeOfFinance GetTypeOfFinance(int id)
         {
-            TypeOfFinance typeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == id);
+            TypeOfFinance typeOfFinance = context.TypeOfFinance.AsNoTracking().FirstOrDefault(tf => tf.FinanceTypeId == id);
             return typeOfFinance;
         }
 
         public TypeOfFinance GetTypeOfFinance(string fullname)
         {
-            TypeOfFinance typeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.Fullname == fullname);
+            TypeOfFinance typeOfFinance = context.TypeOfFinance.AsNoTracking().FirstOrDefault(tf => tf.Fullname == fullname);
             return typeOfFinance;
         }
 
         public List<TypeOfFinance> GetTypeOfFinances()
         {
-            List<TypeOfFinance> typeOfFinances = context.TypeOfFinance.ToList();
+            List<TypeOfFinance> typeOfFinances = context.TypeOfFinance.AsNoTracking().ToList();
             return typeOfFinances;
         }
 

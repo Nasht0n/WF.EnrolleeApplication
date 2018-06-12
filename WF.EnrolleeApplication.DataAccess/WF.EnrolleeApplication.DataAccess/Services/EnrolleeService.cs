@@ -26,482 +26,94 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public Enrollee GetEnrollee(int id)
         {
-            Enrollee enrollee = context.Enrollee.FirstOrDefault(e => e.EnrolleeId == id);
-            if (enrollee != null)
-            {
-                enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                enrollee.Citizenship = context.Citizenship.FirstOrDefault(e => e.CitizenshipId == enrollee.CitizenshipId);
-                enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == enrollee.ForeignLanguageId);
-                enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(rfa => rfa.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(e => e.PostId == enrollee.Employee.PostId);
-                enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                if (enrollee.DecreeId.HasValue) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                if (enrollee.SecondarySpecialityId.HasValue) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                if (enrollee.TargetWorkPlaceId.HasValue) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(tw => tw.TargetId == enrollee.TargetWorkPlaceId);
-            }
+            var enrollee = context.Enrollee.AsNoTracking().FirstOrDefault(e => e.EnrolleeId == id);
+            
             return enrollee;
         }
 
         public Enrollee GetEnrollee(string documentPersonalNumber)
         {
-            Enrollee enrollee = context.Enrollee.FirstOrDefault(e => e.DocumentPersonalNumber == documentPersonalNumber);
-            if (enrollee != null)
-            {
-                enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-            }
+            Enrollee enrollee = context.Enrollee.AsNoTracking().FirstOrDefault(e => e.DocumentPersonalNumber == documentPersonalNumber);
             return enrollee;
         }
 
         public List<Enrollee> GetEnrollees()
         {
-            List<Enrollee> enrollees = context.Enrollee.ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(Speciality speciality)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.SpecialityId == speciality.SpecialityId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.SpecialityId == speciality.SpecialityId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(Citizenship citizenship)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.CitizenshipId == citizenship.CitizenshipId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.CitizenshipId == citizenship.CitizenshipId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(Country country)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.CountryId == country.CountryId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.CountryId == country.CountryId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(Area area)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.AreaId == area.AreaId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.AreaId == area.AreaId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(District district)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.DistrictId == district.DistrictId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.DistrictId == district.DistrictId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(TypeOfSchool typeOfSchool)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.SchoolTypeId == typeOfSchool.SchoolTypeId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.SchoolTypeId == typeOfSchool.SchoolTypeId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(ReasonForAddmission reasonForAddmission)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.ReasonForAddmissionId == reasonForAddmission.ReasonForAddmissionId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.ReasonForAddmissionId == reasonForAddmission.ReasonForAddmissionId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(TypeOfState typeOfState)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.StateTypeId == typeOfState.StateId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.StateTypeId == typeOfState.StateId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(Employee employee)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.EmployeeId == employee.EmployeeId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.EmployeeId == employee.EmployeeId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(Decree decree)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.DecreeId == decree.DecreeId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.DecreeId == decree.DecreeId).ToList();
             return enrollees;
         }
 
         public List<Enrollee> GetEnrollees(TypeOfFinance typeOfFinance)
         {
-            List<Enrollee> enrollees = context.Enrollee.Where(e => e.FinanceTypeId == typeOfFinance.FinanceTypeId).ToList();
-            if (enrollees.Count != 0)
-            {
-                foreach (Enrollee enrollee in enrollees)
-                {
-                    enrollee.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == enrollee.SpecialityId);
-                    enrollee.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == enrollee.Speciality.FacultyId);
-                    enrollee.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == enrollee.Speciality.FormOfStudyId);
-                    enrollee.Citizenship = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == enrollee.CitizenshipId);
-                    enrollee.Country = context.Country.FirstOrDefault(c => c.CountryId == enrollee.CountryId);
-                    enrollee.Area = context.Area.FirstOrDefault(a => a.AreaId == enrollee.AreaId);
-                    enrollee.District = context.District.FirstOrDefault(d => d.DistrictId == enrollee.DistrictId);
-                    enrollee.TypeOfSettlement = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == enrollee.SettlementTypeId);
-                    enrollee.TypeOfStreet = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == enrollee.StreetTypeId);
-                    enrollee.Document = context.Document.FirstOrDefault(d => d.DocumentId == enrollee.DocumentId);
-                    enrollee.TypeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == enrollee.SchoolTypeId);
-                    enrollee.ForeignLanguage = context.ForeignLanguage.FirstOrDefault(f => f.LanguageId == enrollee.ForeignLanguageId);
-                    enrollee.ReasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == enrollee.ReasonForAddmissionId);
-                    enrollee.ReasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == enrollee.ReasonForAddmission.ContestId);
-                    enrollee.TypeOfState = context.TypeOfState.FirstOrDefault(ts => ts.StateId == enrollee.StateTypeId);
-                    enrollee.Employee = context.Employee.FirstOrDefault(e => e.EmployeeId == enrollee.EmployeeId);
-                    enrollee.Employee.EmployeePost = context.EmployeePost.FirstOrDefault(ep => ep.PostId == enrollee.Employee.PostId);
-                    enrollee.TypeOfFinance = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == enrollee.FinanceTypeId);
-                    if (enrollee.DecreeId != null) enrollee.Decree = context.Decree.FirstOrDefault(d => d.DecreeId == enrollee.DecreeId);
-                    if (enrollee.SecondarySpecialityId != null) enrollee.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == enrollee.SecondarySpecialityId);
-                    if (enrollee.TargetWorkPlaceId != null) enrollee.TargetWorkPlace = context.TargetWorkPlace.FirstOrDefault(twp => twp.TargetId == enrollee.TargetWorkPlaceId);
-                }
-            }
+            List<Enrollee> enrollees = context.Enrollee.AsNoTracking().Where(e => e.FinanceTypeId == typeOfFinance.FinanceTypeId).ToList();
             return enrollees;
         }
 
         public Enrollee InsertEnrollee(Enrollee enrollee)
         {
-            try
-            {
                 context.Enrollee.Add(enrollee);
                 context.SaveChanges();
                 return enrollee;
-            }
-            catch (DbEntityValidationException e)
-            {
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
-                throw;
-            }
         }
 
         public Enrollee UpdateEnrollee(Enrollee enrollee)

@@ -18,32 +18,32 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteEstimationString(EstimationString estimationString)
         {
-            EstimationString estimationStringToDelete = context.EstimationString.FirstOrDefault(es => es.EstimationNumber == estimationString.EstimationNumber && es.EstimationText == estimationString.EstimationText);
+            EstimationString estimationStringToDelete = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationNumber == estimationString.EstimationNumber && es.EstimationText == estimationString.EstimationText);
             context.EstimationString.Remove(estimationStringToDelete);
             context.SaveChanges();
         }
 
         public int EstimationAsNumber(string estimation)
         {
-            EstimationString estimationString = context.EstimationString.FirstOrDefault(es => es.EstimationText == estimation);
+            EstimationString estimationString = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationText == estimation);
             return estimationString.EstimationNumber;
         }
 
         public string EstimationAsText(int number)
         {
-            EstimationString estimationString = context.EstimationString.FirstOrDefault(es => es.EstimationNumber == number);
+            EstimationString estimationString = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationNumber == number);
             return estimationString.EstimationText;
         }
 
         public EstimationString GetEstimationString(int number, string text)
         {
-            EstimationString estimationString = context.EstimationString.FirstOrDefault(es => es.EstimationNumber == number && es.EstimationText == text);
+            EstimationString estimationString = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationNumber == number && es.EstimationText == text);
             return estimationString;
         }
 
         public List<EstimationString> GetEstimationStrings()
         {
-            List<EstimationString> estimationStrings = context.EstimationString.ToList();
+            List<EstimationString> estimationStrings = context.EstimationString.AsNoTracking().ToList();
             return estimationStrings;
         }
 

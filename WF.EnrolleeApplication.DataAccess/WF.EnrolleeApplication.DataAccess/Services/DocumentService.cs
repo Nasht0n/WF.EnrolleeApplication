@@ -17,26 +17,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDocument(Document document)
         {
-            Document documentToDelete = context.Document.FirstOrDefault(d => d.DocumentId == document.DocumentId);
+            Document documentToDelete = context.Document.AsNoTracking().FirstOrDefault(d => d.DocumentId == document.DocumentId);
             context.Document.Remove(documentToDelete);
             context.SaveChanges();
         }
 
         public Document GetDocument(int id)
         {
-            Document documentById = context.Document.FirstOrDefault(d => d.DocumentId == id);
+            Document documentById = context.Document.AsNoTracking().FirstOrDefault(d => d.DocumentId == id);
             return documentById;
         }
 
         public Document GetDocument(string name)
         {
-            Document documentByName = context.Document.FirstOrDefault(d => d.Name == name);
+            Document documentByName = context.Document.AsNoTracking().FirstOrDefault(d => d.Name == name);
             return documentByName;
         }
 
         public List<Document> GetDocuments()
         {
-            List<Document> documents = context.Document.ToList();
+            List<Document> documents = context.Document.AsNoTracking().ToList();
             return documents;
         }
 

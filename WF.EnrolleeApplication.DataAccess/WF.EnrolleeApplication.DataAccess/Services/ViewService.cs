@@ -17,25 +17,25 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public List<EmployeeView> GetEmployees()
         {
-            List<EmployeeView> employees = context.EmployeeView.ToList();
+            List<EmployeeView> employees = context.EmployeeView.AsNoTracking().ToList();
             return employees;
         }
 
         public List<EnrolleeView> GetEnrollees(Employee employee)
         {
-            List<EnrolleeView> enrollees = context.EnrolleeView.Where(e=>e.EmployeeId == employee.EmployeeId).OrderByDescending(e=>e.EnrolleeId).ToList();
+            List<EnrolleeView> enrollees = context.EnrolleeView.AsNoTracking().Where(e=>e.EmployeeId == employee.EmployeeId).OrderByDescending(e=>e.EnrolleeId).ToList();
             return enrollees;
         }
 
         public List<EnrolleeView> GetEnrollees(Speciality speciality)
         {
-            List<EnrolleeView> enrollees = context.EnrolleeView.Where(e=>e.SpecialityId == speciality.SpecialityId).OrderBy(e=>e.NumberOfDeal).ToList();
+            List<EnrolleeView> enrollees = context.EnrolleeView.AsNoTracking().Where(e=>e.SpecialityId == speciality.SpecialityId).OrderBy(e=>e.NumberOfDeal).ToList();
             return enrollees;
         }
 
         public List<SpecialityView> GetSpecialities()
         {
-            List<SpecialityView> specialities = context.SpecialityView.ToList();
+            List<SpecialityView> specialities = context.SpecialityView.AsNoTracking().ToList();
             return specialities;
         }
     }

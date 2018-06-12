@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteSecondarySpeciality(SecondarySpeciality secondarySpeciality)
         {
-            SecondarySpeciality secondarySpecialityToDelete = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId);
+            SecondarySpeciality secondarySpecialityToDelete = context.SecondarySpeciality.AsNoTracking().FirstOrDefault(ss => ss.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId);
             context.SecondarySpeciality.Remove(secondarySpecialityToDelete);
             context.SaveChanges();
         }
 
         public List<SecondarySpeciality> GetSecondarySpecialities()
         {
-            List<SecondarySpeciality> secondarySpecialities = context.SecondarySpeciality.ToList();
+            List<SecondarySpeciality> secondarySpecialities = context.SecondarySpeciality.AsNoTracking().ToList();
             return secondarySpecialities;
         }
 
         public SecondarySpeciality GetSecondarySpeciality(int id)
         {
-            SecondarySpeciality secondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == id);
+            SecondarySpeciality secondarySpeciality = context.SecondarySpeciality.AsNoTracking().FirstOrDefault(ss => ss.SecondarySpecialityId == id);
             return secondarySpeciality;
         }
 
         public SecondarySpeciality GetSecondarySpeciality(string cipher)
         {
-            SecondarySpeciality secondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.Cipher == cipher);
+            SecondarySpeciality secondarySpeciality = context.SecondarySpeciality.AsNoTracking().FirstOrDefault(ss => ss.Cipher == cipher);
             return secondarySpeciality;
         }
 

@@ -45,6 +45,7 @@ namespace WF.EnrolleeApplication.App.Views
         {
             InitializeComponent();
             this.activeEmployee = employee;
+            enrolleeTable = CreateStructureTable();
             // Инициализируем сервисы доступа к данным
             InitializeDataAccessServices();
             // Заполняем данными выпадающие списки для поиска 
@@ -155,7 +156,11 @@ namespace WF.EnrolleeApplication.App.Views
                 cbSpeciality.DataSource = specialities;
                 cbSpeciality.DisplayMember = "Fullname";
                 cbSpeciality.ValueMember = "SpecialityId";
-                if (specialities.Count != 0) currentSpeciality = specialities[0];
+                if (specialities.Count != 0)
+                {
+                    currentSpeciality = specialities[0];
+                    InitializeEnrolleeGrid(SearchMode);
+                }
                 cbSpeciality.SelectedValueChanged += cbSpeciality_SelectedValueChanged;
             }
         }
@@ -228,6 +233,7 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 int id = (int)cbSpeciality.SelectedValue;
                 currentSpeciality = specialityService.GetSpeciality(id);
+                InitializeEnrolleeGrid(SearchMode);
             }
         }
 
@@ -380,6 +386,66 @@ namespace WF.EnrolleeApplication.App.Views
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
             enrollee = enrolleeService.GetEnrollee(id);
             ReportManager.PrintTitle(enrollee);
+        }
+
+        private void PrintExamSheet(object sender, EventArgs e)
+        {
+            ReportManager.ConnectionString = connectionString;
+            int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            enrollee = enrolleeService.GetEnrollee(id);
+            ReportManager.PrintExamSheet(enrollee);
+        }
+
+        private void PrintReceipt(object sender, EventArgs e)
+        {
+            ReportManager.ConnectionString = connectionString;
+            int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            enrollee = enrolleeService.GetEnrollee(id);
+            frmReceipt receiptCard = new frmReceipt(enrollee);
+            DialogResult receiptCardResult = receiptCard.ShowDialog();
+            if(receiptCardResult == DialogResult.OK)
+            {
+                ReportManager.PrintReceipt(enrollee, receiptCard.DocumentOfStudy, receiptCard.DocumentOfDiscount, receiptCard.DocumentOther);
+            }
+        }
+
+        private void PrintNotice(object sender, EventArgs e)
+        {
+            ReportManager.ConnectionString = connectionString;
+            int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            enrollee = enrolleeService.GetEnrollee(id);
+            ReportManager.PrintNotice(enrollee);
+        }
+
+        private void Filter(object sender, EventArgs e)
+        {
+            // Фамилия абитуриента
+            string query = $"Фамилия LIKE '%{tbSurname.Text}%'";
+            // Тип финансирования
+            if (BudgetFilter.CheckState == CheckState.Checked && FeeFilter.CheckState == CheckState.Unchecked) query += $" AND КодФинансирования = 1";            
+            else if (BudgetFilter.CheckState == CheckState.Unchecked && FeeFilter.CheckState == CheckState.Checked) query += $" AND КодФинансирования = 2";
+            else query += $" AND (КодФинансирования = 1 OR КодФинансирования = 2)";
+            // Вид конкурса
+            if (GeneralContestFilter.CheckState == CheckState.Checked && WithoutExamFilter.CheckState == CheckState.Unchecked && OutOfContestFilter.CheckState == CheckState.Unchecked)      query += $" AND КодКонкурса = 1";
+            else if (GeneralContestFilter.CheckState == CheckState.Unchecked && WithoutExamFilter.CheckState == CheckState.Checked && OutOfContestFilter.CheckState == CheckState.Unchecked) query += $" AND КодКонкурса = 2";
+            else if (GeneralContestFilter.CheckState == CheckState.Unchecked && WithoutExamFilter.CheckState == CheckState.Unchecked && OutOfContestFilter.CheckState == CheckState.Checked) query += $" AND КодКонкурса = 3";
+            else if ((GeneralContestFilter.CheckState == CheckState.Checked && WithoutExamFilter.CheckState == CheckState.Unchecked && OutOfContestFilter.CheckState == CheckState.Checked)) query += $" AND (КодКонкурса = 1 OR КодКонкурса = 3)";
+            else if ((GeneralContestFilter.CheckState == CheckState.Checked && WithoutExamFilter.CheckState == CheckState.Checked && OutOfContestFilter.CheckState == CheckState.Unchecked)) query += $" AND (КодКонкурса = 1 OR КодКонкурса = 2)";
+            else if ((GeneralContestFilter.CheckState == CheckState.Unchecked && WithoutExamFilter.CheckState == CheckState.Checked && OutOfContestFilter.CheckState == CheckState.Checked)) query += $" AND (КодКонкурса = 2 OR КодКонкурса = 3)";
+            // Статус абитуриента
+            if (CandidateFilter.CheckState == CheckState.Checked && EnrollFilter.CheckState == CheckState.Unchecked && TookDocumentFilter.CheckState == CheckState.Unchecked) query += $" AND КодСтатуса = 1";
+            else if (CandidateFilter.CheckState == CheckState.Unchecked && EnrollFilter.CheckState == CheckState.Checked && TookDocumentFilter.CheckState == CheckState.Unchecked) query += $" AND КодСтатуса = 3";
+            else if (CandidateFilter.CheckState == CheckState.Unchecked && EnrollFilter.CheckState == CheckState.Unchecked && TookDocumentFilter.CheckState == CheckState.Checked) query += $" AND КодСтатуса = 2";
+            else if (CandidateFilter.CheckState == CheckState.Checked && EnrollFilter.CheckState == CheckState.Checked && TookDocumentFilter.CheckState == CheckState.Unchecked) query += $" AND (КодСтатуса = 1 OR КодСтатуса = 3)";
+            else if (CandidateFilter.CheckState == CheckState.Checked && EnrollFilter.CheckState == CheckState.Unchecked && TookDocumentFilter.CheckState == CheckState.Checked) query += $" AND (КодСтатуса = 1 OR КодСтатуса = 2)";
+            else if (CandidateFilter.CheckState == CheckState.Unchecked && EnrollFilter.CheckState == CheckState.Checked && TookDocumentFilter.CheckState == CheckState.Checked) query += $" AND (КодСтатуса = 2 OR КодСтатуса = 3)";
+            (EnrolleeGrid.DataSource as DataTable).DefaultView.RowFilter = query;
+        }
+
+        private void LogoffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Abort;
+            this.Close();
         }
     }
 }

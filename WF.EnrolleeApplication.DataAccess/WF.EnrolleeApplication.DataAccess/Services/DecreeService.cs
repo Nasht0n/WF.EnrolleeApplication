@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDecree(Decree decree)
         {
-            Decree decreeToDelete = context.Decree.FirstOrDefault(d => d.DecreeId == decree.DecreeId);
+            Decree decreeToDelete = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeId == decree.DecreeId);
             context.Decree.Remove(decreeToDelete);
             context.SaveChanges();
         }
 
         public Decree GetDecree(int id)
         {
-            Decree decreeById = context.Decree.FirstOrDefault(d => d.DecreeId == id);
+            Decree decreeById = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeId == id);
             return decreeById;
         }
 
         public Decree GetDecree(DateTime decreeDate)
         {
-            Decree decreeById = context.Decree.FirstOrDefault(d => d.DecreeDate == decreeDate.Date);
+            Decree decreeById = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeDate == decreeDate.Date);
             return decreeById;
         }
 
         public List<Decree> GetDecrees()
         {
-            List<Decree> decrees = context.Decree.ToList();
+            List<Decree> decrees = context.Decree.AsNoTracking().ToList();
             return decrees;
         }
 

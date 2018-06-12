@@ -17,27 +17,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteBasisForAssessing(BasisForAssessing basisForAssessing)
         {
-            BasisForAssessing basisForAssessingToDelete = context.BasisForAssessing.FirstOrDefault(b => b.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
+            BasisForAssessing basisForAssessingToDelete = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
             context.BasisForAssessing.Remove(basisForAssessingToDelete);
             context.SaveChanges();
         }
 
         public BasisForAssessing GetBasisForAssessing(int id)
         {
-            BasisForAssessing basisForAssessingById = context.BasisForAssessing.FirstOrDefault(b => b.BasisForAssessingId == id);
+            BasisForAssessing basisForAssessingById = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.BasisForAssessingId == id);
             return basisForAssessingById;
         }
 
         public BasisForAssessing GetBasisForAssessing(string name)
         {
-            BasisForAssessing basisForAssessingByName = context.BasisForAssessing.FirstOrDefault(b => b.Name == name);
+            BasisForAssessing basisForAssessingByName = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.Name == name);
             return basisForAssessingByName;
         }
 
         public List<BasisForAssessing> GetBasisForAssessings()
         {
-            List<BasisForAssessing> basisForAssessings = null;
-            basisForAssessings = context.BasisForAssessing.ToList();
+            List<BasisForAssessing> basisForAssessings = context.BasisForAssessing.AsNoTracking().ToList();
             return basisForAssessings;
         }
 

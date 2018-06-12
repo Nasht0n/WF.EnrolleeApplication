@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTargetWorkPlace(TargetWorkPlace targetWorkPlace)
         {
-            TargetWorkPlace targetWorkPlaceToDelete = context.TargetWorkPlace.FirstOrDefault(tw => tw.TargetId == targetWorkPlace.TargetId);
+            TargetWorkPlace targetWorkPlaceToDelete = context.TargetWorkPlace.AsNoTracking().FirstOrDefault(tw => tw.TargetId == targetWorkPlace.TargetId);
             context.TargetWorkPlace.Remove(targetWorkPlaceToDelete);
             context.SaveChanges();
         }
 
         public TargetWorkPlace GetTargetWorkPlace(int id)
         {
-            TargetWorkPlace targetWorkPlace = context.TargetWorkPlace.FirstOrDefault(tw => tw.TargetId == id);
+            TargetWorkPlace targetWorkPlace = context.TargetWorkPlace.AsNoTracking().FirstOrDefault(tw => tw.TargetId == id);
             return targetWorkPlace;
         }
 
         public TargetWorkPlace GetTargetWorkPlace(string name)
         {
-            TargetWorkPlace targetWorkPlace = context.TargetWorkPlace.FirstOrDefault(tw => tw.Name == name);
+            TargetWorkPlace targetWorkPlace = context.TargetWorkPlace.AsNoTracking().FirstOrDefault(tw => tw.Name == name);
             return targetWorkPlace;
         }
 
         public List<TargetWorkPlace> GetTargetWorkPlaces()
         {
-            List<TargetWorkPlace> targetWorkPlaces = context.TargetWorkPlace.ToList();
+            List<TargetWorkPlace> targetWorkPlaces = context.TargetWorkPlace.AsNoTracking().ToList();
             return targetWorkPlaces;
         }
 

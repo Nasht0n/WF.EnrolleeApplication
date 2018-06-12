@@ -103,6 +103,12 @@
     <Compile Include="Views\frmEnrolleeCard.Designer.cs">
       <DependentUpon>frmEnrolleeCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\frmReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmReceipt.Designer.cs">
+      <DependentUpon>frmReceipt.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\frmEnrolleeCard.resx">
       <DependentUpon>frmEnrolleeCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmReceipt.resx">
+      <DependentUpon>frmReceipt.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

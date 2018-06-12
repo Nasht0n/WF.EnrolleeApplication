@@ -139,7 +139,12 @@ namespace WF.EnrolleeApplication.App.Views
                         this.Hide();
                         frmDashboard dashboard = new frmDashboard(employee);
                         DialogResult dashboardResult = dashboard.ShowDialog();
-                        if (dashboardResult == DialogResult.Abort) this.Show();
+                        if (dashboardResult == DialogResult.Abort)
+                        {
+                            this.Show();
+                            tbUsername.Text = null;
+                            tbPassword.Text = null;
+                        }
                         else Application.Exit();
                     }
                     else

@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteFormOfStudy(FormOfStudy formOfStudy)
         {
-            FormOfStudy formOfStudyToDelete = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
+            FormOfStudy formOfStudyToDelete = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
             context.FormOfStudy.Remove(formOfStudyToDelete);
             context.SaveChanges();
         }
 
         public List<FormOfStudy> GetFormOfStudies()
         {
-            List<FormOfStudy> formOfStudies = context.FormOfStudy.ToList();
+            List<FormOfStudy> formOfStudies = context.FormOfStudy.AsNoTracking().ToList();
             return formOfStudies;
         }
 
         public FormOfStudy GetFormOfStudy(int id)
         {
-            FormOfStudy formOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == id);
+            FormOfStudy formOfStudy = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.FormOfStudyId == id);
             return formOfStudy;
         }
 
         public FormOfStudy GetFormOfStudy(string fullname)
         {
-            FormOfStudy formOfStudy = context.FormOfStudy.FirstOrDefault(f => f.Fullname == fullname);
+            FormOfStudy formOfStudy = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.Fullname == fullname);
             return formOfStudy;
         }
 

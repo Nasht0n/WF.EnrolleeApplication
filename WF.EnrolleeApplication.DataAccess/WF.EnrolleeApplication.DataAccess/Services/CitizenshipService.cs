@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteCitizenship(Citizenship citizenship)
         {
-            Citizenship citizenshipToDelete = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == citizenship.CitizenshipId);
+            Citizenship citizenshipToDelete = context.Citizenship.AsNoTracking().FirstOrDefault(c => c.CitizenshipId == citizenship.CitizenshipId);
             context.Citizenship.Remove(citizenship);
             context.SaveChanges();
         }
 
         public Citizenship GetCitizenship(int id)
         {
-            Citizenship citizenshipById = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == id);
+            Citizenship citizenshipById = context.Citizenship.AsNoTracking().FirstOrDefault(c => c.CitizenshipId == id);
             return citizenshipById;
         }
 
         public Citizenship GetCitizenship(string fullname)
         {
-            Citizenship citizenshipByFullname = context.Citizenship.FirstOrDefault(c => c.Fullname == fullname);
+            Citizenship citizenshipByFullname = context.Citizenship.AsNoTracking().FirstOrDefault(c => c.Fullname == fullname);
             return citizenshipByFullname;
         }
 
         public List<Citizenship> GetCitizenships()
         {
-            List<Citizenship> citizenships = context.Citizenship.ToList();
+            List<Citizenship> citizenships = context.Citizenship.AsNoTracking().ToList();
             return citizenships;
         }
 

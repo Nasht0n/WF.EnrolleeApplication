@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteContest(Contest contest)
         {
-            Contest contestToDelete = context.Contest.FirstOrDefault(c => c.ContestId == contest.ContestId);
+            Contest contestToDelete = context.Contest.AsNoTracking().FirstOrDefault(c => c.ContestId == contest.ContestId);
             context.Contest.Remove(contestToDelete);
             context.SaveChanges();
         }
 
         public Contest GetContest(int id)
         {
-            Contest contestById = context.Contest.FirstOrDefault(c => c.ContestId == id);
+            Contest contestById = context.Contest.AsNoTracking().FirstOrDefault(c => c.ContestId == id);
             return contestById;
         }
 
         public Contest GetContest(string name)
         {
-            Contest contestByName = context.Contest.FirstOrDefault(c => c.Name == name);
+            Contest contestByName = context.Contest.AsNoTracking().FirstOrDefault(c => c.Name == name);
             return contestByName;
         }
 
         public List<Contest> GetContests()
         {
-            List<Contest> contests = context.Contest.ToList();
+            List<Contest> contests = context.Contest.AsNoTracking().ToList();
             return contests;
         }
 

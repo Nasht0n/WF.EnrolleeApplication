@@ -17,26 +17,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteCountry(Country country)
         {
-            Country countryToDelete = context.Country.FirstOrDefault(c => c.CountryId == country.CountryId);
+            Country countryToDelete = context.Country.AsNoTracking().FirstOrDefault(c => c.CountryId == country.CountryId);
             context.Country.Remove(countryToDelete);
             context.SaveChanges();
         }
 
         public List<Country> GetCountries()
         {
-            List<Country> countries = context.Country.ToList();
+            List<Country> countries = context.Country.AsNoTracking().ToList();
             return countries;
         }
 
         public Country GetCountry(int id)
         {
-            Country countryById = context.Country.FirstOrDefault(c => c.CountryId == id);
+            Country countryById = context.Country.AsNoTracking().FirstOrDefault(c => c.CountryId == id);
             return countryById;
         }
 
         public Country GetCountry(string name)
         {
-            Country countryByName = context.Country.FirstOrDefault(c => c.Name == name);
+            Country countryByName = context.Country.AsNoTracking().FirstOrDefault(c => c.Name == name);
             return countryByName;
         }
 

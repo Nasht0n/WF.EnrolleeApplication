@@ -18,20 +18,20 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteSystemConfiguration(SystemConfiguration systemConfiguration)
         {
-            SystemConfiguration systemConfigurationToDelete = context.SystemConfiguration.FirstOrDefault(sc => sc.Name == systemConfiguration.Name);
+            SystemConfiguration systemConfigurationToDelete = context.SystemConfiguration.AsNoTracking().FirstOrDefault(sc => sc.Name == systemConfiguration.Name);
             context.SystemConfiguration.Remove(systemConfigurationToDelete);
             context.SaveChanges();
         }
 
         public SystemConfiguration GetSystemConfiguration(string name)
         {
-            SystemConfiguration systemConfiguration = context.SystemConfiguration.FirstOrDefault(sc => sc.Name == name);
+            SystemConfiguration systemConfiguration = context.SystemConfiguration.AsNoTracking().FirstOrDefault(sc => sc.Name == name);
             return systemConfiguration;
         }
 
         public List<SystemConfiguration> GetSystemConfigurations()
         {
-            List<SystemConfiguration> systemConfigurations = context.SystemConfiguration.ToList();
+            List<SystemConfiguration> systemConfigurations = context.SystemConfiguration.AsNoTracking().ToList();
             return systemConfigurations;
         }
 

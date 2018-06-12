@@ -103,7 +103,6 @@
             this.CandidateFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.EnrollFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.TookDocumentFilter = new System.Windows.Forms.ToolStripMenuItem();
-            this.btFilterClear = new System.Windows.Forms.ToolStripButton();
             this.EnrolleeGrid = new System.Windows.Forms.DataGridView();
             this.SearchToolBox = new System.Windows.Forms.Panel();
             this.cbSpeciality = new System.Windows.Forms.ComboBox();
@@ -245,6 +244,7 @@
             this.StatementToolStripMenuItem.Name = "StatementToolStripMenuItem";
             this.StatementToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.StatementToolStripMenuItem.Text = "Заявление";
+            this.StatementToolStripMenuItem.Click += new System.EventHandler(this.PrintStatement);
             // 
             // TitulToolStripMenuItem
             // 
@@ -252,6 +252,7 @@
             this.TitulToolStripMenuItem.Name = "TitulToolStripMenuItem";
             this.TitulToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.TitulToolStripMenuItem.Text = "Титульный лист";
+            this.TitulToolStripMenuItem.Click += new System.EventHandler(this.PrintTitle);
             // 
             // ExamToolStripMenuItem
             // 
@@ -259,6 +260,7 @@
             this.ExamToolStripMenuItem.Name = "ExamToolStripMenuItem";
             this.ExamToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.ExamToolStripMenuItem.Text = "Экзаменнационный лист";
+            this.ExamToolStripMenuItem.Click += new System.EventHandler(this.PrintExamSheet);
             // 
             // ReceiptToolStripMenuItem
             // 
@@ -266,6 +268,7 @@
             this.ReceiptToolStripMenuItem.Name = "ReceiptToolStripMenuItem";
             this.ReceiptToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.ReceiptToolStripMenuItem.Text = "Расписка";
+            this.ReceiptToolStripMenuItem.Click += new System.EventHandler(this.PrintReceipt);
             // 
             // NoticeToolStripMenuItem
             // 
@@ -273,6 +276,7 @@
             this.NoticeToolStripMenuItem.Name = "NoticeToolStripMenuItem";
             this.NoticeToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.NoticeToolStripMenuItem.Text = "Извещение";
+            this.NoticeToolStripMenuItem.Click += new System.EventHandler(this.PrintNotice);
             // 
             // FileSeparator2
             // 
@@ -285,6 +289,7 @@
             this.LogoffToolStripMenuItem.Name = "LogoffToolStripMenuItem";
             this.LogoffToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.LogoffToolStripMenuItem.Text = "Выход из системы";
+            this.LogoffToolStripMenuItem.Click += new System.EventHandler(this.LogoffToolStripMenuItem_Click);
             // 
             // ViewToolStripMenuItem
             // 
@@ -570,6 +575,7 @@
             this.ExamToolStripButton.Name = "ExamToolStripButton";
             this.ExamToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.ExamToolStripButton.Text = "Экзаменнационный лист";
+            this.ExamToolStripButton.Click += new System.EventHandler(this.PrintExamSheet);
             // 
             // ReceiptToolStripButton
             // 
@@ -579,6 +585,7 @@
             this.ReceiptToolStripButton.Name = "ReceiptToolStripButton";
             this.ReceiptToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.ReceiptToolStripButton.Text = "Расписка";
+            this.ReceiptToolStripButton.Click += new System.EventHandler(this.PrintReceipt);
             // 
             // NoticeToolStripButton
             // 
@@ -588,6 +595,7 @@
             this.NoticeToolStripButton.Name = "NoticeToolStripButton";
             this.NoticeToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.NoticeToolStripButton.Text = "Извещение";
+            this.NoticeToolStripButton.Click += new System.EventHandler(this.PrintNotice);
             // 
             // ToolBoxSeparator3
             // 
@@ -635,8 +643,7 @@
             this.tbSurname,
             this.ddbtFinance,
             this.ddbtContest,
-            this.ddbtState,
-            this.btFilterClear});
+            this.ddbtState});
             this.FilterToolBox.Location = new System.Drawing.Point(0, 76);
             this.FilterToolBox.Name = "FilterToolBox";
             this.FilterToolBox.Padding = new System.Windows.Forms.Padding(10, 0, 1, 0);
@@ -655,6 +662,7 @@
             // 
             this.tbSurname.Name = "tbSurname";
             this.tbSurname.Size = new System.Drawing.Size(255, 25);
+            this.tbSurname.TextChanged += new System.EventHandler(this.Filter);
             // 
             // ddbtFinance
             // 
@@ -669,15 +677,19 @@
             // 
             // BudgetFilter
             // 
+            this.BudgetFilter.CheckOnClick = true;
             this.BudgetFilter.Name = "BudgetFilter";
             this.BudgetFilter.Size = new System.Drawing.Size(180, 22);
             this.BudgetFilter.Text = "Бюджетная форма";
+            this.BudgetFilter.Click += new System.EventHandler(this.Filter);
             // 
             // FeeFilter
             // 
+            this.FeeFilter.CheckOnClick = true;
             this.FeeFilter.Name = "FeeFilter";
             this.FeeFilter.Size = new System.Drawing.Size(180, 22);
             this.FeeFilter.Text = "На платной основе";
+            this.FeeFilter.Click += new System.EventHandler(this.Filter);
             // 
             // ddbtContest
             // 
@@ -738,15 +750,6 @@
             this.TookDocumentFilter.Name = "TookDocumentFilter";
             this.TookDocumentFilter.Size = new System.Drawing.Size(178, 22);
             this.TookDocumentFilter.Text = "Забрал документы";
-            // 
-            // btFilterClear
-            // 
-            this.btFilterClear.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btFilterClear.Image = ((System.Drawing.Image)(resources.GetObject("btFilterClear.Image")));
-            this.btFilterClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btFilterClear.Name = "btFilterClear";
-            this.btFilterClear.Size = new System.Drawing.Size(79, 22);
-            this.btFilterClear.Text = "Очистить";
             // 
             // EnrolleeGrid
             // 
@@ -963,6 +966,5 @@
         private System.Windows.Forms.Label lbFormOfStudy;
         private System.Windows.Forms.ComboBox cbFaculty;
         private System.Windows.Forms.Label lbFaculty;
-        private System.Windows.Forms.ToolStripButton btFilterClear;
     }
 }

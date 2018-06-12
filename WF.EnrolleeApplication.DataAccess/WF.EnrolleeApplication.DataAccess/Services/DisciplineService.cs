@@ -18,72 +18,44 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDiscipline(Discipline discipline)
         {
-            Discipline disciplineToDelete = context.Discipline.FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
+            Discipline disciplineToDelete = context.Discipline.AsNoTracking().FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
             context.Discipline.Remove(disciplineToDelete);
             context.SaveChanges();
         }
 
         public Discipline GetDiscipline(int id)
         {
-            Discipline discipline = context.Discipline.FirstOrDefault(d => d.DisciplineId == id);
-            if(discipline != null)
-            {
-                discipline.BasisForAssessing = context.BasisForAssessing.FirstOrDefault(bfa=>bfa.BasisForAssessingId == discipline.BasisForAssessingId);
-            }
+            Discipline discipline = context.Discipline.AsNoTracking().FirstOrDefault(d => d.DisciplineId == id);
             return discipline;
         }
 
         public Discipline GetDiscipline(string name)
         {
-            Discipline discipline = context.Discipline.FirstOrDefault(d => d.Name == name);
-            if (discipline != null)
-            {
-                discipline.BasisForAssessing = context.BasisForAssessing.FirstOrDefault(bfa => bfa.BasisForAssessingId == discipline.BasisForAssessingId);
-            }
+            Discipline discipline = context.Discipline.AsNoTracking().FirstOrDefault(d => d.Name == name);
             return discipline;
         }
 
         public List<Discipline> GetDisciplines()
         {
-            List<Discipline> disciplines = context.Discipline.ToList();
-            if(disciplines.Count!= 0)
-            {
-                foreach(var discipline in disciplines)
-                    discipline.BasisForAssessing = context.BasisForAssessing.FirstOrDefault(bfa => bfa.BasisForAssessingId == discipline.BasisForAssessingId);
-            }
+            List<Discipline> disciplines = context.Discipline.AsNoTracking().ToList();
             return disciplines;
         }
 
         public List<Discipline> GetDisciplines(bool IsGroup)
         {
-            List<Discipline> disciplines = context.Discipline.Where(d => d.IsGroup == IsGroup).ToList();
-            if (disciplines.Count != 0)
-            {
-                foreach (var discipline in disciplines)
-                    discipline.BasisForAssessing = context.BasisForAssessing.FirstOrDefault(bfa => bfa.BasisForAssessingId == discipline.BasisForAssessingId);
-            }
+            List<Discipline> disciplines = context.Discipline.AsNoTracking().Where(d => d.IsGroup == IsGroup).ToList();
             return disciplines;
         }
 
         public List<Discipline> GetDisciplines(BasisForAssessing basisForAssessing, bool IsGroup)
         {
-            List<Discipline> disciplines = context.Discipline.Where(d => d.IsGroup == IsGroup && d.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
-            if (disciplines.Count != 0)
-            {
-                foreach (var discipline in disciplines)
-                    discipline.BasisForAssessing = context.BasisForAssessing.FirstOrDefault(bfa => bfa.BasisForAssessingId == discipline.BasisForAssessingId);
-            }
+            List<Discipline> disciplines = context.Discipline.AsNoTracking().Where(d => d.IsGroup == IsGroup && d.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
             return disciplines;
         }
 
         public List<Discipline> GetDisciplines(Discipline disciplineGroup)
         {
-            List<Discipline> disciplines = context.Discipline.Where(d => d.DisciplineGroupId == disciplineGroup.DisciplineId).ToList();
-            if (disciplines.Count != 0)
-            {
-                foreach (var discipline in disciplines)
-                    discipline.BasisForAssessing = context.BasisForAssessing.FirstOrDefault(bfa => bfa.BasisForAssessingId == discipline.BasisForAssessingId);
-            }
+            List<Discipline> disciplines = context.Discipline.AsNoTracking().Where(d => d.DisciplineGroupId == disciplineGroup.DisciplineId).ToList();
             return disciplines;
         }
 

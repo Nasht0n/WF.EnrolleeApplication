@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteFaculty(Faculty faculty)
         {
-            Faculty facultyToDelete = context.Faculty.FirstOrDefault(f => f.FacultyId == faculty.FacultyId);
+            Faculty facultyToDelete = context.Faculty.AsNoTracking().FirstOrDefault(f => f.FacultyId == faculty.FacultyId);
             context.Faculty.Remove(facultyToDelete);
             context.SaveChanges();
         }
 
         public List<Faculty> GetFaculties()
         {
-            List<Faculty> faculties = context.Faculty.ToList();
+            List<Faculty> faculties = context.Faculty.AsNoTracking().ToList();
             return faculties;
         }
 
         public Faculty GetFaculty(int id)
         {
-            Faculty faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == id);
+            Faculty faculty = context.Faculty.AsNoTracking().FirstOrDefault(f => f.FacultyId == id);
             return faculty;
         }
 
         public Faculty GetFaculty(string fullname)
         {
-            Faculty faculty = context.Faculty.FirstOrDefault(f => f.Fullname == fullname);
+            Faculty faculty = context.Faculty.AsNoTracking().FirstOrDefault(f => f.Fullname == fullname);
             return faculty;
         }
 

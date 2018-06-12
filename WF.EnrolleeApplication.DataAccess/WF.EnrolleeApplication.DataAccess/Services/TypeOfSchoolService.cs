@@ -18,26 +18,26 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfSchool(TypeOfSchool typeOfSchool)
         {
-            TypeOfSchool typeOfSchoolToDelete = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == typeOfSchool.SchoolTypeId);
+            TypeOfSchool typeOfSchoolToDelete = context.TypeOfSchool.AsNoTracking().FirstOrDefault(ts => ts.SchoolTypeId == typeOfSchool.SchoolTypeId);
             context.TypeOfSchool.Remove(typeOfSchoolToDelete);
             context.SaveChanges();
         }
 
         public TypeOfSchool GetTypeOfSchool(int id)
         {
-            TypeOfSchool typeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == id);
+            TypeOfSchool typeOfSchool = context.TypeOfSchool.AsNoTracking().FirstOrDefault(ts => ts.SchoolTypeId == id);
             return typeOfSchool;
         }
 
         public TypeOfSchool GetTypeOfSchool(string name)
         {
-            TypeOfSchool typeOfSchool = context.TypeOfSchool.FirstOrDefault(ts => ts.Name == name);
+            TypeOfSchool typeOfSchool = context.TypeOfSchool.AsNoTracking().FirstOrDefault(ts => ts.Name == name);
             return typeOfSchool;
         }
 
         public List<TypeOfSchool> GetTypeOfSchools()
         {
-            List<TypeOfSchool> typeOfSchools = context.TypeOfSchool.ToList();
+            List<TypeOfSchool> typeOfSchools = context.TypeOfSchool.AsNoTracking().ToList();
             return typeOfSchools;
         }
 

@@ -18,54 +18,32 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteReasonForAddmission(ReasonForAddmission reasonForAddmission)
         {
-            ReasonForAddmission reasonForAddmissionToDelete = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == reasonForAddmission.ReasonForAddmissionId);
+            ReasonForAddmission reasonForAddmissionToDelete = context.ReasonForAddmission.AsNoTracking().FirstOrDefault(r => r.ReasonForAddmissionId == reasonForAddmission.ReasonForAddmissionId);
             context.ReasonForAddmission.Remove(reasonForAddmissionToDelete);
             context.SaveChanges();
         }
 
         public ReasonForAddmission GetReasonForAddmission(int id)
         {
-            ReasonForAddmission reasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == id);
-            if (reasonForAddmission != null)
-            {
-                reasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == reasonForAddmission.ContestId);
-            }
+            ReasonForAddmission reasonForAddmission = context.ReasonForAddmission.AsNoTracking().FirstOrDefault(r => r.ReasonForAddmissionId == id);
             return reasonForAddmission;
         }
 
         public ReasonForAddmission GetReasonForAddmission(string fullname)
         {
-            ReasonForAddmission reasonForAddmission = context.ReasonForAddmission.FirstOrDefault(r => r.Fullname == fullname);
-            if (reasonForAddmission != null)
-            {
-                reasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == reasonForAddmission.ContestId);
-            }
+            ReasonForAddmission reasonForAddmission = context.ReasonForAddmission.AsNoTracking().FirstOrDefault(r => r.Fullname == fullname);
             return reasonForAddmission;
         }
 
         public List<ReasonForAddmission> GetReasonForAddmissions()
         {
-            List<ReasonForAddmission> reasonForAddmissions = context.ReasonForAddmission.ToList();
-            if (reasonForAddmissions.Count != 0)
-            {
-                foreach (ReasonForAddmission reasonForAddmission in reasonForAddmissions)
-                {
-                    reasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == reasonForAddmission.ContestId);
-                }
-            }
+            List<ReasonForAddmission> reasonForAddmissions = context.ReasonForAddmission.AsNoTracking().ToList();
             return reasonForAddmissions;
         }
 
         public List<ReasonForAddmission> GetReasonForAddmissions(Contest contest)
         {
-            List<ReasonForAddmission> reasonForAddmissions = context.ReasonForAddmission.Where(r => r.ContestId == contest.ContestId).ToList();
-            if (reasonForAddmissions.Count != 0)
-            {
-                foreach (ReasonForAddmission reasonForAddmission in reasonForAddmissions)
-                {
-                    reasonForAddmission.Contest = context.Contest.FirstOrDefault(c => c.ContestId == reasonForAddmission.ContestId);
-                }
-            }
+            List<ReasonForAddmission> reasonForAddmissions = context.ReasonForAddmission.AsNoTracking().Where(r => r.ContestId == contest.ContestId).ToList();
             return reasonForAddmissions;
         }
 

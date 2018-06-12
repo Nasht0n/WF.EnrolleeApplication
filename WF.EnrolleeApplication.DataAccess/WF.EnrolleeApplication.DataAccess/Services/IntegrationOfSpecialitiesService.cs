@@ -18,67 +18,38 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteIntegrationOfSpecialities(IntegrationOfSpecialities integrationOfSpecialities)
         {
-            IntegrationOfSpecialities integrationOfSpecialitiesToDelete = context.IntegrationOfSpecialities.FirstOrDefault(ios => ios.IntegrationId == integrationOfSpecialities.IntegrationId);
+            IntegrationOfSpecialities integrationOfSpecialitiesToDelete = context.IntegrationOfSpecialities.AsNoTracking().FirstOrDefault(ios => ios.IntegrationId == integrationOfSpecialities.IntegrationId);
             context.IntegrationOfSpecialities.Remove(integrationOfSpecialitiesToDelete);
             context.SaveChanges();
         }
 
         public List<IntegrationOfSpecialities> GetIntegrationOfSpecialities()
         {
-            List<IntegrationOfSpecialities> integrationOfSpecialities = context.IntegrationOfSpecialities.ToList();
-            foreach (var integrationOfSpeciality in integrationOfSpecialities)
-            {
-                integrationOfSpeciality.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == integrationOfSpeciality.FirstSpecialityId);
-                integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
-                integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);
-                integrationOfSpeciality.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == integrationOfSpeciality.SecondarySpecialityId);
-            }
+            List<IntegrationOfSpecialities> integrationOfSpecialities = context.IntegrationOfSpecialities.AsNoTracking().ToList();
             return integrationOfSpecialities;
         }
 
         public List<IntegrationOfSpecialities> GetIntegrationOfSpecialities(Speciality speciality)
         {
-            List<IntegrationOfSpecialities> integrationOfSpecialities = context.IntegrationOfSpecialities.Where(ios => ios.FirstSpecialityId == speciality.SpecialityId).ToList();
-            foreach (var integrationOfSpeciality in integrationOfSpecialities)
-            {            
-                integrationOfSpeciality.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == integrationOfSpeciality.FirstSpecialityId);
-                integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
-                integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);
-                integrationOfSpeciality.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == integrationOfSpeciality.SecondarySpecialityId);
-            }
+            List<IntegrationOfSpecialities> integrationOfSpecialities = context.IntegrationOfSpecialities.AsNoTracking().Where(ios => ios.FirstSpecialityId == speciality.SpecialityId).ToList();
             return integrationOfSpecialities;
         }
 
         public List<IntegrationOfSpecialities> GetIntegrationOfSpecialities(SecondarySpeciality secondarySpeciality)
         {
-            List<IntegrationOfSpecialities> integrationOfSpecialities = context.IntegrationOfSpecialities.Where(ios => ios.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId).ToList();
-            foreach (var integrationOfSpeciality in integrationOfSpecialities)
-            {
-                integrationOfSpeciality.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == integrationOfSpeciality.FirstSpecialityId);
-                integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
-                integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);
-                integrationOfSpeciality.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == integrationOfSpeciality.SecondarySpecialityId);
-            }
+            List<IntegrationOfSpecialities> integrationOfSpecialities = context.IntegrationOfSpecialities.AsNoTracking().Where(ios => ios.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId).ToList();
             return integrationOfSpecialities;
         }
 
         public IntegrationOfSpecialities GetIntegrationOfSpecialities(int id)
         {
-            IntegrationOfSpecialities integrationOfSpeciality = context.IntegrationOfSpecialities.FirstOrDefault(ios => ios.IntegrationId == id);
-            integrationOfSpeciality.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == integrationOfSpeciality.FirstSpecialityId);
-            integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
-            integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);
-            integrationOfSpeciality.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == integrationOfSpeciality.SecondarySpecialityId);
+            IntegrationOfSpecialities integrationOfSpeciality = context.IntegrationOfSpecialities.AsNoTracking().FirstOrDefault(ios => ios.IntegrationId == id);
             return integrationOfSpeciality;
         }
 
         public IntegrationOfSpecialities GetIntegrationOfSpecialities(Speciality speciality, SecondarySpeciality secondarySpeciality)
         {
-            IntegrationOfSpecialities integrationOfSpeciality = context.IntegrationOfSpecialities.FirstOrDefault(ios => ios.FirstSpecialityId == speciality.SpecialityId && ios.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId);
-            integrationOfSpeciality.Speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == integrationOfSpeciality.FirstSpecialityId);
-            integrationOfSpeciality.Speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == integrationOfSpeciality.Speciality.FacultyId);
-            integrationOfSpeciality.Speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == integrationOfSpeciality.Speciality.FormOfStudyId);
-            integrationOfSpeciality.SecondarySpeciality = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == integrationOfSpeciality.SecondarySpecialityId);
+            IntegrationOfSpecialities integrationOfSpeciality = context.IntegrationOfSpecialities.AsNoTracking().FirstOrDefault(ios => ios.FirstSpecialityId == speciality.SpecialityId && ios.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId);
             return integrationOfSpeciality;
         }
 

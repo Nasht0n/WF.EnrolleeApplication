@@ -18,100 +18,50 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteSpeciality(Speciality speciality)
         {
-            Speciality specialityToDelete = context.Speciality.FirstOrDefault(s => s.SpecialityId == speciality.SpecialityId);
+            Speciality specialityToDelete = context.Speciality.AsNoTracking().FirstOrDefault(s => s.SpecialityId == speciality.SpecialityId);
             context.Speciality.Remove(specialityToDelete);
             context.SaveChanges();
         }
 
         public List<Speciality> GetSpecialities()
         {
-            List<Speciality> specialities = context.Speciality.ToList();
-            if (specialities.Count != 0)
-            {
-                foreach (Speciality speciality in specialities)
-                {
-                    speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == speciality.FacultyId);
-                    speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == speciality.FormOfStudyId);
-                }
-            }
+            List<Speciality> specialities = context.Speciality.AsNoTracking().ToList();
             return specialities;
         }
 
         public List<Speciality> GetSpecialities(Faculty faculty)
         {
-            List<Speciality> specialities = context.Speciality.Where(s => s.FacultyId == faculty.FacultyId).ToList();
-            if (specialities.Count != 0)
-            {
-                foreach (Speciality speciality in specialities)
-                {
-                    speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == speciality.FacultyId);
-                    speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == speciality.FormOfStudyId);
-                }
-            }
+            List<Speciality> specialities = context.Speciality.AsNoTracking().Where(s => s.FacultyId == faculty.FacultyId).ToList();
             return specialities;
         }
 
         public List<Speciality> GetSpecialities(FormOfStudy formOfStudy)
         {
-            List<Speciality> specialities = context.Speciality.Where(s => s.FormOfStudyId == formOfStudy.FormOfStudyId).ToList();
-            if (specialities.Count != 0)
-            {
-                foreach (Speciality speciality in specialities)
-                {
-                    speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == speciality.FacultyId);
-                    speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == speciality.FormOfStudyId);
-                }
-            }
+            List<Speciality> specialities = context.Speciality.AsNoTracking().Where(s => s.FormOfStudyId == formOfStudy.FormOfStudyId).ToList();
             return specialities;
         }
 
         public List<Speciality> GetSpecialities(Faculty faculty, FormOfStudy formOfStudy)
         {
-            List<Speciality> specialities = context.Speciality.Where(s => s.FormOfStudyId == formOfStudy.FormOfStudyId && s.FacultyId == faculty.FacultyId).ToList();
-            if (specialities.Count != 0)
-            {
-                foreach (Speciality speciality in specialities)
-                {
-                    speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == speciality.FacultyId);
-                    speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == speciality.FormOfStudyId);
-                }
-            }
+            List<Speciality> specialities = context.Speciality.AsNoTracking().Where(s => s.FormOfStudyId == formOfStudy.FormOfStudyId && s.FacultyId == faculty.FacultyId).ToList();
             return specialities;
         }
 
         public List<Speciality> GetSpecialities(Speciality groupSpeciality)
         {
-            List<Speciality> specialities = context.Speciality.Where(s => s.SpecialityGroupId == groupSpeciality.SpecialityId).ToList();
-            if (specialities.Count != 0)
-            {
-                foreach (Speciality speciality in specialities)
-                {
-                    speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == speciality.FacultyId);
-                    speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == speciality.FormOfStudyId);
-                }
-            }
+            List<Speciality> specialities = context.Speciality.AsNoTracking().Where(s => s.SpecialityGroupId == groupSpeciality.SpecialityId).ToList();
             return specialities;
         }
 
         public Speciality GetSpeciality(int id)
         {
-            Speciality speciality = context.Speciality.FirstOrDefault(s => s.SpecialityId == id);
-            if (speciality != null)
-            {
-                speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == speciality.FacultyId);
-                speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == speciality.FormOfStudyId);
-            }
+            Speciality speciality = context.Speciality.AsNoTracking().FirstOrDefault(s => s.SpecialityId == id);
             return speciality;
         }
 
         public Speciality GetSpeciality(string cipher)
         {
-            Speciality speciality = context.Speciality.FirstOrDefault(s => s.Cipher == cipher);
-            if (speciality != null)
-            {
-                speciality.Faculty = context.Faculty.FirstOrDefault(f => f.FacultyId == speciality.FacultyId);
-                speciality.FormOfStudy = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == speciality.FormOfStudyId);
-            }
+            Speciality speciality = context.Speciality.AsNoTracking().FirstOrDefault(s => s.Cipher == cipher);
             return speciality;
         }
 
