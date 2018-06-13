@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.lbUserInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbEmployee = new System.Windows.Forms.ToolStripStatusLabel();
@@ -705,18 +706,21 @@
             // 
             // GeneralContestFilter
             // 
+            this.GeneralContestFilter.CheckOnClick = true;
             this.GeneralContestFilter.Name = "GeneralContestFilter";
             this.GeneralContestFilter.Size = new System.Drawing.Size(241, 22);
             this.GeneralContestFilter.Text = "Общий конкурс";
             // 
             // WithoutExamFilter
             // 
+            this.WithoutExamFilter.CheckOnClick = true;
             this.WithoutExamFilter.Name = "WithoutExamFilter";
             this.WithoutExamFilter.Size = new System.Drawing.Size(241, 22);
             this.WithoutExamFilter.Text = "Без вступительных испытаний";
             // 
             // OutOfContestFilter
             // 
+            this.OutOfContestFilter.CheckOnClick = true;
             this.OutOfContestFilter.Name = "OutOfContestFilter";
             this.OutOfContestFilter.Size = new System.Drawing.Size(241, 22);
             this.OutOfContestFilter.Text = "Вне конкурса";
@@ -735,18 +739,21 @@
             // 
             // CandidateFilter
             // 
+            this.CandidateFilter.CheckOnClick = true;
             this.CandidateFilter.Name = "CandidateFilter";
             this.CandidateFilter.Size = new System.Drawing.Size(178, 22);
             this.CandidateFilter.Text = "Кандидат";
             // 
             // EnrollFilter
             // 
+            this.EnrollFilter.CheckOnClick = true;
             this.EnrollFilter.Name = "EnrollFilter";
             this.EnrollFilter.Size = new System.Drawing.Size(178, 22);
             this.EnrollFilter.Text = "Зачислен";
             // 
             // TookDocumentFilter
             // 
+            this.TookDocumentFilter.CheckOnClick = true;
             this.TookDocumentFilter.Name = "TookDocumentFilter";
             this.TookDocumentFilter.Size = new System.Drawing.Size(178, 22);
             this.TookDocumentFilter.Text = "Забрал документы";
@@ -760,6 +767,14 @@
             this.EnrolleeGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.EnrolleeGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.EnrolleeGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.EnrolleeGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.EnrolleeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EnrolleeGrid.Location = new System.Drawing.Point(0, 101);
             this.EnrolleeGrid.MultiSelect = false;
@@ -866,6 +881,7 @@
             this.Name = "frmDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "АИС \"Абитуриент\". Модуль \"Регистрация\"";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);

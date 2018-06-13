@@ -188,7 +188,7 @@ namespace WF.EnrolleeApplication.App.Views
             tbBlrName.Text = editEnrollee.BlrName;
             tbBlrPatronymic.Text = editEnrollee.BlrPatronymic;
             dtBirthday.Value = editEnrollee.DateOfBirthday;
-            if (editEnrollee.Gender == "М") rbMale.Checked = true;
+            if (editEnrollee.Gender.Trim() == "М") rbMale.Checked = true;
             else rbFemale.Checked = true;
             cbCitizenship.SelectedValue = editEnrollee.CitizenshipId;
             cbDocument.SelectedValue = editEnrollee.DocumentId;
@@ -219,7 +219,7 @@ namespace WF.EnrolleeApplication.App.Views
             tbSchoolName.Text = editEnrollee.SchoolName;
             cbTypeOfSchool.SelectedValue = editEnrollee.SchoolTypeId;
             if (editEnrollee.SecondarySpecialityId.HasValue) cbSecondarySpeciality.SelectedValue = editEnrollee.SecondarySpecialityId;
-            if (editEnrollee.CurrentNumberCurs != "-" || editEnrollee.CurrentSpeciality != "-" || editEnrollee.CurrentUniversity != "-")
+            if (string.IsNullOrWhiteSpace(editEnrollee.CurrentNumberCurs) || string.IsNullOrWhiteSpace(editEnrollee.CurrentSpeciality) || string.IsNullOrWhiteSpace(editEnrollee.CurrentUniversity))
             {
                 cbSecondEducation.Checked = true;
                 tbCurrentNumberCurs.Text = editEnrollee.CurrentNumberCurs;
@@ -264,8 +264,9 @@ namespace WF.EnrolleeApplication.App.Views
             InitializePrioritySpecialityGrid(editEnrollee);
             InitializeAtributeList(editEnrollee);
 
-
-
+            cbFaculty.Enabled = false;
+            cbFormOfStudy.Enabled = false;
+            cbSpeciality.Enabled = false;
         }
 
         #region Создание, настройка и заполнение таблиц данных
@@ -380,7 +381,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="enrollee">Профиль редактируемого абитуриента</param>
         private void InitializePrioritySpecialityGrid(Enrollee enrollee)
         {
-            List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+            List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p=>p.PriorityLevel).ToList();
             priorityTable.Rows.Clear();
             foreach (var priority in priorities)
                 priorityTable.Rows.Add(priority.PriorityLevel, priority.Speciality.FormOfStudy.Fullname, priority.SpecialityId, priority.Speciality.Fullname);
@@ -992,7 +993,8 @@ namespace WF.EnrolleeApplication.App.Views
                 int id = (int)cbSpeciality.SelectedValue;
                 speciality = specialityService.GetSpeciality(id);
                 InitializeSertificationGrid();
-                InitializeSecondarySpecialityComboBox();
+                if(HasSecondarySpeciality) InitializeSecondarySpecialityComboBox();
+                else InitializePrioritySpecialityGrid();                
             }
         }
         /// <summary>
@@ -1142,7 +1144,11 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Видимость полей
-
+        /// <summary>
+        /// Установка видимости полей второго высшего образования
+        /// </summary>
+        /// <param name="sender">Поле-флажок "Второе высшее"</param>
+        /// <param name="e"></param>
         private void cbSecondEducation_CheckedChanged(object sender, EventArgs e)
         {
             if (cbSecondEducation.Checked)
@@ -1154,13 +1160,19 @@ namespace WF.EnrolleeApplication.App.Views
                 ShowSecondEducationFields(false);
             }
         }
-
+        /// <summary>
+        /// Установка видимости выпадающего списка "Специальности второй ступени"
+        /// </summary>
+        /// <param name="flag"></param>
         private void ShowComboBoxSecondarySpeciality(bool flag)
         {
             HasSecondarySpeciality = flag;
             gbSecondarySpeciality.Visible = flag;
         }
-
+        /// <summary>
+        /// Установка видимости полей рабочего места, должности и стажа
+        /// </summary>
+        /// <param name="flag"></param>
         private void ShowComboBoxesCurrentWorkPlace(bool flag)
         {
             IsWorker = flag;
@@ -1168,7 +1180,10 @@ namespace WF.EnrolleeApplication.App.Views
             gbWorkPlace.Visible = flag;
             gbWorkPost.Visible = flag;
         }
-
+        /// <summary>
+        /// Установка видимости полей специальности второй ступени
+        /// </summary>
+        /// <param name="flag"></param>
         private void ShowSecondEducationFields(bool flag)
         {
             gbCurrentCurs.Visible = flag;
@@ -1177,6 +1192,12 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Работа со списком атрибутов(льгот)
+        /// <summary>
+        /// Установка видимости выпадающего списка рабочих мест целевого направления
+        /// Дублирование выбора атрибута "Целевое направление" в списке льгот
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbTarget_CheckedChanged(object sender, EventArgs e)
         {
             if (cbTarget.Checked)
@@ -1190,13 +1211,21 @@ namespace WF.EnrolleeApplication.App.Views
                 SetCheckedAtribute(cbTarget.Text.Trim(), false);
             }
         }
-
+        /// <summary>
+        /// Дублирование выбора атрибута "БРСМ" в списке льгот
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbBrsm_CheckedChanged(object sender, EventArgs e)
         {
             if (cbBrsm.Checked) SetCheckedAtribute(cbBrsm.Text, true);
             else SetCheckedAtribute(cbBrsm.Text, false);
         }
-
+        /// <summary>
+        /// Выбор атрибута в списке атрибутов (льгот) 
+        /// </summary>
+        /// <param name="name">Наимемнование атрибута</param>
+        /// <param name="flag">Значение true - выбор атрибута; false - отмена выбора</param>
         private void SetCheckedAtribute(string name, bool flag)
         {
             // Дополнительные атрибуты
@@ -1210,7 +1239,11 @@ namespace WF.EnrolleeApplication.App.Views
                 }
             }
         }
-
+        /// <summary>
+        /// Дублирование выбора атрибута "БРСМ" и "Целевое направление" в списке льгот и полях выбора
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkAtributeList_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             string name = chkAtributeList.Items[e.Index].ToString();
@@ -1235,17 +1268,42 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Управление сертификатами
+        /// <summary>
+        /// Удаление выбранной дисциплины из таблицы сертификатов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btDeleteDiscipline_Click(object sender, EventArgs e)
         {
             int rowIndex = SertificateGrid.CurrentRow.Index;
             sertificateTable.Rows[rowIndex].Delete();
         }
-
+        /// <summary>
+        /// Получение текущей экзаменнационной схемы специальности
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btGetExamSchema_Click(object sender, EventArgs e)
         {
-            InitializeSertificationGrid();
+            if (!editMode)
+                InitializeSertificationGrid();
+            else
+            {
+                DialogResult examSchemaClearResult = MessageBox.Show(this, "При загрузке экзаменнационной схемы, будет удалена информация о текущих оценках абитуриента. Продолжить?", "Экзаменнационная схема", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (examSchemaClearResult == DialogResult.Yes)
+                {
+                    List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+                    foreach (var assessment in assessments)
+                        assessmentService.DeleteAssessment(assessment);
+                    InitializeSertificationGrid();
+                }
+            }
         }
-
+        /// <summary>
+        /// Замена дисциплины в таблице сертификатов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btChangeDiscipline_Click(object sender, EventArgs e)
         {
             frmChangeDiscipline changeDisciplineCard = new frmChangeDiscipline();
@@ -1258,6 +1316,11 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Установка языков
+        /// <summary>
+        /// Установка белорусского языка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetBelorussianLanguage(object sender, EventArgs e)
         {
             ChangeInputLanguage change = new ChangeInputLanguage();
@@ -1267,7 +1330,11 @@ namespace WF.EnrolleeApplication.App.Views
                 if (il.Culture.Name == "be-BY") change.ChangeLanguage(il);
             }
         }
-
+        /// <summary>
+        /// Установка английского языка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetEnglishLanguage(object sender, EventArgs e)
         {
             ChangeInputLanguage change = new ChangeInputLanguage();
@@ -1277,7 +1344,11 @@ namespace WF.EnrolleeApplication.App.Views
                 if (il.Culture.Name == "en-US") change.ChangeLanguage(il);
             }
         }
-
+        /// <summary>
+        /// Установка языка по умолчанию (русский)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetDefaultLanguage(object sender, EventArgs e)
         {
             ChangeInputLanguage change = new ChangeInputLanguage();
@@ -1286,12 +1357,21 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Ввод цифр
+        /// <summary>
+        /// Разрешаем ввод цифр
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AllowNumeric(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
         }
-
+        /// <summary>
+        /// Разрешаем ввод цифр поля оценок аттестата
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AllowNumericAttestat(object sender, KeyPressEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -1316,7 +1396,11 @@ namespace WF.EnrolleeApplication.App.Views
                     }
             }
         }
-
+        /// <summary>
+        /// Разрешаем ввод цифр поля оценок диплома ПТУ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AllowNumericDiplomPtu(object sender, KeyPressEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -1341,7 +1425,11 @@ namespace WF.EnrolleeApplication.App.Views
                     }
             }
         }
-
+        /// <summary>
+        /// Разрешаем ввод цифр поля оценок диплома ССУЗ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AllowNumericDiplomSsuz(object sender, KeyPressEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -1368,7 +1456,13 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Работа с оценками абитуриента
-        // Считаем оценки
+        /// <summary>
+        /// Считаем средний балл оценок выбранного документа об образовании
+        /// </summary>
+        /// <param name="firstString">Первая строка оценок</param>
+        /// <param name="secondString">Вторая строка оценок</param>
+        /// <param name="transferSystem">Выпадающий список системы перевода</param>
+        /// <param name="averageString">Поле среднего балла</param>
         private void CalculateEstimation(TextBox firstString, TextBox secondString, ComboBox transferSystem, TextBox averageString)
         {
             if (firstString.Text.Equals(secondString.Text))
@@ -1431,7 +1525,12 @@ namespace WF.EnrolleeApplication.App.Views
             }
             else averageString.Text = " ";
         }
-        // Среднее со всех документов
+        /// <summary>
+        /// Считаем средний балл оценок документов об образовании
+        /// </summary>
+        /// <param name="attestat">Средний балл аттестата</param>
+        /// <param name="diplomSsuz">Средний балл диплома ССУЗа</param>
+        /// <param name="diplomPtu">Средний балл диплома ПТУ</param>
         private void CalculateAverageEstimation(TextBox attestat, TextBox diplomSsuz, TextBox diplomPtu)
         {
             double avgAttestat = 0;
@@ -1452,6 +1551,11 @@ namespace WF.EnrolleeApplication.App.Views
             if (Double.IsNaN(avr)) tbAverage.Text = String.Empty;
             else tbAverage.Text = avr.ToString();
         }
+        /// <summary>
+        /// Проверка системы перевода введеных оценок
+        /// </summary>
+        /// <param name="s">Строка оценок</param>
+        /// <returns></returns>
         private bool isTenSystem(string s)
         {
             bool tenSystem = false; // 10-и балльная система
@@ -1468,62 +1572,122 @@ namespace WF.EnrolleeApplication.App.Views
             else tenSystem = true;
             return tenSystem;
         }
+        /// <summary>
+        /// Изменение системы перевода Аттестата
+        /// </summary>
+        /// <param name="sender">Выпадающий список системы перевода Аттестата</param>
+        /// <param name="e"></param>
         private void cbSystemAttestat_SelectedValueChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstAttestatString, tbSecondAttestatString, cbSystemAttestat, tbAverageAttestat);
         }
+        /// <summary>
+        /// Изменение первой строки оценок Аттестата
+        /// </summary>
+        /// <param name="sender">Текстовое поле аттестата</param>
+        /// <param name="e"></param>
         private void tbFirstAttestatString_TextChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstAttestatString, tbSecondAttestatString, cbSystemAttestat, tbAverageAttestat);
         }
-
+        /// <summary>
+        /// Изменение второй строки оценок Аттестата
+        /// </summary>
+        /// <param name="sender">Текстовое поле аттестата</param>
+        /// <param name="e"></param>
         private void tbSecondAttestatString_TextChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstAttestatString, tbSecondAttestatString, cbSystemAttestat, tbAverageAttestat);
         }
-
+        /// <summary>
+        /// Изменение системы перевода диплома ПТУ
+        /// </summary>
+        /// <param name="sender">Выпадающий список системы перевода диплома ПТУ</param>
+        /// <param name="e"></param>
         private void cbSystemDiplomPtu_SelectedValueChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstDiplomPtuString, tbSecondDiplomPtuString, cbSystemDiplomPtu, tbAverageDiplomPtu);
         }
-
+        /// <summary>
+        /// Изменение первой строки оценок диплома ПТУ
+        /// </summary>
+        /// <param name="sender">Текстовое поле диплома ПТУ</param>
+        /// <param name="e"></param>
         private void tbFirstDiplomPtuString_TextChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstDiplomPtuString, tbSecondDiplomPtuString, cbSystemDiplomPtu, tbAverageDiplomPtu);
         }
-
+        /// <summary>
+        /// Изменение второй строки оценок диплома ПТУ
+        /// </summary>
+        /// <param name="sender">Текстовое поле диплома ПТУ</param>
+        /// <param name="e"></param>
         private void tbSecondDiplomPtuString_TextChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstDiplomPtuString, tbSecondDiplomPtuString, cbSystemDiplomPtu, tbAverageDiplomPtu);
         }
+        /// <summary>
+        /// Изменение системы перевода диплома ССУЗа
+        /// </summary>
+        /// <param name="sender">Выпадающий список системы перевода диплома ССУЗа</param>
+        /// <param name="e"></param>
         private void cbSystemDiplomSsuz_SelectedValueChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstDiplomSsuzString, tbSecondDiplomSsuzString, cbSystemDiplomSsuz, tbAverageDiplomSsuz);
         }
+        /// <summary>
+        /// Изменение первой строки оценок диплома ССУЗа
+        /// </summary>
+        /// <param name="sender">Текстовое поле диплома ССУЗа</param>
+        /// <param name="e"></param>
         private void tbFirstDiplomSsuzString_TextChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstDiplomSsuzString, tbSecondDiplomSsuzString, cbSystemDiplomSsuz, tbAverageDiplomSsuz);
         }
+        /// <summary>
+        /// Изменение второй строки оценок диплома ССУЗа
+        /// </summary>
+        /// <param name="sender">Текстовое поле диплома ССУЗа</param>
+        /// <param name="e"></param>
         private void tbSecondDiplomSsuzString_TextChanged(object sender, EventArgs e)
         {
             CalculateEstimation(tbFirstDiplomSsuzString, tbSecondDiplomSsuzString, cbSystemDiplomSsuz, tbAverageDiplomSsuz);
         }
+        /// <summary>
+        /// Изменение строки среднего балла аттестата
+        /// </summary>
+        /// <param name="sender">Текстовое поле диплома аттестата</param>
+        /// <param name="e"></param>
         private void tbAverageAttestat_TextChanged(object sender, EventArgs e)
         {
             CalculateAverageEstimation(tbAverageAttestat, tbAverageDiplomSsuz, tbAverageDiplomPtu);
         }
-
+        /// <summary>
+        /// Изменение строки среднего балла диплома ПТУ
+        /// </summary>
+        /// <param name="sender">Текстовое поле диплома диплома ПТУ</param>
+        /// <param name="e"></param>
         private void tbAverageDiplomPtu_TextChanged(object sender, EventArgs e)
         {
             CalculateAverageEstimation(tbAverageAttestat, tbAverageDiplomSsuz, tbAverageDiplomPtu);
         }
-
+        /// <summary>
+        /// Изменение строки среднего балла диплома ССУЗа
+        /// </summary>
+        /// <param name="sender">Текстовое поле диплома диплома ССУЗа</param>
+        /// <param name="e"></param>
         private void tbAverageDiplomSsuz_TextChanged(object sender, EventArgs e)
         {
             CalculateAverageEstimation(tbAverageAttestat, tbAverageDiplomSsuz, tbAverageDiplomPtu);
         }
         #endregion
         #region Изменение порядка(ранга) приоритета
+        /// <summary>
+        /// Изменение порядка (ранга) приоритета специальности в таблице приоритетов
+        /// Управление клавишами стрелок на клавиатуре "Вверх" и "Вниз"
+        /// </summary>
+        /// <param name="sender">Таблица приоритетов</param>
+        /// <param name="e"></param>
         private void PriorityGrid_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up) // стрелка вверх
@@ -1576,20 +1740,34 @@ namespace WF.EnrolleeApplication.App.Views
             }
         }
         #endregion
-
+        /// <summary>
+        /// Очистка буфера обмена
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearClipboard(object sender, EventArgs e)
         {
             Clipboard.Clear();
         }
+        /// <summary>
+        /// Отмена сохранения профиля абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка "Отмена"</param>
+        /// <param name="e"></param>
         private void btCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+        /// <summary>
+        /// Сохранение профиля абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка "Сохранить"</param>
+        /// <param name="e"></param>
         private void btSave_Click(object sender, EventArgs e)
         {
             Enrollee savedEnrollee = SaveCurrentEnrollee(enrollee);
-            if (savedEnrollee != null)
+            if (savedEnrollee.EnrolleeId != 0)
             {
                 List<Assessment> assessments = GetAssessments(savedEnrollee);
                 SaveAssessments(assessments);
@@ -1601,19 +1779,49 @@ namespace WF.EnrolleeApplication.App.Views
                 this.Close();
             }
         }
+        /// <summary>
+        /// Сохранение списка приоритетов пользователя
+        /// </summary>
+        /// <param name="priorities">Список приоритетов</param>
         private void SavePriorities(List<PriorityOfSpeciality> priorities)
         {
-            foreach (var priority in priorities)
-                priorityOfSpecialityService.InsertPriorityOfSpeciality(priority);
+            if (!editMode)
+            {
+                foreach (var priority in priorities)
+                    priorityOfSpecialityService.InsertPriorityOfSpeciality(priority);
+            }
+            else
+            {
+                foreach (var priority in priorities)
+                    priorityOfSpecialityService.UpdatePriorityOfSpeciality(priority);
+            }
         }
+        /// <summary>
+        /// Сохранение списка льгот
+        /// </summary>
+        /// <param name="atributes">Список льгот</param>
         private void SaveAtributes(List<AtributeForEnrollee> atributes)
         {
-            foreach (var atribute in atributes)
-                atributeForEnrolleeService.InsertAtributeForEnrollee(atribute);
+
+                foreach (var atribute in atributes)
+                    atributeForEnrolleeService.InsertAtributeForEnrollee(atribute);
+            
         }
+        /// <summary>
+        /// Получение списка льгот абитуриента
+        /// </summary>
+        /// <param name="savedEnrollee">Текущий профиль абитуриента</param>
+        /// <returns></returns>
         private List<AtributeForEnrollee> GetAtributes(Enrollee savedEnrollee)
         {
-            List<AtributeForEnrollee> list = new List<AtributeForEnrollee>();
+            List<AtributeForEnrollee> list = atributeForEnrolleeService.GetAtributeForEnrollees(savedEnrollee);
+            if (list.Count != 0)
+            {
+                foreach (var atribute in list)
+                    atributeForEnrolleeService.DeleteAtributeForEnrollee(atribute);
+            }
+
+            list = new List<AtributeForEnrollee>();
             foreach (int i in chkAtributeList.CheckedIndices)
             {
                 string name = chkAtributeList.Items[i].ToString();
@@ -1623,51 +1831,127 @@ namespace WF.EnrolleeApplication.App.Views
                 atribute.EnrolleeId = savedEnrollee.EnrolleeId;
                 list.Add(atribute);
             }
+
             return list;
         }
+        /// <summary>
+        /// Добавление оценок абитуриента
+        /// </summary>
+        /// <param name="assessments">Список оценок</param>
         private void SaveAssessments(List<Assessment> assessments)
         {
-            foreach (var assessment in assessments)
+            if (!editMode)
             {
-                assessmentService.InsertAssessment(assessment);
+                foreach (var assessment in assessments)
+                    assessmentService.InsertAssessment(assessment);
+            }
+            else
+            {
+                foreach (var assessment in assessments)
+                    assessmentService.UpdateAssessment(assessment);
             }
         }
+        /// <summary>
+        /// Получение списка оценок абитуриента
+        /// </summary>
+        /// <param name="savedEnrollee">Текущий профиль абитуриента</param>
+        /// <returns></returns>
         private List<Assessment> GetAssessments(Enrollee savedEnrollee)
         {
             List<Assessment> list = new List<Assessment>();
-            // Оценка документа об образовании
-            Assessment docAssessment = new Assessment();
-            docAssessment.DisciplineId = 5;
-            docAssessment.EnrolleeId = savedEnrollee.EnrolleeId;
-            docAssessment.Estimation = Int32.Parse(tbAverage.Text);
-            list.Add(docAssessment);
-            // Оценки таблицы сертификатов
-            foreach (DataGridViewRow row in SertificateGrid.Rows)
+            if (!editMode)
             {
-                Assessment assessment = new Assessment();
-                assessment.DisciplineId = Int32.Parse(row.Cells[0].Value.ToString());
-                assessment.EnrolleeId = savedEnrollee.EnrolleeId;
-                assessment.Estimation = Int32.Parse(row.Cells[4].Value.ToString());
-                assessment.SertCode = row.Cells[3].Value.ToString();
-                assessment.SertDate = row.Cells[5].Value.ToString();
-                assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
-                list.Add(assessment);
+                // Оценка документа об образовании
+                Assessment docAssessment = new Assessment();
+                docAssessment.DisciplineId = 5;
+                docAssessment.EnrolleeId = savedEnrollee.EnrolleeId;
+                docAssessment.Estimation = Int32.Parse(tbAverage.Text);
+                list.Add(docAssessment);
+                // Оценки таблицы сертификатов
+                foreach (DataGridViewRow row in SertificateGrid.Rows)
+                {
+                    Assessment assessment = new Assessment();
+                    assessment.DisciplineId = Int32.Parse(row.Cells[0].Value.ToString());
+                    assessment.EnrolleeId = savedEnrollee.EnrolleeId;
+                    if (string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString())) assessment.Estimation = 0;
+                    else assessment.Estimation = Int32.Parse(row.Cells[4].Value.ToString());
+                    assessment.SertCode = row.Cells[3].Value.ToString();
+                    assessment.SertDate = row.Cells[5].Value.ToString();
+                    assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
+                    list.Add(assessment);
+                }
+            }
+            else
+            {
+                list = assessmentService.GetAssessments(savedEnrollee);
+                foreach (var assessment in list)
+                {
+                    if (assessment.DisciplineId == 5)
+                    {
+                        assessment.Estimation = Int32.Parse(tbAverage.Text);
+                    }
+                    else
+                    {
+                        foreach (DataGridViewRow row in SertificateGrid.Rows)
+                        {
+                            int disciplineId = Int32.Parse(row.Cells[0].Value.ToString());
+                            if (assessment.DisciplineId == disciplineId)
+                            {
+                                if (string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString())) assessment.Estimation = 0;
+                                else assessment.Estimation = Int32.Parse(row.Cells[4].Value.ToString());
+                                assessment.SertCode = row.Cells[3].Value.ToString();
+                                assessment.SertDate = row.Cells[5].Value.ToString();
+                                assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
+                            }
+                        }
+                    }
+                }
             }
             return list;
         }
+        /// <summary>
+        /// Получение списка приоритетов специальностей абитуриента
+        /// </summary>
+        /// <param name="savedEnrollee">Текущий профиль абитуриента</param>
+        /// <returns></returns>
         private List<PriorityOfSpeciality> GetPriorityList(Enrollee savedEnrollee)
         {
             List<PriorityOfSpeciality> list = new List<PriorityOfSpeciality>();
-            foreach (DataGridViewRow row in PriorityGrid.Rows)
+            if (!editMode)
             {
-                PriorityOfSpeciality priority = new PriorityOfSpeciality();
-                priority.EnrolleeId = savedEnrollee.EnrolleeId;
-                priority.SpecialityId = Int32.Parse(row.Cells[2].Value.ToString());
-                priority.PriorityLevel = Int32.Parse(row.Cells[0].Value.ToString());
-                list.Add(priority);
+                foreach (DataGridViewRow row in PriorityGrid.Rows)
+                {
+                    PriorityOfSpeciality priority = new PriorityOfSpeciality();
+                    priority.EnrolleeId = savedEnrollee.EnrolleeId;
+                    priority.SpecialityId = Int32.Parse(row.Cells[2].Value.ToString());
+                    priority.PriorityLevel = Int32.Parse(row.Cells[0].Value.ToString());
+                    list.Add(priority);
+                }
+            }
+            else
+            {
+                list = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                foreach (var priority in list)
+                {
+                    foreach (DataGridViewRow row in PriorityGrid.Rows)
+                    {
+                        int specialityId = Int32.Parse(row.Cells[2].Value.ToString());
+                        Speciality tempSpeciality = specialityService.GetSpeciality(specialityId);
+                        PriorityOfSpeciality temp = priorityOfSpecialityService.GetPriorityOfSpeciality(savedEnrollee, tempSpeciality);
+                        if (temp.PriorityId == priority.PriorityId)
+                        {
+                            priority.PriorityLevel = Int32.Parse(row.Cells[0].Value.ToString());
+                        }
+                    }
+                }
             }
             return list;
         }
+        /// <summary>
+        /// Сохранение данных абитуриента
+        /// </summary>
+        /// <param name="enrollee">Текущий профиль абитуриента</param>
+        /// <returns></returns>
         private Enrollee SaveCurrentEnrollee(Enrollee enrollee)
         {
             if (string.IsNullOrWhiteSpace(tbRuSurname.Text))
@@ -1730,30 +2014,6 @@ namespace WF.EnrolleeApplication.App.Views
                 tabControl.SelectedIndex = 0;
                 tbDocPersonalNumber.Focus();
             }
-            else if (string.IsNullOrWhiteSpace(tbFatherInfo.Text))
-            {
-                MessageBox.Show(this, "Введите ФИО отца абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 0;
-                tbFatherInfo.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(tbFatherAdres.Text))
-            {
-                MessageBox.Show(this, "Введите адрес проживания отца абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 0;
-                tbFatherAdres.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(tbMotherInfo.Text))
-            {
-                MessageBox.Show(this, "Введите ФИО матери абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 0;
-                tbMotherInfo.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(tbMotherAdres.Text))
-            {
-                MessageBox.Show(this, "Введите адрес проживания матери абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 0;
-                tbMotherAdres.Focus();
-            }
             else if (string.IsNullOrWhiteSpace(tbSettlementName.Text))
             {
                 MessageBox.Show(this, "Введите наименование населенного пункта абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1775,12 +2035,6 @@ namespace WF.EnrolleeApplication.App.Views
             else if (string.IsNullOrWhiteSpace(tbNumberHouse.Text))
             {
                 MessageBox.Show(this, "Введите номер дома абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 1;
-                tbNumberHouse.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(tbNumberFlat.Text))
-            {
-                MessageBox.Show(this, "Введите номер квартиры абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbNumberHouse.Focus();
             }
@@ -1813,43 +2067,7 @@ namespace WF.EnrolleeApplication.App.Views
                 MessageBox.Show(this, "Введите адрес учебного заведения абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbSchoolName.Focus();
-            }
-            else if (cbSecondEducation.Checked && string.IsNullOrWhiteSpace(tbCurrentNumberCurs.Text))
-            {
-                MessageBox.Show(this, "Введите текущий курс обучения абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 1;
-                tbCurrentNumberCurs.Focus();
-            }
-            else if (cbSecondEducation.Checked && string.IsNullOrWhiteSpace(tbCurrentSpeciality.Text))
-            {
-                MessageBox.Show(this, "Введите текущую специальность обучения абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 1;
-                tbCurrentSpeciality.Focus();
-            }
-            else if (cbSecondEducation.Checked && string.IsNullOrWhiteSpace(tbCurrentUniversity.Text))
-            {
-                MessageBox.Show(this, "Введите наименование университета абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 1;
-                tbCurrentUniversity.Focus();
-            }
-            else if (IsWorker && string.IsNullOrWhiteSpace(tbSeniority.Text))
-            {
-                MessageBox.Show(this, "Введите стаж работы абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 1;
-                tbSeniority.Focus();
-            }
-            else if (IsWorker && string.IsNullOrWhiteSpace(tbWorkPlace.Text))
-            {
-                MessageBox.Show(this, "Введите место работы абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 1;
-                tbWorkPlace.Focus();
-            }
-            else if (IsWorker && string.IsNullOrWhiteSpace(tbWorkPost.Text))
-            {
-                MessageBox.Show(this, "Введите должность абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 1;
-                tbWorkPost.Focus();
-            }
+            }          
             else if (string.IsNullOrWhiteSpace(tbPersonInCharge.Text))
             {
                 MessageBox.Show(this, "Введите лицо отвественное за приём документов", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1890,7 +2108,7 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee.BlrName = tbBlrName.Text;
                 enrollee.BlrPatronymic = tbBlrPatronymic.Text;
                 if (rbMale.Checked) enrollee.Gender = "М";
-                if (rbFemale.Checked) enrollee.Gender = "Ж";
+                else enrollee.Gender = "Ж";
                 enrollee.DateOfBirthday = dtBirthday.Value;
                 enrollee.FatherFullname = tbFatherInfo.Text;
                 enrollee.FatherAddress = tbFatherAdres.Text;
@@ -1944,7 +2162,10 @@ namespace WF.EnrolleeApplication.App.Views
             }
             return enrollee;
         }
-
+        /// <summary>
+        /// Получение следующего номера личного дела абитуриента
+        /// </summary>
+        /// <returns></returns>
         private int GetNumberOfDeal()
         {
             int result = 0;

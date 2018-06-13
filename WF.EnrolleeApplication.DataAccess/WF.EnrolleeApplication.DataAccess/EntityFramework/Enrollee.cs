@@ -108,7 +108,6 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         [StringLength(50)]
         public string NumberHouse { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string NumberFlat { get; set; }
 

@@ -87,5 +87,15 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         [Column(Order = 15)]
         [StringLength(255)]
         public string Status { get; set; }
+
+        [Key]
+        [Column(Order = 16)]
+        [StringLength(25)]
+        public string SpecialityShortname { get; set; }
+
+        [Key]
+        [Column(Order = 17)]
+        [StringLength(10)]
+        public string FormOfStudyShortname { get; set; }
     }
 }

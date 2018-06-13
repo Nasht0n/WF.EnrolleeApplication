@@ -92,11 +92,11 @@ namespace WF.EnrolleeApplication.App.Services
                 else wordDocument.Variables["Нуждаюсь в общежитии"].Value = "Нет";
 
 
-                wordDocument.Variables["ФИО отца"].Value = enrollee.FatherFullname;
-                wordDocument.Variables["Местожительство отца"].Value = enrollee.FatherAddress;
+                wordDocument.Variables["ФИО отца"].Value = $" {enrollee.FatherFullname} ";
+                wordDocument.Variables["Местожительство отца"].Value = $" {enrollee.FatherAddress} ";
 
-                wordDocument.Variables["ФИО матери"].Value = enrollee.MotherFullname;
-                wordDocument.Variables["Местожительство матери"].Value = enrollee.MotherAddress;
+                wordDocument.Variables["ФИО матери"].Value =$" {enrollee.MotherFullname} ";
+                wordDocument.Variables["Местожительство матери"].Value = $" {enrollee.MotherAddress} ";
 
                 string atributeString = " ";
                 if (atributes.Count != 0)
@@ -351,18 +351,27 @@ namespace WF.EnrolleeApplication.App.Services
                         table.Cell(index + 2, 2).Range.Text = "Средний балл";
                         table.Cell(index + 2, 4).Range.Text = assessment.Estimation.ToString();
                         EstimationStringService estimationService = new EstimationStringService(ConnectionString);
-                        string estimationString = estimationService.EstimationAsText(assessment.Estimation);
-                        table.Cell(index + 2, 5).Range.Text = estimationString;
+                        string estimationString = " ";
+                        if (assessment.Estimation.HasValue) estimationString = estimationService.EstimationAsText(assessment.Estimation.Value);
+                        if (!string.IsNullOrWhiteSpace(estimationString)) table.Cell(index + 2, 5).Range.Text = estimationString;
                     }
                     else
                     {
                         table.Cell(index + 2, 2).Range.Text = assessment.Discipline.Name.Trim();
                         table.Cell(index + 2, 3).Range.Text = assessment.SertDate;
-                        if (assessment.Estimation == 0) table.Cell(index + 2, 4).Range.Text = " ";
-                        else table.Cell(index + 2, 4).Range.Text = assessment.Estimation.ToString();
-                        EstimationStringService estimationService = new EstimationStringService(ConnectionString);
-                        string estimationString = estimationService.EstimationAsText(assessment.Estimation);
-                        table.Cell(index + 2, 5).Range.Text = estimationString;
+                        if (assessment.Estimation == 0)
+                        {
+                            table.Cell(index + 2, 4).Range.Text = " ";
+                            table.Cell(index + 2, 5).Range.Text = " ";
+                        }
+                        else
+                        {
+                            table.Cell(index + 2, 4).Range.Text = assessment.Estimation.ToString();
+                            EstimationStringService estimationService = new EstimationStringService(ConnectionString);
+                            string estimationString = " ";
+                            if (assessment.Estimation.HasValue) estimationString = estimationService.EstimationAsText(assessment.Estimation.Value);
+                            table.Cell(index + 2, 5).Range.Text = estimationString;
+                        }
                     }
                     index++;
                 }

@@ -15,7 +15,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 
         public int EnrolleeId { get; set; }
 
-        public int Estimation { get; set; }
+        public int? Estimation { get; set; }
 
         [StringLength(255)]
         public string SertCode { get; set; }

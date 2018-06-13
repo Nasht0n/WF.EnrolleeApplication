@@ -143,10 +143,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
                 .Property(e => e.Shortname)
                 .IsFixedLength();
 
-            modelBuilder.Entity<TypeOfStreet>()
-                .HasMany(e => e.Enrollee)
-                .WithRequired(e => e.TypeOfStreet)
-                .HasForeignKey(e => e.StreetTypeId);
+            modelBuilder.Entity<EnrolleeView>()
+                .Property(e => e.FormOfStudyShortname)
+                .IsFixedLength();
         }
     }
 }

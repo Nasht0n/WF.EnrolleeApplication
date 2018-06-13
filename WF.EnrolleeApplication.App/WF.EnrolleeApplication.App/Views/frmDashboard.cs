@@ -75,10 +75,28 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeGrid.Columns[9].Visible = true;
             enrolleeGrid.Columns[10].Visible = true;
             enrolleeGrid.Columns[11].Visible = true;
-            enrolleeGrid.Columns[12].Visible = false;
-            enrolleeGrid.Columns[13].Visible = true;
+            enrolleeGrid.Columns[12].Visible = true;
+            enrolleeGrid.Columns[13].Visible = false;
             enrolleeGrid.Columns[14].Visible = true;
             enrolleeGrid.Columns[15].Visible = true;
+
+            enrolleeGrid.Columns[0].FillWeight = 5;
+            enrolleeGrid.Columns[1].FillWeight = 5;
+            enrolleeGrid.Columns[2].FillWeight = 5;
+            enrolleeGrid.Columns[3].FillWeight = 5;
+            enrolleeGrid.Columns[4].FillWeight = 5;
+            enrolleeGrid.Columns[5].FillWeight = 5;
+            enrolleeGrid.Columns[6].FillWeight = 5;
+            enrolleeGrid.Columns[7].FillWeight = 10;
+            enrolleeGrid.Columns[8].FillWeight = 10;
+            enrolleeGrid.Columns[9].FillWeight = 30;
+            enrolleeGrid.Columns[10].FillWeight = 10;
+            enrolleeGrid.Columns[11].FillWeight = 10;
+            enrolleeGrid.Columns[12].FillWeight = 10;
+            enrolleeGrid.Columns[13].FillWeight = 5;
+            enrolleeGrid.Columns[14].FillWeight = 10;
+            enrolleeGrid.Columns[15].FillWeight = 10;
+
         }
 
         private DataTable CreateStructureTable()
@@ -91,14 +109,15 @@ namespace WF.EnrolleeApplication.App.Views
             result.Columns.Add(new DataColumn("КодФинансирования", typeof(int)));
             result.Columns.Add(new DataColumn("КодСтатуса", typeof(int)));
             result.Columns.Add(new DataColumn("КодОператора", typeof(int)));
+
+            result.Columns.Add(new DataColumn("№ Л/Д", typeof(string)));
             result.Columns.Add(new DataColumn("Форма обучения",typeof(string)));
             result.Columns.Add(new DataColumn("Специальность", typeof(string)));
             result.Columns.Add(new DataColumn("Фамилия", typeof(string)));
             result.Columns.Add(new DataColumn("Имя", typeof(string)));
             result.Columns.Add(new DataColumn("Конкурс", typeof(string)));
             result.Columns.Add(new DataColumn("Основание зачисления", typeof(string)));
-            result.Columns.Add(new DataColumn("Тип финансирования", typeof(string)));
-            result.Columns.Add(new DataColumn("№ Л/Д", typeof(string)));
+            result.Columns.Add(new DataColumn("Тип финансирования", typeof(string)));            
             result.Columns.Add(new DataColumn("Статус", typeof(string)));
             return result;
         }
@@ -118,9 +137,12 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeTable.Clear();
             foreach (var enrollee in enrollees)
             {
-                enrolleeTable.Rows.Add(enrollee.EnrolleeId, enrollee.SpecialityId, enrollee.ContestId, enrollee.ReasonForAddmissionId, enrollee.FinanceTypeId, enrollee.StateId, enrollee.EmployeeId, enrollee.FormOfStudy,enrollee.Speciality,enrollee.Surname,enrollee.Name,enrollee.Contest,enrollee.ReasonForAddmission,enrollee.Finance, enrollee.NumberOfDeal,enrollee.Status);
-            }
+                string numberOfDeal = $"";
+                if (string.IsNullOrWhiteSpace(enrollee.FormOfStudyShortname)) numberOfDeal = $"{enrollee.SpecialityShortname}-{enrollee.NumberOfDeal}";
+                else numberOfDeal = $"{enrollee.SpecialityShortname}{enrollee.FormOfStudyShortname}-{enrollee.NumberOfDeal}";
 
+                enrolleeTable.Rows.Add(enrollee.EnrolleeId, enrollee.SpecialityId, enrollee.ContestId, enrollee.ReasonForAddmissionId, enrollee.FinanceTypeId, enrollee.StateId, enrollee.EmployeeId, numberOfDeal, enrollee.FormOfStudy,enrollee.Speciality,enrollee.Surname,enrollee.Name,enrollee.Contest,enrollee.ReasonForAddmission,enrollee.Finance,enrollee.Status);
+            }
         }
 
         private void LoadUsersSettings()
@@ -314,6 +336,7 @@ namespace WF.EnrolleeApplication.App.Views
                 LoadUsersSettings();
                 // Режим поиска : подгрузка пользователей, которые добавил оператор
                 SearchMode = false;
+                InitializeEnrolleeGrid(SearchMode);
             }
             else
             {
@@ -322,6 +345,7 @@ namespace WF.EnrolleeApplication.App.Views
                 LoadUsersSettings();
                 // Режим поиска : подгрузка пользователей, по выбранным параметрам специальности
                 SearchMode = true;
+                InitializeEnrolleeGrid(SearchMode);
             }
         }
 
@@ -422,9 +446,9 @@ namespace WF.EnrolleeApplication.App.Views
             // Фамилия абитуриента
             string query = $"Фамилия LIKE '%{tbSurname.Text}%'";
             // Тип финансирования
-            if (BudgetFilter.CheckState == CheckState.Checked && FeeFilter.CheckState == CheckState.Unchecked) query += $" AND КодФинансирования = 1";            
-            else if (BudgetFilter.CheckState == CheckState.Unchecked && FeeFilter.CheckState == CheckState.Checked) query += $" AND КодФинансирования = 2";
-            else query += $" AND (КодФинансирования = 1 OR КодФинансирования = 2)";
+            if (BudgetFilter.CheckState == CheckState.Checked && FeeFilter.CheckState == CheckState.Unchecked) query += $" AND (КодФинансирования = 1 OR КодФинансирования = 3)";            
+            else if (BudgetFilter.CheckState == CheckState.Unchecked && FeeFilter.CheckState == CheckState.Checked) query += $" AND (КодФинансирования = 2 OR КодФинансирования = 3)";
+            else if (BudgetFilter.CheckState == CheckState.Checked && FeeFilter.CheckState == CheckState.Checked) query += $" AND КодФинансирования = 3";
             // Вид конкурса
             if (GeneralContestFilter.CheckState == CheckState.Checked && WithoutExamFilter.CheckState == CheckState.Unchecked && OutOfContestFilter.CheckState == CheckState.Unchecked)      query += $" AND КодКонкурса = 1";
             else if (GeneralContestFilter.CheckState == CheckState.Unchecked && WithoutExamFilter.CheckState == CheckState.Checked && OutOfContestFilter.CheckState == CheckState.Unchecked) query += $" AND КодКонкурса = 2";

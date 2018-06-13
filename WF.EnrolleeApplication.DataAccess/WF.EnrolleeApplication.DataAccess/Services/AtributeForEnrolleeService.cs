@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteAtributeForEnrollee(AtributeForEnrollee atributeForEnrollee)
         {
-            AtributeForEnrollee atributeForEnrolleeToDelete = context.AtributeForEnrollee.AsNoTracking().FirstOrDefault(a => a.Id == atributeForEnrollee.Id);
+            AtributeForEnrollee atributeForEnrolleeToDelete = context.AtributeForEnrollee.FirstOrDefault(a => a.Id == atributeForEnrollee.Id);
             context.AtributeForEnrollee.Remove(atributeForEnrolleeToDelete);
             context.SaveChanges();
         }

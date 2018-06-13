@@ -17,7 +17,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 
         [Key]
         public int StreetTypeId { get; set; }
-        
+
         [Required]
         [StringLength(255)]
         public string Fullname { get; set; }
