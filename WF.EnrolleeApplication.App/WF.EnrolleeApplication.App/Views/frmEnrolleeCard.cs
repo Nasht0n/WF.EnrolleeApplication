@@ -16,110 +16,168 @@ namespace WF.EnrolleeApplication.App.Views
 {
     public partial class frmEnrolleeCard : Form
     {
-        private Employee employee;
+        // Изменяемые объекты-сущности
+        private Area area;
         private Atribute atribute;
-        private Faculty faculty;
-        private FormOfStudy formOfStudy;
-        private Speciality speciality;
         private Citizenship citizenship;
-        private Document document;
-        private Enrollee enrollee;
-        private TypeOfSettlement typeOfSettlement;
-        private TypeOfSchool typeOfSchool;
-        private TypeOfStreet typeOfStreet;
-        private SecondarySpeciality secondarySpeciality;
-        private ForeignLanguage foreignLanguage;
-        private TypeOfFinance typeOfFinance;
         private Contest contest;
-        private ReasonForAddmission reasonForAddmission;
-        private TypeOfState typeOfState;
         private ConversionSystem system;
         private Country country;
-        private Area area;
-        private District district;
         private Decree decree;
+        private District district;
+        private Document document;
+        private Employee employee;
+        private Enrollee enrollee;
+        private Faculty faculty;
+        private ForeignLanguage foreignLanguage;
+        private FormOfStudy formOfStudy;
+        private ReasonForAddmission reasonForAddmission;
+        private SecondarySpeciality secondarySpeciality;
+        private Speciality speciality;
         private TargetWorkPlace targetWorkPlace;
-
+        private TypeOfFinance typeOfFinance;
+        private TypeOfSchool typeOfSchool;
+        private TypeOfSettlement typeOfSettlement;
+        private TypeOfState typeOfState;
+        private TypeOfStreet typeOfStreet;
+        // Сервисы для получения данных
+        private AreaService areaService;
+        private AssessmentService assessmentService;
         private AtributeService atributeService;
-        private ConversionSystemService conversionSystem;
-        private FacultyService facultyService;
-        private FormOfStudyService formOfStudyService;
-        private SpecialityService specialityService;
+        private AtributeForEnrolleeService atributeForEnrolleeService;
         private CitizenshipService citizenshipService;
+        private ContestService contestService;
+        private ConversionSystemService conversionSystemService;
+        private CountryService countryService;
+        private DecreeService decreeService;
+        private DisciplineService disciplineService;
+        private DistrictService districtService;
         private DocumentService documentService;
         private EnrolleeService enrolleeService;
-        private TypeOfSettlementService typeOfSettlementService;
-        private TypeOfStreetService typeOfStreetService;
-        private TypeOfSchoolService typeOfSchoolService;
-        private SecondarySpecialityService secondarySpecialityService;
-        private ForeignLanguageService foreignLanguageService;
-        private IntegrationOfSpecialitiesService integrationOfSpecialitiesService;
-        private TypeOfFinanceService typeOfFinanceService;
-        private ContestService contestService;
-        private ReasonForAddmissionService reasonForAddmissionService;
-        private TypeOfStateService typeOfStateService;
         private ExamSchemaService examSchemaService;
-        private DisciplineService disciplineService;
-        private CountryService countryService;
-        private AreaService areaService;
-        private DistrictService districtService;
-        private TargetWorkPlaceService targetWorkPlaceService;
-        private ConversionSystemService conversionSystemService;
-        private DecreeService decreeService;
-        private AssessmentService assessmentService;
-        private AtributeForEnrolleeService atributeForEnrolleeService;
+        private FacultyService facultyService;
+        private ForeignLanguageService foreignLanguageService;
+        private FormOfStudyService formOfStudyService;
+        private IntegrationOfSpecialitiesService integrationOfSpecialitiesService;
         private PriorityOfSpecialityService priorityOfSpecialityService;
-
+        private ReasonForAddmissionService reasonForAddmissionService;
+        private SecondarySpecialityService secondarySpecialityService;
+        private SpecialityService specialityService;
+        private TargetWorkPlaceService targetWorkPlaceService;
+        private TypeOfFinanceService typeOfFinanceService;
+        private TypeOfSchoolService typeOfSchoolService;
+        private TypeOfSettlementService typeOfSettlementService;
+        private TypeOfStateService typeOfStateService;
+        private TypeOfStreetService typeOfStreetService;
+        // Таблицы данных "Приоритеты специальности" и "Оценки"          
         private DataTable priorityTable;
         private DataTable sertificateTable;
+        // Режим редактирования
         private bool editMode;
+        // Абитуриент заочник
         private bool IsWorker;
+        // Абитуриент поступает на сокращенную форму обучения
         private bool HasSecondarySpeciality;
+        // Абитуриент зачилен по приказу
         private bool HasEnroll;
-
+        // Список абитуриентов
         private List<Enrollee> enrollees;
-
+        /// <summary>
+        /// Конструктор карты абитуриента. 
+        /// Используется при добавлении (регистрации) нового абитуриента
+        /// </summary>
+        /// <param name="employee">Оператор, выполняющий регистрацию новой записи</param>
         public frmEnrolleeCard(Employee employee)
         {
             InitializeComponent();
             this.employee = employee;
             this.enrollee = new Enrollee();
             this.editMode = false;
+            // Создаем структуру таблиц
             priorityTable = CreateStructurePriorityTable();
             PriorityGrid.DataSource = priorityTable;
             sertificateTable = CreateStructureSertificateTable();
             SertificateGrid.DataSource = sertificateTable;
+            // Инициализируем сервисы доступа к данным
             InitializeDataAccessServices();
+            // Инициализируем выпадающие списки данными
             InitializeComboBoxes();
+            // Инициализируем список льгот
             InitializeAtributeList();
-            SetPriorityTableStyle();
-            SetSertificateTableStyle();
+            // Инициализируем автозаполнение полей
             InitializeAutoCompleteTextBoxes();
         }
-
+        /// <summary>
+        /// Конструктор карты абитуриента. 
+        /// Используется при редактировании карты выбранного абитуриента
+        /// </summary>
+        /// <param name="employee">Оператор, выполняющий регистрацию новой записи</param>
+        /// <param name="editEnrollee">Профиль редактируемого абитуриента</param>
         public frmEnrolleeCard(Employee employee, Enrollee editEnrollee)
         {
             InitializeComponent();
             this.employee = employee;
             this.enrollee = editEnrollee;
+            // активируем режим редактирования
             this.editMode = true;
-
+            // Создаем структуру таблиц
             priorityTable = CreateStructurePriorityTable();
             PriorityGrid.DataSource = priorityTable;
             sertificateTable = CreateStructureSertificateTable();
             SertificateGrid.DataSource = sertificateTable;
+            // Инициализируем сервисы доступа к данным
             InitializeDataAccessServices();
+            // Инициализируем выпадающие списки данными
             InitializeComboBoxes();
+            // Инициализируем список льгот
             InitializeAtributeList();
-            SetPriorityTableStyle();
-            SetSertificateTableStyle();
+            // Инициализируем автозаполнение полей
             InitializeAutoCompleteTextBoxes();
-
+            // Заполняем поля данными абитуриента
             FillEditData(editEnrollee);
         }
-
+        /// <summary>
+        /// Инициализация сервисов доступа к базе данных
+        /// </summary>
+        private void InitializeDataAccessServices()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
+            areaService = new AreaService(connectionString);
+            assessmentService = new AssessmentService(connectionString);
+            atributeService = new AtributeService(connectionString);
+            atributeForEnrolleeService = new AtributeForEnrolleeService(connectionString);
+            citizenshipService = new CitizenshipService(connectionString);
+            contestService = new ContestService(connectionString);
+            conversionSystemService = new ConversionSystemService(connectionString);
+            countryService = new CountryService(connectionString);
+            decreeService = new DecreeService(connectionString);
+            disciplineService = new DisciplineService(connectionString);
+            districtService = new DistrictService(connectionString);
+            documentService = new DocumentService(connectionString);
+            enrolleeService = new EnrolleeService(connectionString);
+            examSchemaService = new ExamSchemaService(connectionString);
+            facultyService = new FacultyService(connectionString);
+            foreignLanguageService = new ForeignLanguageService(connectionString);
+            formOfStudyService = new FormOfStudyService(connectionString);
+            integrationOfSpecialitiesService = new IntegrationOfSpecialitiesService(connectionString);
+            priorityOfSpecialityService = new PriorityOfSpecialityService(connectionString);
+            reasonForAddmissionService = new ReasonForAddmissionService(connectionString);
+            secondarySpecialityService = new SecondarySpecialityService(connectionString);
+            specialityService = new SpecialityService(connectionString);
+            targetWorkPlaceService = new TargetWorkPlaceService(connectionString);
+            typeOfFinanceService = new TypeOfFinanceService(connectionString);
+            typeOfSchoolService = new TypeOfSchoolService(connectionString);
+            typeOfSettlementService = new TypeOfSettlementService(connectionString);
+            typeOfStateService = new TypeOfStateService(connectionString);
+            typeOfStreetService = new TypeOfStreetService(connectionString);
+        }
+        /// <summary>
+        /// Заполнение полей данными редактируемого абитуриента
+        /// </summary>
+        /// <param name="editEnrollee">Профиль редактируемого абитуриента</param>
         private void FillEditData(Enrollee editEnrollee)
         {
+            // Информация об абитуриенте
             cbFaculty.SelectedValue = editEnrollee.Speciality.FacultyId;
             cbFormOfStudy.SelectedValue = editEnrollee.Speciality.FormOfStudyId;
             cbSpeciality.SelectedValue = editEnrollee.SpecialityId;
@@ -143,7 +201,7 @@ namespace WF.EnrolleeApplication.App.Views
             tbFatherAdres.Text = editEnrollee.FatherAddress;
             tbMotherInfo.Text = editEnrollee.MotherFullname;
             tbMotherAdres.Text = editEnrollee.MotherAddress;
-            // 2
+            // Дополнительная информация
             cbCountry.SelectedValue = editEnrollee.CountryId;
             cbArea.SelectedValue = editEnrollee.AreaId;
             cbDistrict.SelectedValue = editEnrollee.DistrictId;
@@ -179,19 +237,16 @@ namespace WF.EnrolleeApplication.App.Views
                 tbWorkPlace.Text = editEnrollee.WorkPlace;
                 tbWorkPost.Text = editEnrollee.WorkPost;
             }
+            // Поступление
             cbTypeOfFinance.SelectedValue = editEnrollee.FinanceTypeId;
             cbContest.SelectedValue = editEnrollee.ReasonForAddmission.ContestId;
             cbReasonForAddmission.SelectedValue = editEnrollee.ReasonForAddmissionId;
-
             tbFirstAttestatString.Text = editEnrollee.AttestatEstimationString;
             tbSecondAttestatString.Text = editEnrollee.AttestatEstimationString;
-
             tbFirstDiplomPtuString.Text = editEnrollee.DiplomPtuEstimationString;
             tbSecondDiplomPtuString.Text = editEnrollee.DiplomPtuEstimationString;
-
             tbFirstDiplomSsuzString.Text = editEnrollee.DiplomSusEstimationString;
             tbSecondDiplomSsuzString.Text = editEnrollee.DiplomSusEstimationString;
-
             if (editEnrollee.TargetWorkPlaceId.HasValue)
             {
                 cbTarget.Checked = true;
@@ -205,43 +260,18 @@ namespace WF.EnrolleeApplication.App.Views
             tbNumberOfDeal.Text = editEnrollee.NumberOfDeal.ToString();
             cbTypeOfState.SelectedValue = editEnrollee.StateTypeId;
             tbPersonInCharge.Text = editEnrollee.PersonInCharge;
+            InitializeSertificationGrid(editEnrollee);
+            InitializePrioritySpecialityGrid(editEnrollee);
+            InitializeAtributeList(editEnrollee);
+
 
 
         }
 
-        private void InitializeDataAccessServices()
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
-            facultyService = new FacultyService(connectionString);
-            formOfStudyService = new FormOfStudyService(connectionString);
-            specialityService = new SpecialityService(connectionString);
-            enrolleeService = new EnrolleeService(connectionString);
-            citizenshipService = new CitizenshipService(connectionString);
-            documentService = new DocumentService(connectionString);
-            typeOfSettlementService = new TypeOfSettlementService(connectionString);
-            typeOfStreetService = new TypeOfStreetService(connectionString);
-            typeOfSchoolService = new TypeOfSchoolService(connectionString);
-            secondarySpecialityService = new SecondarySpecialityService(connectionString);
-            foreignLanguageService = new ForeignLanguageService(connectionString);
-            integrationOfSpecialitiesService = new IntegrationOfSpecialitiesService(connectionString);
-            typeOfFinanceService = new TypeOfFinanceService(connectionString);
-            contestService = new ContestService(connectionString);
-            reasonForAddmissionService = new ReasonForAddmissionService(connectionString);
-            typeOfStateService = new TypeOfStateService(connectionString);
-            atributeService = new AtributeService(connectionString);
-            examSchemaService = new ExamSchemaService(connectionString);
-            disciplineService = new DisciplineService(connectionString);
-            countryService = new CountryService(connectionString);
-            areaService = new AreaService(connectionString);
-            districtService = new DistrictService(connectionString);
-            targetWorkPlaceService = new TargetWorkPlaceService(connectionString);
-            conversionSystemService = new ConversionSystemService(connectionString);
-            decreeService = new DecreeService(connectionString);
-            assessmentService = new AssessmentService(connectionString);
-            atributeForEnrolleeService = new AtributeForEnrolleeService(connectionString);
-            priorityOfSpecialityService = new PriorityOfSpecialityService(connectionString);
-    }
         #region Создание, настройка и заполнение таблиц данных
+        /// <summary>
+        /// Установка стиля отображения таблицы сертификатов (дисциплин)
+        /// </summary>
         private void SetSertificateTableStyle()
         {
             SertificateGrid.Columns[0].FillWeight = 10;
@@ -257,7 +287,10 @@ namespace WF.EnrolleeApplication.App.Views
             SertificateGrid.Columns[6].Visible = false;
             SertificateGrid.Columns["Дисциплина"].ReadOnly = true;
         }
-
+        /// <summary>
+        /// Создаем струтуру таблицы данных сертификатов и предметов
+        /// </summary>
+        /// <returns></returns>
         private DataTable CreateStructureSertificateTable()
         {
             DataTable result = new DataTable();
@@ -270,7 +303,9 @@ namespace WF.EnrolleeApplication.App.Views
             result.Columns.Add(new DataColumn("Замена", typeof(string)));
             return result;
         }
-
+        /// <summary>
+        /// Установка стиля отображения таблицы приоритета специальности
+        /// </summary>
         private void SetPriorityTableStyle()
         {
             PriorityGrid.Columns[2].Visible = false;
@@ -279,7 +314,10 @@ namespace WF.EnrolleeApplication.App.Views
             PriorityGrid.Columns[2].FillWeight = 5;
             PriorityGrid.Columns[3].FillWeight = 70;
         }
-
+        /// <summary>
+        /// Создаем структуру таблицы данных списка приоритетов специальностей
+        /// </summary>
+        /// <returns></returns>
         private DataTable CreateStructurePriorityTable()
         {
             DataTable result = new DataTable();
@@ -289,7 +327,9 @@ namespace WF.EnrolleeApplication.App.Views
             result.Columns.Add(new DataColumn("Специальность", typeof(string)));
             return result;
         }
-
+        /// <summary>
+        /// Заполнение таблицы приоритетов специальностей при добавлении нового абитуриента
+        /// </summary>
         private void InitializePrioritySpecialityGrid()
         {
             // Установка списка приоритетов
@@ -331,21 +371,28 @@ namespace WF.EnrolleeApplication.App.Views
                         priorityTable.Rows.Add(1, speciality.FormOfStudy.Fullname, speciality.SpecialityId, speciality.Fullname);
                     }
                 }
-            }
-            else
-            {
-                if (speciality != null)
-                {
-                    priorityTable.Rows.Clear();
-                    List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
-                    foreach (var priority in priorities)
-                        priorityTable.Rows.Add(priority.PriorityLevel, priority.Speciality.FormOfStudy.Fullname, priority.SpecialityId, priority.Speciality.Fullname);
-                }
+                SetPriorityTableStyle();
             }
         }
-
+        /// <summary>
+        /// Заполнение таблицы приоритетов специальностей выбранного абитуриента
+        /// </summary>
+        /// <param name="enrollee">Профиль редактируемого абитуриента</param>
+        private void InitializePrioritySpecialityGrid(Enrollee enrollee)
+        {
+            List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+            priorityTable.Rows.Clear();
+            foreach (var priority in priorities)
+                priorityTable.Rows.Add(priority.PriorityLevel, priority.Speciality.FormOfStudy.Fullname, priority.SpecialityId, priority.Speciality.Fullname);
+            SetPriorityTableStyle();
+        }
+        /// <summary>
+        /// Заполнение таблицы сертификатов (дисциплин) согласно экзаменнационной схеме
+        /// </summary>
         private void InitializeSertificationGrid()
         {
+            if (!editMode)
+            {
                 List<ExamSchema> schema = examSchemaService.GetExamSchemas(speciality).Where(ex => ex.Discipline.BasisForAssessingId != 1).ToList();
                 sertificateTable.Rows.Clear();
                 if (schema.Count != 0)
@@ -365,31 +412,47 @@ namespace WF.EnrolleeApplication.App.Views
                         }
                     }
                 }
+                SetSertificateTableStyle();
+            }
         }
-
-
+        /// <summary>
+        /// Заполнение таблицы сертификатов (дисциплин) выбранного абитуриента
+        /// </summary>
+        /// <param name="enrollee">Профиль редактируемого абитуриента</param>
         private void InitializeSertificationGrid(Enrollee enrollee)
         {
             List<Assessment> assessments = assessmentService.GetAssessments(enrollee).Where(a => a.Discipline.BasisForAssessingId != 1).ToList();
             sertificateTable.Rows.Clear();
-            if(assessments.Count!=0)
-            {
-                foreach(var assessment in assessments)
-                {
-                    sertificateTable.Rows.Add(assessment.DisciplineId, assessment.Discipline.BasisForAssessingId, assessment.Discipline.Name, assessment.SertCode,assessment.Estimation, assessment.SertDate,assessment.ChangeDiscipline);
-                }
-            }
+            foreach (var assessment in assessments)
+                sertificateTable.Rows.Add(assessment.DisciplineId, assessment.Discipline.BasisForAssessingId, assessment.Discipline.Name, assessment.SertCode, assessment.Estimation, assessment.SertDate, assessment.ChangeDiscipline);
+            SetSertificateTableStyle();
         }
         #endregion
         #region Установка списка льгот
+        /// <summary>
+        /// Загружаем полный список льгот
+        /// </summary>
         private void InitializeAtributeList()
         {
             var atributes = atributeService.GetAtributes();
             foreach (var atribute in atributes)
                 chkAtributeList.Items.Add(atribute.Fullname);
         }
+        /// <summary>
+        /// Загружаем льготы выбранного абитуриента
+        /// </summary>
+        /// <param name="enrollee">Профиль редактируемого абитуриента</param>
+        private void InitializeAtributeList(Enrollee enrollee)
+        {
+            var atributes = atributeForEnrolleeService.GetAtributeForEnrollees(enrollee);
+            foreach (var atribute in atributes)
+                SetCheckedAtribute(atribute.Atribute.Fullname.Trim(), true);
+        }
         #endregion
         #region Настройка полей автозаполнения
+        /// <summary>
+        /// Настройка полей автозаполнения данными
+        /// </summary>
         private void InitializeAutoCompleteTextBoxes()
         {
             AutoCompleteStringCollection sourceSurnameRus = new AutoCompleteStringCollection();
@@ -456,11 +519,13 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Initialization ComboBoxes
+        /// <summary>
+        /// Инициализация выдающих списков данными
+        /// </summary>
         private void InitializeComboBoxes()
         {
             InitializeFacultyComboBox();
             InitializeFormOfStudyComboBox();
-            InitializeSpecialityComboBox();
             InitializeCitizenshipComboBox();
             InitializeDocumentComboBox();
             InitializeCountryComboBox();
@@ -477,7 +542,9 @@ namespace WF.EnrolleeApplication.App.Views
             InitializeDecreeComboBox();
             InitializeTargetWorkPlace();
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Целевые места"
+        /// </summary>
         private void InitializeTargetWorkPlace()
         {
             cbTargetWorkPlace.SelectedValueChanged -= cbTargetWorkPlace_SelectedValueChanged;
@@ -488,7 +555,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (targets.Count != 0) targetWorkPlace = targets[0];
             cbTargetWorkPlace.SelectedValueChanged += cbTargetWorkPlace_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Приказы"
+        /// </summary>
         private void InitializeDecreeComboBox()
         {
             cbDecree.SelectedValueChanged -= cbDecree_SelectedValueChanged;
@@ -499,7 +568,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (decrees.Count != 0) decree = decrees[0];
             cbDecree.SelectedValueChanged += cbDecree_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Районы"
+        /// </summary>
         private void InitializeDistrictComboBox()
         {
             cbDistrict.SelectedValueChanged -= cbDistrict_SelectedValueChanged;
@@ -510,7 +581,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (districts.Count != 0) district = districts[0];
             cbDistrict.SelectedValueChanged += cbDistrict_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Области"
+        /// </summary>
         private void InitializeAreaComboBox()
         {
             cbArea.SelectedValueChanged -= cbArea_SelectedValueChanged;
@@ -521,7 +594,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (areas.Count != 0) area = areas[0];
             cbArea.SelectedValueChanged += cbArea_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Страны"
+        /// </summary>
         private void InitializeCountryComboBox()
         {
             cbCountry.SelectedValueChanged -= cbCountry_SelectedValueChanged;
@@ -532,6 +607,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (countries.Count != 0) country = countries[0];
             cbCountry.SelectedValueChanged += cbCountry_SelectedValueChanged;
         }
+        /// <summary>
+        /// Загрузка данных в список "Системы перевода"
+        /// </summary>
         private void InitializeTransferSystem()
         {
             List<string> listAttestat = new List<string>();
@@ -547,6 +625,9 @@ namespace WF.EnrolleeApplication.App.Views
             cbSystemDiplomPtu.DataSource = listPtu;
             cbSystemDiplomSsuz.DataSource = listSsuz;
         }
+        /// <summary>
+        /// Загрузка данных в список "Статусы"
+        /// </summary>
         private void InitializeTypeOfStateComboBox()
         {
             cbTypeOfState.SelectedValueChanged -= cbTypeOfState_SelectedValueChanged;
@@ -557,7 +638,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (states.Count != 0) typeOfState = states[0];
             cbTypeOfState.SelectedValueChanged += cbTypeOfState_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Основания зачисления"
+        /// </summary>
         private void InitializeReasonForAddmissionComboBox()
         {
             cbReasonForAddmission.SelectedValueChanged -= cbReasonForAddmission_SelectedValueChanged;
@@ -568,7 +651,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (reasons.Count != 0) reasonForAddmission = reasons[0];
             cbReasonForAddmission.SelectedValueChanged += cbReasonForAddmission_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Виды конкурса"
+        /// </summary>
         private void InitializeContestComboBox()
         {
             cbContest.SelectedValueChanged -= cbContest_SelectedValueChanged;
@@ -583,7 +668,9 @@ namespace WF.EnrolleeApplication.App.Views
             }
             cbContest.SelectedValueChanged += cbContest_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Тип финансирования"
+        /// </summary>
         private void InitializeTypeOfFinanceComboBox()
         {
             cbTypeOfFinance.SelectedValueChanged -= cbTypeOfFinance_SelectedValueChanged;
@@ -594,7 +681,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (finances.Count != 0) typeOfFinance = finances[0];
             cbTypeOfFinance.SelectedValueChanged += cbTypeOfFinance_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Иностранные языки"
+        /// </summary>
         private void InitializeForeignLanguageComboBox()
         {
             cbForeignLanguage.SelectedValueChanged -= cbForeignLanguage_SelectedValueChanged;
@@ -605,7 +694,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (languages.Count != 0) foreignLanguage = languages[0];
             cbForeignLanguage.SelectedValueChanged += cbForeignLanguage_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Специальности второй ступени"
+        /// </summary>
         private void InitializeSecondarySpecialityComboBox()
         {
             cbSecondarySpeciality.SelectedValueChanged -= cbSecondarySpeciality_SelectedValueChanged;
@@ -626,7 +717,9 @@ namespace WF.EnrolleeApplication.App.Views
             }
             cbSecondarySpeciality.SelectedValueChanged += cbSecondarySpeciality_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Тип прошлого учебного заведения"
+        /// </summary>
         private void InitializeTypeOfSchoolComboBox()
         {
             cbTypeOfSchool.SelectedValueChanged -= cbTypeOfSchool_SelectedValueChanged;
@@ -637,7 +730,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (schools.Count != 0) typeOfSchool = schools[0];
             cbTypeOfSchool.SelectedValueChanged += cbTypeOfSchool_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Тип улиц"
+        /// </summary>
         private void InitializeTypeOfStreetComboBox()
         {
             cbTypeOfStreet.SelectedValueChanged -= cbTypeOfStreet_SelectedValueChanged;
@@ -648,7 +743,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (streets.Count != 0) typeOfStreet = streets[0];
             cbTypeOfStreet.SelectedValueChanged += cbTypeOfStreet_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Тип населенного пункта"
+        /// </summary>
         private void InitializeTypeOfSettlementComboBox()
         {
             cbTypeOfSettlement.SelectedValueChanged -= cbTypeOfSettlement_SelectedValueChanged;
@@ -659,7 +756,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (settlements.Count != 0) typeOfSettlement = settlements[0];
             cbTypeOfSettlement.SelectedValueChanged += cbTypeOfSettlement_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Факультеты"
+        /// </summary>
         private void InitializeFacultyComboBox()
         {
             cbFaculty.SelectedValueChanged -= cbFaculty_SelectedValueChanged;
@@ -667,10 +766,16 @@ namespace WF.EnrolleeApplication.App.Views
             cbFaculty.DataSource = faculties;
             cbFaculty.DisplayMember = "Shortname";
             cbFaculty.ValueMember = "FacultyId";
-            if (faculties.Count != 0) faculty = faculties[0];
+            if (faculties.Count != 0)
+            {
+                faculty = faculties[0];
+                InitializeSpecialityComboBox();
+            }
             cbFaculty.SelectedValueChanged += cbFaculty_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Формы обучения"
+        /// </summary>
         private void InitializeFormOfStudyComboBox()
         {
             cbFormOfStudy.SelectedValueChanged -= cbFormOfStudy_SelectedValueChanged;
@@ -678,10 +783,16 @@ namespace WF.EnrolleeApplication.App.Views
             cbFormOfStudy.DataSource = formsOfStudies;
             cbFormOfStudy.DisplayMember = "Fullname";
             cbFormOfStudy.ValueMember = "FormOfStudyId";
-            if (formsOfStudies.Count != 0) formOfStudy = formsOfStudies[0];
+            if (formsOfStudies.Count != 0)
+            {
+                formOfStudy = formsOfStudies[0];
+                InitializeSpecialityComboBox();
+            }
             cbFormOfStudy.SelectedValueChanged += cbFormOfStudy_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Специальности"
+        /// </summary>
         private void InitializeSpecialityComboBox()
         {
             if (faculty != null && formOfStudy != null)
@@ -695,14 +806,15 @@ namespace WF.EnrolleeApplication.App.Views
                 {
                     speciality = specialities[0];
                     InitializeSecondarySpecialityComboBox();
-                    if (editMode) InitializeSertificationGrid(enrollee);
-                    else InitializeSertificationGrid();
+                    InitializeSertificationGrid();
                     InitializePrioritySpecialityGrid();
                 }
                 cbSpeciality.SelectedValueChanged += cbSpeciality_SelectedValueChanged;
             }
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Вид гражданства"
+        /// </summary>
         private void InitializeCitizenshipComboBox()
         {
             cbCitizenship.SelectedValueChanged -= cbCitizenship_SelectedValueChanged;
@@ -713,7 +825,9 @@ namespace WF.EnrolleeApplication.App.Views
             if (citizenships.Count != 0) citizenship = citizenships[0];
             cbCitizenship.SelectedValueChanged += cbCitizenship_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Загрузка данных в список "Документы"
+        /// </summary>
         private void InitializeDocumentComboBox()
         {
             cbDocument.SelectedValueChanged -= cbDocument_SelectedValueChanged;
@@ -726,6 +840,11 @@ namespace WF.EnrolleeApplication.App.Views
         }
         #endregion
         #region Обработчики выбора объекта ComboBox
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Целевые рабочие места"</param>
+        /// <param name="e"></param>
         private void cbTargetWorkPlace_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbTargetWorkPlace.SelectedValue != null)
@@ -734,6 +853,11 @@ namespace WF.EnrolleeApplication.App.Views
                 targetWorkPlace = targetWorkPlaceService.GetTargetWorkPlace(id);
             }
         }
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Приказы"</param>
+        /// <param name="e"></param>
         private void cbDecree_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbDecree.SelectedValue != null)
@@ -742,6 +866,11 @@ namespace WF.EnrolleeApplication.App.Views
                 decree = decreeService.GetDecree(id);
             }
         }
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Страны"</param>
+        /// <param name="e"></param>
         private void cbCountry_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbCountry.SelectedValue != null)
@@ -750,7 +879,11 @@ namespace WF.EnrolleeApplication.App.Views
                 country = countryService.GetCountry(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Области"</param>
+        /// <param name="e"></param>
         private void cbArea_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbArea.SelectedValue != null)
@@ -759,7 +892,11 @@ namespace WF.EnrolleeApplication.App.Views
                 area = areaService.GetArea(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Районы"</param>
+        /// <param name="e"></param>
         private void cbDistrict_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbDistrict.SelectedValue != null)
@@ -768,6 +905,12 @@ namespace WF.EnrolleeApplication.App.Views
                 district = districtService.GetDistrict(id);
             }
         }
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// Загрузка данных в выпадающий список "Специальности"
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Факультеты"</param>
+        /// <param name="e"></param>
         private void cbFaculty_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbFaculty.SelectedValue != null)
@@ -777,7 +920,13 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeSpecialityComboBox();
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// Загрузка данных в выпадающий список "Специальности"
+        /// Установка видимости полей
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Формы обучения"</param>
+        /// <param name="e"></param>
         private void cbFormOfStudy_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbFormOfStudy.SelectedValue != null)
@@ -829,20 +978,28 @@ namespace WF.EnrolleeApplication.App.Views
                 }
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// Загрузка данных в выпадающий список "Специальности второй ступени"
+        /// Загрузка данных в таблицу "Сертификатов (дисциплин"
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Формы обучения"</param>
+        /// <param name="e"></param>
         private void cbSpeciality_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbSpeciality.SelectedValue != null)
             {
                 int id = (int)cbSpeciality.SelectedValue;
                 speciality = specialityService.GetSpeciality(id);
-                if (editMode) InitializeSertificationGrid(enrollee);
-                else InitializeSertificationGrid();
+                InitializeSertificationGrid();
                 InitializeSecondarySpecialityComboBox();
             }
         }
-
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Виды гражданства"</param>
+        /// <param name="e"></param>
         private void cbCitizenship_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbCitizenship.SelectedValue != null)
@@ -851,7 +1008,11 @@ namespace WF.EnrolleeApplication.App.Views
                 citizenship = citizenshipService.GetCitizenship(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Документы"</param>
+        /// <param name="e"></param>
         private void cbDocument_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbDocument.SelectedValue != null)
@@ -860,7 +1021,11 @@ namespace WF.EnrolleeApplication.App.Views
                 document = documentService.GetDocument(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Тип населенного пункта"</param>
+        /// <param name="e"></param>
         private void cbTypeOfSettlement_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbTypeOfSettlement.SelectedValue != null)
@@ -869,7 +1034,11 @@ namespace WF.EnrolleeApplication.App.Views
                 typeOfSettlement = typeOfSettlementService.GetTypeOfSettlement(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Вид улиц"</param>
+        /// <param name="e"></param>
         private void cbTypeOfStreet_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbTypeOfStreet.SelectedValue != null)
@@ -878,7 +1047,11 @@ namespace WF.EnrolleeApplication.App.Views
                 typeOfStreet = typeOfStreetService.GetTypeOfStreet(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Вид учебного заведения"</param>
+        /// <param name="e"></param>
         private void cbTypeOfSchool_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbTypeOfSchool.SelectedValue != null)
@@ -887,7 +1060,11 @@ namespace WF.EnrolleeApplication.App.Views
                 typeOfSchool = typeOfSchoolService.GetTypeOfSchool(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Специальности второй ступени"</param>
+        /// <param name="e"></param>
         private void cbSecondarySpeciality_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbSecondarySpeciality.SelectedValue != null)
@@ -897,7 +1074,11 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializePrioritySpecialityGrid();
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Иностранные языки"</param>
+        /// <param name="e"></param>
         private void cbForeignLanguage_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbForeignLanguage.SelectedValue != null)
@@ -906,7 +1087,11 @@ namespace WF.EnrolleeApplication.App.Views
                 foreignLanguage = foreignLanguageService.GetForeignLanguage(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Тип финансирования"</param>
+        /// <param name="e"></param>
         private void cbTypeOfFinance_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbTypeOfFinance.SelectedValue != null)
@@ -915,7 +1100,11 @@ namespace WF.EnrolleeApplication.App.Views
                 typeOfFinance = typeOfFinanceService.GetTypeOfFinance(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Вид конкурса"</param>
+        /// <param name="e"></param>
         private void cbContest_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbContest.SelectedValue != null)
@@ -925,7 +1114,11 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeReasonForAddmissionComboBox();
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Основание зачисления"</param>
+        /// <param name="e"></param>
         private void cbReasonForAddmission_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbReasonForAddmission.SelectedValue != null)
@@ -934,7 +1127,11 @@ namespace WF.EnrolleeApplication.App.Views
                 reasonForAddmission = reasonForAddmissionService.GetReasonForAddmission(id);
             }
         }
-
+        /// <summary>
+        /// Получение объекта выпадающего списка
+        /// </summary>
+        /// <param name="sender">Выпадающий список "Статус абитуриента"</param>
+        /// <param name="e"></param>
         private void cbTypeOfState_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbTypeOfState.SelectedValue != null)
@@ -1384,18 +1581,15 @@ namespace WF.EnrolleeApplication.App.Views
         {
             Clipboard.Clear();
         }
-
-
         private void btCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
         private void btSave_Click(object sender, EventArgs e)
         {
             Enrollee savedEnrollee = SaveCurrentEnrollee(enrollee);
-            if(savedEnrollee!=null)
+            if (savedEnrollee != null)
             {
                 List<Assessment> assessments = GetAssessments(savedEnrollee);
                 SaveAssessments(assessments);
@@ -1407,19 +1601,16 @@ namespace WF.EnrolleeApplication.App.Views
                 this.Close();
             }
         }
-
         private void SavePriorities(List<PriorityOfSpeciality> priorities)
         {
             foreach (var priority in priorities)
                 priorityOfSpecialityService.InsertPriorityOfSpeciality(priority);
         }
-
         private void SaveAtributes(List<AtributeForEnrollee> atributes)
         {
             foreach (var atribute in atributes)
                 atributeForEnrolleeService.InsertAtributeForEnrollee(atribute);
         }
-
         private List<AtributeForEnrollee> GetAtributes(Enrollee savedEnrollee)
         {
             List<AtributeForEnrollee> list = new List<AtributeForEnrollee>();
@@ -1432,18 +1623,15 @@ namespace WF.EnrolleeApplication.App.Views
                 atribute.EnrolleeId = savedEnrollee.EnrolleeId;
                 list.Add(atribute);
             }
-
             return list;
         }
-
         private void SaveAssessments(List<Assessment> assessments)
         {
-            foreach(var assessment in assessments)
+            foreach (var assessment in assessments)
             {
                 assessmentService.InsertAssessment(assessment);
             }
         }
-
         private List<Assessment> GetAssessments(Enrollee savedEnrollee)
         {
             List<Assessment> list = new List<Assessment>();
@@ -1454,7 +1642,7 @@ namespace WF.EnrolleeApplication.App.Views
             docAssessment.Estimation = Int32.Parse(tbAverage.Text);
             list.Add(docAssessment);
             // Оценки таблицы сертификатов
-            foreach(DataGridViewRow row in SertificateGrid.Rows)
+            foreach (DataGridViewRow row in SertificateGrid.Rows)
             {
                 Assessment assessment = new Assessment();
                 assessment.DisciplineId = Int32.Parse(row.Cells[0].Value.ToString());
@@ -1467,11 +1655,10 @@ namespace WF.EnrolleeApplication.App.Views
             }
             return list;
         }
-
         private List<PriorityOfSpeciality> GetPriorityList(Enrollee savedEnrollee)
         {
             List<PriorityOfSpeciality> list = new List<PriorityOfSpeciality>();
-            foreach(DataGridViewRow row in PriorityGrid.Rows)
+            foreach (DataGridViewRow row in PriorityGrid.Rows)
             {
                 PriorityOfSpeciality priority = new PriorityOfSpeciality();
                 priority.EnrolleeId = savedEnrollee.EnrolleeId;
@@ -1481,7 +1668,6 @@ namespace WF.EnrolleeApplication.App.Views
             }
             return list;
         }
-
         private Enrollee SaveCurrentEnrollee(Enrollee enrollee)
         {
             if (string.IsNullOrWhiteSpace(tbRuSurname.Text))
@@ -1670,7 +1856,7 @@ namespace WF.EnrolleeApplication.App.Views
                 tabControl.SelectedIndex = 2;
                 tbPersonInCharge.Focus();
             }
-            else if(string.IsNullOrEmpty(tbAverage.Text))
+            else if (string.IsNullOrEmpty(tbAverage.Text))
             {
                 MessageBox.Show(this, "Введите оценки абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 2;
