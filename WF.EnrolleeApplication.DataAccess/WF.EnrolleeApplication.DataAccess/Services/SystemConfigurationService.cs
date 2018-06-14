@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteSystemConfiguration(SystemConfiguration systemConfiguration)
         {
-            SystemConfiguration systemConfigurationToDelete = context.SystemConfiguration.AsNoTracking().FirstOrDefault(sc => sc.Name == systemConfiguration.Name);
+            SystemConfiguration systemConfigurationToDelete = context.SystemConfiguration.FirstOrDefault(sc => sc.Name == systemConfiguration.Name);
             context.SystemConfiguration.Remove(systemConfigurationToDelete);
             context.SaveChanges();
         }

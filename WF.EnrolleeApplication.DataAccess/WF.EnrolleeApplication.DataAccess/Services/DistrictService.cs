@@ -17,7 +17,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDistrict(District district)
         {
-            District districtToDelete = context.District.AsNoTracking().FirstOrDefault(d => d.DistrictId == district.DistrictId);
+            District districtToDelete = context.District.FirstOrDefault(d => d.DistrictId == district.DistrictId);
             context.District.Remove(districtToDelete);
             context.SaveChanges();
         }

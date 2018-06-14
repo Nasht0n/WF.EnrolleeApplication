@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDecree(Decree decree)
         {
-            Decree decreeToDelete = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeId == decree.DecreeId);
+            Decree decreeToDelete = context.Decree.FirstOrDefault(d => d.DecreeId == decree.DecreeId);
             context.Decree.Remove(decreeToDelete);
             context.SaveChanges();
         }

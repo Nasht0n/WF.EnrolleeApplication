@@ -1966,12 +1966,6 @@ namespace WF.EnrolleeApplication.App.Views
                 tabControl.SelectedIndex = 0;
                 tbRuName.Focus();
             }
-            else if (string.IsNullOrEmpty(tbRuPatronymic.Text))
-            {
-                MessageBox.Show(this, "Введите отчество абитуриента на русском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 0;
-                tbRuPatronymic.Focus();
-            }
             else if (string.IsNullOrWhiteSpace(tbBlrSurname.Text))
             {
                 MessageBox.Show(this, "Введите фамилию абитуриента на белорусском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1983,12 +1977,6 @@ namespace WF.EnrolleeApplication.App.Views
                 MessageBox.Show(this, "Введите имя абитуриента на белорусском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbBlrName.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(tbBlrPatronymic.Text))
-            {
-                MessageBox.Show(this, "Введите отчество абитуриента на белорусском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 0;
-                tbBlrPatronymic.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbDocSeria.Text))
             {

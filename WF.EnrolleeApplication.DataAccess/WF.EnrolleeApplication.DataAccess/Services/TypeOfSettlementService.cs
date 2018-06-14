@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfSettlement(TypeOfSettlement typeOfSettlement)
         {
-            TypeOfSettlement typeOfSettlementToDelete = context.TypeOfSettlement.AsNoTracking().FirstOrDefault(ts => ts.SettlementTypeId == typeOfSettlement.SettlementTypeId);
+            TypeOfSettlement typeOfSettlementToDelete = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == typeOfSettlement.SettlementTypeId);
             context.TypeOfSettlement.Remove(typeOfSettlementToDelete);
             context.SaveChanges();
         }

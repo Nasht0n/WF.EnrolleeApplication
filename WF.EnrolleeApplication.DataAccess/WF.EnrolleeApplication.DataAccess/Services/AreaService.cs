@@ -25,7 +25,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <param name="area">Удаляемая область</param>
         public void DeleteArea(Area area)
         {
-            Area areaToDelete = context.Area.AsNoTracking().FirstOrDefault(a => a.AreaId == area.AreaId);
+            Area areaToDelete = context.Area.FirstOrDefault(a => a.AreaId == area.AreaId);
             if (areaToDelete != null)
             {
                 context.Area.Remove(areaToDelete);

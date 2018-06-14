@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteContest(Contest contest)
         {
-            Contest contestToDelete = context.Contest.AsNoTracking().FirstOrDefault(c => c.ContestId == contest.ContestId);
+            Contest contestToDelete = context.Contest.FirstOrDefault(c => c.ContestId == contest.ContestId);
             context.Contest.Remove(contestToDelete);
             context.SaveChanges();
         }

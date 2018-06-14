@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteEstimationString(EstimationString estimationString)
         {
-            EstimationString estimationStringToDelete = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationNumber == estimationString.EstimationNumber && es.EstimationText == estimationString.EstimationText);
+            EstimationString estimationStringToDelete = context.EstimationString.FirstOrDefault(es => es.EstimationNumber == estimationString.EstimationNumber && es.EstimationText == estimationString.EstimationText);
             context.EstimationString.Remove(estimationStringToDelete);
             context.SaveChanges();
         }

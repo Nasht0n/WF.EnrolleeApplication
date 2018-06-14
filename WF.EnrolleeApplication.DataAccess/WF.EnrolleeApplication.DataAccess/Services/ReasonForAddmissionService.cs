@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteReasonForAddmission(ReasonForAddmission reasonForAddmission)
         {
-            ReasonForAddmission reasonForAddmissionToDelete = context.ReasonForAddmission.AsNoTracking().FirstOrDefault(r => r.ReasonForAddmissionId == reasonForAddmission.ReasonForAddmissionId);
+            ReasonForAddmission reasonForAddmissionToDelete = context.ReasonForAddmission.FirstOrDefault(r => r.ReasonForAddmissionId == reasonForAddmission.ReasonForAddmissionId);
             context.ReasonForAddmission.Remove(reasonForAddmissionToDelete);
             context.SaveChanges();
         }

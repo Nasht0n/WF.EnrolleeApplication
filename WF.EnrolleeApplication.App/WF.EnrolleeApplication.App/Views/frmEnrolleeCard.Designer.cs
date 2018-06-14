@@ -999,10 +999,10 @@
             // 
             this.tabPage2.Controls.Add(this.groupBox35);
             this.tabPage2.Controls.Add(this.groupBox22);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(976, 455);
+            this.tabPage2.Size = new System.Drawing.Size(976, 453);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Дополнительная информация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1013,7 +1013,7 @@
             this.groupBox35.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox35.Location = new System.Drawing.Point(3, 179);
             this.groupBox35.Name = "groupBox35";
-            this.groupBox35.Size = new System.Drawing.Size(970, 273);
+            this.groupBox35.Size = new System.Drawing.Size(970, 271);
             this.groupBox35.TabIndex = 1;
             this.groupBox35.TabStop = false;
             this.groupBox35.Text = "Дополнительные сведения";
@@ -1051,13 +1051,13 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(964, 251);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(964, 249);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // gbDateDeal
             // 
             this.gbDateDeal.Controls.Add(this.dtDateDeal);
-            this.gbDateDeal.Location = new System.Drawing.Point(772, 153);
+            this.gbDateDeal.Location = new System.Drawing.Point(772, 150);
             this.gbDateDeal.Name = "gbDateDeal";
             this.gbDateDeal.Size = new System.Drawing.Size(186, 43);
             this.gbDateDeal.TabIndex = 23;
@@ -1072,16 +1072,16 @@
             this.dtDateDeal.Location = new System.Drawing.Point(3, 19);
             this.dtDateDeal.Name = "dtDateDeal";
             this.dtDateDeal.Size = new System.Drawing.Size(180, 23);
-            this.dtDateDeal.TabIndex = 1;
+            this.dtDateDeal.TabIndex = 0;
             // 
             // gbWorkPost
             // 
             this.tableLayoutPanel5.SetColumnSpan(this.gbWorkPost, 2);
             this.gbWorkPost.Controls.Add(this.tbWorkPost);
             this.gbWorkPost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbWorkPost.Location = new System.Drawing.Point(580, 203);
+            this.gbWorkPost.Location = new System.Drawing.Point(580, 199);
             this.gbWorkPost.Name = "gbWorkPost";
-            this.gbWorkPost.Size = new System.Drawing.Size(381, 45);
+            this.gbWorkPost.Size = new System.Drawing.Size(381, 47);
             this.gbWorkPost.TabIndex = 21;
             this.gbWorkPost.TabStop = false;
             this.gbWorkPost.Text = "Должность";
@@ -1095,15 +1095,15 @@
             this.tbWorkPost.Location = new System.Drawing.Point(3, 19);
             this.tbWorkPost.Name = "tbWorkPost";
             this.tbWorkPost.Size = new System.Drawing.Size(375, 23);
-            this.tbWorkPost.TabIndex = 1;
+            this.tbWorkPost.TabIndex = 0;
             // 
             // gbWorkPlace
             // 
             this.gbWorkPlace.Controls.Add(this.tbWorkPlace);
             this.gbWorkPlace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbWorkPlace.Location = new System.Drawing.Point(243, 203);
+            this.gbWorkPlace.Location = new System.Drawing.Point(243, 199);
             this.gbWorkPlace.Name = "gbWorkPlace";
-            this.gbWorkPlace.Size = new System.Drawing.Size(331, 45);
+            this.gbWorkPlace.Size = new System.Drawing.Size(331, 47);
             this.gbWorkPlace.TabIndex = 20;
             this.gbWorkPlace.TabStop = false;
             this.gbWorkPlace.Text = "Место работы";
@@ -1117,16 +1117,16 @@
             this.tbWorkPlace.Location = new System.Drawing.Point(3, 19);
             this.tbWorkPlace.Name = "tbWorkPlace";
             this.tbWorkPlace.Size = new System.Drawing.Size(325, 23);
-            this.tbWorkPlace.TabIndex = 1;
+            this.tbWorkPlace.TabIndex = 0;
             // 
             // gbSeniority
             // 
             this.tableLayoutPanel5.SetColumnSpan(this.gbSeniority, 2);
             this.gbSeniority.Controls.Add(this.tbSeniority);
             this.gbSeniority.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbSeniority.Location = new System.Drawing.Point(3, 203);
+            this.gbSeniority.Location = new System.Drawing.Point(3, 199);
             this.gbSeniority.Name = "gbSeniority";
-            this.gbSeniority.Size = new System.Drawing.Size(234, 45);
+            this.gbSeniority.Size = new System.Drawing.Size(234, 47);
             this.gbSeniority.TabIndex = 19;
             this.gbSeniority.TabStop = false;
             this.gbSeniority.Text = "Трудовой стаж (полных месяцев)";
@@ -1138,7 +1138,7 @@
             this.tbSeniority.Location = new System.Drawing.Point(3, 19);
             this.tbSeniority.Name = "tbSeniority";
             this.tbSeniority.Size = new System.Drawing.Size(228, 23);
-            this.tbSeniority.TabIndex = 1;
+            this.tbSeniority.TabIndex = 0;
             this.tbSeniority.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox46
@@ -1146,9 +1146,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.groupBox46, 2);
             this.groupBox46.Controls.Add(this.cbForeignLanguage);
             this.groupBox46.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox46.Location = new System.Drawing.Point(147, 153);
+            this.groupBox46.Location = new System.Drawing.Point(147, 150);
             this.groupBox46.Name = "groupBox46";
-            this.groupBox46.Size = new System.Drawing.Size(427, 44);
+            this.groupBox46.Size = new System.Drawing.Size(427, 43);
             this.groupBox46.TabIndex = 18;
             this.groupBox46.TabStop = false;
             this.groupBox46.Text = "Основной иностранный язык";
@@ -1161,16 +1161,16 @@
             this.cbForeignLanguage.Location = new System.Drawing.Point(3, 19);
             this.cbForeignLanguage.Name = "cbForeignLanguage";
             this.cbForeignLanguage.Size = new System.Drawing.Size(421, 23);
-            this.cbForeignLanguage.TabIndex = 1;
+            this.cbForeignLanguage.TabIndex = 0;
             this.cbForeignLanguage.SelectedValueChanged += new System.EventHandler(this.cbForeignLanguage_SelectedValueChanged);
             // 
             // groupBox45
             // 
             this.groupBox45.Controls.Add(this.cbBrsm);
             this.groupBox45.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox45.Location = new System.Drawing.Point(3, 153);
+            this.groupBox45.Location = new System.Drawing.Point(3, 150);
             this.groupBox45.Name = "groupBox45";
-            this.groupBox45.Size = new System.Drawing.Size(138, 44);
+            this.groupBox45.Size = new System.Drawing.Size(138, 43);
             this.groupBox45.TabIndex = 11;
             this.groupBox45.TabStop = false;
             this.groupBox45.Text = "БРСМ";
@@ -1181,7 +1181,7 @@
             this.cbBrsm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbBrsm.Location = new System.Drawing.Point(3, 19);
             this.cbBrsm.Name = "cbBrsm";
-            this.cbBrsm.Size = new System.Drawing.Size(132, 22);
+            this.cbBrsm.Size = new System.Drawing.Size(132, 21);
             this.cbBrsm.TabIndex = 0;
             this.cbBrsm.Text = "БРСМ";
             this.cbBrsm.UseVisualStyleBackColor = true;
@@ -1191,9 +1191,9 @@
             // 
             this.gbCurrentUniversity.Controls.Add(this.tbCurrentUniversity);
             this.gbCurrentUniversity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbCurrentUniversity.Location = new System.Drawing.Point(772, 103);
+            this.gbCurrentUniversity.Location = new System.Drawing.Point(772, 101);
             this.gbCurrentUniversity.Name = "gbCurrentUniversity";
-            this.gbCurrentUniversity.Size = new System.Drawing.Size(189, 44);
+            this.gbCurrentUniversity.Size = new System.Drawing.Size(189, 43);
             this.gbCurrentUniversity.TabIndex = 10;
             this.gbCurrentUniversity.TabStop = false;
             this.gbCurrentUniversity.Text = "Наименование учреждения образования";
@@ -1207,16 +1207,16 @@
             this.tbCurrentUniversity.Location = new System.Drawing.Point(3, 19);
             this.tbCurrentUniversity.Name = "tbCurrentUniversity";
             this.tbCurrentUniversity.Size = new System.Drawing.Size(183, 23);
-            this.tbCurrentUniversity.TabIndex = 1;
+            this.tbCurrentUniversity.TabIndex = 0;
             // 
             // gbCurrentSpeciality
             // 
             this.tableLayoutPanel5.SetColumnSpan(this.gbCurrentSpeciality, 2);
             this.gbCurrentSpeciality.Controls.Add(this.tbCurrentSpeciality);
             this.gbCurrentSpeciality.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbCurrentSpeciality.Location = new System.Drawing.Point(243, 103);
+            this.gbCurrentSpeciality.Location = new System.Drawing.Point(243, 101);
             this.gbCurrentSpeciality.Name = "gbCurrentSpeciality";
-            this.gbCurrentSpeciality.Size = new System.Drawing.Size(523, 44);
+            this.gbCurrentSpeciality.Size = new System.Drawing.Size(523, 43);
             this.gbCurrentSpeciality.TabIndex = 8;
             this.gbCurrentSpeciality.TabStop = false;
             this.gbCurrentSpeciality.Text = "Специальность учреждения образования";
@@ -1230,15 +1230,15 @@
             this.tbCurrentSpeciality.Location = new System.Drawing.Point(3, 19);
             this.tbCurrentSpeciality.Name = "tbCurrentSpeciality";
             this.tbCurrentSpeciality.Size = new System.Drawing.Size(517, 23);
-            this.tbCurrentSpeciality.TabIndex = 1;
+            this.tbCurrentSpeciality.TabIndex = 0;
             // 
             // gbCurrentCurs
             // 
             this.gbCurrentCurs.Controls.Add(this.tbCurrentNumberCurs);
             this.gbCurrentCurs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbCurrentCurs.Location = new System.Drawing.Point(147, 103);
+            this.gbCurrentCurs.Location = new System.Drawing.Point(147, 101);
             this.gbCurrentCurs.Name = "gbCurrentCurs";
-            this.gbCurrentCurs.Size = new System.Drawing.Size(90, 44);
+            this.gbCurrentCurs.Size = new System.Drawing.Size(90, 43);
             this.gbCurrentCurs.TabIndex = 7;
             this.gbCurrentCurs.TabStop = false;
             this.gbCurrentCurs.Text = "Курс";
@@ -1250,16 +1250,16 @@
             this.tbCurrentNumberCurs.Location = new System.Drawing.Point(3, 19);
             this.tbCurrentNumberCurs.Name = "tbCurrentNumberCurs";
             this.tbCurrentNumberCurs.Size = new System.Drawing.Size(84, 23);
-            this.tbCurrentNumberCurs.TabIndex = 1;
+            this.tbCurrentNumberCurs.TabIndex = 0;
             this.tbCurrentNumberCurs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox41
             // 
             this.groupBox41.Controls.Add(this.cbSecondEducation);
             this.groupBox41.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox41.Location = new System.Drawing.Point(3, 103);
+            this.groupBox41.Location = new System.Drawing.Point(3, 101);
             this.groupBox41.Name = "groupBox41";
-            this.groupBox41.Size = new System.Drawing.Size(138, 44);
+            this.groupBox41.Size = new System.Drawing.Size(138, 43);
             this.groupBox41.TabIndex = 6;
             this.groupBox41.TabStop = false;
             this.groupBox41.Text = "Второе высшее";
@@ -1270,7 +1270,7 @@
             this.cbSecondEducation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbSecondEducation.Location = new System.Drawing.Point(3, 19);
             this.cbSecondEducation.Name = "cbSecondEducation";
-            this.cbSecondEducation.Size = new System.Drawing.Size(132, 22);
+            this.cbSecondEducation.Size = new System.Drawing.Size(132, 21);
             this.cbSecondEducation.TabIndex = 0;
             this.cbSecondEducation.Text = "Второе высшее образование";
             this.cbSecondEducation.UseVisualStyleBackColor = true;
@@ -1281,9 +1281,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.gbSecondarySpeciality, 2);
             this.gbSecondarySpeciality.Controls.Add(this.cbSecondarySpeciality);
             this.gbSecondarySpeciality.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbSecondarySpeciality.Location = new System.Drawing.Point(580, 53);
+            this.gbSecondarySpeciality.Location = new System.Drawing.Point(580, 52);
             this.gbSecondarySpeciality.Name = "gbSecondarySpeciality";
-            this.gbSecondarySpeciality.Size = new System.Drawing.Size(381, 44);
+            this.gbSecondarySpeciality.Size = new System.Drawing.Size(381, 43);
             this.gbSecondarySpeciality.TabIndex = 5;
             this.gbSecondarySpeciality.TabStop = false;
             this.gbSecondarySpeciality.Text = "Специальность второй ступени";
@@ -1297,7 +1297,7 @@
             this.cbSecondarySpeciality.Location = new System.Drawing.Point(3, 19);
             this.cbSecondarySpeciality.Name = "cbSecondarySpeciality";
             this.cbSecondarySpeciality.Size = new System.Drawing.Size(375, 23);
-            this.cbSecondarySpeciality.TabIndex = 3;
+            this.cbSecondarySpeciality.TabIndex = 0;
             this.cbSecondarySpeciality.SelectedValueChanged += new System.EventHandler(this.cbSecondarySpeciality_SelectedValueChanged);
             // 
             // groupBox39
@@ -1305,9 +1305,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.groupBox39, 3);
             this.groupBox39.Controls.Add(this.tbSchoolAdres);
             this.groupBox39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox39.Location = new System.Drawing.Point(3, 53);
+            this.groupBox39.Location = new System.Drawing.Point(3, 52);
             this.groupBox39.Name = "groupBox39";
-            this.groupBox39.Size = new System.Drawing.Size(571, 44);
+            this.groupBox39.Size = new System.Drawing.Size(571, 43);
             this.groupBox39.TabIndex = 4;
             this.groupBox39.TabStop = false;
             this.groupBox39.Text = "Адрес учебного заведения";
@@ -1320,7 +1320,7 @@
             this.tbSchoolAdres.Location = new System.Drawing.Point(3, 19);
             this.tbSchoolAdres.Name = "tbSchoolAdres";
             this.tbSchoolAdres.Size = new System.Drawing.Size(565, 23);
-            this.tbSchoolAdres.TabIndex = 1;
+            this.tbSchoolAdres.TabIndex = 0;
             // 
             // groupBox38
             // 
@@ -1329,7 +1329,7 @@
             this.groupBox38.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox38.Location = new System.Drawing.Point(580, 3);
             this.groupBox38.Name = "groupBox38";
-            this.groupBox38.Size = new System.Drawing.Size(381, 44);
+            this.groupBox38.Size = new System.Drawing.Size(381, 43);
             this.groupBox38.TabIndex = 3;
             this.groupBox38.TabStop = false;
             this.groupBox38.Text = "Наименование учебного заведения";
@@ -1342,7 +1342,7 @@
             this.tbSchoolName.Location = new System.Drawing.Point(3, 19);
             this.tbSchoolName.Name = "tbSchoolName";
             this.tbSchoolName.Size = new System.Drawing.Size(375, 23);
-            this.tbSchoolName.TabIndex = 1;
+            this.tbSchoolName.TabIndex = 0;
             // 
             // groupBox36
             // 
@@ -1350,7 +1350,7 @@
             this.groupBox36.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox36.Location = new System.Drawing.Point(3, 3);
             this.groupBox36.Name = "groupBox36";
-            this.groupBox36.Size = new System.Drawing.Size(138, 44);
+            this.groupBox36.Size = new System.Drawing.Size(138, 43);
             this.groupBox36.TabIndex = 1;
             this.groupBox36.TabStop = false;
             this.groupBox36.Text = "Год окончания";
@@ -1361,7 +1361,7 @@
             this.tbSchoolYear.Location = new System.Drawing.Point(3, 19);
             this.tbSchoolYear.Name = "tbSchoolYear";
             this.tbSchoolYear.Size = new System.Drawing.Size(132, 23);
-            this.tbSchoolYear.TabIndex = 1;
+            this.tbSchoolYear.TabIndex = 0;
             this.tbSchoolYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox37
@@ -1371,7 +1371,7 @@
             this.groupBox37.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox37.Location = new System.Drawing.Point(147, 3);
             this.groupBox37.Name = "groupBox37";
-            this.groupBox37.Size = new System.Drawing.Size(427, 44);
+            this.groupBox37.Size = new System.Drawing.Size(427, 43);
             this.groupBox37.TabIndex = 2;
             this.groupBox37.TabStop = false;
             this.groupBox37.Text = "Тип учебного заведения";
@@ -1384,13 +1384,13 @@
             this.cbTypeOfSchool.Location = new System.Drawing.Point(3, 19);
             this.cbTypeOfSchool.Name = "cbTypeOfSchool";
             this.cbTypeOfSchool.Size = new System.Drawing.Size(421, 23);
-            this.cbTypeOfSchool.TabIndex = 2;
+            this.cbTypeOfSchool.TabIndex = 0;
             this.cbTypeOfSchool.SelectedValueChanged += new System.EventHandler(this.cbTypeOfSchool_SelectedValueChanged);
             // 
             // gbDecree
             // 
             this.gbDecree.Controls.Add(this.cbDecree);
-            this.gbDecree.Location = new System.Drawing.Point(580, 153);
+            this.gbDecree.Location = new System.Drawing.Point(580, 150);
             this.gbDecree.Name = "gbDecree";
             this.gbDecree.Size = new System.Drawing.Size(186, 43);
             this.gbDecree.TabIndex = 22;
@@ -1406,7 +1406,7 @@
             this.cbDecree.Location = new System.Drawing.Point(3, 19);
             this.cbDecree.Name = "cbDecree";
             this.cbDecree.Size = new System.Drawing.Size(180, 23);
-            this.cbDecree.TabIndex = 2;
+            this.cbDecree.TabIndex = 0;
             this.cbDecree.SelectedValueChanged += new System.EventHandler(this.cbDecree_SelectedValueChanged);
             // 
             // groupBox22
@@ -1466,7 +1466,7 @@
             this.tbMobilePhone.Location = new System.Drawing.Point(3, 19);
             this.tbMobilePhone.Name = "tbMobilePhone";
             this.tbMobilePhone.Size = new System.Drawing.Size(229, 23);
-            this.tbMobilePhone.TabIndex = 1;
+            this.tbMobilePhone.TabIndex = 0;
             // 
             // groupBox33
             // 
@@ -1485,7 +1485,7 @@
             this.tbHomePhone.Location = new System.Drawing.Point(3, 19);
             this.tbHomePhone.Name = "tbHomePhone";
             this.tbHomePhone.Size = new System.Drawing.Size(229, 23);
-            this.tbHomePhone.TabIndex = 1;
+            this.tbHomePhone.TabIndex = 0;
             // 
             // groupBox32
             // 
@@ -1504,7 +1504,7 @@
             this.tbNumberFlat.Location = new System.Drawing.Point(3, 19);
             this.tbNumberFlat.Name = "tbNumberFlat";
             this.tbNumberFlat.Size = new System.Drawing.Size(229, 23);
-            this.tbNumberFlat.TabIndex = 1;
+            this.tbNumberFlat.TabIndex = 0;
             // 
             // groupBox31
             // 
@@ -1523,7 +1523,7 @@
             this.tbNumberHouse.Location = new System.Drawing.Point(3, 19);
             this.tbNumberHouse.Name = "tbNumberHouse";
             this.tbNumberHouse.Size = new System.Drawing.Size(229, 23);
-            this.tbNumberHouse.TabIndex = 1;
+            this.tbNumberHouse.TabIndex = 0;
             // 
             // groupBox30
             // 
@@ -1544,7 +1544,7 @@
             this.tbStreetName.Location = new System.Drawing.Point(3, 19);
             this.tbStreetName.Name = "tbStreetName";
             this.tbStreetName.Size = new System.Drawing.Size(229, 23);
-            this.tbStreetName.TabIndex = 1;
+            this.tbStreetName.TabIndex = 0;
             // 
             // groupBox29
             // 
@@ -1565,7 +1565,7 @@
             this.cbTypeOfStreet.Location = new System.Drawing.Point(3, 19);
             this.cbTypeOfStreet.Name = "cbTypeOfStreet";
             this.cbTypeOfStreet.Size = new System.Drawing.Size(229, 23);
-            this.cbTypeOfStreet.TabIndex = 1;
+            this.cbTypeOfStreet.TabIndex = 0;
             this.cbTypeOfStreet.SelectedValueChanged += new System.EventHandler(this.cbTypeOfStreet_SelectedValueChanged);
             // 
             // groupBox28
@@ -1587,7 +1587,7 @@
             this.tbSettlementIndex.Location = new System.Drawing.Point(3, 19);
             this.tbSettlementIndex.Name = "tbSettlementIndex";
             this.tbSettlementIndex.Size = new System.Drawing.Size(229, 23);
-            this.tbSettlementIndex.TabIndex = 1;
+            this.tbSettlementIndex.TabIndex = 0;
             this.tbSettlementIndex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumeric);
             // 
             // groupBox27
@@ -1609,7 +1609,7 @@
             this.tbSettlementName.Location = new System.Drawing.Point(3, 19);
             this.tbSettlementName.Name = "tbSettlementName";
             this.tbSettlementName.Size = new System.Drawing.Size(229, 23);
-            this.tbSettlementName.TabIndex = 1;
+            this.tbSettlementName.TabIndex = 0;
             // 
             // groupBox26
             // 
@@ -1630,7 +1630,7 @@
             this.cbTypeOfSettlement.Location = new System.Drawing.Point(3, 19);
             this.cbTypeOfSettlement.Name = "cbTypeOfSettlement";
             this.cbTypeOfSettlement.Size = new System.Drawing.Size(229, 23);
-            this.cbTypeOfSettlement.TabIndex = 1;
+            this.cbTypeOfSettlement.TabIndex = 0;
             this.cbTypeOfSettlement.SelectedValueChanged += new System.EventHandler(this.cbTypeOfSettlement_SelectedValueChanged);
             // 
             // groupBox24
@@ -1652,7 +1652,7 @@
             this.cbArea.Location = new System.Drawing.Point(3, 19);
             this.cbArea.Name = "cbArea";
             this.cbArea.Size = new System.Drawing.Size(229, 23);
-            this.cbArea.TabIndex = 2;
+            this.cbArea.TabIndex = 0;
             this.cbArea.SelectedValueChanged += new System.EventHandler(this.cbArea_SelectedValueChanged);
             // 
             // groupBox25
@@ -1674,7 +1674,7 @@
             this.cbDistrict.Location = new System.Drawing.Point(3, 19);
             this.cbDistrict.Name = "cbDistrict";
             this.cbDistrict.Size = new System.Drawing.Size(229, 23);
-            this.cbDistrict.TabIndex = 2;
+            this.cbDistrict.TabIndex = 0;
             this.cbDistrict.SelectedValueChanged += new System.EventHandler(this.cbDistrict_SelectedValueChanged);
             // 
             // groupBox23
@@ -1696,7 +1696,7 @@
             this.cbCountry.Location = new System.Drawing.Point(3, 19);
             this.cbCountry.Name = "cbCountry";
             this.cbCountry.Size = new System.Drawing.Size(229, 23);
-            this.cbCountry.TabIndex = 2;
+            this.cbCountry.TabIndex = 0;
             this.cbCountry.SelectedValueChanged += new System.EventHandler(this.cbCountry_SelectedValueChanged);
             // 
             // tabPage3
@@ -1704,10 +1704,10 @@
             this.tabPage3.Controls.Add(this.groupBox64);
             this.tabPage3.Controls.Add(this.groupBox55);
             this.tabPage3.Controls.Add(this.groupBox50);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(976, 455);
+            this.tabPage3.Size = new System.Drawing.Size(976, 453);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Поступление";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1763,7 +1763,7 @@
             this.tbPersonInCharge.Location = new System.Drawing.Point(6, 22);
             this.tbPersonInCharge.Name = "tbPersonInCharge";
             this.tbPersonInCharge.Size = new System.Drawing.Size(369, 23);
-            this.tbPersonInCharge.TabIndex = 2;
+            this.tbPersonInCharge.TabIndex = 0;
             // 
             // groupBox74
             // 
@@ -1784,7 +1784,7 @@
             this.cbTypeOfState.Location = new System.Drawing.Point(3, 19);
             this.cbTypeOfState.Name = "cbTypeOfState";
             this.cbTypeOfState.Size = new System.Drawing.Size(373, 23);
-            this.cbTypeOfState.TabIndex = 2;
+            this.cbTypeOfState.TabIndex = 0;
             this.cbTypeOfState.SelectedValueChanged += new System.EventHandler(this.cbTypeOfState_SelectedValueChanged);
             // 
             // gbNumberOfDeal
@@ -1805,7 +1805,7 @@
             this.tbNumberOfDeal.Location = new System.Drawing.Point(3, 19);
             this.tbNumberOfDeal.Name = "tbNumberOfDeal";
             this.tbNumberOfDeal.Size = new System.Drawing.Size(180, 23);
-            this.tbNumberOfDeal.TabIndex = 2;
+            this.tbNumberOfDeal.TabIndex = 0;
             // 
             // groupBox65
             // 
@@ -1826,7 +1826,7 @@
             this.tbAverage.Name = "tbAverage";
             this.tbAverage.ReadOnly = true;
             this.tbAverage.Size = new System.Drawing.Size(369, 23);
-            this.tbAverage.TabIndex = 2;
+            this.tbAverage.TabIndex = 0;
             // 
             // groupBox66
             // 
@@ -1849,7 +1849,7 @@
             this.cbTargetWorkPlace.Location = new System.Drawing.Point(151, 19);
             this.cbTargetWorkPlace.Name = "cbTargetWorkPlace";
             this.cbTargetWorkPlace.Size = new System.Drawing.Size(417, 23);
-            this.cbTargetWorkPlace.TabIndex = 1;
+            this.cbTargetWorkPlace.TabIndex = 0;
             this.cbTargetWorkPlace.Visible = false;
             this.cbTargetWorkPlace.SelectedValueChanged += new System.EventHandler(this.cbTargetWorkPlace_SelectedValueChanged);
             // 
@@ -1962,7 +1962,7 @@
             this.tbSecondAttestatString.Location = new System.Drawing.Point(3, 19);
             this.tbSecondAttestatString.Name = "tbSecondAttestatString";
             this.tbSecondAttestatString.Size = new System.Drawing.Size(451, 23);
-            this.tbSecondAttestatString.TabIndex = 1;
+            this.tbSecondAttestatString.TabIndex = 0;
             this.tbSecondAttestatString.TextChanged += new System.EventHandler(this.tbSecondAttestatString_TextChanged);
             this.tbSecondAttestatString.Enter += new System.EventHandler(this.ClearClipboard);
             this.tbSecondAttestatString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericAttestat);
@@ -1985,7 +1985,7 @@
             this.tbFirstAttestatString.Location = new System.Drawing.Point(3, 19);
             this.tbFirstAttestatString.Name = "tbFirstAttestatString";
             this.tbFirstAttestatString.Size = new System.Drawing.Size(451, 23);
-            this.tbFirstAttestatString.TabIndex = 1;
+            this.tbFirstAttestatString.TabIndex = 0;
             this.tbFirstAttestatString.TextChanged += new System.EventHandler(this.tbFirstAttestatString_TextChanged);
             this.tbFirstAttestatString.Enter += new System.EventHandler(this.ClearClipboard);
             this.tbFirstAttestatString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericAttestat);
@@ -2007,7 +2007,7 @@
             this.tbAverageAttestat.Location = new System.Drawing.Point(3, 19);
             this.tbAverageAttestat.Name = "tbAverageAttestat";
             this.tbAverageAttestat.Size = new System.Drawing.Size(174, 23);
-            this.tbAverageAttestat.TabIndex = 2;
+            this.tbAverageAttestat.TabIndex = 0;
             this.tbAverageAttestat.TextChanged += new System.EventHandler(this.tbAverageAttestat_TextChanged);
             // 
             // groupBox68
@@ -2029,16 +2029,16 @@
             this.cbSystemAttestat.Location = new System.Drawing.Point(3, 19);
             this.cbSystemAttestat.Name = "cbSystemAttestat";
             this.cbSystemAttestat.Size = new System.Drawing.Size(173, 23);
-            this.cbSystemAttestat.TabIndex = 2;
+            this.cbSystemAttestat.TabIndex = 0;
             this.cbSystemAttestat.SelectedValueChanged += new System.EventHandler(this.cbSystemAttestat_SelectedValueChanged);
             // 
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.tableLayoutPanel7);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(469, 172);
+            this.tabPage8.Size = new System.Drawing.Size(469, 167);
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "Диплом ПТУ";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -2060,7 +2060,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(463, 166);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(463, 161);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // groupBox54
@@ -2068,9 +2068,9 @@
             this.tableLayoutPanel7.SetColumnSpan(this.groupBox54, 5);
             this.groupBox54.Controls.Add(this.tbSecondDiplomPtuString);
             this.groupBox54.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox54.Location = new System.Drawing.Point(3, 113);
+            this.groupBox54.Location = new System.Drawing.Point(3, 109);
             this.groupBox54.Name = "groupBox54";
-            this.groupBox54.Size = new System.Drawing.Size(457, 50);
+            this.groupBox54.Size = new System.Drawing.Size(457, 49);
             this.groupBox54.TabIndex = 24;
             this.groupBox54.TabStop = false;
             this.groupBox54.Text = "Вторая строка диплома ПТУ";
@@ -2081,7 +2081,7 @@
             this.tbSecondDiplomPtuString.Location = new System.Drawing.Point(3, 19);
             this.tbSecondDiplomPtuString.Name = "tbSecondDiplomPtuString";
             this.tbSecondDiplomPtuString.Size = new System.Drawing.Size(451, 23);
-            this.tbSecondDiplomPtuString.TabIndex = 1;
+            this.tbSecondDiplomPtuString.TabIndex = 0;
             this.tbSecondDiplomPtuString.TextChanged += new System.EventHandler(this.tbSecondDiplomPtuString_TextChanged);
             this.tbSecondDiplomPtuString.Enter += new System.EventHandler(this.ClearClipboard);
             this.tbSecondDiplomPtuString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomPtu);
@@ -2091,9 +2091,9 @@
             this.tableLayoutPanel7.SetColumnSpan(this.groupBox56, 5);
             this.groupBox56.Controls.Add(this.tbFirstDiplomPtuString);
             this.groupBox56.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox56.Location = new System.Drawing.Point(3, 58);
+            this.groupBox56.Location = new System.Drawing.Point(3, 56);
             this.groupBox56.Name = "groupBox56";
-            this.groupBox56.Size = new System.Drawing.Size(457, 49);
+            this.groupBox56.Size = new System.Drawing.Size(457, 47);
             this.groupBox56.TabIndex = 23;
             this.groupBox56.TabStop = false;
             this.groupBox56.Text = "Первая строка диплома ПТУ";
@@ -2104,7 +2104,7 @@
             this.tbFirstDiplomPtuString.Location = new System.Drawing.Point(3, 19);
             this.tbFirstDiplomPtuString.Name = "tbFirstDiplomPtuString";
             this.tbFirstDiplomPtuString.Size = new System.Drawing.Size(451, 23);
-            this.tbFirstDiplomPtuString.TabIndex = 1;
+            this.tbFirstDiplomPtuString.TabIndex = 0;
             this.tbFirstDiplomPtuString.TextChanged += new System.EventHandler(this.tbFirstDiplomPtuString_TextChanged);
             this.tbFirstDiplomPtuString.Enter += new System.EventHandler(this.ClearClipboard);
             this.tbFirstDiplomPtuString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomPtu);
@@ -2115,7 +2115,7 @@
             this.groupBox57.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox57.Location = new System.Drawing.Point(280, 3);
             this.groupBox57.Name = "groupBox57";
-            this.groupBox57.Size = new System.Drawing.Size(180, 49);
+            this.groupBox57.Size = new System.Drawing.Size(180, 47);
             this.groupBox57.TabIndex = 3;
             this.groupBox57.TabStop = false;
             this.groupBox57.Text = "Средний балл диплома ПТУ";
@@ -2126,7 +2126,7 @@
             this.tbAverageDiplomPtu.Location = new System.Drawing.Point(3, 19);
             this.tbAverageDiplomPtu.Name = "tbAverageDiplomPtu";
             this.tbAverageDiplomPtu.Size = new System.Drawing.Size(174, 23);
-            this.tbAverageDiplomPtu.TabIndex = 2;
+            this.tbAverageDiplomPtu.TabIndex = 0;
             this.tbAverageDiplomPtu.TextChanged += new System.EventHandler(this.tbAverageDiplomPtu_TextChanged);
             // 
             // groupBox58
@@ -2135,7 +2135,7 @@
             this.groupBox58.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox58.Location = new System.Drawing.Point(3, 3);
             this.groupBox58.Name = "groupBox58";
-            this.groupBox58.Size = new System.Drawing.Size(179, 49);
+            this.groupBox58.Size = new System.Drawing.Size(179, 47);
             this.groupBox58.TabIndex = 1;
             this.groupBox58.TabStop = false;
             this.groupBox58.Text = "Система перевода";
@@ -2151,16 +2151,16 @@
             this.cbSystemDiplomPtu.Location = new System.Drawing.Point(3, 19);
             this.cbSystemDiplomPtu.Name = "cbSystemDiplomPtu";
             this.cbSystemDiplomPtu.Size = new System.Drawing.Size(173, 23);
-            this.cbSystemDiplomPtu.TabIndex = 2;
+            this.cbSystemDiplomPtu.TabIndex = 0;
             this.cbSystemDiplomPtu.SelectedValueChanged += new System.EventHandler(this.cbSystemDiplomPtu_SelectedValueChanged);
             // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.tableLayoutPanel8);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(469, 172);
+            this.tabPage4.Size = new System.Drawing.Size(469, 167);
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "Диплом ССУЗ";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2182,7 +2182,7 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(463, 166);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(463, 161);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // groupBox59
@@ -2190,9 +2190,9 @@
             this.tableLayoutPanel8.SetColumnSpan(this.groupBox59, 5);
             this.groupBox59.Controls.Add(this.tbSecondDiplomSsuzString);
             this.groupBox59.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox59.Location = new System.Drawing.Point(3, 113);
+            this.groupBox59.Location = new System.Drawing.Point(3, 109);
             this.groupBox59.Name = "groupBox59";
-            this.groupBox59.Size = new System.Drawing.Size(457, 50);
+            this.groupBox59.Size = new System.Drawing.Size(457, 49);
             this.groupBox59.TabIndex = 24;
             this.groupBox59.TabStop = false;
             this.groupBox59.Text = "Вторая строка оценок диплома ССУЗ";
@@ -2203,7 +2203,7 @@
             this.tbSecondDiplomSsuzString.Location = new System.Drawing.Point(3, 19);
             this.tbSecondDiplomSsuzString.Name = "tbSecondDiplomSsuzString";
             this.tbSecondDiplomSsuzString.Size = new System.Drawing.Size(451, 23);
-            this.tbSecondDiplomSsuzString.TabIndex = 1;
+            this.tbSecondDiplomSsuzString.TabIndex = 0;
             this.tbSecondDiplomSsuzString.TextChanged += new System.EventHandler(this.tbSecondDiplomSsuzString_TextChanged);
             this.tbSecondDiplomSsuzString.Enter += new System.EventHandler(this.ClearClipboard);
             this.tbSecondDiplomSsuzString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomSsuz);
@@ -2213,9 +2213,9 @@
             this.tableLayoutPanel8.SetColumnSpan(this.groupBox60, 5);
             this.groupBox60.Controls.Add(this.tbFirstDiplomSsuzString);
             this.groupBox60.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox60.Location = new System.Drawing.Point(3, 58);
+            this.groupBox60.Location = new System.Drawing.Point(3, 56);
             this.groupBox60.Name = "groupBox60";
-            this.groupBox60.Size = new System.Drawing.Size(457, 49);
+            this.groupBox60.Size = new System.Drawing.Size(457, 47);
             this.groupBox60.TabIndex = 23;
             this.groupBox60.TabStop = false;
             this.groupBox60.Text = "Первая строка оценок диплома ССУЗ";
@@ -2226,7 +2226,7 @@
             this.tbFirstDiplomSsuzString.Location = new System.Drawing.Point(3, 19);
             this.tbFirstDiplomSsuzString.Name = "tbFirstDiplomSsuzString";
             this.tbFirstDiplomSsuzString.Size = new System.Drawing.Size(451, 23);
-            this.tbFirstDiplomSsuzString.TabIndex = 1;
+            this.tbFirstDiplomSsuzString.TabIndex = 0;
             this.tbFirstDiplomSsuzString.TextChanged += new System.EventHandler(this.tbFirstDiplomSsuzString_TextChanged);
             this.tbFirstDiplomSsuzString.Enter += new System.EventHandler(this.ClearClipboard);
             this.tbFirstDiplomSsuzString.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllowNumericDiplomSsuz);
@@ -2237,7 +2237,7 @@
             this.groupBox61.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox61.Location = new System.Drawing.Point(280, 3);
             this.groupBox61.Name = "groupBox61";
-            this.groupBox61.Size = new System.Drawing.Size(180, 49);
+            this.groupBox61.Size = new System.Drawing.Size(180, 47);
             this.groupBox61.TabIndex = 3;
             this.groupBox61.TabStop = false;
             this.groupBox61.Text = "Средний балл диплом ССУЗ";
@@ -2248,7 +2248,7 @@
             this.tbAverageDiplomSsuz.Location = new System.Drawing.Point(3, 19);
             this.tbAverageDiplomSsuz.Name = "tbAverageDiplomSsuz";
             this.tbAverageDiplomSsuz.Size = new System.Drawing.Size(174, 23);
-            this.tbAverageDiplomSsuz.TabIndex = 2;
+            this.tbAverageDiplomSsuz.TabIndex = 0;
             this.tbAverageDiplomSsuz.TextChanged += new System.EventHandler(this.tbAverageDiplomSsuz_TextChanged);
             // 
             // groupBox62
@@ -2257,7 +2257,7 @@
             this.groupBox62.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox62.Location = new System.Drawing.Point(3, 3);
             this.groupBox62.Name = "groupBox62";
-            this.groupBox62.Size = new System.Drawing.Size(179, 49);
+            this.groupBox62.Size = new System.Drawing.Size(179, 47);
             this.groupBox62.TabIndex = 1;
             this.groupBox62.TabStop = false;
             this.groupBox62.Text = "Система перевода";
@@ -2273,7 +2273,7 @@
             this.cbSystemDiplomSsuz.Location = new System.Drawing.Point(3, 19);
             this.cbSystemDiplomSsuz.Name = "cbSystemDiplomSsuz";
             this.cbSystemDiplomSsuz.Size = new System.Drawing.Size(173, 23);
-            this.cbSystemDiplomSsuz.TabIndex = 2;
+            this.cbSystemDiplomSsuz.TabIndex = 0;
             this.cbSystemDiplomSsuz.SelectedValueChanged += new System.EventHandler(this.cbSystemDiplomSsuz_SelectedValueChanged);
             // 
             // groupBox63
@@ -2405,7 +2405,7 @@
             this.cbReasonForAddmission.Location = new System.Drawing.Point(3, 19);
             this.cbReasonForAddmission.Name = "cbReasonForAddmission";
             this.cbReasonForAddmission.Size = new System.Drawing.Size(310, 23);
-            this.cbReasonForAddmission.TabIndex = 2;
+            this.cbReasonForAddmission.TabIndex = 0;
             this.cbReasonForAddmission.SelectedValueChanged += new System.EventHandler(this.cbReasonForAddmission_SelectedValueChanged);
             // 
             // groupBox52
@@ -2427,7 +2427,7 @@
             this.cbContest.Location = new System.Drawing.Point(3, 19);
             this.cbContest.Name = "cbContest";
             this.cbContest.Size = new System.Drawing.Size(309, 23);
-            this.cbContest.TabIndex = 2;
+            this.cbContest.TabIndex = 0;
             this.cbContest.SelectedValueChanged += new System.EventHandler(this.cbContest_SelectedValueChanged);
             // 
             // groupBox51
@@ -2449,16 +2449,16 @@
             this.cbTypeOfFinance.Location = new System.Drawing.Point(3, 19);
             this.cbTypeOfFinance.Name = "cbTypeOfFinance";
             this.cbTypeOfFinance.Size = new System.Drawing.Size(309, 23);
-            this.cbTypeOfFinance.TabIndex = 2;
+            this.cbTypeOfFinance.TabIndex = 0;
             this.cbTypeOfFinance.SelectedValueChanged += new System.EventHandler(this.cbTypeOfFinance_SelectedValueChanged);
             // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.tableLayoutPanel13);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(976, 455);
+            this.tabPage5.Size = new System.Drawing.Size(976, 453);
             this.tabPage5.TabIndex = 3;
             this.tabPage5.Text = "Разное";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2476,7 +2476,7 @@
             this.tableLayoutPanel13.RowCount = 2;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 449);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 447);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // groupBox72
@@ -2486,7 +2486,7 @@
             this.groupBox72.Location = new System.Drawing.Point(342, 3);
             this.groupBox72.Name = "groupBox72";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox72, 2);
-            this.groupBox72.Size = new System.Drawing.Size(625, 443);
+            this.groupBox72.Size = new System.Drawing.Size(625, 441);
             this.groupBox72.TabIndex = 1;
             this.groupBox72.TabStop = false;
             this.groupBox72.Text = "Приоритет специальностей";
@@ -2504,7 +2504,7 @@
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(619, 421);
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(619, 419);
             this.tableLayoutPanel14.TabIndex = 0;
             // 
             // PriorityGrid
@@ -2534,7 +2534,7 @@
             this.PriorityGrid.RowHeadersVisible = false;
             this.tableLayoutPanel14.SetRowSpan(this.PriorityGrid, 2);
             this.PriorityGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PriorityGrid.Size = new System.Drawing.Size(613, 415);
+            this.PriorityGrid.Size = new System.Drawing.Size(613, 413);
             this.PriorityGrid.TabIndex = 0;
             this.PriorityGrid.VirtualMode = true;
             this.PriorityGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PriorityGrid_KeyDown);
@@ -2546,7 +2546,7 @@
             this.groupBox67.Location = new System.Drawing.Point(3, 3);
             this.groupBox67.Name = "groupBox67";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox67, 2);
-            this.groupBox67.Size = new System.Drawing.Size(333, 443);
+            this.groupBox67.Size = new System.Drawing.Size(333, 441);
             this.groupBox67.TabIndex = 0;
             this.groupBox67.TabStop = false;
             this.groupBox67.Text = "Выбор дополнительных сведений (льгот) ";
@@ -2558,7 +2558,7 @@
             this.chkAtributeList.FormattingEnabled = true;
             this.chkAtributeList.Location = new System.Drawing.Point(3, 19);
             this.chkAtributeList.Name = "chkAtributeList";
-            this.chkAtributeList.Size = new System.Drawing.Size(327, 421);
+            this.chkAtributeList.Size = new System.Drawing.Size(327, 419);
             this.chkAtributeList.TabIndex = 0;
             this.chkAtributeList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkAtributeList_ItemCheck);
             // 

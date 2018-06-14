@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfSchool(TypeOfSchool typeOfSchool)
         {
-            TypeOfSchool typeOfSchoolToDelete = context.TypeOfSchool.AsNoTracking().FirstOrDefault(ts => ts.SchoolTypeId == typeOfSchool.SchoolTypeId);
+            TypeOfSchool typeOfSchoolToDelete = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == typeOfSchool.SchoolTypeId);
             context.TypeOfSchool.Remove(typeOfSchoolToDelete);
             context.SaveChanges();
         }

@@ -17,7 +17,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDocument(Document document)
         {
-            Document documentToDelete = context.Document.AsNoTracking().FirstOrDefault(d => d.DocumentId == document.DocumentId);
+            Document documentToDelete = context.Document.FirstOrDefault(d => d.DocumentId == document.DocumentId);
             context.Document.Remove(documentToDelete);
             context.SaveChanges();
         }

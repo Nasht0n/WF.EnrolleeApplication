@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfStreet(TypeOfStreet typeOfStreet)
         {
-            TypeOfStreet typeOfStreetToDelete = context.TypeOfStreet.AsNoTracking().FirstOrDefault(ts => ts.StreetTypeId == typeOfStreet.StreetTypeId);
+            TypeOfStreet typeOfStreetToDelete = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == typeOfStreet.StreetTypeId);
             context.TypeOfStreet.Remove(typeOfStreet);
             context.SaveChanges();
         }

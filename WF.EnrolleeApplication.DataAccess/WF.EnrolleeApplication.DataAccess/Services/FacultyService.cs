@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteFaculty(Faculty faculty)
         {
-            Faculty facultyToDelete = context.Faculty.AsNoTracking().FirstOrDefault(f => f.FacultyId == faculty.FacultyId);
+            Faculty facultyToDelete = context.Faculty.FirstOrDefault(f => f.FacultyId == faculty.FacultyId);
             context.Faculty.Remove(facultyToDelete);
             context.SaveChanges();
         }

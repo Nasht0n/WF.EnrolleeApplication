@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteDiscipline(Discipline discipline)
         {
-            Discipline disciplineToDelete = context.Discipline.AsNoTracking().FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
+            Discipline disciplineToDelete = context.Discipline.FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
             context.Discipline.Remove(disciplineToDelete);
             context.SaveChanges();
         }

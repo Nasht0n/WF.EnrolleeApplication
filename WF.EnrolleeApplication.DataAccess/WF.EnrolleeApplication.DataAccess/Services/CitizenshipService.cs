@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteCitizenship(Citizenship citizenship)
         {
-            Citizenship citizenshipToDelete = context.Citizenship.AsNoTracking().FirstOrDefault(c => c.CitizenshipId == citizenship.CitizenshipId);
+            Citizenship citizenshipToDelete = context.Citizenship.FirstOrDefault(c => c.CitizenshipId == citizenship.CitizenshipId);
             context.Citizenship.Remove(citizenship);
             context.SaveChanges();
         }

@@ -17,7 +17,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteCountry(Country country)
         {
-            Country countryToDelete = context.Country.AsNoTracking().FirstOrDefault(c => c.CountryId == country.CountryId);
+            Country countryToDelete = context.Country.FirstOrDefault(c => c.CountryId == country.CountryId);
             context.Country.Remove(countryToDelete);
             context.SaveChanges();
         }

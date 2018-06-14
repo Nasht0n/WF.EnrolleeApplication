@@ -17,7 +17,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteAssessment(Assessment assessment)
         {
-            Assessment assessmentToDelete = context.Assessment.AsNoTracking().FirstOrDefault(a => a.AssessmentId == assessment.AssessmentId);
+            Assessment assessmentToDelete = context.Assessment.FirstOrDefault(a => a.AssessmentId == assessment.AssessmentId);
             context.Assessment.Remove(assessmentToDelete);
             context.SaveChanges();
         }

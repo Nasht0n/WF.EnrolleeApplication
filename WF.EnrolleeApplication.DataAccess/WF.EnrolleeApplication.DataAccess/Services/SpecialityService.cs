@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteSpeciality(Speciality speciality)
         {
-            Speciality specialityToDelete = context.Speciality.AsNoTracking().FirstOrDefault(s => s.SpecialityId == speciality.SpecialityId);
+            Speciality specialityToDelete = context.Speciality.FirstOrDefault(s => s.SpecialityId == speciality.SpecialityId);
             context.Speciality.Remove(specialityToDelete);
             context.SaveChanges();
         }

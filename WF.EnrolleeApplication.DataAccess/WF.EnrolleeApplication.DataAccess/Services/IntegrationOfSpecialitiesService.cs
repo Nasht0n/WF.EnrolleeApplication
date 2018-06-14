@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteIntegrationOfSpecialities(IntegrationOfSpecialities integrationOfSpecialities)
         {
-            IntegrationOfSpecialities integrationOfSpecialitiesToDelete = context.IntegrationOfSpecialities.AsNoTracking().FirstOrDefault(ios => ios.IntegrationId == integrationOfSpecialities.IntegrationId);
+            IntegrationOfSpecialities integrationOfSpecialitiesToDelete = context.IntegrationOfSpecialities.FirstOrDefault(ios => ios.IntegrationId == integrationOfSpecialities.IntegrationId);
             context.IntegrationOfSpecialities.Remove(integrationOfSpecialitiesToDelete);
             context.SaveChanges();
         }

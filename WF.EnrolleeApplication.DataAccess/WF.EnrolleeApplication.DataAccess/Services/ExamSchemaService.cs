@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteExamSchema(ExamSchema examSchema)
         {
-            ExamSchema examSchemaToDelete = context.ExamSchema.AsNoTracking().FirstOrDefault(es => es.DisciplineId == examSchema.DisciplineId && es.SpecialityId == examSchema.SpecialityId);
+            ExamSchema examSchemaToDelete = context.ExamSchema.FirstOrDefault(es => es.DisciplineId == examSchema.DisciplineId && es.SpecialityId == examSchema.SpecialityId);
             context.ExamSchema.Remove(examSchemaToDelete);
             context.SaveChanges();
         }

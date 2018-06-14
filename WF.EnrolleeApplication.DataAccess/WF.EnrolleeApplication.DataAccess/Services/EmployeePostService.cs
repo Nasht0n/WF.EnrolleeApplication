@@ -27,7 +27,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <param name="post">Объект сотрудника</param>
         public void DeleteEmployeePost(EmployeePost post)
         {
-            EmployeePost postToDelete = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.PostId == post.PostId);
+            EmployeePost postToDelete = context.EmployeePost.FirstOrDefault(ep => ep.PostId == post.PostId);
             context.EmployeePost.Remove(postToDelete);
             context.SaveChanges();
         }

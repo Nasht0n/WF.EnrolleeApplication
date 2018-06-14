@@ -19,7 +19,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteAtribute(Atribute atribute)
         {
-            Atribute atributeToDelete = context.Atribute.AsNoTracking().FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
+            Atribute atributeToDelete = context.Atribute.FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
             context.Atribute.Remove(atributeToDelete);
             context.SaveChanges();
         }

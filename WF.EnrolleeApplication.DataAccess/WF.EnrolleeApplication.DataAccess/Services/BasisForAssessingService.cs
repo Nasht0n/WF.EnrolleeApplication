@@ -17,7 +17,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         }
         public void DeleteBasisForAssessing(BasisForAssessing basisForAssessing)
         {
-            BasisForAssessing basisForAssessingToDelete = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
+            BasisForAssessing basisForAssessingToDelete = context.BasisForAssessing.FirstOrDefault(b => b.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
             context.BasisForAssessing.Remove(basisForAssessingToDelete);
             context.SaveChanges();
         }

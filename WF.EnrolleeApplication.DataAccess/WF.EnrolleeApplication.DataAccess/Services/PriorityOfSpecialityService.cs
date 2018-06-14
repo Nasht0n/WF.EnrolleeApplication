@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeletePriorityOfSpeciality(PriorityOfSpeciality priorityOfSpeciality)
         {
-            PriorityOfSpeciality priorityOfSpecialityToDelete = context.PriorityOfSpeciality.AsNoTracking().FirstOrDefault(ps => ps.PriorityId == priorityOfSpeciality.PriorityId);
+            PriorityOfSpeciality priorityOfSpecialityToDelete = context.PriorityOfSpeciality.FirstOrDefault(ps => ps.PriorityId == priorityOfSpeciality.PriorityId);
             context.PriorityOfSpeciality.Remove(priorityOfSpecialityToDelete);
             context.SaveChanges();
         }

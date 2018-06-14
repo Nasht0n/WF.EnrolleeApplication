@@ -27,7 +27,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <param name="employee">Объект удаляемой записи</param>
         public void DeleteEmployee(Employee employee)
         {
-            Employee employeeToDelete = context.Employee.AsNoTracking().FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
+            Employee employeeToDelete = context.Employee.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
             context.Employee.Remove(employeeToDelete);
             context.SaveChanges();
         }

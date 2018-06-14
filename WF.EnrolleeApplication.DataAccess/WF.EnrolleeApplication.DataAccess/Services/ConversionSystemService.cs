@@ -30,7 +30,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteConversionSystem(ConversionSystem conversionSystem)
         {
-            ConversionSystem conversionSystemToDelete = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.Five == conversionSystem.Five && cs.Ten == conversionSystem.Ten);
+            ConversionSystem conversionSystemToDelete = context.ConversionSystem.FirstOrDefault(cs => cs.Five == conversionSystem.Five && cs.Ten == conversionSystem.Ten);
             context.ConversionSystem.Remove(conversionSystemToDelete);
             context.SaveChanges();
         }

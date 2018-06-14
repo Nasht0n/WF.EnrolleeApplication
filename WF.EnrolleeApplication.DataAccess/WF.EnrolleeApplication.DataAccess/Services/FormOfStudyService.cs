@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteFormOfStudy(FormOfStudy formOfStudy)
         {
-            FormOfStudy formOfStudyToDelete = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
+            FormOfStudy formOfStudyToDelete = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
             context.FormOfStudy.Remove(formOfStudyToDelete);
             context.SaveChanges();
         }

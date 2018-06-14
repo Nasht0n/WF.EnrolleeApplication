@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTargetWorkPlace(TargetWorkPlace targetWorkPlace)
         {
-            TargetWorkPlace targetWorkPlaceToDelete = context.TargetWorkPlace.AsNoTracking().FirstOrDefault(tw => tw.TargetId == targetWorkPlace.TargetId);
+            TargetWorkPlace targetWorkPlaceToDelete = context.TargetWorkPlace.FirstOrDefault(tw => tw.TargetId == targetWorkPlace.TargetId);
             context.TargetWorkPlace.Remove(targetWorkPlaceToDelete);
             context.SaveChanges();
         }

@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteForeignLanguage(ForeignLanguage foreignLanguage)
         {
-            ForeignLanguage foreignLanguageToDelete = context.ForeignLanguage.AsNoTracking().FirstOrDefault(fl => fl.LanguageId == foreignLanguage.LanguageId);
+            ForeignLanguage foreignLanguageToDelete = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == foreignLanguage.LanguageId);
             context.ForeignLanguage.Remove(foreignLanguageToDelete);
             context.SaveChanges();
         }

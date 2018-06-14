@@ -18,7 +18,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
 
         public void DeleteTypeOfFinance(TypeOfFinance typeOfFinance)
         {
-            TypeOfFinance typeOfFinanceToDelete = context.TypeOfFinance.AsNoTracking().FirstOrDefault(tf => tf.FinanceTypeId == typeOfFinance.FinanceTypeId);
+            TypeOfFinance typeOfFinanceToDelete = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == typeOfFinance.FinanceTypeId);
             context.TypeOfFinance.Remove(typeOfFinanceToDelete);
             context.SaveChanges();
         }
