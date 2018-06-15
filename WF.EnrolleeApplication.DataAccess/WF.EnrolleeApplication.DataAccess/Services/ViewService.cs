@@ -15,6 +15,19 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         {
             context = new EnrolleeContext(connectionString);
         }
+
+        public List<AssessmentView> GetAssessments()
+        {
+            List<AssessmentView> assessments = context.AssessmentView.AsNoTracking().ToList();
+            return assessments;
+        }
+
+        public List<AssessmentView> GetAssessments(Discipline discipline)
+        {
+            List<AssessmentView> assessments = context.AssessmentView.AsNoTracking().Where(a=>a.DisciplineId == discipline.DisciplineId).ToList();
+            return assessments;
+        }
+
         public List<EmployeeView> GetEmployees()
         {
             List<EmployeeView> employees = context.EmployeeView.AsNoTracking().ToList();

@@ -219,7 +219,8 @@ namespace WF.EnrolleeApplication.App.Views
             tbSchoolName.Text = editEnrollee.SchoolName;
             cbTypeOfSchool.SelectedValue = editEnrollee.SchoolTypeId;
             if (editEnrollee.SecondarySpecialityId.HasValue) cbSecondarySpeciality.SelectedValue = editEnrollee.SecondarySpecialityId;
-            if (string.IsNullOrWhiteSpace(editEnrollee.CurrentNumberCurs) || string.IsNullOrWhiteSpace(editEnrollee.CurrentSpeciality) || string.IsNullOrWhiteSpace(editEnrollee.CurrentUniversity))
+
+            if (!string.IsNullOrWhiteSpace(editEnrollee.CurrentNumberCurs) || !string.IsNullOrWhiteSpace(editEnrollee.CurrentSpeciality) || !string.IsNullOrWhiteSpace(editEnrollee.CurrentUniversity))
             {
                 cbSecondEducation.Checked = true;
                 tbCurrentNumberCurs.Text = editEnrollee.CurrentNumberCurs;

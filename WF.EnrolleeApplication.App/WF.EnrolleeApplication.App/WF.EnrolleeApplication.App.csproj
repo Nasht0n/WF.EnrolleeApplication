@@ -103,6 +103,12 @@
     <Compile Include="Views\frmEnrolleeCard.Designer.cs">
       <DependentUpon>frmEnrolleeCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\frmEnrtyExam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmEnrtyExam.Designer.cs">
+      <DependentUpon>frmEnrtyExam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\frmReceipt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\frmEnrolleeCard.resx">
       <DependentUpon>frmEnrolleeCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmEnrtyExam.resx">
+      <DependentUpon>frmEnrtyExam.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\frmReceipt.resx">
       <DependentUpon>frmReceipt.cs</DependentUpon>

@@ -45,6 +45,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         public virtual DbSet<TypeOfSettlement> TypeOfSettlement { get; set; }
         public virtual DbSet<TypeOfState> TypeOfState { get; set; }
         public virtual DbSet<TypeOfStreet> TypeOfStreet { get; set; }
+        public virtual DbSet<AssessmentView> AssessmentView { get; set; }
         public virtual DbSet<EmployeeView> EmployeeView { get; set; }
         public virtual DbSet<EnrolleeView> EnrolleeView { get; set; }
         public virtual DbSet<SpecialityView> SpecialityView { get; set; }
@@ -141,6 +142,10 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 
             modelBuilder.Entity<TypeOfStreet>()
                 .Property(e => e.Shortname)
+                .IsFixedLength();
+
+            modelBuilder.Entity<AssessmentView>()
+                .Property(e => e.FormOfStudy)
                 .IsFixedLength();
 
             modelBuilder.Entity<EnrolleeView>()

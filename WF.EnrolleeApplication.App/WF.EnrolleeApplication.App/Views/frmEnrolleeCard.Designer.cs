@@ -1704,10 +1704,10 @@
             this.tabPage3.Controls.Add(this.groupBox64);
             this.tabPage3.Controls.Add(this.groupBox55);
             this.tabPage3.Controls.Add(this.groupBox50);
-            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(976, 453);
+            this.tabPage3.Size = new System.Drawing.Size(976, 455);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Поступление";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -2035,10 +2035,10 @@
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.tableLayoutPanel7);
-            this.tabPage8.Location = new System.Drawing.Point(4, 24);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(469, 167);
+            this.tabPage8.Size = new System.Drawing.Size(469, 172);
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "Диплом ПТУ";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -2060,7 +2060,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(463, 161);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(463, 166);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // groupBox54
@@ -2068,9 +2068,9 @@
             this.tableLayoutPanel7.SetColumnSpan(this.groupBox54, 5);
             this.groupBox54.Controls.Add(this.tbSecondDiplomPtuString);
             this.groupBox54.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox54.Location = new System.Drawing.Point(3, 109);
+            this.groupBox54.Location = new System.Drawing.Point(3, 113);
             this.groupBox54.Name = "groupBox54";
-            this.groupBox54.Size = new System.Drawing.Size(457, 49);
+            this.groupBox54.Size = new System.Drawing.Size(457, 50);
             this.groupBox54.TabIndex = 24;
             this.groupBox54.TabStop = false;
             this.groupBox54.Text = "Вторая строка диплома ПТУ";
@@ -2091,9 +2091,9 @@
             this.tableLayoutPanel7.SetColumnSpan(this.groupBox56, 5);
             this.groupBox56.Controls.Add(this.tbFirstDiplomPtuString);
             this.groupBox56.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox56.Location = new System.Drawing.Point(3, 56);
+            this.groupBox56.Location = new System.Drawing.Point(3, 58);
             this.groupBox56.Name = "groupBox56";
-            this.groupBox56.Size = new System.Drawing.Size(457, 47);
+            this.groupBox56.Size = new System.Drawing.Size(457, 49);
             this.groupBox56.TabIndex = 23;
             this.groupBox56.TabStop = false;
             this.groupBox56.Text = "Первая строка диплома ПТУ";
@@ -2115,7 +2115,7 @@
             this.groupBox57.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox57.Location = new System.Drawing.Point(280, 3);
             this.groupBox57.Name = "groupBox57";
-            this.groupBox57.Size = new System.Drawing.Size(180, 47);
+            this.groupBox57.Size = new System.Drawing.Size(180, 49);
             this.groupBox57.TabIndex = 3;
             this.groupBox57.TabStop = false;
             this.groupBox57.Text = "Средний балл диплома ПТУ";
@@ -2135,7 +2135,7 @@
             this.groupBox58.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox58.Location = new System.Drawing.Point(3, 3);
             this.groupBox58.Name = "groupBox58";
-            this.groupBox58.Size = new System.Drawing.Size(179, 47);
+            this.groupBox58.Size = new System.Drawing.Size(179, 49);
             this.groupBox58.TabIndex = 1;
             this.groupBox58.TabStop = false;
             this.groupBox58.Text = "Система перевода";
@@ -2157,10 +2157,10 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.tableLayoutPanel8);
-            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(469, 167);
+            this.tabPage4.Size = new System.Drawing.Size(469, 172);
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "Диплом ССУЗ";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2182,7 +2182,7 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(463, 161);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(463, 166);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // groupBox59
@@ -2190,9 +2190,9 @@
             this.tableLayoutPanel8.SetColumnSpan(this.groupBox59, 5);
             this.groupBox59.Controls.Add(this.tbSecondDiplomSsuzString);
             this.groupBox59.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox59.Location = new System.Drawing.Point(3, 109);
+            this.groupBox59.Location = new System.Drawing.Point(3, 113);
             this.groupBox59.Name = "groupBox59";
-            this.groupBox59.Size = new System.Drawing.Size(457, 49);
+            this.groupBox59.Size = new System.Drawing.Size(457, 50);
             this.groupBox59.TabIndex = 24;
             this.groupBox59.TabStop = false;
             this.groupBox59.Text = "Вторая строка оценок диплома ССУЗ";
@@ -2213,9 +2213,9 @@
             this.tableLayoutPanel8.SetColumnSpan(this.groupBox60, 5);
             this.groupBox60.Controls.Add(this.tbFirstDiplomSsuzString);
             this.groupBox60.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox60.Location = new System.Drawing.Point(3, 56);
+            this.groupBox60.Location = new System.Drawing.Point(3, 58);
             this.groupBox60.Name = "groupBox60";
-            this.groupBox60.Size = new System.Drawing.Size(457, 47);
+            this.groupBox60.Size = new System.Drawing.Size(457, 49);
             this.groupBox60.TabIndex = 23;
             this.groupBox60.TabStop = false;
             this.groupBox60.Text = "Первая строка оценок диплома ССУЗ";
@@ -2237,7 +2237,7 @@
             this.groupBox61.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox61.Location = new System.Drawing.Point(280, 3);
             this.groupBox61.Name = "groupBox61";
-            this.groupBox61.Size = new System.Drawing.Size(180, 47);
+            this.groupBox61.Size = new System.Drawing.Size(180, 49);
             this.groupBox61.TabIndex = 3;
             this.groupBox61.TabStop = false;
             this.groupBox61.Text = "Средний балл диплом ССУЗ";
@@ -2257,7 +2257,7 @@
             this.groupBox62.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox62.Location = new System.Drawing.Point(3, 3);
             this.groupBox62.Name = "groupBox62";
-            this.groupBox62.Size = new System.Drawing.Size(179, 47);
+            this.groupBox62.Size = new System.Drawing.Size(179, 49);
             this.groupBox62.TabIndex = 1;
             this.groupBox62.TabStop = false;
             this.groupBox62.Text = "Система перевода";
@@ -2455,10 +2455,10 @@
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.tableLayoutPanel13);
-            this.tabPage5.Location = new System.Drawing.Point(4, 24);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(976, 453);
+            this.tabPage5.Size = new System.Drawing.Size(976, 455);
             this.tabPage5.TabIndex = 3;
             this.tabPage5.Text = "Разное";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2476,7 +2476,7 @@
             this.tableLayoutPanel13.RowCount = 2;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 447);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 449);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // groupBox72
@@ -2486,7 +2486,7 @@
             this.groupBox72.Location = new System.Drawing.Point(342, 3);
             this.groupBox72.Name = "groupBox72";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox72, 2);
-            this.groupBox72.Size = new System.Drawing.Size(625, 441);
+            this.groupBox72.Size = new System.Drawing.Size(625, 443);
             this.groupBox72.TabIndex = 1;
             this.groupBox72.TabStop = false;
             this.groupBox72.Text = "Приоритет специальностей";
@@ -2504,7 +2504,7 @@
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(619, 419);
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(619, 421);
             this.tableLayoutPanel14.TabIndex = 0;
             // 
             // PriorityGrid
@@ -2534,7 +2534,7 @@
             this.PriorityGrid.RowHeadersVisible = false;
             this.tableLayoutPanel14.SetRowSpan(this.PriorityGrid, 2);
             this.PriorityGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PriorityGrid.Size = new System.Drawing.Size(613, 413);
+            this.PriorityGrid.Size = new System.Drawing.Size(613, 415);
             this.PriorityGrid.TabIndex = 0;
             this.PriorityGrid.VirtualMode = true;
             this.PriorityGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PriorityGrid_KeyDown);
@@ -2546,7 +2546,7 @@
             this.groupBox67.Location = new System.Drawing.Point(3, 3);
             this.groupBox67.Name = "groupBox67";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox67, 2);
-            this.groupBox67.Size = new System.Drawing.Size(333, 441);
+            this.groupBox67.Size = new System.Drawing.Size(333, 443);
             this.groupBox67.TabIndex = 0;
             this.groupBox67.TabStop = false;
             this.groupBox67.Text = "Выбор дополнительных сведений (льгот) ";
@@ -2558,7 +2558,7 @@
             this.chkAtributeList.FormattingEnabled = true;
             this.chkAtributeList.Location = new System.Drawing.Point(3, 19);
             this.chkAtributeList.Name = "chkAtributeList";
-            this.chkAtributeList.Size = new System.Drawing.Size(327, 419);
+            this.chkAtributeList.Size = new System.Drawing.Size(327, 421);
             this.chkAtributeList.TabIndex = 0;
             this.chkAtributeList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkAtributeList_ItemCheck);
             // 

@@ -438,7 +438,21 @@ namespace WF.EnrolleeApplication.App.Views
             ReportManager.ConnectionString = connectionString;
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
             enrollee = enrolleeService.GetEnrollee(id);
-            ReportManager.PrintNotice(enrollee);
+            List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+            bool flag = false;
+            foreach(var assessment in assessments)
+                if(assessment.Discipline.BasisForAssessingId == 2)
+                {
+                    flag = true;
+                    break;
+                }
+            else
+                {
+                    flag = false;
+                    break;                    
+                }
+            if (!flag) MessageBox.Show(this, "Абитуриент не сдаёт вступительные испытания в университете", "Печать извещения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else ReportManager.PrintNotice(enrollee);
         }
 
         private void Filter(object sender, EventArgs e)
@@ -470,6 +484,12 @@ namespace WF.EnrolleeApplication.App.Views
         {
             this.DialogResult = DialogResult.Abort;
             this.Close();
+        }
+
+        private void EntryExamView(object sender, EventArgs e)
+        {
+            frmEnrtyExam entryExamView = new frmEnrtyExam();
+            entryExamView.ShowDialog();
         }
     }
 }

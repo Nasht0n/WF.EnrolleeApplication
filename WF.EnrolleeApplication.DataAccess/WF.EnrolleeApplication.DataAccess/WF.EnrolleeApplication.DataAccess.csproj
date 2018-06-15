@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="EntityFramework\Area.cs" />
     <Compile Include="EntityFramework\Assessment.cs" />
+    <Compile Include="EntityFramework\AssessmentView.cs" />
     <Compile Include="EntityFramework\Atribute.cs" />
     <Compile Include="EntityFramework\AtributeForEnrollee.cs" />
     <Compile Include="EntityFramework\BasisForAssessing.cs" />
