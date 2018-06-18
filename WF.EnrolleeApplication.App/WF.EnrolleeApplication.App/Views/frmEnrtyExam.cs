@@ -36,8 +36,7 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeTable = CreateStructureTable();
             EnrolleeGrid.DataSource = enrolleeTable;
             InitializeDataAccessServices();
-            InitializeComboBox();
-            
+            InitializeComboBox();            
             SetGridStyle();
         }
 

@@ -40,6 +40,7 @@ namespace WF.EnrolleeApplication.App.Views
         private SpecialityService specialityService;
         private EnrolleeService enrolleeService;
         private ViewService viewService;
+        private ExamSchemaService examSchemaService;
 
         public frmDashboard(Employee employee)
         {
@@ -220,6 +221,7 @@ namespace WF.EnrolleeApplication.App.Views
             assessmentService = new AssessmentService(connectionString);
             priorityOfSpecialityService = new PriorityOfSpecialityService(connectionString);
             atributeForEnrolleeService = new AtributeForEnrolleeService(connectionString);
+            examSchemaService = new ExamSchemaService(connectionString);
         }
 
         private void InitializeStatusStrip()
@@ -490,6 +492,51 @@ namespace WF.EnrolleeApplication.App.Views
         {
             frmEnrtyExam entryExamView = new frmEnrtyExam();
             entryExamView.ShowDialog();
+        }
+
+        private void EnrollView(object sender, EventArgs e)
+        {
+            frmEnroll enrollView = new frmEnroll();
+            enrollView.ShowDialog();
+        }
+
+        private void PrintSummaryExaminationReport(object sender, EventArgs ea)
+        {
+            frmChooseSpeciality chooseSpeciality = new frmChooseSpeciality();
+            if (chooseSpeciality.ShowDialog() == DialogResult.OK)
+            {
+                ReportManager.ConnectionString = connectionString;
+                List<Enrollee> enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality)
+                    .OrderByDescending(e => e.ReasonForAddmission.ContestId)
+                    .ThenByDescending(e => e.Assessment.Sum(a => a.Estimation))
+                    .ToList();
+                ReportManager.PrintSummaryExaminationSheet(enrollees, chooseSpeciality.speciality);
+            }
+        }
+
+        private void PrintExaminationSheet(object sender, EventArgs e)
+        {
+            frmChooseSpeciality chooseSpeciality = new frmChooseSpeciality();
+            if (chooseSpeciality.ShowDialog() == DialogResult.OK)
+            {
+                ReportManager.ConnectionString = connectionString;
+                List<ExamSchema> exams = examSchemaService.GetExamSchemas(chooseSpeciality.speciality);
+                bool flag = false;
+                foreach(var exam in exams)
+                {
+                    if (exam.Discipline.BasisForAssessingId == 2)
+                    { flag = true; break; }
+                }
+                if (flag)
+                {
+                    List<Enrollee> enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality);
+                    ReportManager.PrintExaminationSheet(exams, enrollees);
+                }
+                else
+                {
+                    MessageBox.Show(this, "Абитуриенты данной специальности не сдают вступительные испытания в университете", "Печать экзаменнационного листа", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
     }
 }

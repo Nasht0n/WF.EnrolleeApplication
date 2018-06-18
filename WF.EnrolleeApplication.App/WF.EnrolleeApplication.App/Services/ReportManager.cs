@@ -10,6 +10,12 @@ using WF.EnrolleeApplication.DataAccess.Services;
 
 namespace WF.EnrolleeApplication.App.Services
 {
+    public class ExamDiscipline
+    {
+        public Discipline discipline;
+        public int ColumnIndex;
+    }
+
     public class ReportManager
     {
         public static string ConnectionString;
@@ -95,7 +101,7 @@ namespace WF.EnrolleeApplication.App.Services
                 wordDocument.Variables["ФИО отца"].Value = $" {enrollee.FatherFullname} ";
                 wordDocument.Variables["Местожительство отца"].Value = $" {enrollee.FatherAddress} ";
 
-                wordDocument.Variables["ФИО матери"].Value =$" {enrollee.MotherFullname} ";
+                wordDocument.Variables["ФИО матери"].Value = $" {enrollee.MotherFullname} ";
                 wordDocument.Variables["Местожительство матери"].Value = $" {enrollee.MotherAddress} ";
 
                 string atributeString = " ";
@@ -539,5 +545,238 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
+        // Сводная экзаменнационная ведомость
+        public static void PrintSummaryExaminationSheet(List<Enrollee> enrollees, Speciality speciality)
+        {
+            ExamSchemaService examSchemaService = new ExamSchemaService(ConnectionString);
+            AssessmentService assessmentService = new AssessmentService(ConnectionString);
+            DisciplineService disciplineService = new DisciplineService(ConnectionString);
+            string path = Environment.CurrentDirectory + "\\Templates\\Сводная экзаменнационная ведомость.dotx";
+            Word.Application wordApp = new Word.Application();
+            wordApp.Visible = false;
+            try
+            {
+                Object template = path; // - имя шаблона, по которому создается новый документ
+                Object newTemplate = false; // при true новый документ открывается как шаблон.
+                Object documentType = Word.WdNewDocumentType.wdNewBlankDocument; // документ Word (по умолчанию)
+                Object visible = true;//видимость документа. При true (по умолчанию) документ отображается.
+                Word.Document wordDocument = wordApp.Documents.Add(ref template, ref newTemplate, ref documentType, ref visible);
+                SystemConfigurationService systemConfigurationService = new SystemConfigurationService(ConnectionString);
+                wordDocument.Variables["Наименование учреждения образования"].Value = systemConfigurationService.GetSystemConfiguration("V_UNI_NAME").Value;
+                wordDocument.Variables["Факультет"].Value = $" {speciality.Faculty.Fullname.Trim()} ";
+                wordDocument.Variables["Специальность"].Value = $" {speciality.Cipher.Trim()} {speciality.Fullname.Trim()}";
+                wordDocument.Variables["Форма получения образования"].Value = $"{speciality.FormOfStudy.Fullname.Trim() }";
+                if (speciality.FormOfStudyId == 6 || speciality.FormOfStudyId == 7)
+                {
+                    wordDocument.Variables["Основание"].Value = "среднего специального образования";
+                }
+                else
+                {
+                    wordDocument.Variables["Основание"].Value = "общего среднего, профессионально-технического с общим средним, среднего специального образования";
+                }
+
+                int index = 1;
+                int indexTable = 3;
+                Word.Table table = wordDocument.Tables[indexTable];
+                foreach (var enrollee in enrollees)
+                {
+                    table.Rows.Add();
+                    table.Cell(index + 4, 1).Range.Text = index.ToString(); // № п/п
+                    string numberOfDeal = null;
+                    if (string.IsNullOrWhiteSpace(enrollee.Speciality.FormOfStudy.Shortname.Trim())) numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                    else numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}-{enrollee.NumberOfDeal}";
+                    table.Cell(index + 4, 2).Range.Text = numberOfDeal; // № экз.листа
+                    string fullname = null;
+                    if (string.IsNullOrWhiteSpace(enrollee.RuPatronymic)) fullname = $"{enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}";
+                    else fullname = $"{enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} {enrollee.RuPatronymic.Trim()}";
+                    table.Cell(index + 4, 3).Range.Text = fullname; // ФИО абитуриента
+
+
+                    var exams = examSchemaService.GetExamSchemas(speciality);
+                    var assessments = assessmentService.GetAssessments(enrollee);
+
+                    string disciplineList = "";
+                    string averageDocumentEstimation = "";
+                    int indexAssessment = 4;
+
+                    List<ExamDiscipline> examDisciplines = new List<ExamDiscipline>();
+                    foreach (var exam in exams)
+                    {
+
+                        if (exam.Discipline.BasisForAssessingId == 1)
+                        {
+                            ExamDiscipline examDiscipline = new ExamDiscipline();
+                            examDiscipline.ColumnIndex = indexAssessment;
+                            examDiscipline.discipline = exam.Discipline;
+                            examDisciplines.Add(examDiscipline);
+                            continue;
+                        }
+                        if (exam.Discipline.IsGroup)
+                        {
+                            var disciplines = disciplineService.GetDisciplines(exam.Discipline);
+                            foreach (var discipline in disciplines)
+                            {
+                                ExamDiscipline examDiscipline = new ExamDiscipline();
+                                examDiscipline.ColumnIndex = indexAssessment;
+                                examDiscipline.discipline = discipline;
+                                disciplineList += $"{indexAssessment - 3}) {discipline.Name.Trim()}; ";
+                                examDisciplines.Add(examDiscipline);
+                                indexAssessment++;
+                            }
+                        }
+                        else
+                        {
+                            ExamDiscipline examDiscipline = new ExamDiscipline();
+                            examDiscipline.ColumnIndex = indexAssessment;
+                            examDiscipline.discipline = exam.Discipline;
+                            disciplineList += $"{indexAssessment - 3}) {exam.Discipline.Name.Trim()}; ";
+                            examDisciplines.Add(examDiscipline);
+                            indexAssessment++;
+                        }
+                    }
+
+
+                    foreach (var discipline in examDisciplines)
+                    {
+
+                        table.Cell(index + 4, discipline.ColumnIndex).Range.Text = "0";
+                        foreach (var assessment in assessments)
+                        {
+                            if (assessment.Discipline.BasisForAssessingId == 1)
+                            {
+                                averageDocumentEstimation = assessment.Estimation.ToString();
+                            }
+                            else if (discipline.discipline.DisciplineId == assessment.DisciplineId)
+                            {
+                                table.Cell(index + 4, discipline.ColumnIndex).Range.Text = assessment.Estimation.ToString();
+                            }
+                        }
+                    }
+
+
+                    wordDocument.Variables["Предметы"].Value = disciplineList; // Список предметов
+                    table.Cell(index + 4, 11).Range.Text = averageDocumentEstimation; // Средний балл документа об образованиии
+                                                                                      // Сумма баллов
+                    int? sum = assessments.Sum(a => a.Estimation);
+                    if (sum.HasValue) table.Cell(index + 4, 12).Range.Text = sum.Value.ToString();
+                    else table.Cell(index + 4, 12).Range.Text = "0";
+                    // Конкурс
+                    char contestFirstChar = enrollee.ReasonForAddmission.Contest.Name[0];
+                    table.Cell(index + 4, 13).Range.Text = contestFirstChar.ToString();
+                    // Город/Село
+                    if (enrollee.TypeOfSettlement.IsTown) table.Cell(index + 4, 14).Range.Text = "Г";
+                    else table.Cell(index + 4, 14).Range.Text = "C";
+                    AtributeForEnrolleeService atributeForEnrolleeService = new AtributeForEnrolleeService(ConnectionString);
+                    var atributes = atributeForEnrolleeService.GetAtributeForEnrollees(enrollee);
+                    string atributeList = "";
+                    foreach (var atribute in atributes)
+                    {
+                        atributeList += $"{atribute.Atribute.Shortname.Trim()} ";
+                    }
+                    table.Cell(index + 4, 15).Range.Text = atributeList;
+                    PriorityOfSpecialityService priorityOfSpecialityService = new PriorityOfSpecialityService(ConnectionString);
+                    var priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                    string priorityList = "";
+                    foreach (var priority in priorities)
+                    {
+                        priorityList += $"{priority.PriorityLevel} — {priority.Speciality.Shortname.Trim()}; ";
+                    }
+                    table.Cell(index + 4, 16).Range.Text = priorityList;
+                    index++;
+                }
+                wordDocument.Variables["Секретарь приемной комиссии"].Value = systemConfigurationService.GetSystemConfiguration("SOKR_SEKR").Value;
+                wordDocument.Fields.Update();
+                wordApp.Visible = true;
+                wordApp.Activate();
+            }
+            catch (Exception ex)
+            {
+                Object saveChanges = Word.WdSaveOptions.wdPromptToSaveChanges;
+                Object originalFormat = Word.WdOriginalFormat.wdWordDocument;
+                Object routeDocument = Type.Missing;
+                ((Word._Application)wordApp).Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                wordApp = null;
+            }
+            finally
+            {
+                //  wordApp.Quit(false);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+        // Экзаменнационная ведомость
+        public static void PrintExaminationSheet(List<ExamSchema> exams, List<Enrollee> enrollees)
+        {
+            string path = Environment.CurrentDirectory + "\\Templates\\Экзаменнационная ведомость.dotx";
+            Word.Application wordApp = new Word.Application();
+            wordApp.Visible = true;
+            try
+            {
+                Object template = path; // - имя шаблона, по которому создается новый документ
+                Object newTemplate = false; // при true новый документ открывается как шаблон.
+                Object documentType = Word.WdNewDocumentType.wdNewBlankDocument; // документ Word (по умолчанию)
+                Object visible = false;//видимость документа. При true (по умолчанию) документ отображается.
+                SystemConfigurationService systemConfigurationService = new SystemConfigurationService(ConnectionString);
+                ExamSchemaService examSchemaService = new ExamSchemaService(ConnectionString);
+                EnrolleeService enrolleeService = new EnrolleeService(ConnectionString);
+                AssessmentService assessmentService = new AssessmentService(ConnectionString);
+                EstimationStringService estimationStringService = new EstimationStringService(ConnectionString);       
+                foreach (var exam in exams)
+                {
+                    if (exam.Discipline.BasisForAssessingId == 2)
+                    {
+                        Word.Document wordDocument = wordApp.Documents.Add(ref template, ref newTemplate, ref documentType, ref visible);
+                        wordDocument.Variables["Наименование учреждения образования"].Value = systemConfigurationService.GetSystemConfiguration("V_UNI_NAME").Value;
+                        wordDocument.Variables["Дисциплина"].Value = exam.Discipline.Name.Trim();
+                        wordDocument.Variables["Факультет"].Value = exam.Speciality.Faculty.Fullname.Trim();
+                        wordDocument.Variables["№ группы"].Value = exam.Speciality.Shortname.Trim();
+                        int index = 1;
+                        int indexTable = 4;
+                        Word.Table table = wordDocument.Tables[indexTable];
+                        foreach (var enrollee in enrollees)
+                        {
+                            var assessment = assessmentService.GetAssessment(exam.Discipline, enrollee);
+                            if (assessment != null)
+                            {
+                                table.Rows.Add();
+                                table.Cell(index + 2, 1).Range.Text = index.ToString();
+                                if (string.IsNullOrWhiteSpace(enrollee.RuPatronymic)) table.Cell(index + 2, 2).Range.Text = $"{enrollee.RuSurname.Trim()} {enrollee.RuName[0]}.";
+                                else table.Cell(index + 2, 2).Range.Text = $"{enrollee.RuSurname.Trim()} {enrollee.RuName[0]}.{enrollee.RuPatronymic[0]}.";
+                                table.Cell(index + 2, 3).Range.Text = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}—{enrollee.NumberOfDeal}";
+                                table.Cell(index + 2, 5).Range.Text = assessment.Estimation.Value.ToString();
+                                table.Cell(index + 2, 6).Range.Text = estimationStringService.EstimationAsText(assessment.Estimation.Value).Trim();
+                            }
+                            index++;
+                        }
+                        wordDocument.Variables["Секретарь приемной комиссии"].Value = systemConfigurationService.GetSystemConfiguration("SOKR_SEKR").Value;
+                        wordDocument.Fields.Update();
+                    }
+                }
+
+                wordApp.Visible = true;
+                wordApp.Activate();
+            }
+            catch (Exception ex)
+            {
+                Object saveChanges = Word.WdSaveOptions.wdPromptToSaveChanges;
+                Object originalFormat = Word.WdOriginalFormat.wdWordDocument;
+                Object routeDocument = Type.Missing;
+                ((Word._Application)wordApp).Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                wordApp = null;
+            }
+            finally
+            {
+                //  wordApp.Quit(false);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
     }
-    }
+
+}
+
+

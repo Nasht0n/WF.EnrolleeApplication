@@ -360,6 +360,7 @@
             this.EnrollToolStripMenuItem.Name = "EnrollToolStripMenuItem";
             this.EnrollToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.EnrollToolStripMenuItem.Text = "Зачисление";
+            this.EnrollToolStripMenuItem.Click += new System.EventHandler(this.EnrollView);
             // 
             // ServiceSeparator
             // 
@@ -392,6 +393,7 @@
             this.TotalExaminationListToolStripMenuItem.Name = "TotalExaminationListToolStripMenuItem";
             this.TotalExaminationListToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.TotalExaminationListToolStripMenuItem.Text = "Сводная экзаменнационная ведомость";
+            this.TotalExaminationListToolStripMenuItem.Click += new System.EventHandler(this.PrintSummaryExaminationReport);
             // 
             // ExaminationListToolStripMenuItem
             // 
@@ -399,6 +401,7 @@
             this.ExaminationListToolStripMenuItem.Name = "ExaminationListToolStripMenuItem";
             this.ExaminationListToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.ExaminationListToolStripMenuItem.Text = "Экзаменнационная ведомость";
+            this.ExaminationListToolStripMenuItem.Click += new System.EventHandler(this.PrintExaminationSheet);
             // 
             // PrintSeparator1
             // 
@@ -622,6 +625,7 @@
             this.EnrollToolStripButton.Name = "EnrollToolStripButton";
             this.EnrollToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.EnrollToolStripButton.Text = "Зачисление абитуриентов";
+            this.EnrollToolStripButton.Click += new System.EventHandler(this.EnrollView);
             // 
             // ToolBoxSeparator4
             // 
