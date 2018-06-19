@@ -775,7 +775,6 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
-
         // Функция замены текста
         private static void ReplaceText(Word.Application app, string findText, string replacementText)
         {
@@ -795,7 +794,6 @@ namespace WF.EnrolleeApplication.App.Services
             Format: false,
             ReplaceWith: Type.Missing, Replace: replace);
         }
-
         // Выписка
         public static void PrintExtract(List<Enrollee> enrollees)
         {
@@ -828,6 +826,43 @@ namespace WF.EnrolleeApplication.App.Services
                     ReplaceText(wordApp, "@@DATE_PRT", enrollee.Decree.ProtocolDate.ToShortDateString().Trim());
                     DateTime now = DateTime.Now;
                     ReplaceText(wordApp, "@@CUR_YEAR", now.Year.ToString());
+                    string formOfStudy = "";
+                    switch (enrollee.Speciality.FormOfStudyId)
+                    {
+                        case 1:
+                            {
+                                formOfStudy = "дневной";
+                                break;
+                            }
+                        case 2:
+                            {
+                                formOfStudy = "дневной сокращенной";
+                                break;
+                            }
+                        case 3:
+                            {
+                                formOfStudy = "заочной";
+                                break;
+                            }
+                        case 4:
+                            {
+                                formOfStudy = "заочной дистанционной";
+                                break;
+                            }
+                        case 5:
+                            {
+                                formOfStudy = "заочной дистанционно-сокращенной";
+                                break;
+                            }
+                        case 6:
+                            {
+                                formOfStudy = "заочной сокращенной";
+                                break;
+                            }
+                    }
+                    ReplaceText(wordApp, "@@FOS", formOfStudy);
+
+
                     ReplaceText(wordApp, "@@FAC", enrollee.Speciality.Faculty.Fullname.Trim());
                     ReplaceText(wordApp, "@@CIFER", enrollee.Speciality.Cipher.Trim());
                     ReplaceText(wordApp, "@@SPC", enrollee.Speciality.Fullname.Trim());
