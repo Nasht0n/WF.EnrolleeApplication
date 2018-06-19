@@ -15,5 +15,6 @@ namespace WF.EnrolleeApplication.DataAccess.Interfaces
         List<SpecialityView> GetSpecialities();
         List<AssessmentView> GetAssessments();
         List<AssessmentView> GetAssessments(Discipline discipline);
+        List<PriorityView> GetPriorities(Enrollee enrollee);
     }
 }

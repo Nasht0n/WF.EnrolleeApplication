@@ -775,6 +775,108 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
+
+        // Функция замены текста
+        private static void ReplaceText(Word.Application app, string findText, string replacementText)
+        {
+            Word.Find find = app.Selection.Find;
+            find.Text = findText;
+            find.Replacement.Text = replacementText;
+            Object wrap = Word.WdFindWrap.wdFindContinue;
+            Object replace = Word.WdReplace.wdReplaceAll;
+            find.Execute(FindText: Type.Missing,
+            MatchCase: false,
+            MatchWholeWord: false,
+            MatchWildcards: false,
+            MatchSoundsLike: Type.Missing,
+            MatchAllWordForms: false,
+            Forward: true,
+            Wrap: wrap,
+            Format: false,
+            ReplaceWith: Type.Missing, Replace: replace);
+        }
+
+        // Выписка
+        public static void PrintExtract(List<Enrollee> enrollees)
+        {
+            string path = Environment.CurrentDirectory + "\\Templates\\Выписка.dotx";
+            Word.Application wordApp = new Word.Application();
+            wordApp.Visible = false;
+            try
+            {
+                Object template = path; // - имя шаблона, по которому создается новый документ
+                Object newTemplate = false; // при true новый документ открывается как шаблон.
+                Object documentType = Word.WdNewDocumentType.wdNewBlankDocument; // документ Word (по умолчанию)
+                Object visible = true;//видимость документа. При true (по умолчанию) документ отображается.
+                Word.Document wordDocument = wordApp.Documents.Add(ref template, ref newTemplate, ref documentType, ref visible);
+                object oMissing = System.Reflection.Missing.Value;
+                SystemConfigurationService systemConfigurationService = new SystemConfigurationService(ConnectionString);
+                Word.Selection selection = wordApp.Selection;
+                var tableToUse = wordDocument.Tables[1];
+                Word.Range range = tableToUse.Range;
+                range.Copy();
+
+                int index = 1;
+                int count = enrollees.Count;
+                foreach(var enrollee in enrollees)
+                {
+                    // fill template
+                    ReplaceText(wordApp, "@@DATE_ORD ", enrollee.Decree.DecreeDate.ToShortDateString().Trim());
+                    ReplaceText(wordApp, "@@NUMBER_ORD", enrollee.Decree.DecreeNumber.Trim());
+                    ReplaceText(wordApp, "@@DESCRIPTION", enrollee.Decree.Content.Trim());
+                    ReplaceText(wordApp, "@@NUMBER_PRT", enrollee.Decree.ProtocolNumber.Trim());
+                    ReplaceText(wordApp, "@@DATE_PRT", enrollee.Decree.ProtocolDate.ToShortDateString().Trim());
+                    DateTime now = DateTime.Now;
+                    ReplaceText(wordApp, "@@CUR_YEAR", now.Year.ToString());
+                    ReplaceText(wordApp, "@@FAC", enrollee.Speciality.Faculty.Fullname.Trim());
+                    ReplaceText(wordApp, "@@CIFER", enrollee.Speciality.Cipher.Trim());
+                    ReplaceText(wordApp, "@@SPC", enrollee.Speciality.Fullname.Trim());
+                    string fullname = $"";
+                    if (string.IsNullOrWhiteSpace(enrollee.RuPatronymic)) fullname = $"{enrollee.RuSurname.Trim()} {enrollee.RuName[0]}.";
+                    else fullname = $"{enrollee.RuSurname.Trim()} {enrollee.RuName[0]}. {enrollee.RuPatronymic[0]}.";
+                    ReplaceText(wordApp, "@@FIO", fullname);
+                    ReplaceText(wordApp, "@@SHORT_REKTOR", systemConfigurationService.GetSystemConfiguration("SHORT_REKTOR").Value.Trim());
+                    ReplaceText(wordApp, "@@SOKR_SEKR", systemConfigurationService.GetSystemConfiguration("SOKR_SEKR").Value.Trim());
+                    ReplaceText(wordApp, "@@CUR_DATE", now.Date.ToString("dd.MM.yyyy"));
+
+                    if (index < count)
+                    {
+                        //inserting a page break: first go to end of document
+                        selection.EndKey(Word.WdUnits.wdStory, Word.WdMovementType.wdMove);
+                        //insert a page break
+                        object breakType = Word.WdBreakType.wdPageBreak;
+                        selection.InsertBreak(ref breakType);
+
+                        //paste the template table in new page
+                        //add a new table (initially with 1 row and one column) at the end of the document
+                        Word.Table tableCopy = wordDocument.Tables.Add(selection.Range, 1, 1, ref oMissing, ref oMissing);
+                        //paste the original template table over the new one
+                        tableCopy.Range.Paste();
+                    }
+                    index++;
+                }               
+
+                wordDocument.Fields.Update();
+                wordApp.Visible = true;
+                wordApp.Activate();
+            }
+            catch (Exception ex)
+            {
+                Object saveChanges = Word.WdSaveOptions.wdPromptToSaveChanges;
+                Object originalFormat = Word.WdOriginalFormat.wdWordDocument;
+                Object routeDocument = Type.Missing;
+                ((Word._Application)wordApp).Quit(ref saveChanges, ref originalFormat, ref routeDocument);
+                wordApp = null;
+            }
+            finally
+            {
+                //  wordApp.Quit(false);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
     }
 
 }

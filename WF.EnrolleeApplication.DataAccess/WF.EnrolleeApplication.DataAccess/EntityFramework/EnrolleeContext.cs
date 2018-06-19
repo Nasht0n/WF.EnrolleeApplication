@@ -48,6 +48,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         public virtual DbSet<AssessmentView> AssessmentView { get; set; }
         public virtual DbSet<EmployeeView> EmployeeView { get; set; }
         public virtual DbSet<EnrolleeView> EnrolleeView { get; set; }
+        public virtual DbSet<PriorityView> PriorityView { get; set; }
         public virtual DbSet<SpecialityView> SpecialityView { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

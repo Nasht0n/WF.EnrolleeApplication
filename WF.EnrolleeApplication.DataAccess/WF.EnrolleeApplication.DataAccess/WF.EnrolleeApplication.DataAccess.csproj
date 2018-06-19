@@ -76,6 +76,7 @@
     <Compile Include="EntityFramework\FormOfStudy.cs" />
     <Compile Include="EntityFramework\IntegrationOfSpecialities.cs" />
     <Compile Include="EntityFramework\PriorityOfSpeciality.cs" />
+    <Compile Include="EntityFramework\PriorityView.cs" />
     <Compile Include="EntityFramework\ReasonForAddmission.cs" />
     <Compile Include="EntityFramework\SecondarySpeciality.cs" />
     <Compile Include="EntityFramework\Speciality.cs" />

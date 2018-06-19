@@ -46,6 +46,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             return enrollees;
         }
 
+        public List<PriorityView> GetPriorities(Enrollee enrollee)
+        {
+            List<PriorityView> priorities = context.PriorityView.AsNoTracking().Where(p => p.EnrolleeId == enrollee.EnrolleeId).ToList();
+            return priorities;
+        }
+
         public List<SpecialityView> GetSpecialities()
         {
             List<SpecialityView> specialities = context.SpecialityView.AsNoTracking().ToList();

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEnroll));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gbSpeciality = new System.Windows.Forms.GroupBox();
@@ -38,20 +39,19 @@
             this.gbFaculty = new System.Windows.Forms.GroupBox();
             this.cbFaculty = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btSave = new System.Windows.Forms.Button();
             this.btClear = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btReport = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.gbEnrollee = new System.Windows.Forms.GroupBox();
             this.EnrolleeGrid = new System.Windows.Forms.DataGridView();
-            this.ColumnEnrolleeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnNumberOfDeal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnSurname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCountEstimation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDecree = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColumnsPriorityComboBox = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColumnEnroll = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.gbEnrollPanel = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbPriority = new System.Windows.Forms.ComboBox();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btCancelEnrollCurrentEnrollee = new System.Windows.Forms.Button();
+            this.btEnrollCurrentEnrollee = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbDecree = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.gbSpeciality.SuspendLayout();
             this.gbFormOfStudy.SuspendLayout();
@@ -59,6 +59,10 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.gbEnrollee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EnrolleeGrid)).BeginInit();
+            this.gbEnrollPanel.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -148,9 +152,8 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.btSave);
             this.flowLayoutPanel1.Controls.Add(this.btClear);
-            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.Controls.Add(this.btReport);
             this.flowLayoutPanel1.Controls.Add(this.btCancel);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
@@ -159,41 +162,35 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(984, 36);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
-            // btSave
-            // 
-            this.btSave.Location = new System.Drawing.Point(731, 3);
-            this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(250, 28);
-            this.btSave.TabIndex = 0;
-            this.btSave.Text = "Зачислить абитуриентов";
-            this.btSave.UseVisualStyleBackColor = true;
-            // 
             // btClear
             // 
-            this.btClear.Location = new System.Drawing.Point(525, 3);
+            this.btClear.Location = new System.Drawing.Point(781, 3);
             this.btClear.Name = "btClear";
             this.btClear.Size = new System.Drawing.Size(200, 28);
             this.btClear.TabIndex = 1;
             this.btClear.Text = "Отменить зачисление";
             this.btClear.UseVisualStyleBackColor = true;
+            this.btClear.Click += new System.EventHandler(this.btClear_Click);
             // 
-            // button1
+            // btReport
             // 
-            this.button1.Location = new System.Drawing.Point(369, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(150, 28);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Печать выписки";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btReport.Location = new System.Drawing.Point(625, 3);
+            this.btReport.Name = "btReport";
+            this.btReport.Size = new System.Drawing.Size(150, 28);
+            this.btReport.TabIndex = 3;
+            this.btReport.Text = "Печать выписки";
+            this.btReport.UseVisualStyleBackColor = true;
+            this.btReport.Click += new System.EventHandler(this.btReport_Click);
             // 
             // btCancel
             // 
-            this.btCancel.Location = new System.Drawing.Point(263, 3);
+            this.btCancel.Location = new System.Drawing.Point(519, 3);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(100, 28);
             this.btCancel.TabIndex = 2;
             this.btCancel.Text = "Отмена";
             this.btCancel.UseVisualStyleBackColor = true;
+            this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
             // 
             // gbEnrollee
             // 
@@ -201,94 +198,138 @@
             this.gbEnrollee.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbEnrollee.Location = new System.Drawing.Point(0, 107);
             this.gbEnrollee.Name = "gbEnrollee";
-            this.gbEnrollee.Size = new System.Drawing.Size(984, 418);
+            this.gbEnrollee.Size = new System.Drawing.Size(984, 344);
             this.gbEnrollee.TabIndex = 3;
             this.gbEnrollee.TabStop = false;
             this.gbEnrollee.Text = "Список абитуриентов";
             // 
             // EnrolleeGrid
             // 
+            this.EnrolleeGrid.AllowUserToAddRows = false;
             this.EnrolleeGrid.AllowUserToDeleteRows = false;
             this.EnrolleeGrid.AllowUserToResizeColumns = false;
             this.EnrolleeGrid.AllowUserToResizeRows = false;
             this.EnrolleeGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.EnrolleeGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.EnrolleeGrid.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.EnrolleeGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.EnrolleeGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnEnrolleeId,
-            this.ColumnNumberOfDeal,
-            this.ColumnSurname,
-            this.ColumnName,
-            this.ColumnCountEstimation,
-            this.ColumnDecree,
-            this.ColumnsPriorityComboBox,
-            this.ColumnEnroll});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.EnrolleeGrid.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.EnrolleeGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.EnrolleeGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.EnrolleeGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.EnrolleeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EnrolleeGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.EnrolleeGrid.GridColor = System.Drawing.SystemColors.ControlLight;
             this.EnrolleeGrid.Location = new System.Drawing.Point(3, 19);
             this.EnrolleeGrid.MultiSelect = false;
             this.EnrolleeGrid.Name = "EnrolleeGrid";
+            this.EnrolleeGrid.ReadOnly = true;
             this.EnrolleeGrid.RowHeadersVisible = false;
-            this.EnrolleeGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.EnrolleeGrid.Size = new System.Drawing.Size(978, 396);
+            this.EnrolleeGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.EnrolleeGrid.Size = new System.Drawing.Size(978, 322);
             this.EnrolleeGrid.TabIndex = 0;
+            this.EnrolleeGrid.SelectionChanged += new System.EventHandler(this.EnrolleeGrid_SelectionChanged);
             // 
-            // ColumnEnrolleeId
+            // gbEnrollPanel
             // 
-            this.ColumnEnrolleeId.HeaderText = "Код Абитуриента";
-            this.ColumnEnrolleeId.Name = "ColumnEnrolleeId";
-            this.ColumnEnrolleeId.Visible = false;
+            this.gbEnrollPanel.Controls.Add(this.groupBox3);
+            this.gbEnrollPanel.Controls.Add(this.flowLayoutPanel2);
+            this.gbEnrollPanel.Controls.Add(this.groupBox2);
+            this.gbEnrollPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gbEnrollPanel.Location = new System.Drawing.Point(0, 451);
+            this.gbEnrollPanel.Name = "gbEnrollPanel";
+            this.gbEnrollPanel.Size = new System.Drawing.Size(984, 74);
+            this.gbEnrollPanel.TabIndex = 4;
+            this.gbEnrollPanel.TabStop = false;
+            this.gbEnrollPanel.Text = "Информация об абитуриенте";
             // 
-            // ColumnNumberOfDeal
+            // groupBox3
             // 
-            this.ColumnNumberOfDeal.FillWeight = 5F;
-            this.ColumnNumberOfDeal.HeaderText = "№ Л/Д";
-            this.ColumnNumberOfDeal.Name = "ColumnNumberOfDeal";
+            this.groupBox3.Controls.Add(this.cbPriority);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(203, 19);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(517, 52);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Укажите приоритетную специальность ";
             // 
-            // ColumnSurname
+            // cbPriority
             // 
-            this.ColumnSurname.FillWeight = 10F;
-            this.ColumnSurname.HeaderText = "Фамилия";
-            this.ColumnSurname.Name = "ColumnSurname";
+            this.cbPriority.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPriority.FormattingEnabled = true;
+            this.cbPriority.Location = new System.Drawing.Point(3, 19);
+            this.cbPriority.Name = "cbPriority";
+            this.cbPriority.Size = new System.Drawing.Size(511, 23);
+            this.cbPriority.TabIndex = 1;
+            this.cbPriority.SelectedValueChanged += new System.EventHandler(this.cbPriority_SelectedValueChanged);
             // 
-            // ColumnName
+            // flowLayoutPanel2
             // 
-            this.ColumnName.FillWeight = 10F;
-            this.ColumnName.HeaderText = "Имя";
-            this.ColumnName.Name = "ColumnName";
+            this.flowLayoutPanel2.Controls.Add(this.btCancelEnrollCurrentEnrollee);
+            this.flowLayoutPanel2.Controls.Add(this.btEnrollCurrentEnrollee);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(720, 19);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(3);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(261, 52);
+            this.flowLayoutPanel2.TabIndex = 4;
             // 
-            // ColumnCountEstimation
+            // btCancelEnrollCurrentEnrollee
             // 
-            this.ColumnCountEstimation.FillWeight = 10F;
-            this.ColumnCountEstimation.HeaderText = "Количество баллов";
-            this.ColumnCountEstimation.Name = "ColumnCountEstimation";
+            this.btCancelEnrollCurrentEnrollee.Location = new System.Drawing.Point(6, 6);
+            this.btCancelEnrollCurrentEnrollee.Name = "btCancelEnrollCurrentEnrollee";
+            this.btCancelEnrollCurrentEnrollee.Size = new System.Drawing.Size(120, 43);
+            this.btCancelEnrollCurrentEnrollee.TabIndex = 4;
+            this.btCancelEnrollCurrentEnrollee.Text = "Отменить зачисление";
+            this.btCancelEnrollCurrentEnrollee.UseVisualStyleBackColor = true;
+            this.btCancelEnrollCurrentEnrollee.Click += new System.EventHandler(this.btCancelEnrollCurrentEnrollee_Click);
             // 
-            // ColumnDecree
+            // btEnrollCurrentEnrollee
             // 
-            this.ColumnDecree.FillWeight = 10F;
-            this.ColumnDecree.HeaderText = "№ приказа";
-            this.ColumnDecree.Name = "ColumnDecree";
-            this.ColumnDecree.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btEnrollCurrentEnrollee.Location = new System.Drawing.Point(132, 6);
+            this.btEnrollCurrentEnrollee.Name = "btEnrollCurrentEnrollee";
+            this.btEnrollCurrentEnrollee.Size = new System.Drawing.Size(120, 43);
+            this.btEnrollCurrentEnrollee.TabIndex = 5;
+            this.btEnrollCurrentEnrollee.Text = "Зачислить абитуриента";
+            this.btEnrollCurrentEnrollee.UseVisualStyleBackColor = true;
+            this.btEnrollCurrentEnrollee.Click += new System.EventHandler(this.btEnrollCurrentEnrollee_Click);
             // 
-            // ColumnsPriorityComboBox
+            // groupBox2
             // 
-            this.ColumnsPriorityComboBox.FillWeight = 45F;
-            this.ColumnsPriorityComboBox.HeaderText = "Приоритетная специальность";
-            this.ColumnsPriorityComboBox.Name = "ColumnsPriorityComboBox";
+            this.groupBox2.Controls.Add(this.cbDecree);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox2.Location = new System.Drawing.Point(3, 19);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 52);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Зачислить по приказу";
             // 
-            // ColumnEnroll
+            // cbDecree
             // 
-            this.ColumnEnroll.FillWeight = 10F;
-            this.ColumnEnroll.HeaderText = "Зачислен?";
-            this.ColumnEnroll.Name = "ColumnEnroll";
+            this.cbDecree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbDecree.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDecree.FormattingEnabled = true;
+            this.cbDecree.Location = new System.Drawing.Point(3, 19);
+            this.cbDecree.Name = "cbDecree";
+            this.cbDecree.Size = new System.Drawing.Size(194, 23);
+            this.cbDecree.TabIndex = 1;
+            this.cbDecree.SelectedValueChanged += new System.EventHandler(this.cbDecree_SelectedValueChanged);
             // 
             // frmEnroll
             // 
@@ -296,6 +337,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.gbEnrollee);
+            this.Controls.Add(this.gbEnrollPanel);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -310,6 +352,10 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.gbEnrollee.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EnrolleeGrid)).EndInit();
+            this.gbEnrollPanel.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -324,19 +370,18 @@
         private System.Windows.Forms.GroupBox gbFaculty;
         private System.Windows.Forms.ComboBox cbFaculty;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Button btClear;
         private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btReport;
         private System.Windows.Forms.GroupBox gbEnrollee;
         private System.Windows.Forms.DataGridView EnrolleeGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEnrolleeId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNumberOfDeal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnSurname;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCountEstimation;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ColumnDecree;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ColumnsPriorityComboBox;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnEnroll;
+        private System.Windows.Forms.GroupBox gbEnrollPanel;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox cbPriority;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cbDecree;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.Button btCancelEnrollCurrentEnrollee;
+        private System.Windows.Forms.Button btEnrollCurrentEnrollee;
     }
 }
