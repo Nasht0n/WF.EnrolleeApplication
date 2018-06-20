@@ -913,10 +913,10 @@ namespace WF.EnrolleeApplication.App.Services
             }
         }
 
-        public static void PrintMonitoring(List<Enrollee> enrollees)
+        public static void PrintBudgetMonitoring(List<Enrollee> enrollees)
         {
             SpecialityService specialityService = new SpecialityService(ConnectionString);
-            string path = string.Format(Environment.CurrentDirectory + "\\Templates\\Мониторинг.xlsx");
+            string path = string.Format(Environment.CurrentDirectory + "\\Templates\\Мониторинг (Бюджетная форма).xlsx");
             Excel.Application excelApp = new Excel.Application();
             try
             {
@@ -926,7 +926,9 @@ namespace WF.EnrolleeApplication.App.Services
                 int row = 2;
                 enrollees = enrollees.Where(e=>e.FinanceTypeId != 2 && e.StateTypeId == 1)
                     .ToList();
-                var specialities = specialityService.GetSpecialities().OrderBy(s => s.FormOfStudy.Fullname).ThenBy(s => s.Faculty.Fullname).ToList();
+                var specialities = specialityService.GetSpecialities()
+                    .Where(s=>s.BudgetCountPlace>0)
+                    .OrderBy(s => s.FormOfStudy.Fullname).ThenBy(s => s.Faculty.Fullname).ToList();
                 foreach(var speciality in specialities)
                 {
                     if(speciality.IsGroup)
@@ -940,7 +942,9 @@ namespace WF.EnrolleeApplication.App.Services
                             excelWorkSheet.Cells[row, 4] = speciality.BudgetCountPlace;
                             int countRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId);
                             excelWorkSheet.Cells[row, 5] = countRecord;
-                            excelWorkSheet.Cells[row, 6] = specialityInGroup.Fullname.Trim();
+
+                            if (string.IsNullOrWhiteSpace(specialityInGroup.FormOfStudy.Shortname.Trim())) excelWorkSheet.Cells[row, 6] = specialityInGroup.Fullname.Trim();
+                            else excelWorkSheet.Cells[row, 6] = $"{specialityInGroup.Fullname.Trim()} -{specialityInGroup.FormOfStudy.Shortname.Trim()}";
                             excelWorkSheet.Cells[row, 7] = specialityInGroup.BudgetCountPlace;
                             excelWorkSheet.Cells[row, 8] = specialityInGroup.TargetCountPlace;
                             int countDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));

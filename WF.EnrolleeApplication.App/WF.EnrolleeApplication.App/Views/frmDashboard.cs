@@ -543,7 +543,7 @@ namespace WF.EnrolleeApplication.App.Views
         {
             ReportManager.ConnectionString = connectionString;
             List<Enrollee> enrollees = enrolleeService.GetEnrollees();
-            ReportManager.PrintMonitoring(enrollees);
+            ReportManager.PrintBudgetMonitoring(enrollees);
         }
     }
 }
