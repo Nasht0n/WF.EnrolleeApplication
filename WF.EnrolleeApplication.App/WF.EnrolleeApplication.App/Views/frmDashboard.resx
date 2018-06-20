@@ -337,14 +337,14 @@
   <data name="SearchToolBoxToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGGSURBVDhPnZIxa8JQFIVDu3Xt0J/RwZ/gImZ3cYhjVsFV
-        SSHgD+jgksVAO6SdBDvYwam0HfwFzZIWLYI0BjV0qJzeE18JJc9CPfBI8njfzb3nPGOfABylaWqt1+uH
-        xWLxOZ/Pt/IebjabbpIkp+qYXgKfCHw3mUzQarVQqVRQLpfRaDQQBAHiOJ5JsXN1vCj5iz8cDmGaJnzf
-        R/gS4jV6w2h0D8uy0G63syLaTgQuRVGEarWKp8dnLOPk15rN3rMi7ITjKCwXNz3Pg+M4BfhnsROOQ08U
-        lktmDzqdDm6CWy3MxXHoCY1VWC6peu26Lvp9Xwtz0RMay3QUlktGaA4GA9i2jfhjqS1AY5kOI1ZYrtVq
-        dTadTrf1eh29Xq9QhMYyHUbMe6KwnST/Y+ngajweZymwCDvhH+mJ41xk+4yY94SXTaFFmE92wnHoCY1l
-        OoxYzvm8bArVw/zmOPJs0limI+9dWSWF7bQP5r468rfksHcwTMll+KrVaofBlMx2ySLs5N+wYRjfy6f/
-        WdEiz2gAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGGSURBVDhPnZIxT8JQFIUb3Vwd/BkO/AQWQncWhjJ2JWGF
+        1KQJP8CBpQtNdKhOJDjgwGTUgV9glypBBmJpgMZBcrynPNOYPkzkJC9tX953e+85z9gnAEdpmlrr9fph
+        sVh8zufzrbyHm82mmyTJqTqml8AnAt9NJhO0Wi1UKhWUy2U0Gg0EQYA4jmdS7FwdL0r+4g+HQ5imCd/3
+        Eb6EeI3eMBrdw7IstNvtrIi2E4FLURShWq3i6fEZyzj5tWaz96wIO+E4CsvFTc/z4DhOAf5Z7ITj0BOF
+        5ZLZg06ng5vgVgtzcRx6QmMVlkuqXruui37f18Jc9ITGMh2F5ZIRmoPBALZtI/5YagvQWKbDiBWWa7Va
+        nU2n0229Xkev1ysUobFMhxHznihsJ8n/WDq4Go/HWQoswk74R3riOBfZPiPmPeFlU2gR5pOdcBx6QmOZ
+        DiOWcz4vm0L1ML85jjybNJbpyHtXVklhO+2Dua+O/C057B0MU3IZvmq12mEwJbNdsgg7+TdsGMY3rA//
+        RwO4JioAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="NewEnrolleeToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

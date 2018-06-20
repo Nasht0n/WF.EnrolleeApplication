@@ -436,6 +436,7 @@
             this.BudgetToolStripMenuItem.Name = "BudgetToolStripMenuItem";
             this.BudgetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.BudgetToolStripMenuItem.Text = "Бюджетная форма";
+            this.BudgetToolStripMenuItem.Click += new System.EventHandler(this.PrintMonitoringBudget);
             // 
             // FeeToolStripMenuItem
             // 
