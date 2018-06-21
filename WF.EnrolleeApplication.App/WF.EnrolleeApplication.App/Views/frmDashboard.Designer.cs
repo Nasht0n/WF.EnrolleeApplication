@@ -444,6 +444,7 @@
             this.FeeToolStripMenuItem.Name = "FeeToolStripMenuItem";
             this.FeeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.FeeToolStripMenuItem.Text = "На платной основе";
+            this.FeeToolStripMenuItem.Click += new System.EventHandler(this.PrintMonitoringFee);
             // 
             // HelpToolStripMenuItem
             // 
