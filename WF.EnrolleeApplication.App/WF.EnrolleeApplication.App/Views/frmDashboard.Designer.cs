@@ -414,6 +414,7 @@
             this.InformationCompanyToolStripMenuItem.Name = "InformationCompanyToolStripMenuItem";
             this.InformationCompanyToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.InformationCompanyToolStripMenuItem.Text = "Информация о ходе приема";
+            this.InformationCompanyToolStripMenuItem.Click += new System.EventHandler(this.PrintInformationReport);
             // 
             // PrintSeparator2
             // 

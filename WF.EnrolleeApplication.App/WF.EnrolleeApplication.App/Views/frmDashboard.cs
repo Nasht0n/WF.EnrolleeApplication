@@ -552,5 +552,12 @@ namespace WF.EnrolleeApplication.App.Views
             List<Enrollee> enrollees = enrolleeService.GetEnrollees();
             ReportManager.PrintFeeMonitoring(enrollees);
         }
+
+        private void PrintInformationReport(object sender, EventArgs ea)
+        {
+            ReportManager.ConnectionString = connectionString;
+            List<Enrollee> enrollees = enrolleeService.GetEnrollees();
+            ReportManager.PrintInformationReport(enrollees);
+        }
     }
 }

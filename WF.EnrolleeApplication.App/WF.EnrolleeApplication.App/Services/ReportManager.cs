@@ -1736,6 +1736,157 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
+        // Информация о ходе приема
+        public static void PrintInformationReport(List<Enrollee> enrollees)
+        {
+            SpecialityService specialityService = new SpecialityService(ConnectionString);
+            string path = string.Format(Environment.CurrentDirectory + "\\Templates\\Информация о ходе приема.xlsx");
+            Excel.Application excelApp = new Excel.Application();
+            try
+            {
+                Excel.Workbook excelWorkbook = excelApp.Workbooks.Open(path, 1, false, 5, "", "", false, Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                Excel.Sheets excelSheets = excelWorkbook.Worksheets;
+                Excel.Worksheet excelWorkSheet = (Excel.Worksheet)excelSheets.get_Item("DATA");
+                int row = 2;
+                enrollees = enrollees.Where(e => e.StateTypeId == 1).ToList();
+                var specialities = specialityService.GetSpecialities()
+                    .Where(s => s.IsAlternative == false)
+                    .OrderBy(s => s.FormOfStudy.Fullname).ThenBy(s => s.Faculty.Fullname).ToList();
+                foreach (var speciality in specialities)
+                {
+                    if (speciality.IsGroup)
+                    {
+                        excelWorkSheet.Cells[row, 1] = speciality.Faculty.Fullname.Trim();
+                        excelWorkSheet.Cells[row, 2] = speciality.Faculty.Shortname.Trim();
+                        excelWorkSheet.Cells[row, 3] = speciality.FormOfStudy.Fullname.Trim();
+                        excelWorkSheet.Cells[row, 4] = speciality.FormOfStudy.Shortname.Trim();
+                        excelWorkSheet.Cells[row, 5] = speciality.Cipher.Trim();
+                        excelWorkSheet.Cells[row, 6] = speciality.Fullname.Trim();
+
+                        excelWorkSheet.Cells[row, 7] = speciality.BudgetCountPlace;
+                        excelWorkSheet.Cells[row, 8] = speciality.FeeCountPlace;
+
+                        int countRecordBudget = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId != 2);
+                        excelWorkSheet.Cells[row, 9] = countRecordBudget;
+
+                        int countRecordFee = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId == 2);
+                        excelWorkSheet.Cells[row, 10] = countRecordFee;
+
+                        int countRecordBudgetToday = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId != 2 &&
+                                                                e.DateDeal.Date == DateTime.Now.Date &&
+                                                                e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                p.SpecialityId == speciality.SpecialityId));
+                        excelWorkSheet.Cells[row, 11] = countRecordBudgetToday;
+
+                        int countRecordFeeToday = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId == 2 &&
+                                                                e.DateDeal.Date == DateTime.Now.Date &&
+                                                                e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                p.SpecialityId == speciality.SpecialityId));
+                        excelWorkSheet.Cells[row, 12] = countRecordFeeToday;
+                        row++;
+
+                        var specialitiesInGroup = specialityService.GetSpecialities(speciality);
+                        foreach (var specialityInGroup in specialitiesInGroup)
+                        {
+                            excelWorkSheet.Cells[row, 1] = specialityInGroup.Faculty.Fullname.Trim();
+                            excelWorkSheet.Cells[row, 2] = specialityInGroup.Faculty.Shortname.Trim();
+                            excelWorkSheet.Cells[row, 3] = specialityInGroup.FormOfStudy.Fullname.Trim();
+                            excelWorkSheet.Cells[row, 4] = specialityInGroup.FormOfStudy.Shortname.Trim();
+                            excelWorkSheet.Cells[row, 5] = specialityInGroup.Cipher.Trim();
+                            excelWorkSheet.Cells[row, 6] = specialityInGroup.Fullname.Trim();
+
+                            excelWorkSheet.Cells[row, 7] = specialityInGroup.BudgetCountPlace;
+                            excelWorkSheet.Cells[row, 8] = specialityInGroup.FeeCountPlace;
+
+                            countRecordBudget = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
+                                                                    e.FinanceTypeId !=2 &&
+                                                                    e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && 
+                                                                    p.SpecialityId == specialityInGroup.SpecialityId));
+                            excelWorkSheet.Cells[row, 9] = countRecordBudget;
+
+                            countRecordFee = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                    e.FinanceTypeId == 2 &&
+                                                                    e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                    p.SpecialityId == specialityInGroup.SpecialityId));
+                            excelWorkSheet.Cells[row, 10] = countRecordFee;
+
+                            countRecordBudgetToday = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                    e.FinanceTypeId != 2 &&
+                                                                    e.DateDeal.Date == DateTime.Now.Date &&
+                                                                    e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                    p.SpecialityId == specialityInGroup.SpecialityId));
+                            excelWorkSheet.Cells[row, 11] = countRecordBudgetToday;
+
+                            countRecordFeeToday = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                    e.FinanceTypeId == 2 &&
+                                                                    e.DateDeal.Date == DateTime.Now.Date &&
+                                                                    e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                    p.SpecialityId == specialityInGroup.SpecialityId));
+                            excelWorkSheet.Cells[row, 12] = countRecordFeeToday;
+                            row++;
+                        }
+                    }
+                    else
+                    {
+                        excelWorkSheet.Cells[row, 1] = speciality.Faculty.Fullname.Trim();
+                        excelWorkSheet.Cells[row, 2] = speciality.Faculty.Shortname.Trim();
+                        excelWorkSheet.Cells[row, 3] = speciality.FormOfStudy.Fullname.Trim();
+                        excelWorkSheet.Cells[row, 4] = speciality.FormOfStudy.Shortname.Trim();
+                        excelWorkSheet.Cells[row, 5] = speciality.Cipher.Trim();
+                        excelWorkSheet.Cells[row, 6] = speciality.Fullname.Trim();
+
+                        excelWorkSheet.Cells[row, 7] = speciality.BudgetCountPlace;
+                        excelWorkSheet.Cells[row, 8] = speciality.FeeCountPlace;
+
+                        int countRecordBudget = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId != 2 &&
+                                                                e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                p.SpecialityId == speciality.SpecialityId));
+                        excelWorkSheet.Cells[row, 9] = countRecordBudget;
+
+                        int countRecordFee = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId == 2 &&
+                                                                e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                p.SpecialityId == speciality.SpecialityId));
+                        excelWorkSheet.Cells[row, 10] = countRecordFee;
+
+                        int countRecordBudgetToday = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId != 2 &&
+                                                                e.DateDeal.Date == DateTime.Now.Date &&
+                                                                e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                p.SpecialityId == speciality.SpecialityId));
+                        excelWorkSheet.Cells[row, 11] = countRecordBudgetToday;
+
+                        int countRecordFeeToday = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                                                                e.FinanceTypeId == 2 &&
+                                                                e.DateDeal.Date == DateTime.Now.Date &&
+                                                                e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 &&
+                                                                p.SpecialityId == speciality.SpecialityId));
+                        excelWorkSheet.Cells[row, 12] = countRecordFeeToday;
+                        row++;
+                    }
+                }
+                excelApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                ((Excel._Application)excelApp).Quit();
+                excelApp = null;
+            }
+            finally
+            {
+                //  wordApp.Quit(false);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
     }
 
 }
