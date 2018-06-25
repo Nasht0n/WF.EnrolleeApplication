@@ -36,11 +36,18 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +95,17 @@
     <Compile Include="EntityFramework\TypeOfSettlement.cs" />
     <Compile Include="EntityFramework\TypeOfState.cs" />
     <Compile Include="EntityFramework\TypeOfStreet.cs" />
+    <Compile Include="EntityPartial\Area.cs" />
+    <Compile Include="EntityPartial\Assessment.cs" />
+    <Compile Include="EntityPartial\AssessmentView.cs" />
+    <Compile Include="EntityPartial\Atribute.cs" />
+    <Compile Include="EntityPartial\AtributeForEnrollee.cs" />
+    <Compile Include="EntityPartial\BasisForAssessing.cs" />
+    <Compile Include="EntityPartial\Citizenship.cs" />
+    <Compile Include="EntityPartial\Contest.cs" />
+    <Compile Include="EntityPartial\ConversionSystem.cs" />
+    <Compile Include="EntityPartial\Country.cs" />
+    <Compile Include="EntityPartial\Decree.cs" />
     <Compile Include="Interfaces\IAreaService.cs" />
     <Compile Include="Interfaces\IAssessmentService.cs" />
     <Compile Include="Interfaces\IAtributeForEnrolleeService.cs" />
@@ -158,11 +176,15 @@
     <Compile Include="Services\TypeOfStreetService.cs" />
     <Compile Include="Services\ViewService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EntityPartial\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
