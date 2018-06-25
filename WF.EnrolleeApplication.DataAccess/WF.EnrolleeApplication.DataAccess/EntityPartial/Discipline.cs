@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 {
     /// <summary>
-    /// Таблица "Оценки" 
+    /// Таблица "Дисциплины" 
     /// Частичный класс для переопределения внутренних методов
     /// </summary>
-    public partial class Assessment
+    public partial class Discipline
     {
         /// <summary>
         /// Переопределенный метод сравнения
@@ -19,9 +19,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>true - если объекты равны</returns>
         public override bool Equals(object obj)
         {
-            if(obj is Assessment && obj!=null)
+            if (obj is Discipline && obj != null)
             {
-                Assessment temp = (Assessment)obj;
+                Discipline temp = (Discipline)obj;
                 if (temp.GetHashCode() == this.GetHashCode()) return true;
                 else return false;
             }
@@ -33,23 +33,19 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            string result = $"Assessment - Entity" +
-                            $"\nИдентификатор оценки = {this.AssessmentId}" +
-                            $"\nИдентификатор дисциплины = {this.DisciplineId}" +
-                            $"\nИдентификатор абитуриента = {this.EnrolleeId}" +
-                            $"\nОценка абитуриента = {this.Estimation}";
-            if (!string.IsNullOrWhiteSpace(this.SertCode))
-            {
-                result +=$"\n№ Сертификата - {this.SertCode}";
-            }
-            if (!string.IsNullOrWhiteSpace(this.SertDate))
-            {
-                result += $"\nДата выдачи сертификата - {this.SertDate}";
-            }
-            if (!string.IsNullOrWhiteSpace(this.ChangeDiscipline))
-            {
-                result += $"\nПроизведена замена предмета. Дисциплина по сертификату - {this.ChangeDiscipline}";
-            }
+            string result = $"Код дисциплины = {this.DisciplineId}" +
+                   $"\nКод типа оценивания = {this.BasisForAssessingId}" +
+                   $"\nНаименование дисциплины = {this.Name.Trim()}" +
+                   $"\nГруппа предметов? {this.IsGroup}" +
+                   $"\nДисциплина группы предметов? {this.IsAlternative}";
+            if (this.DisciplineGroupId.HasValue)
+                result += $"\nКод группы специальностей = {this.DisciplineGroupId.Value}";
+            if (!string.IsNullOrWhiteSpace(this.ConsultDate))
+                result += $"\nДата консультации = {this.ConsultDate.Trim()}";
+            if (!string.IsNullOrWhiteSpace(this.EntryExamDate))
+                result += $"\nДата вступительного испытания = {this.EntryExamDate.Trim()}";
+            if (this.StageCount.HasValue)
+                result += $"\nКоличество этапов = {this.StageCount.Value}";
             return result;
         }
         /// <summary>

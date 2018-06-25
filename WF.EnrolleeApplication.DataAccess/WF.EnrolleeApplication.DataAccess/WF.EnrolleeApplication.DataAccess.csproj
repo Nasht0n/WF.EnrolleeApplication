@@ -106,6 +106,10 @@
     <Compile Include="EntityPartial\ConversionSystem.cs" />
     <Compile Include="EntityPartial\Country.cs" />
     <Compile Include="EntityPartial\Decree.cs" />
+    <Compile Include="EntityPartial\Discipline.cs" />
+    <Compile Include="EntityPartial\District.cs" />
+    <Compile Include="EntityPartial\Document.cs" />
+    <Compile Include="EntityPartial\Employee.cs" />
     <Compile Include="Interfaces\IAreaService.cs" />
     <Compile Include="Interfaces\IAssessmentService.cs" />
     <Compile Include="Interfaces\IAtributeForEnrolleeService.cs" />

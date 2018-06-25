@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 {
     /// <summary>
-    /// Таблица "Оценки" 
+    /// Таблица "Районы" 
     /// Частичный класс для переопределения внутренних методов
     /// </summary>
-    public partial class Assessment
+    public partial class Document
     {
         /// <summary>
         /// Переопределенный метод сравнения
@@ -19,9 +19,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>true - если объекты равны</returns>
         public override bool Equals(object obj)
         {
-            if(obj is Assessment && obj!=null)
+            if(obj is Document && obj!=null)
             {
-                Assessment temp = (Assessment)obj;
+                Document temp = (Document)obj;
                 if (temp.GetHashCode() == this.GetHashCode()) return true;
                 else return false;
             }
@@ -33,24 +33,8 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            string result = $"Assessment - Entity" +
-                            $"\nИдентификатор оценки = {this.AssessmentId}" +
-                            $"\nИдентификатор дисциплины = {this.DisciplineId}" +
-                            $"\nИдентификатор абитуриента = {this.EnrolleeId}" +
-                            $"\nОценка абитуриента = {this.Estimation}";
-            if (!string.IsNullOrWhiteSpace(this.SertCode))
-            {
-                result +=$"\n№ Сертификата - {this.SertCode}";
-            }
-            if (!string.IsNullOrWhiteSpace(this.SertDate))
-            {
-                result += $"\nДата выдачи сертификата - {this.SertDate}";
-            }
-            if (!string.IsNullOrWhiteSpace(this.ChangeDiscipline))
-            {
-                result += $"\nПроизведена замена предмета. Дисциплина по сертификату - {this.ChangeDiscipline}";
-            }
-            return result;
+            return $"Код документа = {this.DocumentId}" +
+                   $"\nНаименование документа = {this.Name.Trim()}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта
