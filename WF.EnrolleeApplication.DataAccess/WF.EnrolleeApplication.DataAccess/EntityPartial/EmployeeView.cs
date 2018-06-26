@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 {
     /// <summary>
-    /// Таблица "Пользователи" 
+    /// Представление "Пользователи" 
     /// Частичный класс для переопределения внутренних методов
     /// </summary>
-    public partial class Employee
+    public partial class EmployeeView
     {
         /// <summary>
         /// Переопределенный метод сравнения
@@ -19,9 +19,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>true - если объекты равны</returns>
         public override bool Equals(object obj)
         {
-            if(obj is Employee && obj!=null)
+            if(obj is EmployeeView && obj!=null)
             {
-                Employee temp = (Employee)obj;
+                EmployeeView temp = (EmployeeView)obj;
                 if (temp.GetHashCode() == this.GetHashCode()) return true;
                 else return false;
             }
@@ -34,11 +34,11 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         public override string ToString()
         {
             return $"Код пользователя = {this.EmployeeId}" +
-                   $"\nКод группы пользователя = {this.PostId}" +
+                   $"\nКод должности пользователя = {this.PostId}" +
+                   $"\nДолжность пользователя = {this.Name.Trim()}" +
                    $"\nФИО пользователя = {this.Fullname.Trim()}" +
                    $"\nИмя входа пользователя = {this.Username.Trim()}" +
-                   $"\nПароль пользователя = {this.Password.Trim()}" +
-                   $"\nДата создания учетной записи = {this.CreateDate.ToShortDateString()}" +
+                   $"\nДата регистрации = {this.CreateDate.ToShortDateString()}" +
                    $"\nУчетная запись активирована? = {this.Enabled}";
         }
         /// <summary>

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 {
     /// <summary>
-    /// Таблица "Пользователи" 
+    /// Таблица "Тип населенного пункта" 
     /// Частичный класс для переопределения внутренних методов
     /// </summary>
-    public partial class Employee
+    public partial class TypeOfSettlement
     {
         /// <summary>
         /// Переопределенный метод сравнения
@@ -19,9 +19,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>true - если объекты равны</returns>
         public override bool Equals(object obj)
         {
-            if(obj is Employee && obj!=null)
+            if(obj is TypeOfSettlement && obj != null)
             {
-                Employee temp = (Employee)obj;
+                TypeOfSettlement temp = (TypeOfSettlement)obj;
                 if (temp.GetHashCode() == this.GetHashCode()) return true;
                 else return false;
             }
@@ -33,13 +33,10 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код пользователя = {this.EmployeeId}" +
-                   $"\nКод группы пользователя = {this.PostId}" +
-                   $"\nФИО пользователя = {this.Fullname.Trim()}" +
-                   $"\nИмя входа пользователя = {this.Username.Trim()}" +
-                   $"\nПароль пользователя = {this.Password.Trim()}" +
-                   $"\nДата создания учетной записи = {this.CreateDate.ToShortDateString()}" +
-                   $"\nУчетная запись активирована? = {this.Enabled}";
+            return $"Код типа населенного пункта = {this.SettlementTypeId}" +
+                   $"\nПолное наименование = {this.Fullname.Trim()}" +
+                   $"\nСокращенное наименование = {this.Shortname.Trim()}" +
+                   $"\nЯвляется городом? {this.IsTown}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 {
     /// <summary>
-    /// Таблица "Пользователи" 
+    /// Представление "Специальности первой ступени" 
     /// Частичный класс для переопределения внутренних методов
     /// </summary>
-    public partial class Employee
+    public partial class SpecialityView
     {
         /// <summary>
         /// Переопределенный метод сравнения
@@ -19,9 +19,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>true - если объекты равны</returns>
         public override bool Equals(object obj)
         {
-            if(obj is Employee && obj!=null)
+            if(obj is SpecialityView && obj!=null)
             {
-                Employee temp = (Employee)obj;
+                SpecialityView temp = (SpecialityView)obj;
                 if (temp.GetHashCode() == this.GetHashCode()) return true;
                 else return false;
             }
@@ -33,13 +33,17 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код пользователя = {this.EmployeeId}" +
-                   $"\nКод группы пользователя = {this.PostId}" +
-                   $"\nФИО пользователя = {this.Fullname.Trim()}" +
-                   $"\nИмя входа пользователя = {this.Username.Trim()}" +
-                   $"\nПароль пользователя = {this.Password.Trim()}" +
-                   $"\nДата создания учетной записи = {this.CreateDate.ToShortDateString()}" +
-                   $"\nУчетная запись активирована? = {this.Enabled}";
+            return $"Код специальности = {this.SpecialityId}" +
+                    $"\nКод факультета = {this.FacultyId}" +
+                    $"\nНаименование факультета = {this.Faculty.Trim()}" +
+                    $"\nКод формы обучения = {this.FormOfStudyId}" +
+                    $"\nНаименование формы обучения = {this.FormOfStudy}" +
+                    $"\nШифр специальности = {this.Cipher.Trim()}" +
+                    $"\nНаименование специальности = {this.Speciality.Trim()}" +
+                    $"\nГруппа специальностей? {this.IsGroup}" +
+                    $"\nПлан набора (Бюджет) = {this.BudgetCountPlace}" +
+                    $"\nПлан набора (Платно) = {this.FeeCountPlace}" +
+                    $"\nПлан набора (Целевые места) = {this.TargetCountPlace}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

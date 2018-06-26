@@ -10,7 +10,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
     /// Таблица "Пользователи" 
     /// Частичный класс для переопределения внутренних методов
     /// </summary>
-    public partial class Employee
+    public partial class EmployeePost
     {
         /// <summary>
         /// Переопределенный метод сравнения
@@ -19,9 +19,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>true - если объекты равны</returns>
         public override bool Equals(object obj)
         {
-            if(obj is Employee && obj!=null)
+            if(obj is EmployeePost && obj != null)
             {
-                Employee temp = (Employee)obj;
+                EmployeePost temp = (EmployeePost)obj;
                 if (temp.GetHashCode() == this.GetHashCode()) return true;
                 else return false;
             }
@@ -33,13 +33,12 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код пользователя = {this.EmployeeId}" +
-                   $"\nКод группы пользователя = {this.PostId}" +
-                   $"\nФИО пользователя = {this.Fullname.Trim()}" +
-                   $"\nИмя входа пользователя = {this.Username.Trim()}" +
-                   $"\nПароль пользователя = {this.Password.Trim()}" +
-                   $"\nДата создания учетной записи = {this.CreateDate.ToShortDateString()}" +
-                   $"\nУчетная запись активирована? = {this.Enabled}";
+            return $"Код группы пользователя = {this.PostId}" +
+                   $"\nНаименование группы пользователя = {this.Name.Trim()}" +
+                   $"\nОписание = {this.Note.Trim()}" +
+                   $"\nРазрешение регистрации? - {this.RegistrationAllow}" +
+                   $"\nРазрешение зачисления? - {this.EnrollAllow}" +
+                   $"\nДоступ к справочникам системы? - {this.DictionaryAllow}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта
