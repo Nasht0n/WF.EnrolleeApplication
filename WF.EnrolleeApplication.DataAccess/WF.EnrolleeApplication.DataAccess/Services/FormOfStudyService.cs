@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,53 +10,200 @@ using WF.EnrolleeApplication.DataAccess.Interfaces;
 
 namespace WF.EnrolleeApplication.DataAccess.Services
 {
+    /// <summary>
+    /// Класс доступа к данным таблицы "Формы обучения"
+    /// </summary>
     public class FormOfStudyService : IFormOfStudyService
     {
         private EnrolleeContext context;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public FormOfStudyService(string connectionString)
         {
             context = new EnrolleeContext(connectionString);
         }
-
+        /// <summary>
+        /// Удаление формы обучения
+        /// </summary>
+        /// <param name="formOfStudy">Удаляемая форма обучения</param>
         public void DeleteFormOfStudy(FormOfStudy formOfStudy)
         {
-            FormOfStudy formOfStudyToDelete = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
-            context.FormOfStudy.Remove(formOfStudyToDelete);
-            context.SaveChanges();
+            logger.Trace("Попытка подключения к источнику данных.");
+            logger.Trace("Подготовка к удалению формы обучения.");
+            try
+            {
+                logger.Debug($"Поиск записи формы обучения для удаления. Удаляемый объект : {formOfStudy.ToString()}.");
+                var formOfStudyToDelete = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
+                if (formOfStudyToDelete != null)
+                {
+                    context.FormOfStudy.Remove(formOfStudyToDelete);
+                    context.SaveChanges();
+                    logger.Debug("Удаление записи формы обучения успешно завершено.");
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                logger.Error("Ошибка удаления записи формы обучения.");
+                logger.Error($"Ошибка SQL Server — {sqlEx.Number}.");
+                logger.Error($"Сообщение об ошибке: {sqlEx.Message}.");
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Ошибка удаления записи формы обучения.");
+                logger.Error($"Ошибка — {ex.Message}.");
+            }
         }
-
+        /// <summary>
+        /// Получение списка форм обучения
+        /// </summary>
+        /// <returns>Список форм обучения</returns>
         public List<FormOfStudy> GetFormOfStudies()
         {
-            List<FormOfStudy> formOfStudies = context.FormOfStudy.AsNoTracking().ToList();
-            return formOfStudies;
+            logger.Trace("Попытка подключения к источнику данных.");
+            logger.Trace("Подготовка к поиску списка форм обучения.");
+            try
+            {
+                logger.Debug($"Получение списка форм обучения.");
+                var formOfStudies = context.FormOfStudy.AsNoTracking().ToList();
+                logger.Debug($"Поиск окончен. Количество записей: {formOfStudies.Count}.");
+                return formOfStudies;
+            }
+            catch (SqlException sqlEx)
+            {
+                logger.Error("Ошибка получения списка форм обучения.");
+                logger.Error($"Ошибка SQL Server — {sqlEx.Number}.");
+                logger.Error($"Сообщение об ошибке: {sqlEx.Message}.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Ошибка получения списка форм обучения.");
+                logger.Error($"Ошибка — {ex.Message}.");
+                return null;
+            }
         }
-
+        /// <summary>
+        /// Получение формы обучения по уникальному идентификатору
+        /// </summary>
+        /// <param name="id">Уникальный идентификатор</param>
+        /// <returns>Запись формы обучения</returns>
         public FormOfStudy GetFormOfStudy(int id)
         {
-            FormOfStudy formOfStudy = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.FormOfStudyId == id);
-            return formOfStudy;
+            logger.Trace("Попытка подключения к источнику данных.");
+            logger.Trace("Подготовка к поиску формы обучения по уникальному идентификатору.");
+            try
+            {
+                logger.Debug($"Поиск записи формы обучения по уникальному идентификатору = {id}.");
+                var formOfStudyById = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.FormOfStudyId == id);
+                if (formOfStudyById != null) logger.Debug($"Поиск окончен. Искомая запись: {formOfStudyById.ToString()}.");
+                return formOfStudyById;
+            }
+            catch (SqlException sqlEx)
+            {
+                logger.Error("Ошибка поиска записи формы обучения по уникальному идентификатору.");
+                logger.Error($"Ошибка SQL Server — {sqlEx.Number}.");
+                logger.Error($"Сообщение об ошибке: {sqlEx.Message}.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Ошибка поиска записи формы обучения по уникальному идентификатору.");
+                logger.Error($"Ошибка — {ex.Message}.");
+                return null;
+            }
         }
-
+        /// <summary>
+        /// Получение формы обучения по наименованию
+        /// </summary>
+        /// <param name="fullname">Наименование формы обучения</param>
+        /// <returns>Запись формы обучения</returns>
         public FormOfStudy GetFormOfStudy(string fullname)
         {
-            FormOfStudy formOfStudy = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.Fullname == fullname);
-            return formOfStudy;
+            logger.Trace("Попытка подключения к источнику данных.");
+            logger.Trace("Подготовка к поиску формы обучения по наименованию.");
+            try
+            {
+                logger.Debug($"Поиск записи формы обучения по наименованию = {fullname}.");
+                var formOfStudyByName = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.Fullname == fullname);
+                if (formOfStudyByName != null) logger.Debug($"Поиск окончен. Искомая запись: {formOfStudyByName.ToString()}.");
+                return formOfStudyByName;
+            }
+            catch (SqlException sqlEx)
+            {
+                logger.Error("Ошибка поиска записи формы обучения по наименованию.");
+                logger.Error($"Ошибка SQL Server — {sqlEx.Number}.");
+                logger.Error($"Сообщение об ошибке: {sqlEx.Message}.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Ошибка поиска записи формы обучения по наименованию.");
+                logger.Error($"Ошибка — {ex.Message}.");
+                return null;
+            }
         }
-
+        /// <summary>
+        /// Добавление формы обучения
+        /// </summary>
+        /// <param name="formOfStudy">Новая форма обучения</param>
+        /// <returns>Новая запись</returns>
         public FormOfStudy InsertFormOfStudy(FormOfStudy formOfStudy)
         {
-            context.FormOfStudy.Add(formOfStudy);
-            context.SaveChanges();
-            return formOfStudy;
+            logger.Trace("Попытка подключения к источнику данных.");
+            logger.Trace("Подготовка к добавлению формы обучения");
+            try
+            {
+                logger.Debug($"Добавляемая запись: {formOfStudy.ToString()}");
+                context.FormOfStudy.Add(formOfStudy);
+                context.SaveChanges();
+                logger.Debug($"Форма обучения успешно добавлен.");
+                return formOfStudy;
+            }
+            catch (SqlException sqlEx)
+            {
+                logger.Error("Ошибка добавления формы обучения.");
+                logger.Error($"Ошибка SQL Server — {sqlEx.Number}.");
+                logger.Error($"Сообщение об ошибке: {sqlEx.Message}.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Ошибка добавления формы обучения.");
+                logger.Error($"Ошибка — {ex.Message}.");
+                return null;
+            }
         }
-
+        /// <summary>
+        /// Обновление формы обучения
+        /// </summary>
+        /// <param name="formOfStudy">Редактируемая форма обучения</param>
+        /// <returns>Отредактированная форма обучения</returns>
         public FormOfStudy UpdateFormOfStudy(FormOfStudy formOfStudy)
         {
-            FormOfStudy formOfStudyToUpdate = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
-            formOfStudyToUpdate.Fullname = formOfStudy.Fullname;
-            formOfStudyToUpdate.Shortname = formOfStudy.Shortname;
-            context.SaveChanges();
-            return formOfStudyToUpdate;
+            logger.Trace("Попытка подключения к источнику данных.");
+            logger.Trace("Подготовка к обновлению формы обучения.");
+            try
+            {
+                var formOfStudyToUpdate = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
+                logger.Debug($"Текущая запись: {formOfStudyToUpdate.ToString()}");
+                formOfStudyToUpdate.Fullname = formOfStudy.Fullname;
+                formOfStudyToUpdate.Shortname = formOfStudy.Shortname;
+                context.SaveChanges();
+                logger.Debug($"Новая запись: {formOfStudyToUpdate.ToString()}");
+                return formOfStudyToUpdate;
+            }
+            catch (SqlException sqlEx)
+            {
+                logger.Error("Ошибка редактирования формы обучения.");
+                logger.Error($"Ошибка SQL Server — {sqlEx.Number}.");
+                logger.Error($"Сообщение об ошибке: {sqlEx.Message}.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Ошибка редактирования формы обучения.");
+                logger.Error($"Ошибка — {ex.Message}.");
+                return null;
+            }
         }
     }
 }
