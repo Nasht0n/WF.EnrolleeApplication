@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChangeDiscipline));
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbDiscipline = new System.Windows.Forms.ComboBox();
             this.btSave = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbDiscipline = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +48,26 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(478, 32);
             this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // btSave
+            // 
+            this.btSave.Location = new System.Drawing.Point(275, 3);
+            this.btSave.Name = "btSave";
+            this.btSave.Size = new System.Drawing.Size(200, 27);
+            this.btSave.TabIndex = 0;
+            this.btSave.Text = "Сохранить";
+            this.btSave.UseVisualStyleBackColor = true;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
+            // 
+            // btCancel
+            // 
+            this.btCancel.Location = new System.Drawing.Point(169, 3);
+            this.btCancel.Name = "btCancel";
+            this.btCancel.Size = new System.Drawing.Size(100, 27);
+            this.btCancel.TabIndex = 1;
+            this.btCancel.Text = "Отмена";
+            this.btCancel.UseVisualStyleBackColor = true;
+            this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
             // 
             // groupBox1
             // 
@@ -70,26 +90,6 @@
             this.cbDiscipline.Size = new System.Drawing.Size(472, 23);
             this.cbDiscipline.TabIndex = 0;
             this.cbDiscipline.SelectedValueChanged += new System.EventHandler(this.cbDiscipline_SelectedValueChanged);
-            // 
-            // btSave
-            // 
-            this.btSave.Location = new System.Drawing.Point(375, 3);
-            this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(100, 27);
-            this.btSave.TabIndex = 0;
-            this.btSave.Text = "Сохранить";
-            this.btSave.UseVisualStyleBackColor = true;
-            this.btSave.Click += new System.EventHandler(this.btSave_Click);
-            // 
-            // btCancel
-            // 
-            this.btCancel.Location = new System.Drawing.Point(269, 3);
-            this.btCancel.Name = "btCancel";
-            this.btCancel.Size = new System.Drawing.Size(100, 27);
-            this.btCancel.TabIndex = 1;
-            this.btCancel.Text = "Отмена";
-            this.btCancel.UseVisualStyleBackColor = true;
-            this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
             // 
             // frmChangeDiscipline
             // 

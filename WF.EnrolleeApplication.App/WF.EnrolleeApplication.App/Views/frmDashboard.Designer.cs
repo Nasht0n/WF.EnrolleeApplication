@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
@@ -112,12 +113,32 @@
             this.lbFormOfStudy = new System.Windows.Forms.Label();
             this.cbFaculty = new System.Windows.Forms.ComboBox();
             this.lbFaculty = new System.Windows.Forms.Label();
+            this.contextMenuEnrolleeGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.EditEnrolleeContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FinanceTypeEnrolleeContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BudgetAndFeeContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FeeContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BudgetContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StateEnrolleeContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CandidateContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TookDocumentContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnrollContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TransferSpecialityContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PrintReportContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.StatementContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TitulContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExamContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ReceiptContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.NoticeContextMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.ToolBox.SuspendLayout();
             this.FilterToolBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EnrolleeGrid)).BeginInit();
             this.SearchToolBox.SuspendLayout();
+            this.contextMenuEnrolleeGrid.SuspendLayout();
             this.SuspendLayout();
             // 
             // StatusStrip
@@ -461,19 +482,19 @@
             // 
             this.ViewHelpToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ViewHelpToolStripMenuItem.Image")));
             this.ViewHelpToolStripMenuItem.Name = "ViewHelpToolStripMenuItem";
-            this.ViewHelpToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.ViewHelpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ViewHelpToolStripMenuItem.Text = "Просмотр справки";
             // 
             // HelpSeparator
             // 
             this.HelpSeparator.Name = "HelpSeparator";
-            this.HelpSeparator.Size = new System.Drawing.Size(176, 6);
+            this.HelpSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AboutToolStripMenuItem.Image")));
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AboutToolStripMenuItem.Text = "О программе";
             // 
             // ToolBox
@@ -753,7 +774,7 @@
             // 
             this.CandidateFilter.CheckOnClick = true;
             this.CandidateFilter.Name = "CandidateFilter";
-            this.CandidateFilter.Size = new System.Drawing.Size(178, 22);
+            this.CandidateFilter.Size = new System.Drawing.Size(180, 22);
             this.CandidateFilter.Text = "Кандидат";
             this.CandidateFilter.Click += new System.EventHandler(this.Filter);
             // 
@@ -761,7 +782,7 @@
             // 
             this.EnrollFilter.CheckOnClick = true;
             this.EnrollFilter.Name = "EnrollFilter";
-            this.EnrollFilter.Size = new System.Drawing.Size(178, 22);
+            this.EnrollFilter.Size = new System.Drawing.Size(180, 22);
             this.EnrollFilter.Text = "Зачислен";
             this.EnrollFilter.Click += new System.EventHandler(this.Filter);
             // 
@@ -769,7 +790,7 @@
             // 
             this.TookDocumentFilter.CheckOnClick = true;
             this.TookDocumentFilter.Name = "TookDocumentFilter";
-            this.TookDocumentFilter.Size = new System.Drawing.Size(178, 22);
+            this.TookDocumentFilter.Size = new System.Drawing.Size(180, 22);
             this.TookDocumentFilter.Text = "Забрал документы";
             this.TookDocumentFilter.Click += new System.EventHandler(this.Filter);
             // 
@@ -782,6 +803,7 @@
             this.EnrolleeGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.EnrolleeGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.EnrolleeGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.EnrolleeGrid.ContextMenuStrip = this.contextMenuEnrolleeGrid;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -799,6 +821,7 @@
             this.EnrolleeGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.EnrolleeGrid.Size = new System.Drawing.Size(984, 478);
             this.EnrolleeGrid.TabIndex = 6;
+            this.EnrolleeGrid.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.EnrolleeGrid_CellMouseDown);
             // 
             // SearchToolBox
             // 
@@ -878,6 +901,149 @@
             this.lbFaculty.TabIndex = 0;
             this.lbFaculty.Text = "Факультет";
             // 
+            // contextMenuEnrolleeGrid
+            // 
+            this.contextMenuEnrolleeGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EditEnrolleeContextMenuItem,
+            this.FinanceTypeEnrolleeContextMenuItem,
+            this.StateEnrolleeContextMenuItem,
+            this.TransferSpecialityContextMenuItem,
+            this.toolStripMenuItem1,
+            this.PrintReportContextMenuItem});
+            this.contextMenuEnrolleeGrid.Name = "contextMenuEnrolleeGrid";
+            this.contextMenuEnrolleeGrid.Size = new System.Drawing.Size(267, 142);
+            this.contextMenuEnrolleeGrid.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuEnrolleeGrid_Opening);
+            // 
+            // EditEnrolleeContextMenuItem
+            // 
+            this.EditEnrolleeContextMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.EditEnrolleeContextMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.EditEnrolleeContextMenuItem.Name = "EditEnrolleeContextMenuItem";
+            this.EditEnrolleeContextMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.EditEnrolleeContextMenuItem.Text = "Редактирование абитуриента";
+            this.EditEnrolleeContextMenuItem.Click += new System.EventHandler(this.EditCurrentEnrolleeCard);
+            // 
+            // FinanceTypeEnrolleeContextMenuItem
+            // 
+            this.FinanceTypeEnrolleeContextMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BudgetAndFeeContextMenuItem,
+            this.BudgetContextMenuItem,
+            this.FeeContextMenuItem});
+            this.FinanceTypeEnrolleeContextMenuItem.Name = "FinanceTypeEnrolleeContextMenuItem";
+            this.FinanceTypeEnrolleeContextMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.FinanceTypeEnrolleeContextMenuItem.Text = "Тип финансирования";
+            // 
+            // BudgetAndFeeContextMenuItem
+            // 
+            this.BudgetAndFeeContextMenuItem.Name = "BudgetAndFeeContextMenuItem";
+            this.BudgetAndFeeContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.BudgetAndFeeContextMenuItem.Text = "Бюджет/Платно";
+            // 
+            // FeeContextMenuItem
+            // 
+            this.FeeContextMenuItem.Name = "FeeContextMenuItem";
+            this.FeeContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.FeeContextMenuItem.Text = "Платная форма";
+            // 
+            // BudgetContextMenuItem
+            // 
+            this.BudgetContextMenuItem.Name = "BudgetContextMenuItem";
+            this.BudgetContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.BudgetContextMenuItem.Text = "Бюджетная форма";
+            // 
+            // StateEnrolleeContextMenuItem
+            // 
+            this.StateEnrolleeContextMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CandidateContextMenuItem,
+            this.TookDocumentContextMenuItem,
+            this.EnrollContextMenuItem});
+            this.StateEnrolleeContextMenuItem.Name = "StateEnrolleeContextMenuItem";
+            this.StateEnrolleeContextMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.StateEnrolleeContextMenuItem.Text = "Статус абитуриента";
+            // 
+            // CandidateContextMenuItem
+            // 
+            this.CandidateContextMenuItem.Name = "CandidateContextMenuItem";
+            this.CandidateContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CandidateContextMenuItem.Text = "Кандидат";
+            // 
+            // TookDocumentContextMenuItem
+            // 
+            this.TookDocumentContextMenuItem.Name = "TookDocumentContextMenuItem";
+            this.TookDocumentContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.TookDocumentContextMenuItem.Text = "Забрал документы";
+            // 
+            // EnrollContextMenuItem
+            // 
+            this.EnrollContextMenuItem.Name = "EnrollContextMenuItem";
+            this.EnrollContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EnrollContextMenuItem.Text = "Зачислен";
+            // 
+            // TransferSpecialityContextMenuItem
+            // 
+            this.TransferSpecialityContextMenuItem.Name = "TransferSpecialityContextMenuItem";
+            this.TransferSpecialityContextMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.TransferSpecialityContextMenuItem.Text = "Перевод на другую специальность";
+            // 
+            // PrintReportContextMenuItem
+            // 
+            this.PrintReportContextMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatementContextMenuItem,
+            this.TitulContextMenuItem,
+            this.ExamContextMenuItem,
+            this.toolStripMenuItem2,
+            this.ReceiptContextMenuItem,
+            this.NoticeContextMenuItem});
+            this.PrintReportContextMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.PrintReportContextMenuItem.Name = "PrintReportContextMenuItem";
+            this.PrintReportContextMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.PrintReportContextMenuItem.Text = "Печать отчётов";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(263, 6);
+            // 
+            // StatementContextMenuItem
+            // 
+            this.StatementContextMenuItem.Name = "StatementContextMenuItem";
+            this.StatementContextMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.StatementContextMenuItem.Text = "Заявление";
+            this.StatementContextMenuItem.Click += new System.EventHandler(this.PrintStatement);
+            // 
+            // TitulContextMenuItem
+            // 
+            this.TitulContextMenuItem.Name = "TitulContextMenuItem";
+            this.TitulContextMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.TitulContextMenuItem.Text = "Титульный лист";
+            this.TitulContextMenuItem.Click += new System.EventHandler(this.PrintTitle);
+            // 
+            // ExamContextMenuItem
+            // 
+            this.ExamContextMenuItem.Name = "ExamContextMenuItem";
+            this.ExamContextMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.ExamContextMenuItem.Text = "Экзаменнационный лист";
+            this.ExamContextMenuItem.Click += new System.EventHandler(this.PrintExamSheet);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(209, 6);
+            // 
+            // ReceiptContextMenuItem
+            // 
+            this.ReceiptContextMenuItem.Name = "ReceiptContextMenuItem";
+            this.ReceiptContextMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.ReceiptContextMenuItem.Text = "Расписка";
+            this.ReceiptContextMenuItem.Click += new System.EventHandler(this.PrintReceipt);
+            // 
+            // NoticeContextMenuItem
+            // 
+            this.NoticeContextMenuItem.Name = "NoticeContextMenuItem";
+            this.NoticeContextMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.NoticeContextMenuItem.Text = "Извещение";
+            this.NoticeContextMenuItem.Click += new System.EventHandler(this.PrintNotice);
+            // 
             // frmDashboard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -908,6 +1074,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EnrolleeGrid)).EndInit();
             this.SearchToolBox.ResumeLayout(false);
             this.SearchToolBox.PerformLayout();
+            this.contextMenuEnrolleeGrid.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -997,5 +1164,24 @@
         private System.Windows.Forms.Label lbFormOfStudy;
         private System.Windows.Forms.ComboBox cbFaculty;
         private System.Windows.Forms.Label lbFaculty;
+        private System.Windows.Forms.ContextMenuStrip contextMenuEnrolleeGrid;
+        private System.Windows.Forms.ToolStripMenuItem EditEnrolleeContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FinanceTypeEnrolleeContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BudgetAndFeeContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BudgetContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FeeContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem StateEnrolleeContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CandidateContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TookDocumentContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EnrollContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TransferSpecialityContextMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem PrintReportContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem StatementContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TitulContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExamContextMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem ReceiptContextMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem NoticeContextMenuItem;
     }
 }

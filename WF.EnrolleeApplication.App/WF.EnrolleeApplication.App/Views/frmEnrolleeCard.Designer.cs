@@ -1704,10 +1704,10 @@
             this.tabPage3.Controls.Add(this.groupBox64);
             this.tabPage3.Controls.Add(this.groupBox55);
             this.tabPage3.Controls.Add(this.groupBox50);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(976, 455);
+            this.tabPage3.Size = new System.Drawing.Size(976, 453);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Поступление";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -2342,17 +2342,17 @@
             // 
             this.btChangeDiscipline.Location = new System.Drawing.Point(209, 3);
             this.btChangeDiscipline.Name = "btChangeDiscipline";
-            this.btChangeDiscipline.Size = new System.Drawing.Size(80, 28);
+            this.btChangeDiscipline.Size = new System.Drawing.Size(166, 28);
             this.btChangeDiscipline.TabIndex = 1;
-            this.btChangeDiscipline.Text = "Замена";
+            this.btChangeDiscipline.Text = "Замена дисциплины";
             this.btChangeDiscipline.UseVisualStyleBackColor = true;
             this.btChangeDiscipline.Click += new System.EventHandler(this.btChangeDiscipline_Click);
             // 
             // btDeleteDiscipline
             // 
-            this.btDeleteDiscipline.Location = new System.Drawing.Point(295, 3);
+            this.btDeleteDiscipline.Location = new System.Drawing.Point(381, 3);
             this.btDeleteDiscipline.Name = "btDeleteDiscipline";
-            this.btDeleteDiscipline.Size = new System.Drawing.Size(80, 28);
+            this.btDeleteDiscipline.Size = new System.Drawing.Size(91, 28);
             this.btDeleteDiscipline.TabIndex = 2;
             this.btDeleteDiscipline.Text = "Удалить";
             this.btDeleteDiscipline.UseVisualStyleBackColor = true;

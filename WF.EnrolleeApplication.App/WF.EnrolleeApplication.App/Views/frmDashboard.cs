@@ -559,5 +559,105 @@ namespace WF.EnrolleeApplication.App.Views
             List<Enrollee> enrollees = enrolleeService.GetEnrollees();
             ReportManager.PrintInformationReport(enrollees);
         }
+
+        private void EnrolleeGrid_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                // Add this
+                EnrolleeGrid.CurrentCell = EnrolleeGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                // Can leave these here - doesn't hurt
+                EnrolleeGrid.Rows[e.RowIndex].Selected = true;
+                EnrolleeGrid.Focus();
+            }
+        }
+
+        private void contextMenuEnrolleeGrid_Opening(object sender, CancelEventArgs e)
+        {
+            var cms = sender as ContextMenuStrip;
+            var mousepos = MousePosition;
+            if (cms != null)
+            {
+                var rel_mousePos = cms.PointToClient(mousepos);
+                if (cms.ClientRectangle.Contains(rel_mousePos))
+                {
+                    //the mouse pos is on the menu ... 
+                    //looks like the mouse was used to open it
+                    var dgv_rel_mousePos = EnrolleeGrid.PointToClient(mousepos);
+                    var hti = EnrolleeGrid.HitTest(dgv_rel_mousePos.X, dgv_rel_mousePos.Y);
+                    if (hti.RowIndex == -1)
+                    {
+                        // no row ...
+                        e.Cancel = true;
+                    }
+                    else
+                    {
+                        int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                        enrollee = enrolleeService.GetEnrollee(id);
+                        SetStateContextMenu(enrollee);
+                    }
+                }
+                else
+                {
+                    //looks like the menu was opened without the mouse ...
+                    //we could cancel the menu, or perhaps use the currently selected cell as reference...
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void SetStateContextMenu(Enrollee enrollee)
+        {
+            // Получем тип финансирования
+            switch (enrollee.FinanceTypeId)
+            {
+                case 1:
+                    {
+                        BudgetContextMenuItem.CheckState = CheckState.Checked;
+                        FeeContextMenuItem.CheckState = CheckState.Unchecked;
+                        BudgetAndFeeContextMenuItem.CheckState = CheckState.Unchecked;
+                        break;
+                    }
+                case 2:
+                    {
+                        BudgetContextMenuItem.CheckState = CheckState.Unchecked;
+                        FeeContextMenuItem.CheckState = CheckState.Checked;
+                        BudgetAndFeeContextMenuItem.CheckState = CheckState.Unchecked;
+                        break;
+                    }
+                case 3:
+                    {
+                        BudgetContextMenuItem.CheckState = CheckState.Unchecked;
+                        FeeContextMenuItem.CheckState = CheckState.Unchecked;
+                        BudgetAndFeeContextMenuItem.CheckState = CheckState.Checked;
+                        break;
+                    }
+            }
+            // Статус абитуриента
+            switch (enrollee.StateTypeId)
+            {
+                case 1:
+                    {
+                        CandidateContextMenuItem.CheckState = CheckState.Checked;
+                        EnrollContextMenuItem.CheckState = CheckState.Unchecked;
+                        TookDocumentContextMenuItem.CheckState = CheckState.Unchecked;
+                        break;
+                    }
+                case 2:
+                    {
+                        CandidateContextMenuItem.CheckState = CheckState.Unchecked;
+                        EnrollContextMenuItem.CheckState = CheckState.Unchecked;
+                        TookDocumentContextMenuItem.CheckState = CheckState.Checked;
+                        break;
+                    }
+                case 3:
+                    {
+                        CandidateContextMenuItem.CheckState = CheckState.Unchecked;
+                        EnrollContextMenuItem.CheckState = CheckState.Checked;
+                        TookDocumentContextMenuItem.CheckState = CheckState.Unchecked;
+                        break;
+                    }
+            }
+        }
     }
 }

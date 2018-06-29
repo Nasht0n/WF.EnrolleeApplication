@@ -648,7 +648,9 @@ namespace WF.EnrolleeApplication.App.Services
                             }
                             else if (discipline.discipline.DisciplineId == assessment.DisciplineId)
                             {
-                                table.Cell(index + 4, discipline.ColumnIndex).Range.Text = assessment.Estimation.ToString();
+                                if (!string.IsNullOrWhiteSpace(assessment.ChangeDiscipline))
+                                    table.Cell(index + 4, discipline.ColumnIndex).Range.Text = assessment.Estimation.ToString() + "*";
+                                else table.Cell(index + 4, discipline.ColumnIndex).Range.Text = assessment.Estimation.ToString();
                             }
                         }
                     }
