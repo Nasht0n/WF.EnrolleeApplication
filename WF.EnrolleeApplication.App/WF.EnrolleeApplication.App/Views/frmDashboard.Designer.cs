@@ -326,15 +326,15 @@
             // 
             this.ToolBoxToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ToolBoxToolStripMenuItem.Image")));
             this.ToolBoxToolStripMenuItem.Name = "ToolBoxToolStripMenuItem";
-            this.ToolBoxToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.ToolBoxToolStripMenuItem.Text = "Панель управления";
+            this.ToolBoxToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.ToolBoxToolStripMenuItem.Text = "Панель инструментов";
             this.ToolBoxToolStripMenuItem.Click += new System.EventHandler(this.ToolBoxToolStripMenuItem_Click);
             // 
             // SearchToolBoxToolStripMenuItem
             // 
             this.SearchToolBoxToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("SearchToolBoxToolStripMenuItem.Image")));
             this.SearchToolBoxToolStripMenuItem.Name = "SearchToolBoxToolStripMenuItem";
-            this.SearchToolBoxToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.SearchToolBoxToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.SearchToolBoxToolStripMenuItem.Text = "Панель поиска";
             this.SearchToolBoxToolStripMenuItem.Click += new System.EventHandler(this.SearchToolBoxToolStripMenuItem_Click);
             // 
@@ -342,7 +342,7 @@
             // 
             this.FilterToolBoxToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("FilterToolBoxToolStripMenuItem.Image")));
             this.FilterToolBoxToolStripMenuItem.Name = "FilterToolBoxToolStripMenuItem";
-            this.FilterToolBoxToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.FilterToolBoxToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.FilterToolBoxToolStripMenuItem.Text = "Панель фильтра";
             this.FilterToolBoxToolStripMenuItem.Click += new System.EventHandler(this.FilterToolBoxToolStripMenuItem_Click);
             // 
@@ -350,7 +350,7 @@
             // 
             this.StatusStripToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("StatusStripToolStripMenuItem.Image")));
             this.StatusStripToolStripMenuItem.Name = "StatusStripToolStripMenuItem";
-            this.StatusStripToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.StatusStripToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.StatusStripToolStripMenuItem.Text = "Строка состояния";
             this.StatusStripToolStripMenuItem.Click += new System.EventHandler(this.StatusStripToolStripMenuItem_Click);
             // 
@@ -830,7 +830,7 @@
             this.toolStripMenuItem1,
             this.PrintReportContextMenuItem});
             this.contextMenuEnrolleeGrid.Name = "contextMenuEnrolleeGrid";
-            this.contextMenuEnrolleeGrid.Size = new System.Drawing.Size(238, 120);
+            this.contextMenuEnrolleeGrid.Size = new System.Drawing.Size(238, 98);
             this.contextMenuEnrolleeGrid.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuEnrolleeGrid_Opening);
             // 
             // EditEnrolleeContextMenuItem
@@ -855,21 +855,21 @@
             // BudgetAndFeeContextMenuItem
             // 
             this.BudgetAndFeeContextMenuItem.Name = "BudgetAndFeeContextMenuItem";
-            this.BudgetAndFeeContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.BudgetAndFeeContextMenuItem.Size = new System.Drawing.Size(177, 22);
             this.BudgetAndFeeContextMenuItem.Text = "Бюджет/Платно";
             this.BudgetAndFeeContextMenuItem.Click += new System.EventHandler(this.BudgetAndFeeContextMenuItem_Click);
             // 
             // BudgetContextMenuItem
             // 
             this.BudgetContextMenuItem.Name = "BudgetContextMenuItem";
-            this.BudgetContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.BudgetContextMenuItem.Size = new System.Drawing.Size(177, 22);
             this.BudgetContextMenuItem.Text = "Бюджетная форма";
             this.BudgetContextMenuItem.Click += new System.EventHandler(this.BudgetContextMenuItem_Click);
             // 
             // FeeContextMenuItem
             // 
             this.FeeContextMenuItem.Name = "FeeContextMenuItem";
-            this.FeeContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.FeeContextMenuItem.Size = new System.Drawing.Size(177, 22);
             this.FeeContextMenuItem.Text = "Платная форма";
             this.FeeContextMenuItem.Click += new System.EventHandler(this.FeeContextMenuItem_Click);
             // 
@@ -885,14 +885,14 @@
             // CandidateContextMenuItem
             // 
             this.CandidateContextMenuItem.Name = "CandidateContextMenuItem";
-            this.CandidateContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CandidateContextMenuItem.Size = new System.Drawing.Size(178, 22);
             this.CandidateContextMenuItem.Text = "Кандидат";
             this.CandidateContextMenuItem.Click += new System.EventHandler(this.CandidateContextMenuItem_Click);
             // 
             // TookDocumentContextMenuItem
             // 
             this.TookDocumentContextMenuItem.Name = "TookDocumentContextMenuItem";
-            this.TookDocumentContextMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.TookDocumentContextMenuItem.Size = new System.Drawing.Size(178, 22);
             this.TookDocumentContextMenuItem.Text = "Забрал документы";
             this.TookDocumentContextMenuItem.Click += new System.EventHandler(this.TookDocumentContextMenuItem_Click);
             // 

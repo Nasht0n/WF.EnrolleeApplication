@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -14,24 +15,34 @@ using WF.EnrolleeApplication.DataAccess.Services;
 
 namespace WF.EnrolleeApplication.App.Views
 {
+    /// <summary>
+    /// Класс-форма "Главная форма приложения"
+    /// </summary>
     public partial class frmDashboard : Form
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // Строка подключения к источнику данных
         private string connectionString;
-
+        // Вспомогательные переменные для скрытия/отображения панелей формы
         private bool ToolBoxVisible;
         private bool SearchToolBoxVisible;
         private bool FilterToolBoxVisible;
         private bool StatusStripVisible;
+        // Режим поиска
         private bool SearchMode = false;
-
+        // Таблица данных абитуриентов
         private DataTable enrolleeTable;
-
+        // Выбранный абитуриент
         private Enrollee enrollee;
+        // Текущий пользователь системы
         private Employee activeEmployee;
+        // Выбранный факультет
         private Faculty currentFaculty;
+        // Выбранная форма обучения
         private FormOfStudy currentFormOfStudy;
+        // Выбранная специальность
         private Speciality currentSpeciality;
-
+        // Сервисы получения данных
         private AssessmentService assessmentService;
         private PriorityOfSpecialityService priorityOfSpecialityService;
         private AtributeForEnrolleeService atributeForEnrolleeService;
@@ -41,11 +52,16 @@ namespace WF.EnrolleeApplication.App.Views
         private EnrolleeService enrolleeService;
         private ViewService viewService;
         private ExamSchemaService examSchemaService;
-
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="employee">Текущий пользователь системы</param>
         public frmDashboard(Employee employee)
         {
             InitializeComponent();
+            // Запоминаем текущего пользователя
             this.activeEmployee = employee;
+            // Создаем структуру таблицы абитуриентов
             enrolleeTable = CreateStructureTable();
             // Инициализируем сервисы доступа к данным
             InitializeDataAccessServices();
@@ -55,15 +71,20 @@ namespace WF.EnrolleeApplication.App.Views
             InitializeStatusStrip();
             // Параметры программы
             LoadUsersSettings();
-            // Заполняем таблицу абитуриентов
-            enrolleeTable = CreateStructureTable();
+            // Устанавливаем таблицу абитуриентов как источник данных компонента
             EnrolleeGrid.DataSource = enrolleeTable;
+            // Инициализируем данными таблицу абитуриентов
             InitializeEnrolleeGrid(SearchMode);
+            // Устанавливаем стиль отображения
             SetStyleEnrolleeGrid(EnrolleeGrid);
         }
-
+        /// <summary>
+        /// Метод установка стиля отображения таблицы данных абитуриентов
+        /// </summary>
+        /// <param name="enrolleeGrid">Компонент расположения таблицы абитуриентов</param>
         private void SetStyleEnrolleeGrid(DataGridView enrolleeGrid)
         {
+            // Установка видимости столбцов
             enrolleeGrid.Columns[0].Visible = false;
             enrolleeGrid.Columns[1].Visible = false;
             enrolleeGrid.Columns[2].Visible = false;
@@ -80,7 +101,7 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeGrid.Columns[13].Visible = false;
             enrolleeGrid.Columns[14].Visible = true;
             enrolleeGrid.Columns[15].Visible = true;
-
+            // Установка весов (ширины) столбцов
             enrolleeGrid.Columns[0].FillWeight = 5;
             enrolleeGrid.Columns[1].FillWeight = 5;
             enrolleeGrid.Columns[2].FillWeight = 5;
@@ -97,9 +118,11 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeGrid.Columns[13].FillWeight = 5;
             enrolleeGrid.Columns[14].FillWeight = 10;
             enrolleeGrid.Columns[15].FillWeight = 10;
-
         }
-
+        /// <summary>
+        /// Создание структуры таблицы данных
+        /// </summary>
+        /// <returns>Таблица данных, для отображения списка абитуриентов</returns>
         private DataTable CreateStructureTable()
         {
             DataTable result = new DataTable();
@@ -110,7 +133,6 @@ namespace WF.EnrolleeApplication.App.Views
             result.Columns.Add(new DataColumn("КодФинансирования", typeof(int)));
             result.Columns.Add(new DataColumn("КодСтатуса", typeof(int)));
             result.Columns.Add(new DataColumn("КодОператора", typeof(int)));
-
             result.Columns.Add(new DataColumn("№ Л/Д", typeof(string)));
             result.Columns.Add(new DataColumn("Форма обучения",typeof(string)));
             result.Columns.Add(new DataColumn("Специальность", typeof(string)));
@@ -122,10 +144,16 @@ namespace WF.EnrolleeApplication.App.Views
             result.Columns.Add(new DataColumn("Статус", typeof(string)));
             return result;
         }
-
+        /// <summary>
+        /// Инициализация таблицы абитуриентов данными
+        /// </summary>
+        /// <param name="searchMode">Параметр, определяющий способ поиска абитуриента: по специальностям или в порядке добавления</param>
         private void InitializeEnrolleeGrid(bool searchMode)
         {
+            // Список абитуриентов
             List<EnrolleeView> enrollees;
+            // Если режим поиска — получаем список абитуриентов, по выбранной специальности
+            // Иначе в порядке добавления текущего пользователя
             if(searchMode)
             {
                 enrollees = viewService.GetEnrollees(currentSpeciality); 
@@ -134,18 +162,22 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 enrollees = viewService.GetEnrollees(activeEmployee);
             }
-
+            // Очищаем таблицу данных
             enrolleeTable.Clear();
+            // Заполняем таблицу данных списком абитуриентов
             foreach (var enrollee in enrollees)
             {
                 string numberOfDeal = $"";
                 if (string.IsNullOrWhiteSpace(enrollee.FormOfStudyShortname)) numberOfDeal = $"{enrollee.SpecialityShortname}-{enrollee.NumberOfDeal}";
                 else numberOfDeal = $"{enrollee.SpecialityShortname}{enrollee.FormOfStudyShortname}-{enrollee.NumberOfDeal}";
-
                 enrolleeTable.Rows.Add(enrollee.EnrolleeId, enrollee.SpecialityId, enrollee.ContestId, enrollee.ReasonForAddmissionId, enrollee.FinanceTypeId, enrollee.StateId, enrollee.EmployeeId, numberOfDeal, enrollee.FormOfStudy,enrollee.Speciality,enrollee.Surname,enrollee.Name,enrollee.Contest,enrollee.ReasonForAddmission,enrollee.Finance,enrollee.Status);
             }
         }
-
+        /// <summary>
+        /// Метод загрузки сохраненных параметров приложения пользователем
+        /// Используются параметры внешнего вида приложения:
+        /// Панели инструментов, панели поиска, панели фильтров и строки состояния
+        /// </summary>
         private void LoadUsersSettings()
         {
             // Получаем значения сохраненные пользователем
@@ -159,60 +191,97 @@ namespace WF.EnrolleeApplication.App.Views
             FilterToolBox.Visible = FilterToolBoxVisible;
             StatusStrip.Visible = StatusStripVisible;
         }
-
+        /// <summary>
+        /// Инициализация выпадающих списков поиска по специальности
+        /// </summary>
         private void InitializeSearchComboBoxes()
         {
             // Заполняем факультеты
             InitializeFacultyComboBox();
             // Заполняем формы обучения
-            InitializeFormOfStudyComboBox();
-            // Заполняем специальности
-            InitializeSpecialityComboBox();            
+            InitializeFormOfStudyComboBox();         
         }
-
+        /// <summary>
+        /// Инициализация выпадающего списка специальности
+        /// </summary>
         private void InitializeSpecialityComboBox()
         {
+            // Если выбраны текущие факультет и форма обучения
             if (currentFaculty != null && currentFormOfStudy != null)
             {
+                // Отключаем отслеживание изменения специальности в списке специальностей
                 cbSpeciality.SelectedValueChanged -= cbSpeciality_SelectedValueChanged;
+                // Получаем список специальностей
                 var specialities = specialityService.GetSpecialities(currentFaculty,currentFormOfStudy);
+                // Инициализация комбо-бокса
                 cbSpeciality.DataSource = specialities;
                 cbSpeciality.DisplayMember = "Fullname";
                 cbSpeciality.ValueMember = "SpecialityId";
+                // Если список специальностей не пуст, инициализируем выбранную специальность - первой из списка
+                // Инициализируем список абитуриентов
                 if (specialities.Count != 0)
                 {
                     currentSpeciality = specialities[0];
                     InitializeEnrolleeGrid(SearchMode);
                 }
+                // Включаем отслеживание изменения специальности в списке специальностей
                 cbSpeciality.SelectedValueChanged += cbSpeciality_SelectedValueChanged;
             }
         }
-
+        /// <summary>
+        /// Инициализация выпадающего списка форм обучения
+        /// </summary>
         private void InitializeFormOfStudyComboBox()
         {
+            // Отключаем отслеживание изменения формы обучения в списке форм обучения
             cbFormOfStudy.SelectedValueChanged -= cbFormOfStudy_SelectedValueChanged;
+            // Получаем список форм обучения
             var formsOfStudies = formOfStudyService.GetFormOfStudies();
+            // Инициализация комбо-бокса
             cbFormOfStudy.DataSource = formsOfStudies;
             cbFormOfStudy.DisplayMember = "Fullname";
             cbFormOfStudy.ValueMember = "FormOfStudyId";
-            if (formsOfStudies.Count != 0) currentFormOfStudy = formsOfStudies[0];
+            // Если список форм обучения не пуст, инициализируем выбранную форму обучения - первой из списка
+            // Инициализируем список специальностей
+            if (formsOfStudies.Count != 0)
+            {
+                currentFormOfStudy = formsOfStudies[0];
+                InitializeSpecialityComboBox();
+            }
+            // Включаем отслеживание изменения формы обучения в списке форм обучения
             cbFormOfStudy.SelectedValueChanged += cbFormOfStudy_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Инициализация выпадающего списка факультета
+        /// </summary>
         private void InitializeFacultyComboBox()
         {
+            // Отключаем отслеживание изменения факультета в списке факультетов
             cbFaculty.SelectedValueChanged -= cbFaculty_SelectedValueChanged;
+            // Получаем список факультетов
             var faculties = facultyService.GetFaculties();
+            // Инициализация комбо-бокса
             cbFaculty.DataSource = faculties;
             cbFaculty.DisplayMember = "Shortname";
             cbFaculty.ValueMember = "FacultyId";
-            if (faculties.Count != 0) currentFaculty = faculties[0];
+            // Если список факультетов не пуст, инициализируем выбранный факультет - первой из списка
+            // Инициализируем список специальностей
+            if (faculties.Count != 0)
+            {
+                currentFaculty = faculties[0];
+                InitializeSpecialityComboBox();
+            }
+            // Включаем отслеживание изменения факультета в списке факультетов
             cbFaculty.SelectedValueChanged += cbFaculty_SelectedValueChanged;
         }
-
+        /// <summary>
+        /// Инициализация сервисов доступа к данным
+        /// </summary>
         private void InitializeDataAccessServices()
         {
+            // Получение строки подключения к источнику данных
             connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
+            // Инициализация сервисов доступа к данным
             facultyService = new FacultyService(connectionString);
             formOfStudyService = new FormOfStudyService(connectionString);
             specialityService = new SpecialityService(connectionString);
@@ -223,16 +292,29 @@ namespace WF.EnrolleeApplication.App.Views
             atributeForEnrolleeService = new AtributeForEnrolleeService(connectionString);
             examSchemaService = new ExamSchemaService(connectionString);
         }
-
+        /// <summary>
+        /// Инициализация строки состояния приложения
+        /// </summary>
         private void InitializeStatusStrip()
         {
+            // Вывод информации о текущем пользователе системы
             lbEmployee.Text = $"{activeEmployee.EmployeePost.Name}, {activeEmployee.Fullname}";
+            // Получение списка абитуриентов
             var enrollees = enrolleeService.GetEnrollees();
+            // Вывод информации о количество записей абитуриентов
             lbCountRecord.Text = enrollees.Count.ToString();
         }
-
+        /// <summary>
+        /// Обработчик выбора факультета
+        /// </summary>
+        /// <param name="sender">ComboBox факультетов</param>
+        /// <param name="e"></param>
         private void cbFaculty_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список факультетов не пуст
+            // Получаем уникальный идентификатор выбранного факультета
+            // Получаем факультет по уникальному идентификатору
+            // Инициализация списка специальностей
             if(cbFaculty.SelectedValue != null)
             {
                 int id = (int)cbFaculty.SelectedValue;
@@ -240,47 +322,77 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeSpecialityComboBox();
             }
         }
-
+        /// <summary>
+        /// Обработчик выбора форм обучения
+        /// </summary>
+        /// <param name="sender">ComboBox формы обучения</param>
+        /// <param name="e"></param>
         private void cbFormOfStudy_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(cbFormOfStudy.SelectedValue != null)
+            // Если список форм обучения не пуст
+            // Получаем уникальный идентификатор выбранной формы обучения
+            // Получаем форму обучения по уникальному идентификатору
+            // Инициализация списка специальностей
+            if (cbFormOfStudy.SelectedValue != null)
             {
                 int id = (int)cbFormOfStudy.SelectedValue;
                 currentFormOfStudy = formOfStudyService.GetFormOfStudy(id);
                 InitializeSpecialityComboBox();
             }
         }
-
+        /// <summary>
+        /// Обработчик выбора специальностей
+        /// </summary>
+        /// <param name="sender">ComboBox специальности</param>
+        /// <param name="e"></param>
         private void cbSpeciality_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(cbSpeciality.SelectedValue!=null)
+            // Если список специальностей не пуст
+            // Получаем уникальный идентификатор выбранной специальности
+            // Получаем специальность по уникальному идентификатору
+            // Инициализация списка абитуриентов
+            if (cbSpeciality.SelectedValue!=null)
             {
                 int id = (int)cbSpeciality.SelectedValue;
                 currentSpeciality = specialityService.GetSpeciality(id);
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Обработчик нажатия кнопки меню "Вид — Панель инструментов"
+        /// </summary>
+        /// <param name="sender">Кнопка меню "Вид — Панель инструментов"</param>
+        /// <param name="e"></param>
         private void ToolBoxToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Если панель инструментов видима
             if(ToolBoxVisible)
             {
+                // Скрываем панель инструментов
                 Properties.Settings.Default.ToolBoxVisible = false;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
             }
-            else
+            // Иначе
+            else 
             {
+                // Показываем панель инструментов
                 Properties.Settings.Default.ToolBoxVisible = true;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
             }
         }
-
+        /// <summary>
+        /// Обработчик нажатия кнопки меню "Вид — Панель поиска"
+        /// </summary>
+        /// <param name="sender">Кнопка меню "Вид — Панель поиска"</param>
+        /// <param name="e"></param>
         private void SearchToolBoxToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(SearchToolBoxVisible)
+            // Если панель поиска видима
+            if (SearchToolBoxVisible)
             {
+                // Скрываем панель поиска
                 Properties.Settings.Default.SearchToolBoxVisible = false;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
@@ -289,6 +401,7 @@ namespace WF.EnrolleeApplication.App.Views
             }
             else
             {
+                // Показываем панель поиска
                 Properties.Settings.Default.SearchToolBoxVisible = true;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
@@ -296,43 +409,63 @@ namespace WF.EnrolleeApplication.App.Views
                 SearchMode = true;
             }
         }
-
+        /// <summary>
+        /// Обработчик нажатия кнопки меню "Вид — Строка состояния"
+        /// </summary>
+        /// <param name="sender">Кнопка меню "Вид — Строка состояния"</param>
+        /// <param name="e"></param>
         private void StatusStripToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Если строка состояния видима
             if (StatusStripVisible)
             {
+                // Скрываем строку состояния
                 Properties.Settings.Default.StatusStripVisible = false;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
             }
             else
             {
+                // Показываем строку состояния
                 Properties.Settings.Default.StatusStripVisible = true;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
             }
         }
-
+        /// <summary>
+        /// Обработчик нажатия кнопки меню "Вид — Панель фильтра"
+        /// </summary>
+        /// <param name="sender">Кнопка меню "Вид — Панель фильтра"</param>
+        /// <param name="e"></param>
         private void FilterToolBoxToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Если панель фильтра видима
             if (FilterToolBoxVisible)
             {
+                // Скрываем панель фильтра
                 Properties.Settings.Default.FilterToolBoxVisible = false;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
             }
             else
             {
+                // Показываем панель фильтра
                 Properties.Settings.Default.FilterToolBoxVisible = true;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
             }
         }
-
+        /// <summary>
+        /// Обработчик нажатия кнопки "Панель поиска" на панели инструментов
+        /// </summary>
+        /// <param name="sender">Кнопка "Панель поиска"</param>
+        /// <param name="e"></param>
         private void SearchToolBoxToolStripButton_Click(object sender, EventArgs e)
         {
+            // Если панель поиска видима
             if (SearchToolBoxVisible)
             {
+                // Скрываем панель поиска
                 Properties.Settings.Default.SearchToolBoxVisible = false;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
@@ -342,6 +475,7 @@ namespace WF.EnrolleeApplication.App.Views
             }
             else
             {
+                // Показываем панель поиска
                 Properties.Settings.Default.SearchToolBoxVisible = true;
                 Properties.Settings.Default.Save();
                 LoadUsersSettings();
@@ -350,97 +484,175 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Вызов формы регистрации/изменения абитуриента для добавления абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка вызова регистрации/изменения абитуриента</param>
+        /// <param name="e"></param>
         private void ShowNewEnrolleeCard(object sender, EventArgs e)
         {
+            // Форма регистрации абитуриента
+            // activeEmployee — текущий оператор
             frmEnrolleeCard enrolleeCard = new frmEnrolleeCard(activeEmployee);
             DialogResult enrolleeCardResult = enrolleeCard.ShowDialog();
             if(enrolleeCardResult == DialogResult.OK)
             {
+                // Если пользователь успешно добавил абитуриента
+                // Обновляем список абитуриентов
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Вызов формы регистрации/изменения абитуриента для редактирования абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка вызова регистрации/изменения абитуриента</param>
+        /// <param name="e"></param>
         private void EditCurrentEnrolleeCard(object sender, EventArgs e)
         {
+            // Диалоговое окно о серьезности намерения (:
             DialogResult youSure = MessageBox.Show(this, "Редактировать профиль выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (youSure == DialogResult.Yes)
             {
+                // Получаем уникальный идентификатор выбранного абитуриента
                 int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                // Поиск абитуриента
                 enrollee = enrolleeService.GetEnrollee(id);
+                // Вызов формы регистрации
+                // activeEmployee — текущий оператор
+                // enrollee — выбранный абитуриент для редактирования
                 frmEnrolleeCard enrolleeCard = new frmEnrolleeCard(activeEmployee, enrollee);
                 DialogResult enrolleeCardResult = enrolleeCard.ShowDialog();
                 if (enrolleeCardResult == DialogResult.OK)
                 {
+                    // Если пользователь успешно редактировал запись абитуриента
+                    // Обновляем список абитуриентов
                     InitializeEnrolleeGrid(SearchMode);
                 }
             }
         }
-
+        /// <summary>
+        /// Удаление выбранного абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка вызова удаления абитуриента</param>
+        /// <param name="e"></param>
         private void DeleteCurrentEnrollee(object sender, EventArgs e)
         {
+            // Диалоговое окно о серьезности намерения (:
             DialogResult youSure = MessageBox.Show(this, "Удалить выбранного абитуриента?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (youSure == DialogResult.Yes)
             {
+                // Получаем уникальный идентификатор выбранного абитуриента
                 int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                // Поиск абитуриента
                 enrollee = enrolleeService.GetEnrollee(id);
-                List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+                // Получаем список оценок абитуриента
+                var assessments = assessmentService.GetAssessments(enrollee);
+                // Удаляем оценки
                 foreach (var assessment in assessments)
                     assessmentService.DeleteAssessment(assessment);
-                List<AtributeForEnrollee> atributes = atributeForEnrolleeService.GetAtributeForEnrollees(enrollee);
+                // Получаем список атрибутов (льгот) абитуриента
+                var atributes = atributeForEnrolleeService.GetAtributeForEnrollees(enrollee);
+                // Удаляем атрибуты абитуриента
                 foreach (var atribute in atributes)
                     atributeForEnrolleeService.DeleteAtributeForEnrollee(atribute);
-                List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                // Получаем список приоритетов
+                var priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                // Удаляем список приоритетов абитуриента
                 foreach (var priority in priorities)
                     priorityOfSpecialityService.DeletePriorityOfSpeciality(priority);
+                // Удаляем абитуриента
                 enrolleeService.DeleteEnrollee(enrollee);
+                // Обновляем список абитуриентов
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Печать заявления абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка печать заявления</param>
+        /// <param name="e"></param>
         private void PrintStatement(object sender, EventArgs e)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
+            // Получаем уникальный идентификатор выбранного абитуриента
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
+            // Подготавливаем заявление абитуриента
             ReportManager.PrintStatement(enrollee);
         }
-
+        /// <summary>
+        /// Печать титульного листа абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка печать титульного листа</param>
+        /// <param name="e"></param>
         private void PrintTitle(object sender, EventArgs e)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
+            // Получаем уникальный идентификатор выбранного абитуриента
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
+            // Подготавливаем титульный лист абитуриента
             ReportManager.PrintTitle(enrollee);
         }
-
+        /// <summary>
+        /// Печать экзаменнационного листа абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка печать экзаменнационного листа</param>
+        /// <param name="e"></param>
         private void PrintExamSheet(object sender, EventArgs e)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
+            // Получаем уникальный идентификатор выбранного абитуриента
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
+            // Подготавливаем экзаменнационный лист абитуриента
             ReportManager.PrintExamSheet(enrollee);
         }
-
+        /// <summary>
+        /// Печать расписки абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка печать расписки</param>
+        /// <param name="e"></param>
         private void PrintReceipt(object sender, EventArgs e)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
+            // Получаем уникальный идентификатор выбранного абитуриента
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
+            // Форма подготовка отчёта расписки
+            // enrollee — абитуриент
             frmReceipt receiptCard = new frmReceipt(enrollee);
             DialogResult receiptCardResult = receiptCard.ShowDialog();
             if(receiptCardResult == DialogResult.OK)
             {
+                // Подготовка расписки к печати
                 ReportManager.PrintReceipt(enrollee, receiptCard.DocumentOfStudy, receiptCard.DocumentOfDiscount, receiptCard.DocumentOther);
             }
         }
-
+        /// <summary>
+        /// Печать извещения абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка печать извещения</param>
+        /// <param name="e"></param>
         private void PrintNotice(object sender, EventArgs e)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
+            // Получаем уникальный идентификатор выбранного абитуриента
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+            // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
-            List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+            // Список оценок
+            var assessments = assessmentService.GetAssessments(enrollee);
+            // Проверяем наличие внутреннего испытания у абитуриента
             bool flag = false;
             foreach(var assessment in assessments)
                 if(assessment.Discipline.BasisForAssessingId == 2)
@@ -453,10 +665,16 @@ namespace WF.EnrolleeApplication.App.Views
                     flag = false;
                     break;                    
                 }
+            // Если абитуриент сдаёт вступительное испытание в вузе 
+            // Подготовка извещения к печати
             if (!flag) MessageBox.Show(this, "Абитуриент не сдаёт вступительные испытания в университете", "Печать извещения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else ReportManager.PrintNotice(enrollee);
         }
-
+        /// <summary>
+        /// Метод фильтрации в списке абитуриентов
+        /// </summary>
+        /// <param name="sender">Обработчик фильтра</param>
+        /// <param name="e"></param>
         private void Filter(object sender, EventArgs e)
         {
             // Фамилия абитуриента
@@ -481,45 +699,71 @@ namespace WF.EnrolleeApplication.App.Views
             else if (CandidateFilter.CheckState == CheckState.Unchecked && EnrollFilter.CheckState == CheckState.Checked && TookDocumentFilter.CheckState == CheckState.Checked) query += $" AND (КодСтатуса = 2 OR КодСтатуса = 3)";
             (EnrolleeGrid.DataSource as DataTable).DefaultView.RowFilter = query;
         }
-
+        /// <summary>
+        /// Обработчик выхода из системы пользователя
+        /// </summary>
+        /// <param name="sender">Кнопка "Выход из системы"</param>
+        /// <param name="e"></param>
         private void LogoffToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Abort;
             this.Close();
         }
-
+        /// <summary>
+        /// Вызов формы ввода оценок вступительных испытаний
+        /// </summary>
+        /// <param name="sender">Кнопка "Вступительные испытания"</param>
+        /// <param name="e"></param>
         private void EntryExamView(object sender, EventArgs e)
         {
             frmEnrtyExam entryExamView = new frmEnrtyExam();
             entryExamView.ShowDialog();
         }
-
+        /// <summary>
+        /// Вызов формы зачисления абитуриентов
+        /// </summary>
+        /// <param name="sender">Кнопка "Зачисление абитуриентов"</param>
+        /// <param name="e"></param>
         private void EnrollView(object sender, EventArgs e)
         {
             frmEnroll enrollView = new frmEnroll();
             enrollView.ShowDialog();
             InitializeEnrolleeGrid(SearchMode);
         }
-
+        /// <summary>
+        /// Печать "Сводной экзаменнационной ведомости"
+        /// </summary>
+        /// <param name="sender">Кнопка "Сводная экзаменнационная ведомость"</param>
+        /// <param name="ea"></param>
         private void PrintSummaryExaminationReport(object sender, EventArgs ea)
         {
+            // Вызов формы выбора специальности
             frmChooseSpeciality chooseSpeciality = new frmChooseSpeciality();
             if (chooseSpeciality.ShowDialog() == DialogResult.OK)
             {
+                // Передаем строку подключения к источнику данных
                 ReportManager.ConnectionString = connectionString;
-                List<Enrollee> enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality)
+                // Получение списка абитуриентов
+                var enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality)
                     .OrderByDescending(e => e.ReasonForAddmission.ContestId)
                     .ThenByDescending(e => e.Assessment.Sum(a => a.Estimation))
                     .ToList();
+                // Подготовка отчёта сводной экзаменнационной ведомости
                 ReportManager.PrintSummaryExaminationSheet(enrollees, chooseSpeciality.speciality);
             }
         }
-
+        /// <summary>
+        /// Печать "Экзаменнационная ведомость"
+        /// </summary>
+        /// <param name="sender">Кнопка "Экзаменнационная ведомость"</param>
+        /// <param name="ea"></param>
         private void PrintExaminationSheet(object sender, EventArgs e)
         {
+            // Вызов формы выбора специальности
             frmChooseSpeciality chooseSpeciality = new frmChooseSpeciality();
             if (chooseSpeciality.ShowDialog() == DialogResult.OK)
             {
+                // Передаем строку подключения к источнику данных
                 ReportManager.ConnectionString = connectionString;
                 List<ExamSchema> exams = examSchemaService.GetExamSchemas(chooseSpeciality.speciality);
                 bool flag = false;
@@ -530,7 +774,9 @@ namespace WF.EnrolleeApplication.App.Views
                 }
                 if (flag)
                 {
-                    List<Enrollee> enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality);
+                    // Получаем список абитуриентов сдающих вступительные испытания
+                    var enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality);
+                    // Подготовка отчёта экзаменнационной ведомости
                     ReportManager.PrintExaminationSheet(exams, enrollees);
                 }
                 else
@@ -539,28 +785,53 @@ namespace WF.EnrolleeApplication.App.Views
                 }
             }
         }
-
+        /// <summary>
+        /// Печать мониторинга (Бюджет)
+        /// </summary>
+        /// <param name="sender">Кнопка печати мониторинга</param>
+        /// <param name="ea"></param>
         private void PrintMonitoringBudget(object sender, EventArgs ea)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
-            List<Enrollee> enrollees = enrolleeService.GetEnrollees();
+            // Получаем список абитуриентов
+            var enrollees = enrolleeService.GetEnrollees();
+            // Подготовка отчёта
             ReportManager.PrintBudgetMonitoring(enrollees);
         }
-
+        /// <summary>
+        /// Печать мониторинга (Платное)
+        /// </summary>
+        /// <param name="sender">Кнопка печати мониторинга</param>
+        /// <param name="ea"></param>
         private void PrintMonitoringFee(object sender, EventArgs ea)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
-            List<Enrollee> enrollees = enrolleeService.GetEnrollees();
+            // Получаем список абитуриентов
+            var enrollees = enrolleeService.GetEnrollees();
+            // Подготовка отчёта
             ReportManager.PrintFeeMonitoring(enrollees);
         }
-
+        /// <summary>
+        /// Печать информации о ходе приема документов
+        /// </summary>
+        /// <param name="sender">Кнопка печати информации о ходе приема</param>
+        /// <param name="ea"></param>
         private void PrintInformationReport(object sender, EventArgs ea)
         {
+            // Передаем строку подключения к источнику данных
             ReportManager.ConnectionString = connectionString;
-            List<Enrollee> enrollees = enrolleeService.GetEnrollees();
+            // Получаем список абитуриентов
+            var enrollees = enrolleeService.GetEnrollees();
+            // Подготовка отчёта
             ReportManager.PrintInformationReport(enrollees);
         }
-
+        /// <summary>
+        /// Вызов контекстного меню на таблице данных абитуриентов
+        /// </summary>
+        /// <param name="sender">Таблица данных</param>
+        /// <param name="e"></param>
         private void EnrolleeGrid_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -572,7 +843,11 @@ namespace WF.EnrolleeApplication.App.Views
                 EnrolleeGrid.Focus();
             }
         }
-
+        /// <summary>
+        /// Обработчик открытия контекстного меню
+        /// </summary>
+        /// <param name="sender">Контекстное меню</param>
+        /// <param name="e"></param>
         private void contextMenuEnrolleeGrid_Opening(object sender, CancelEventArgs e)
         {
             var cms = sender as ContextMenuStrip;
@@ -606,7 +881,10 @@ namespace WF.EnrolleeApplication.App.Views
                 }
             }
         }
-
+        /// <summary>
+        /// Установка состояния контекстного меню таблицы абитуриентов
+        /// </summary>
+        /// <param name="enrollee"></param>
         private void SetStateContextMenu(Enrollee enrollee)
         {
             // Получем тип финансирования
@@ -661,7 +939,11 @@ namespace WF.EnrolleeApplication.App.Views
                     }
             }
         }
-
+        /// <summary>
+        /// Изменение типа финансирования "Бюджет/Платно" абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка типа финансирования "Бюджет/Платно"</param>
+        /// <param name="e"></param>
         private void BudgetAndFeeContextMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -674,7 +956,11 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Изменение типа финансирования "Бюджет" абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка типа финансирования "Бюджет"</param>
+        /// <param name="e"></param>
         private void BudgetContextMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -687,7 +973,11 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Изменение типа финансирования "Платно" абитуриента
+        /// </summary>
+        /// <param name="sender">Кнопка типа финансирования "Платно"</param>
+        /// <param name="e"></param>
         private void FeeContextMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -700,7 +990,11 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Изменение статуса абитурента на "Кандидат"
+        /// </summary>
+        /// <param name="sender">Кнопка статуса абитурента "Кандидат"</param>
+        /// <param name="e"></param>
         private void CandidateContextMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -713,7 +1007,11 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
-
+        /// <summary>
+        /// Изменение статуса абитурента на "Забрал документы"
+        /// </summary>
+        /// <param name="sender">Кнопка статуса абитурента "Забрал документы"</param>
+        /// <param name="e"></param>
         private void TookDocumentContextMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -722,8 +1020,6 @@ namespace WF.EnrolleeApplication.App.Views
                 int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
                 enrollee = enrolleeService.GetEnrollee(id);
                 enrollee.StateTypeId = 2;
-                enrollee.DecreeId = null;
-
                 enrolleeService.UpdateEnrollee(enrollee);
                 InitializeEnrolleeGrid(SearchMode);
             }

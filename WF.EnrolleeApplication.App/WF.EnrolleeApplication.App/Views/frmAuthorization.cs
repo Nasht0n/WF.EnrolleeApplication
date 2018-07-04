@@ -11,15 +11,13 @@ namespace WF.EnrolleeApplication.App.Views
     /// Класс-форма "Авторизация пользователя"
     /// </summary>
     public partial class frmAuthorization : Form
-    {
-        /// <summary>
-        /// Форма авторизации пользователя в системе
-        /// </summary>        
+    {   
         private static Logger logger = LogManager.GetCurrentClassLogger();
         // Текущий оператор
         private Employee employee;
         // Сервис получения данных о пользователях системы
         private EmployeeService employeeService;
+        // Конструктор по умолчанию
         public frmAuthorization()
         {
             InitializeComponent();
