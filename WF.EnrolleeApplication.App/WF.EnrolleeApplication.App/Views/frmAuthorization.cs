@@ -1,30 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using NLog;
+using System;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WF.EnrolleeApplication.DataAccess.EntityFramework;
 using WF.EnrolleeApplication.DataAccess.Services;
 
 namespace WF.EnrolleeApplication.App.Views
 {
+    /// <summary>
+    /// Класс-форма "Авторизация пользователя"
+    /// </summary>
     public partial class frmAuthorization : Form
     {
         /// <summary>
         /// Форма авторизации пользователя в системе
-        /// </summary>
+        /// </summary>        
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // Текущий оператор
         private Employee employee;
+        // Сервис получения данных о пользователях системы
         private EmployeeService employeeService;
         public frmAuthorization()
         {
             InitializeComponent();
+            // Получение строки подключения к источнику данных
             string connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
+            // Инициализация сервиса
             employeeService = new EmployeeService(connectionString);
+            // При запуске поле ввода имени пользователя делаем активным
             tbUsername.Focus();
         }
         /// <summary>
@@ -34,6 +37,8 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void btCancel_Click(object sender, EventArgs e)
         {
+            logger.Info($"Отмена авторизации. Завершение работы приложения.");
+            // Нажатие кнопки "Отмена" — Завершение работы приложения
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
@@ -91,26 +96,35 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void TryEnter()
         {
-            // Проверяем заполненность полей
+            logger.Info($"Попытка авторизации пользователя.");
+            // Проверяем поле ввода имени пользователя
             if (string.IsNullOrWhiteSpace(tbUsername.Text))
             {
+                logger.Warn($"Поле ввода имени пользователя НЕ ЗАПОЛНЕНО.");
                 MessageBox.Show(this, "Введите логин пользователя", "Вход в систему", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 tbUsername.Focus();
             }
+            // Проверяем поле пароля пользователя
             else if (string.IsNullOrWhiteSpace(tbPassword.Text))
             {
+                logger.Warn($"Поле пароля пользователя НЕ ЗАПОЛНЕНО.");
                 MessageBox.Show(this, "Введите пароль пользователя", "Вход в систему", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 tbPassword.Focus();
             }
             else
             {
-                // Ищем пользователя по имени и паролю
                 string username = tbUsername.Text;
                 string password = tbPassword.Text;
+                // Поиск пользователя по данным авторизации
                 employee = employeeService.GetEmployee(username, password);
+                logger.Info($"Авторизация пользователя. Поиск пользователя.\nИмя входа: {username.Trim()};\nПароль: {password.Trim()}.\n");
                 if (employee == null)
                 {
-                    // Если пользователь не найден
+                    // Пользователь не найден
+                    // Диалоговое окно (Повтор/Отмена)
+                    // - Повтор — очищаем поля ввода, устанавливаем фокус на поле имени пользователя;
+                    // - Отмена — завершение работы приложения
+                    logger.Warn($"Пользователь не найден.");
                     DialogResult employeeNull = MessageBox.Show(this, "Пользователь не найден", "Вход в систему", MessageBoxButtons.RetryCancel, MessageBoxIcon.Stop);
                     if (employeeNull == DialogResult.Retry)
                     {
@@ -122,6 +136,12 @@ namespace WF.EnrolleeApplication.App.Views
                 }
                 else if (employee.Enabled == false)
                 {
+                    // Пользователь найден.
+                    // Учётная запись заблокирована.
+                    // Диалоговое окно (Повтор/Отмена)
+                    // - Повтор — очищаем поля ввода, устанавливаем фокус на поле имени пользователя;
+                    // - Отмена — завершение работы приложения
+                    logger.Warn($"Учётная запись пользователя отключена.");
                     DialogResult employeeDisable = MessageBox.Show(this, "Учётная запись заблокирована", "Вход в систему", MessageBoxButtons.RetryCancel, MessageBoxIcon.Stop);
                     if (employeeDisable == DialogResult.Retry)
                     {
@@ -133,25 +153,35 @@ namespace WF.EnrolleeApplication.App.Views
                 }
                 else
                 {
-                    // Если найден проверяем уровень доступа
+                    // Пользователь найден.
+                    // Проверяем уровень доступа.
+                    logger.Info($"Пользователь найден. Проверяем уровень доступа");
                     if (employee.EmployeePost.DictionaryAllow)
                     {
+                        logger.Info($"Доступ получен. Авторизация пройдена успешно.");
                         this.Hide();
+                        // Доступ получен, открываем главное окно приложения
                         frmDashboard dashboard = new frmDashboard(employee);
                         DialogResult dashboardResult = dashboard.ShowDialog();
                         if (dashboardResult == DialogResult.Abort)
                         {
+                            // Завершение работы пользователя
+                            logger.Info($"Пользователь {employee.ToString()} завершил работу в системе.");
                             this.Show();
                             tbUsername.Text = null;
                             tbPassword.Text = null;
+                            employee = null;
                         }
                         else Application.Exit();
                     }
                     else
                     {
+                        // Нет прав доступа пользователя в систему
+                        logger.Info($"Нет прав доступа в систему.");
                         DialogResult accessResult = MessageBox.Show(this, "Нет прав доступа", "Вход в систему", MessageBoxButtons.RetryCancel, MessageBoxIcon.Stop);
                         if (accessResult == DialogResult.Retry)
                         {
+                            employee = null;
                             tbUsername.Text = null;
                             tbPassword.Text = null;
                             tbUsername.Focus();

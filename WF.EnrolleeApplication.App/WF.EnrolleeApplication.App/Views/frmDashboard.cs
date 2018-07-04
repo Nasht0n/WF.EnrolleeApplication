@@ -363,7 +363,7 @@ namespace WF.EnrolleeApplication.App.Views
 
         private void EditCurrentEnrolleeCard(object sender, EventArgs e)
         {
-            DialogResult youSure = MessageBox.Show(this, "Редактировать профиль выбранного абитуриента?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult youSure = MessageBox.Show(this, "Редактировать профиль выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (youSure == DialogResult.Yes)
             {
                 int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
@@ -498,6 +498,7 @@ namespace WF.EnrolleeApplication.App.Views
         {
             frmEnroll enrollView = new frmEnroll();
             enrollView.ShowDialog();
+            InitializeEnrolleeGrid(SearchMode);
         }
 
         private void PrintSummaryExaminationReport(object sender, EventArgs ea)
@@ -638,25 +639,93 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 case 1:
                     {
+                        CandidateContextMenuItem.Enabled = true;
+                        TookDocumentContextMenuItem.Enabled = true;
                         CandidateContextMenuItem.CheckState = CheckState.Checked;
-                        EnrollContextMenuItem.CheckState = CheckState.Unchecked;
                         TookDocumentContextMenuItem.CheckState = CheckState.Unchecked;
                         break;
                     }
                 case 2:
                     {
+                        CandidateContextMenuItem.Enabled = true;
+                        TookDocumentContextMenuItem.Enabled = true;
                         CandidateContextMenuItem.CheckState = CheckState.Unchecked;
-                        EnrollContextMenuItem.CheckState = CheckState.Unchecked;
                         TookDocumentContextMenuItem.CheckState = CheckState.Checked;
                         break;
                     }
                 case 3:
                     {
-                        CandidateContextMenuItem.CheckState = CheckState.Unchecked;
-                        EnrollContextMenuItem.CheckState = CheckState.Checked;
-                        TookDocumentContextMenuItem.CheckState = CheckState.Unchecked;
+                        CandidateContextMenuItem.Enabled = false;
+                        TookDocumentContextMenuItem.Enabled = false;
                         break;
                     }
+            }
+        }
+
+        private void BudgetAndFeeContextMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (youSure == DialogResult.Yes)
+            {
+                int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                enrollee = enrolleeService.GetEnrollee(id);
+                enrollee.FinanceTypeId = 3;
+                enrolleeService.UpdateEnrollee(enrollee);
+                InitializeEnrolleeGrid(SearchMode);
+            }
+        }
+
+        private void BudgetContextMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (youSure == DialogResult.Yes)
+            {
+                int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                enrollee = enrolleeService.GetEnrollee(id);
+                enrollee.FinanceTypeId = 1;
+                enrolleeService.UpdateEnrollee(enrollee);
+                InitializeEnrolleeGrid(SearchMode);
+            }
+        }
+
+        private void FeeContextMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (youSure == DialogResult.Yes)
+            {
+                int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                enrollee = enrolleeService.GetEnrollee(id);
+                enrollee.FinanceTypeId = 2;
+                enrolleeService.UpdateEnrollee(enrollee);
+                InitializeEnrolleeGrid(SearchMode);
+            }
+        }
+
+        private void CandidateContextMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (youSure == DialogResult.Yes)
+            {
+                int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                enrollee = enrolleeService.GetEnrollee(id);
+                enrollee.StateTypeId = 1;
+                enrolleeService.UpdateEnrollee(enrollee);
+                InitializeEnrolleeGrid(SearchMode);
+            }
+        }
+
+        private void TookDocumentContextMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (youSure == DialogResult.Yes)
+            {
+                int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
+                enrollee = enrolleeService.GetEnrollee(id);
+                enrollee.StateTypeId = 2;
+                enrollee.DecreeId = null;
+
+                enrolleeService.UpdateEnrollee(enrollee);
+                InitializeEnrolleeGrid(SearchMode);
             }
         }
     }

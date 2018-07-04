@@ -7,6 +7,7 @@ using WF.EnrolleeApplication.DataAccess.EntityFramework;
 using Word = Microsoft.Office.Interop.Word;
 using Excel = Microsoft.Office.Interop.Excel;
 using WF.EnrolleeApplication.DataAccess.Services;
+using NLog;
 
 namespace WF.EnrolleeApplication.App.Services
 {
@@ -19,10 +20,10 @@ namespace WF.EnrolleeApplication.App.Services
     public class ReportManager
     {
         public static string ConnectionString;
-
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         // Заявление
         public static void PrintStatement(Enrollee enrollee)
-        {
+        {     
             string path = Environment.CurrentDirectory + "\\Templates\\Заявление абитуриента.dotx";
             Word.Application wordApp = new Word.Application();
             wordApp.Visible = false;
