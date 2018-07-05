@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -15,57 +16,106 @@ namespace WF.EnrolleeApplication.App.Views
     /// </summary>
     public partial class frmEnrolleeCard : Form
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        // Выбранная область
         private Area area;
+        // Объект атрибута (льготы)
         private Atribute atribute;
+        // Выбранное гражданство
         private Citizenship citizenship;
+        // Выбранный тип конкурса
         private Contest contest;
-        private ConversionSystem system;
+        // Выбранная страна
         private Country country;
+        // Объект приказа о зачислении
         private Decree decree;
+        // Выбранный район
         private District district;
+        // Выбранный тип документа
         private Document document;
-        private Employee employee;
+        // Текущий пользователь системы
+        private Employee activeEmployee;
+        // Добавляемая/Редактируемая запись абитуриента
         public Enrollee enrollee;
+        // Выбранный факультет
         private Faculty faculty;
+        // Выбранный иностранный язык
         private ForeignLanguage foreignLanguage;
+        // Выбранная форма обучения
         private FormOfStudy formOfStudy;
+        // Выбранное основание зачисления
         private ReasonForAddmission reasonForAddmission;
+        // Выбранная специальность второй ступени
         private SecondarySpeciality secondarySpeciality;
+        // Выбранная специальность
         private Speciality speciality;
+        // Выбранное место работы по целевому направлению
         private TargetWorkPlace targetWorkPlace;
+        // Выбранный тип финансирования
         private TypeOfFinance typeOfFinance;
+        // Выбранный тип учебного заведения
         private TypeOfSchool typeOfSchool;
+        // Выбранный тип населенного пункта
         private TypeOfSettlement typeOfSettlement;
+        // Выбранный тип состояния абитуриента
         private TypeOfState typeOfState;
+        // Выбранный тип улицы
         private TypeOfStreet typeOfStreet;
-
+        // Сервис доступа к данным области
         private AreaService areaService;
+        // Сервис доступа к оценкам абитуриента
         private AssessmentService assessmentService;
+        // Сервис доступа к атрибутам (льготам)
         private AtributeService atributeService;
+        // Сервис доступа к атрибутам (льготам) абитуриента
         private AtributeForEnrolleeService atributeForEnrolleeService;
+        // Сервис доступа к видам гражданства
         private CitizenshipService citizenshipService;
+        // Сервис доступа к типам конкурса
         private ContestService contestService;
+        // Сервис доступа к системе конвертации оценок
         private ConversionSystemService conversionSystemService;
+        // Сервис доступа к списку стран
         private CountryService countryService;
+        // Сервис доступа к списку приказов
         private DecreeService decreeService;
+        // Сервис доступа к списку дисциплин
         private DisciplineService disciplineService;
+        // Сервис доступа к списку районов
         private DistrictService districtService;
+        // Сервис доступа к списке типов документов
         private DocumentService documentService;
+        // Сервис доступа к данным абитуриента
         private EnrolleeService enrolleeService;
+        // Сервис доступа к данным экзаменнационных схем
         private ExamSchemaService examSchemaService;
+        // Сервис доступа к данным о факультетах
         private FacultyService facultyService;
+        // Сервис доступа к данным о иностранных языках
         private ForeignLanguageService foreignLanguageService;
+        // Сервис доступа к данным о формах обучения
         private FormOfStudyService formOfStudyService;
+        // Сервис доступа к данным об интеграции специальностей
         private IntegrationOfSpecialitiesService integrationOfSpecialitiesService;
+        // Сервис доступа к данным об специальностях приоритета
         private PriorityOfSpecialityService priorityOfSpecialityService;
+        // Сервис доступа к данным об основаниях зачисления
         private ReasonForAddmissionService reasonForAddmissionService;
+        // Сервис доступа к данным об специальностях второй ступени
         private SecondarySpecialityService secondarySpecialityService;
+        // Сервис доступа к данным об специальностях первой ступени
         private SpecialityService specialityService;
+        // Сервис доступа к данным об местах работы по целевому направлению
         private TargetWorkPlaceService targetWorkPlaceService;
+        // Сервис доступа к данным об типах финансирования
         private TypeOfFinanceService typeOfFinanceService;
+        // Сервис доступа к данным об типах учебных заведений
         private TypeOfSchoolService typeOfSchoolService;
+        // Сервис доступа к данным об типах населенных пунктов
         private TypeOfSettlementService typeOfSettlementService;
+        // Сервис доступа к данным о типах состояния абитуриентов
         private TypeOfStateService typeOfStateService;
+        // Сервис доступа к данным о типах улиц
         private TypeOfStreetService typeOfStreetService;
         // Таблицы данных "Приоритеты специальности" и "Оценки"          
         private DataTable priorityTable;
@@ -80,6 +130,8 @@ namespace WF.EnrolleeApplication.App.Views
         private bool HasEnroll;
         // Список абитуриентов
         private List<Enrollee> enrollees;
+        private static Logger LogMa;
+
         /// <summary>
         /// Конструктор карты абитуриента. 
         /// Используется при добавлении (регистрации) нового абитуриента
@@ -88,8 +140,12 @@ namespace WF.EnrolleeApplication.App.Views
         public frmEnrolleeCard(Employee employee)
         {
             InitializeComponent();
-            this.employee = employee;
+            logger.Info($"Открыт сеанс добавления (регистрации) абитуриента. Оператор — {employee.Fullname.Trim()}.");
+            // Запоминаем текущего пользователя
+            this.activeEmployee = employee;
+            // Создаем объект нового абитуриента
             this.enrollee = new Enrollee();
+            // Отключаем режим редактирования
             this.editMode = false;
             // Создаем структуру таблиц
             priorityTable = CreateStructurePriorityTable();
@@ -114,9 +170,12 @@ namespace WF.EnrolleeApplication.App.Views
         public frmEnrolleeCard(Employee employee, Enrollee editEnrollee)
         {
             InitializeComponent();
-            this.employee = employee;
+            logger.Info($"Открыт сеанс редактирования абитуриента. Оператор — {employee.Fullname.Trim()}.");
+            // Запоминаем текущего пользователя
+            this.activeEmployee = employee;
+            // Запоминаем редактируемого абитуриента
             this.enrollee = editEnrollee;
-            // активируем режим редактирования
+            // Активируем режим редактирования
             this.editMode = true;
             // Создаем структуру таблиц
             priorityTable = CreateStructurePriorityTable();
@@ -131,7 +190,7 @@ namespace WF.EnrolleeApplication.App.Views
             InitializeAtributeList();
             // Инициализируем автозаполнение полей
             InitializeAutoCompleteTextBoxes();
-            // Заполняем поля данными абитуриента
+            // Заполняем поля данными редактируемого абитуриента
             FillEditData(editEnrollee);
         }
         /// <summary>
@@ -139,7 +198,10 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeDataAccessServices()
         {
+            // Получаем строку подключения к источнику данных
+            logger.Debug("Получаем строку подключения к источнику данных");
             string connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
+            // Инициализируем сервисы доступа к данным
             areaService = new AreaService(connectionString);
             assessmentService = new AssessmentService(connectionString);
             atributeService = new AtributeService(connectionString);
@@ -175,36 +237,57 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="editEnrollee">Профиль редактируемого абитуриента</param>
         private void FillEditData(Enrollee editEnrollee)
         {
-            // Информация об абитуриенте
+            // Заполняем поля формы, данными редактируемого абитуриента
+            /* *********************************** *
+             * Вкладка "Информация об абитуриенте" *
+             * *********************************** */
+            // Устанавливаем факультет абитуриента
             cbFaculty.SelectedValue = editEnrollee.Speciality.FacultyId;
+            // Устанавливаем форму обучения абитуриента
             cbFormOfStudy.SelectedValue = editEnrollee.Speciality.FormOfStudyId;
+            // Устанавливаем специальность абитуриента
             cbSpeciality.SelectedValue = editEnrollee.SpecialityId;
+            // Заполняем поля ФИО на русском и белорусском языках
             tbRuSurname.Text = editEnrollee.RuSurname;
             tbRuName.Text = editEnrollee.RuName;
             tbRuPatronymic.Text = editEnrollee.RuPatronymic;
             tbBlrSurname.Text = editEnrollee.BlrSurname;
             tbBlrName.Text = editEnrollee.BlrName;
             tbBlrPatronymic.Text = editEnrollee.BlrPatronymic;
+            // Устанавливаем дату рождения абитуриента
             dtBirthday.Value = editEnrollee.DateOfBirthday;
+            // Устанавливаем пол абитуриента
             if (editEnrollee.Gender.Trim() == "М") rbMale.Checked = true;
             else rbFemale.Checked = true;
+            // Устанавливаем гражданство абитуриента
             cbCitizenship.SelectedValue = editEnrollee.CitizenshipId;
+            // Устанавливаем тип документа абитуриента
             cbDocument.SelectedValue = editEnrollee.DocumentId;
+            // Заполняем поля данными предоставленного документа абитуриентом
             tbDocSeria.Text = editEnrollee.DocumentSeria;
             tbDocNumber.Text = editEnrollee.DocumentNumber;
             dtDocDate.Value = editEnrollee.DocumentDate;
             tbDocWhoGave.Text = editEnrollee.DocumentWhoGave;
             tbDocPersonalNumber.Text = editEnrollee.DocumentPersonalNumber;
+            // Заполняем поля о родителях абитуриента
             tbFatherInfo.Text = editEnrollee.FatherFullname;
             tbFatherAdres.Text = editEnrollee.FatherAddress;
             tbMotherInfo.Text = editEnrollee.MotherFullname;
             tbMotherAdres.Text = editEnrollee.MotherAddress;
-            // Дополнительная информация
+            /* **********************************  *
+             * Вкладка "Дополнительная информация" *
+             * **********************************  */
+            // Устанавливаем страну абитуриента
             cbCountry.SelectedValue = editEnrollee.CountryId;
+            // Устанавливаем область абитуриента
             cbArea.SelectedValue = editEnrollee.AreaId;
+            // Устанавливаем район абитуриента
             cbDistrict.SelectedValue = editEnrollee.DistrictId;
+            // Устанавливаем тип населенного пункта абитуриент
             cbTypeOfSettlement.SelectedValue = editEnrollee.SettlementTypeId;
+            // Устанавливаем тип улицы абитуриента
             cbTypeOfStreet.SelectedValue = editEnrollee.StreetTypeId;
+            // Заполняем поля данными определяющие местожительства и номера телефонов абитуриента
             tbSettlementName.Text = editEnrollee.SettlementName;
             tbSettlementIndex.Text = editEnrollee.SettlementIndex.ToString();
             tbStreetName.Text = editEnrollee.StreetName;
@@ -212,12 +295,15 @@ namespace WF.EnrolleeApplication.App.Views
             tbNumberFlat.Text = editEnrollee.NumberFlat;
             tbMobilePhone.Text = editEnrollee.MobilePhone;
             tbHomePhone.Text = editEnrollee.HomePhone;
+            // Устанавливаем тип последнего учебного заведения абитуриента
+            cbTypeOfSchool.SelectedValue = editEnrollee.SchoolTypeId;
+            // Заполняем поля данными последнего учебного заведения абитуриента
             tbSchoolYear.Text = editEnrollee.SchoolYear;
             tbSchoolAdres.Text = editEnrollee.SchoolAddress;
             tbSchoolName.Text = editEnrollee.SchoolName;
-            cbTypeOfSchool.SelectedValue = editEnrollee.SchoolTypeId;
+            // Если пользователь имеет запись о специальности второй ступени устанавливаем специальность второй ступени
             if (editEnrollee.SecondarySpecialityId.HasValue) cbSecondarySpeciality.SelectedValue = editEnrollee.SecondarySpecialityId;
-
+            // В случае, когда абитуриент подает документы на второе высшее образование заполняем поля данными о текущем обучении
             if (!string.IsNullOrWhiteSpace(editEnrollee.CurrentNumberCurs) || !string.IsNullOrWhiteSpace(editEnrollee.CurrentSpeciality) || !string.IsNullOrWhiteSpace(editEnrollee.CurrentUniversity))
             {
                 cbSecondEducation.Checked = true;
@@ -226,26 +312,38 @@ namespace WF.EnrolleeApplication.App.Views
                 tbCurrentUniversity.Text = editEnrollee.CurrentUniversity;
             }
             else cbSecondEducation.Checked = false;
+            // Устанавливаем пункт о членстве в БРСМ
             cbBrsm.Checked = editEnrollee.IsBRSM;
+            // Устанавливаем иностранный язык абитуриента
             cbForeignLanguage.SelectedValue = editEnrollee.ForeignLanguageId;
+            // Если абитуриент зачислен, устанавливаем значение приказа о зачислении
             if (editEnrollee.DecreeId.HasValue) cbDecree.SelectedValue = editEnrollee.DecreeId;
+            // Устанавливаем дату подачи документов
             dtDateDeal.Value = editEnrollee.DateDeal;
+            // Если абитуриент, подающий документы на заочную форму обучения, работает заполняем сведения о рабочем месте и стаже работы
             if (IsWorker)
             {
                 tbSeniority.Text = editEnrollee.Seniority.ToString();
                 tbWorkPlace.Text = editEnrollee.WorkPlace;
                 tbWorkPost.Text = editEnrollee.WorkPost;
             }
-            // Поступление
+            /* ********************* *
+             * Вкладка "Поступление" *
+             * ********************* */
+            // Устанавливаем тип финансирования
             cbTypeOfFinance.SelectedValue = editEnrollee.FinanceTypeId;
+            // Устанавливаем тип конкурса 
             cbContest.SelectedValue = editEnrollee.ReasonForAddmission.ContestId;
+            // Устанавливаем тип основания зачисления
             cbReasonForAddmission.SelectedValue = editEnrollee.ReasonForAddmissionId;
+            // Заполняем поля оценками документа (-ов), предоставленного (-ыми) абитуриентом
             tbFirstAttestatString.Text = editEnrollee.AttestatEstimationString;
             tbSecondAttestatString.Text = editEnrollee.AttestatEstimationString;
             tbFirstDiplomPtuString.Text = editEnrollee.DiplomPtuEstimationString;
             tbSecondDiplomPtuString.Text = editEnrollee.DiplomPtuEstimationString;
             tbFirstDiplomSsuzString.Text = editEnrollee.DiplomSusEstimationString;
             tbSecondDiplomSsuzString.Text = editEnrollee.DiplomSusEstimationString;
+            // Устанавливаем данные о целевом направлении
             if (editEnrollee.TargetWorkPlaceId.HasValue)
             {
                 cbTarget.Checked = true;
@@ -255,14 +353,20 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 cbTarget.Checked = false;
             }
+            // Отображаем и заполняем поле номера личного дела абитуриента
             tbNumberOfDeal.Visible = true;
             tbNumberOfDeal.Text = editEnrollee.NumberOfDeal.ToString();
+            // Устанавливаем тип состояния абитуриента
             cbTypeOfState.SelectedValue = editEnrollee.StateTypeId;
+            // Заполняем поле лица ответственного за приём документов
             tbPersonInCharge.Text = editEnrollee.PersonInCharge;
+            // Инициализируем таблицу оценок абитуриента
             InitializeSertificationGrid(editEnrollee);
+            // Инициализируем таблицу специальностей согласно приоритетам абитуриента
             InitializePrioritySpecialityGrid(editEnrollee);
+            // Инициализируем список атрибутов (льгот) абитуриента
             InitializeAtributeList(editEnrollee);
-
+            // Убираем возможно редактировать специальность абитуриента
             cbFaculty.Enabled = false;
             cbFormOfStudy.Enabled = false;
             cbSpeciality.Enabled = false;
@@ -273,6 +377,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void SetSertificateTableStyle()
         {
+            // Установка ширины (весов) столбцов оценок
             SertificateGrid.Columns[0].FillWeight = 10;
             SertificateGrid.Columns[1].FillWeight = 10;
             SertificateGrid.Columns[2].FillWeight = 60;
@@ -280,16 +385,18 @@ namespace WF.EnrolleeApplication.App.Views
             SertificateGrid.Columns[4].FillWeight = 20;
             SertificateGrid.Columns[5].FillWeight = 10;
             SertificateGrid.Columns[6].FillWeight = 10;
+            // Установка видимости столбцов оценок
             SertificateGrid.Columns[0].Visible = false;
             SertificateGrid.Columns[1].Visible = false;
             SertificateGrid.Columns[5].Visible = false;
             SertificateGrid.Columns[6].Visible = false;
+            // Установка столбца только для чтения
             SertificateGrid.Columns["Дисциплина"].ReadOnly = true;
         }
         /// <summary>
         /// Создаем струтуру таблицы данных сертификатов и предметов
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Таблица данных сертификтов</returns>
         private DataTable CreateStructureSertificateTable()
         {
             DataTable result = new DataTable();
@@ -307,7 +414,9 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void SetPriorityTableStyle()
         {
+            // Установка видимости столбцов приоритета специальности
             PriorityGrid.Columns[2].Visible = false;
+            // Установка ширины (весов) столбцов приоритета специальности
             PriorityGrid.Columns[0].FillWeight = 5;
             PriorityGrid.Columns[1].FillWeight = 20;
             PriorityGrid.Columns[2].FillWeight = 5;
@@ -316,7 +425,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// <summary>
         /// Создаем структуру таблицы данных списка приоритетов специальностей
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Таблица данных приоритетов специальностей</returns>
         private DataTable CreateStructurePriorityTable()
         {
             DataTable result = new DataTable();
@@ -332,24 +441,35 @@ namespace WF.EnrolleeApplication.App.Views
         private void InitializePrioritySpecialityGrid()
         {
             // Установка списка приоритетов
-            if (!editMode)
+            if (!editMode) // Для режима добавления абитуриента
             {
+                // Проверяем выбрана ли специальность
                 if (speciality != null)
                 {
+                    // Очищаем таблицу данных приоритетов
                     priorityTable.Rows.Clear();
-                    if (speciality.IsGroup) // если общий конкурс
+                    // Если выбранная специальность общего конкурса
+                    if (speciality.IsGroup) 
                     {
+                        // Получаем список специальностей входящих в группу общего конкурса
                         var specialities = specialityService.GetSpecialities(speciality);
+                        // Если список не пустой
                         if (specialities.Count != 0)
                         {
+                            // Индекс приоритета
                             int lvl_priority = 1;
+                            // Проход по всем специальностям
                             foreach (var specialityGroup in specialities)
                             {
-                                List<IntegrationOfSpecialities> listIntegration = integrationOfSpecialitiesService.GetIntegrationOfSpecialities(specialityGroup);
+                                // Получаем список интегрированных специальностей с текущей специальностью
+                                var listIntegration = integrationOfSpecialitiesService.GetIntegrationOfSpecialities(specialityGroup);
+                                // Если список не пуст
                                 if (listIntegration.Count != 0)
                                 {
-                                    foreach (IntegrationOfSpecialities itemIntegration in listIntegration)
+                                    // Проход по специальностям интеграции
+                                    foreach (var itemIntegration in listIntegration)
                                     {
+                                        // Если выбранная специальность интеграции - специальность второй ступени абитуриента добавляем в список приоритетов абитуриента
                                         if (itemIntegration.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId)
                                         {
                                             priorityTable.Rows.Add(lvl_priority, specialityGroup.FormOfStudy.Fullname, specialityGroup.SpecialityId, specialityGroup.Fullname);
@@ -359,6 +479,8 @@ namespace WF.EnrolleeApplication.App.Views
                                 }
                                 else
                                 {
+                                    // Если список интеграционных специальностей пуст
+                                    // Добавляем в приоритеты специальности входящие в группу общего конкурса
                                     priorityTable.Rows.Add(lvl_priority, specialityGroup.FormOfStudy.Fullname, specialityGroup.SpecialityId, specialityGroup.Fullname);
                                     lvl_priority++;
                                 }
@@ -367,22 +489,28 @@ namespace WF.EnrolleeApplication.App.Views
                     }
                     else
                     {
+                        // Если специальность не общего конкурса, добавляем её в список приоритетов
                         priorityTable.Rows.Add(1, speciality.FormOfStudy.Fullname, speciality.SpecialityId, speciality.Fullname);
                     }
                 }
+                // Задаем стиль таблицы приоритетов
                 SetPriorityTableStyle();
             }
         }
         /// <summary>
-        /// Заполнение таблицы приоритетов специальностей выбранного абитуриента
+        /// Заполнение таблицы приоритетов специальностей выбранного абитуриента (При редактировании профиля абитуриента)
         /// </summary>
         /// <param name="enrollee">Профиль редактируемого абитуриента</param>
         private void InitializePrioritySpecialityGrid(Enrollee enrollee)
         {
-            List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p => p.PriorityLevel).ToList();
+            // Получаем список приоритетов абитуриента
+            var priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p => p.PriorityLevel).ToList();
+            // Очищаем таблицу данных
             priorityTable.Rows.Clear();
+            // Заполняем список приоритетов
             foreach (var priority in priorities)
                 priorityTable.Rows.Add(priority.PriorityLevel, priority.Speciality.FormOfStudy.Fullname, priority.SpecialityId, priority.Speciality.Fullname);
+            // Задаем стиль отображения таблицы приоритетов
             SetPriorityTableStyle();
         }
         /// <summary>
@@ -390,27 +518,38 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeSertificationGrid()
         {
+            // Режим редактирования отключен
             if (!editMode)
             {
-                List<ExamSchema> schema = examSchemaService.GetExamSchemas(speciality).Where(ex => ex.Discipline.BasisForAssessingId != 1).ToList();
+                // Получение списка дисциплин экзаменнационной схемы
+                var schemas = examSchemaService.GetExamSchemas(speciality).Where(ex => ex.Discipline.BasisForAssessingId != 1).ToList();
+                // Очистка таблицы сертификатов
                 sertificateTable.Rows.Clear();
-                if (schema.Count != 0)
+                // Если список не пуст
+                if (schemas.Count != 0)
                 {
-                    foreach (ExamSchema item in schema)
+                    // Проход по элементам экзаменнационной схемы
+                    foreach (var schema in schemas)
                     {
-                        Discipline discipline = disciplineService.GetDiscipline(item.DisciplineId);
+                        // Поиск дисциплины
+                        var discipline = disciplineService.GetDiscipline(schema.DisciplineId);
+                        // Если дисциплина найдена и является группой дисциплин
                         if (discipline != null && discipline.IsGroup)
                         {
+                            // Поиск альтернатив
                             var alternatives = disciplineService.GetDisciplines(discipline);
+                            // Запись в таблицу данных об оценках
                             foreach (var alternative in alternatives)
                                 sertificateTable.Rows.Add(alternative.DisciplineId, alternative.BasisForAssessingId, alternative.Name, "", "", "", "");
                         }
                         else
                         {
+                            // Запись дисциплины в таблицу данных об оценках
                             sertificateTable.Rows.Add(discipline.DisciplineId, discipline.BasisForAssessingId, discipline.Name, "", "", "", "");
                         }
                     }
                 }
+                // Задаем стиль отображения таблицы сертификатов
                 SetSertificateTableStyle();
             }
         }
@@ -420,10 +559,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="enrollee">Профиль редактируемого абитуриента</param>
         private void InitializeSertificationGrid(Enrollee enrollee)
         {
-            List<Assessment> assessments = assessmentService.GetAssessments(enrollee).Where(a => a.Discipline.BasisForAssessingId != 1).ToList();
+            // Получаем список оценок редактируемого абитуриента
+            var assessments = assessmentService.GetAssessments(enrollee).Where(a => a.Discipline.BasisForAssessingId != 1).ToList();
+            // Очистка таблицы данных 
             sertificateTable.Rows.Clear();
+            // Запись оценок в таблицу сертификатов (оценок)
             foreach (var assessment in assessments)
                 sertificateTable.Rows.Add(assessment.DisciplineId, assessment.Discipline.BasisForAssessingId, assessment.Discipline.Name, assessment.SertCode, assessment.Estimation, assessment.SertDate, assessment.ChangeDiscipline);
+            // Задаем стиль отображения таблицы сертификатов (оценок)
             SetSertificateTableStyle();
         }
         #endregion
@@ -433,7 +576,9 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeAtributeList()
         {
+            // Получаем список атрибутов (льгот)
             var atributes = atributeService.GetAtributes();
+            // Заполняем CheckBoxList данными
             foreach (var atribute in atributes)
                 chkAtributeList.Items.Add(atribute.Fullname);
         }
@@ -443,7 +588,9 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="enrollee">Профиль редактируемого абитуриента</param>
         private void InitializeAtributeList(Enrollee enrollee)
         {
+            // Получаем список атрибутов (льгот) редактируемого абитуриента
             var atributes = atributeForEnrolleeService.GetAtributeForEnrollees(enrollee);
+            // Отмечаем полученные льготы в списке атрибутов
             foreach (var atribute in atributes)
                 SetCheckedAtribute(atribute.Atribute.Fullname.Trim(), true);
         }
@@ -454,30 +601,43 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeAutoCompleteTextBoxes()
         {
+            // Источники автозаполнения данных
+            // Фамилии на русском языке
             AutoCompleteStringCollection sourceSurnameRus = new AutoCompleteStringCollection();
+            // Имена на русском языке
             AutoCompleteStringCollection sourceNameRus = new AutoCompleteStringCollection();
+            // Отчества на русском языке
             AutoCompleteStringCollection sourcePatronymicRus = new AutoCompleteStringCollection();
+            // Фамилии на белорусском языке
             AutoCompleteStringCollection sourceSurnameBlr = new AutoCompleteStringCollection();
+            // Имена на белорусском языке
             AutoCompleteStringCollection sourceNameBlr = new AutoCompleteStringCollection();
+            // Отчества на белорусском языке
             AutoCompleteStringCollection sourcePatronymicBlr = new AutoCompleteStringCollection();
+            // Кем выдан документ 
             AutoCompleteStringCollection sourceDocumentWhoGave = new AutoCompleteStringCollection();
+            // Местожительство родителей
             AutoCompleteStringCollection sourceMotherAdress = new AutoCompleteStringCollection();
             AutoCompleteStringCollection sourceFatherAdress = new AutoCompleteStringCollection();
-            AutoCompleteStringCollection sourceCountry = new AutoCompleteStringCollection();
-            AutoCompleteStringCollection sourceArea = new AutoCompleteStringCollection();
-            AutoCompleteStringCollection sourceDistrict = new AutoCompleteStringCollection();
+            // Населенный пункт
             AutoCompleteStringCollection sourceSettlement = new AutoCompleteStringCollection();
+            // Тип улицы
             AutoCompleteStringCollection sourceStreet = new AutoCompleteStringCollection();
+            // Наименование типа учебного заведения
             AutoCompleteStringCollection sourceSchoolName = new AutoCompleteStringCollection();
+            // Местоположение типа учебного заведения
             AutoCompleteStringCollection sourceSchoolAdress = new AutoCompleteStringCollection();
+            // Информация об обучении на втором высшем
             AutoCompleteStringCollection sourceCurrentUniversity = new AutoCompleteStringCollection();
             AutoCompleteStringCollection sourceCurrentSpeciality = new AutoCompleteStringCollection();
+            // Информация о рабочем месте
             AutoCompleteStringCollection sourceWorkPlace = new AutoCompleteStringCollection();
             AutoCompleteStringCollection sourceWorkPost = new AutoCompleteStringCollection();
-            AutoCompleteStringCollection sourceTarget = new AutoCompleteStringCollection();
+            // Лицо ответственное за прием документов
             AutoCompleteStringCollection sourcePersonInCharge = new AutoCompleteStringCollection();
+            // Получаем список абитуриентов
             enrollees = enrolleeService.GetEnrollees();
-
+            // Заполняем источники данными
             sourceSurnameRus.AddRange(enrollees.Select(s => s.RuSurname).Distinct().ToArray());
             sourceNameRus.AddRange(enrollees.Select(n => n.RuName).Distinct().ToArray());
             sourcePatronymicRus.AddRange(enrollees.Where(p => p.RuPatronymic != null).Select(p => p.RuPatronymic).Distinct().ToArray());
@@ -496,7 +656,7 @@ namespace WF.EnrolleeApplication.App.Views
             sourceWorkPlace.AddRange(enrollees.Where(p => p.WorkPlace != null).Select(p => p.WorkPlace).Distinct().ToArray());
             sourceWorkPost.AddRange(enrollees.Where(p => p.WorkPost != null).Select(p => p.WorkPost).Distinct().ToArray());
             sourcePersonInCharge.AddRange(enrollees.Where(p => p.PersonInCharge != null).Select(p => p.PersonInCharge).Distinct().ToArray());
-
+            // Задаем текстовым полям источники данных
             tbRuSurname.AutoCompleteCustomSource = sourceSurnameRus;
             tbRuName.AutoCompleteCustomSource = sourceNameRus;
             tbRuPatronymic.AutoCompleteCustomSource = sourcePatronymicRus;
@@ -2075,7 +2235,7 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee.ForeignLanguageId = foreignLanguage.LanguageId;
                 enrollee.ReasonForAddmissionId = reasonForAddmission.ReasonForAddmissionId;
                 enrollee.StateTypeId = typeOfState.StateId;
-                enrollee.EmployeeId = employee.EmployeeId;
+                enrollee.EmployeeId = activeEmployee.EmployeeId;
                 enrollee.FinanceTypeId = typeOfFinance.FinanceTypeId;
                 if (HasEnroll) enrollee.DecreeId = decree.DecreeId;
                 else enrollee.DecreeId = null;
