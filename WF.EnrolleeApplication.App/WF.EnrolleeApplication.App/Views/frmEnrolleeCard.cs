@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WF.EnrolleeApplication.App.Services;
 using WF.EnrolleeApplication.DataAccess.EntityFramework;
@@ -14,9 +10,11 @@ using WF.EnrolleeApplication.DataAccess.Services;
 
 namespace WF.EnrolleeApplication.App.Views
 {
+    /// <summary>
+    /// Класс-формы "Регистрация/Редактирование абитуриента профиля"
+    /// </summary>
     public partial class frmEnrolleeCard : Form
     {
-        // Изменяемые объекты-сущности
         private Area area;
         private Atribute atribute;
         private Citizenship citizenship;
@@ -27,7 +25,7 @@ namespace WF.EnrolleeApplication.App.Views
         private District district;
         private Document document;
         private Employee employee;
-        private Enrollee enrollee;
+        public Enrollee enrollee;
         private Faculty faculty;
         private ForeignLanguage foreignLanguage;
         private FormOfStudy formOfStudy;
@@ -40,7 +38,7 @@ namespace WF.EnrolleeApplication.App.Views
         private TypeOfSettlement typeOfSettlement;
         private TypeOfState typeOfState;
         private TypeOfStreet typeOfStreet;
-        // Сервисы для получения данных
+
         private AreaService areaService;
         private AssessmentService assessmentService;
         private AtributeService atributeService;
@@ -269,7 +267,6 @@ namespace WF.EnrolleeApplication.App.Views
             cbFormOfStudy.Enabled = false;
             cbSpeciality.Enabled = false;
         }
-
         #region Создание, настройка и заполнение таблиц данных
         /// <summary>
         /// Установка стиля отображения таблицы сертификатов (дисциплин)
@@ -382,7 +379,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="enrollee">Профиль редактируемого абитуриента</param>
         private void InitializePrioritySpecialityGrid(Enrollee enrollee)
         {
-            List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p=>p.PriorityLevel).ToList();
+            List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p => p.PriorityLevel).ToList();
             priorityTable.Rows.Clear();
             foreach (var priority in priorities)
                 priorityTable.Rows.Add(priority.PriorityLevel, priority.Speciality.FormOfStudy.Fullname, priority.SpecialityId, priority.Speciality.Fullname);
@@ -994,8 +991,8 @@ namespace WF.EnrolleeApplication.App.Views
                 int id = (int)cbSpeciality.SelectedValue;
                 speciality = specialityService.GetSpeciality(id);
                 InitializeSertificationGrid();
-                if(HasSecondarySpeciality) InitializeSecondarySpecialityComboBox();
-                else InitializePrioritySpecialityGrid();                
+                if (HasSecondarySpeciality) InitializeSecondarySpecialityComboBox();
+                else InitializePrioritySpecialityGrid();
             }
         }
         /// <summary>
@@ -1803,10 +1800,8 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="atributes">Список льгот</param>
         private void SaveAtributes(List<AtributeForEnrollee> atributes)
         {
-
-                foreach (var atribute in atributes)
-                    atributeForEnrolleeService.InsertAtributeForEnrollee(atribute);
-            
+            foreach (var atribute in atributes)
+                atributeForEnrolleeService.InsertAtributeForEnrollee(atribute);
         }
         /// <summary>
         /// Получение списка льгот абитуриента
@@ -1821,7 +1816,6 @@ namespace WF.EnrolleeApplication.App.Views
                 foreach (var atribute in list)
                     atributeForEnrolleeService.DeleteAtributeForEnrollee(atribute);
             }
-
             list = new List<AtributeForEnrollee>();
             foreach (int i in chkAtributeList.CheckedIndices)
             {
@@ -1832,7 +1826,6 @@ namespace WF.EnrolleeApplication.App.Views
                 atribute.EnrolleeId = savedEnrollee.EnrolleeId;
                 list.Add(atribute);
             }
-
             return list;
         }
         /// <summary>
@@ -2056,7 +2049,7 @@ namespace WF.EnrolleeApplication.App.Views
                 MessageBox.Show(this, "Введите адрес учебного заведения абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbSchoolName.Focus();
-            }          
+            }
             else if (string.IsNullOrWhiteSpace(tbPersonInCharge.Text))
             {
                 MessageBox.Show(this, "Введите лицо отвественное за приём документов", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -2119,7 +2112,6 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee.SchoolAddress = tbSchoolAdres.Text;
                 enrollee.SchoolYear = tbSchoolYear.Text;
                 enrollee.IsBRSM = cbBrsm.Checked;
-
                 enrollee.PersonInCharge = tbPersonInCharge.Text;
                 enrollee.Seniority = tbSeniority.Text;
                 enrollee.WorkPlace = tbWorkPlace.Text;
@@ -2127,17 +2119,14 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee.CurrentNumberCurs = tbCurrentNumberCurs.Text;
                 enrollee.CurrentSpeciality = tbCurrentSpeciality.Text;
                 enrollee.CurrentUniversity = tbCurrentUniversity.Text;
-
                 enrollee.AttestatEstimationString = tbFirstAttestatString.Text;
                 enrollee.DiplomPtuEstimationString = tbFirstDiplomPtuString.Text;
                 enrollee.DiplomSusEstimationString = tbFirstDiplomSsuzString.Text;
-
                 if (editMode)
                 {
                     enrollee.NumberOfDeal = Int32.Parse(tbNumberOfDeal.Text);
                     enrollee.DateDeal = dtDateDeal.Value;
                     enrollee.StateDateChange = DateTime.Now;
-
                     enrolleeService.UpdateEnrollee(enrollee);
                 }
                 else
@@ -2145,7 +2134,6 @@ namespace WF.EnrolleeApplication.App.Views
                     enrollee.NumberOfDeal = GetNumberOfDeal();
                     enrollee.DateDeal = DateTime.Now;
                     enrollee.StateDateChange = DateTime.Now;
-
                     enrolleeService.InsertEnrollee(enrollee);
                 }
             }
@@ -2169,6 +2157,5 @@ namespace WF.EnrolleeApplication.App.Views
             }
             return result;
         }
-
     }
 }

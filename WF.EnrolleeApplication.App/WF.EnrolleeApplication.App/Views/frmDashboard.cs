@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WF.EnrolleeApplication.App.Services;
 using WF.EnrolleeApplication.DataAccess.EntityFramework;
@@ -77,6 +74,8 @@ namespace WF.EnrolleeApplication.App.Views
             InitializeEnrolleeGrid(SearchMode);
             // Устанавливаем стиль отображения
             SetStyleEnrolleeGrid(EnrolleeGrid);
+            logger.Info("Выполнен вход в АИС Абитуриент.");
+            logger.Info($"Работает пользователь:\n {employee.ToString()}.");
         }
         /// <summary>
         /// Метод установка стиля отображения таблицы данных абитуриентов
@@ -156,14 +155,17 @@ namespace WF.EnrolleeApplication.App.Views
             // Иначе в порядке добавления текущего пользователя
             if(searchMode)
             {
+                logger.Debug($"Обновление таблицы абитуриентов. Включен режим поиска.");
                 enrollees = viewService.GetEnrollees(currentSpeciality); 
             }
             else
             {
+                logger.Debug($"Обновление таблицы абитуриентов. Режим поиска выключен.");
                 enrollees = viewService.GetEnrollees(activeEmployee);
             }
             // Очищаем таблицу данных
             enrolleeTable.Clear();
+            logger.Debug($"Заполняем данными таблицу абитуриентов.");
             // Заполняем таблицу данных списком абитуриентов
             foreach (var enrollee in enrollees)
             {
@@ -280,6 +282,7 @@ namespace WF.EnrolleeApplication.App.Views
         private void InitializeDataAccessServices()
         {
             // Получение строки подключения к источнику данных
+            logger.Info($"Получение строки подключения к источнику данных.");
             connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
             // Инициализация сервисов доступа к данным
             facultyService = new FacultyService(connectionString);
@@ -493,11 +496,15 @@ namespace WF.EnrolleeApplication.App.Views
         {
             // Форма регистрации абитуриента
             // activeEmployee — текущий оператор
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} выполняет регистрацию абитуриента.");
             frmEnrolleeCard enrolleeCard = new frmEnrolleeCard(activeEmployee);
             DialogResult enrolleeCardResult = enrolleeCard.ShowDialog();
             if(enrolleeCardResult == DialogResult.OK)
             {
                 // Если пользователь успешно добавил абитуриента
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} " +
+                    $"выполнил регистрацию абитуриента: {enrolleeCard.enrollee.RuSurname} {enrolleeCard.enrollee.RuName}\n" +
+                    $"на специальность: {enrolleeCard.enrollee.Speciality.Fullname.Trim()}.");
                 // Обновляем список абитуриентов
                 InitializeEnrolleeGrid(SearchMode);
             }
@@ -512,7 +519,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Диалоговое окно о серьезности намерения (:
             DialogResult youSure = MessageBox.Show(this, "Редактировать профиль выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (youSure == DialogResult.Yes)
-            {
+            {           
                 // Получаем уникальный идентификатор выбранного абитуриента
                 int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
                 // Поиск абитуриента
@@ -520,11 +527,14 @@ namespace WF.EnrolleeApplication.App.Views
                 // Вызов формы регистрации
                 // activeEmployee — текущий оператор
                 // enrollee — выбранный абитуриент для редактирования
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} выполняет редактирование профиля абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 frmEnrolleeCard enrolleeCard = new frmEnrolleeCard(activeEmployee, enrollee);
                 DialogResult enrolleeCardResult = enrolleeCard.ShowDialog();
                 if (enrolleeCardResult == DialogResult.OK)
                 {
                     // Если пользователь успешно редактировал запись абитуриента
+                    logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} " +
+                    $"выполнил редактирование профиля абитуриента: {enrolleeCard.enrollee.RuSurname} {enrolleeCard.enrollee.RuName}.");
                     // Обновляем список абитуриентов
                     InitializeEnrolleeGrid(SearchMode);
                 }
@@ -561,7 +571,9 @@ namespace WF.EnrolleeApplication.App.Views
                 foreach (var priority in priorities)
                     priorityOfSpecialityService.DeletePriorityOfSpeciality(priority);
                 // Удаляем абитуриента
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} выполняет удаление профиля абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 enrolleeService.DeleteEnrollee(enrollee);
+                logger.Info($"Профиль абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} удален пользователем {activeEmployee.Fullname.Trim()}.");
                 // Обновляем список абитуриентов
                 InitializeEnrolleeGrid(SearchMode);
             }
@@ -580,6 +592,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
             // Подготавливаем заявление абитуриента
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает заявление для абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
             ReportManager.PrintStatement(enrollee);
         }
         /// <summary>
@@ -596,6 +609,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
             // Подготавливаем титульный лист абитуриента
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает титульный лист для абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
             ReportManager.PrintTitle(enrollee);
         }
         /// <summary>
@@ -612,6 +626,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Поиск абитуриента
             enrollee = enrolleeService.GetEnrollee(id);
             // Подготавливаем экзаменнационный лист абитуриента
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает экзаменнационный лист для абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
             ReportManager.PrintExamSheet(enrollee);
         }
         /// <summary>
@@ -634,6 +649,7 @@ namespace WF.EnrolleeApplication.App.Views
             if(receiptCardResult == DialogResult.OK)
             {
                 // Подготовка расписки к печати
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает расписку для абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 ReportManager.PrintReceipt(enrollee, receiptCard.DocumentOfStudy, receiptCard.DocumentOfDiscount, receiptCard.DocumentOther);
             }
         }
@@ -668,7 +684,11 @@ namespace WF.EnrolleeApplication.App.Views
             // Если абитуриент сдаёт вступительное испытание в вузе 
             // Подготовка извещения к печати
             if (!flag) MessageBox.Show(this, "Абитуриент не сдаёт вступительные испытания в университете", "Печать извещения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else ReportManager.PrintNotice(enrollee);
+            else
+            {
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает извещение для абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
+                ReportManager.PrintNotice(enrollee);
+            }
         }
         /// <summary>
         /// Метод фильтрации в списке абитуриентов
@@ -706,6 +726,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void LogoffToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} выполнил выход из системы.");
             this.DialogResult = DialogResult.Abort;
             this.Close();
         }
@@ -716,6 +737,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void EntryExamView(object sender, EventArgs e)
         {
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} выполнил вход в управление вступительными испытаниями.");
             frmEnrtyExam entryExamView = new frmEnrtyExam();
             entryExamView.ShowDialog();
         }
@@ -726,7 +748,8 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void EnrollView(object sender, EventArgs e)
         {
-            frmEnroll enrollView = new frmEnroll();
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} выполнил вход в управление зачислением абитуриентов.");
+            frmEnroll enrollView = new frmEnroll(activeEmployee);
             enrollView.ShowDialog();
             InitializeEnrolleeGrid(SearchMode);
         }
@@ -749,6 +772,7 @@ namespace WF.EnrolleeApplication.App.Views
                     .ThenByDescending(e => e.Assessment.Sum(a => a.Estimation))
                     .ToList();
                 // Подготовка отчёта сводной экзаменнационной ведомости
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает сводную экзаменнационную ведомость специальности {chooseSpeciality.speciality.Fullname.Trim()}.");
                 ReportManager.PrintSummaryExaminationSheet(enrollees, chooseSpeciality.speciality);
             }
         }
@@ -777,6 +801,7 @@ namespace WF.EnrolleeApplication.App.Views
                     // Получаем список абитуриентов сдающих вступительные испытания
                     var enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality);
                     // Подготовка отчёта экзаменнационной ведомости
+                    logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает экзаменнационную ведомость специальности {chooseSpeciality.speciality.Fullname.Trim()}.");
                     ReportManager.PrintExaminationSheet(exams, enrollees);
                 }
                 else
@@ -797,6 +822,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Получаем список абитуриентов
             var enrollees = enrolleeService.GetEnrollees();
             // Подготовка отчёта
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема на бюджет.");
             ReportManager.PrintBudgetMonitoring(enrollees);
         }
         /// <summary>
@@ -811,6 +837,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Получаем список абитуриентов
             var enrollees = enrolleeService.GetEnrollees();
             // Подготовка отчёта
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема на платной основе.");
             ReportManager.PrintFeeMonitoring(enrollees);
         }
         /// <summary>
@@ -825,6 +852,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Получаем список абитуриентов
             var enrollees = enrolleeService.GetEnrollees();
             // Подготовка отчёта
+            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема.");
             ReportManager.PrintInformationReport(enrollees);
         }
         /// <summary>
@@ -953,6 +981,7 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee = enrolleeService.GetEnrollee(id);
                 enrollee.FinanceTypeId = 3;
                 enrolleeService.UpdateEnrollee(enrollee);
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} изменил тип финансирования абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} на Бюджет/Платно.");
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
@@ -970,6 +999,7 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee = enrolleeService.GetEnrollee(id);
                 enrollee.FinanceTypeId = 1;
                 enrolleeService.UpdateEnrollee(enrollee);
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} изменил тип финансирования абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} на бюджет.");
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
@@ -987,6 +1017,7 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee = enrolleeService.GetEnrollee(id);
                 enrollee.FinanceTypeId = 2;
                 enrolleeService.UpdateEnrollee(enrollee);
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} изменил тип финансирования абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} на платно.");
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
@@ -997,13 +1028,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void CandidateContextMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult youSure = MessageBox.Show(this, "Изменить тип состояния выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (youSure == DialogResult.Yes)
             {
                 int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
                 enrollee = enrolleeService.GetEnrollee(id);
                 enrollee.StateTypeId = 1;
                 enrolleeService.UpdateEnrollee(enrollee);
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} изменил тип состояния абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} на кандидат.");
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
@@ -1014,13 +1046,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void TookDocumentContextMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult youSure = MessageBox.Show(this, "Изменить тип финансирования выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult youSure = MessageBox.Show(this, "Изменить тип состояния выбранного абитуриента?", "Редактирование записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (youSure == DialogResult.Yes)
             {
                 int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
                 enrollee = enrolleeService.GetEnrollee(id);
                 enrollee.StateTypeId = 2;
                 enrolleeService.UpdateEnrollee(enrollee);
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} изменил тип состояния абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} на забрал документы.");
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
