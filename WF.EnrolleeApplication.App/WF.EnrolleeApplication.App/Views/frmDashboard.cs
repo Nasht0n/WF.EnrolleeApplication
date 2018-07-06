@@ -503,8 +503,7 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 // Если пользователь успешно добавил абитуриента
                 logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} " +
-                    $"выполнил регистрацию абитуриента: {enrolleeCard.enrollee.RuSurname} {enrolleeCard.enrollee.RuName}\n" +
-                    $"на специальность: {enrolleeCard.enrollee.Speciality.Fullname.Trim()}.");
+                    $"выполнил регистрацию абитуриента: {enrolleeCard.enrollee.RuSurname} {enrolleeCard.enrollee.RuName}");
                 // Обновляем список абитуриентов
                 InitializeEnrolleeGrid(SearchMode);
             }

@@ -454,6 +454,7 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(984, 481);
             this.tabControl.TabIndex = 2;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // InformationPage
             // 
@@ -516,6 +517,7 @@
             this.tbMotherInfo.Name = "tbMotherInfo";
             this.tbMotherInfo.Size = new System.Drawing.Size(470, 23);
             this.tbMotherInfo.TabIndex = 0;
+            this.tbMotherInfo.Enter += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // groupBox20
             // 
@@ -535,6 +537,7 @@
             this.tbMotherAdres.Name = "tbMotherAdres";
             this.tbMotherAdres.Size = new System.Drawing.Size(470, 23);
             this.tbMotherAdres.TabIndex = 0;
+            this.tbMotherAdres.Enter += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // groupBox19
             // 
@@ -554,6 +557,7 @@
             this.tbFatherAdres.Name = "tbFatherAdres";
             this.tbFatherAdres.Size = new System.Drawing.Size(470, 23);
             this.tbFatherAdres.TabIndex = 0;
+            this.tbFatherAdres.Enter += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // groupBox18
             // 
@@ -573,6 +577,7 @@
             this.tbFatherInfo.Name = "tbFatherInfo";
             this.tbFatherInfo.Size = new System.Drawing.Size(470, 23);
             this.tbFatherInfo.TabIndex = 0;
+            this.tbFatherInfo.Enter += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // groupBox10
             // 
@@ -642,6 +647,8 @@
             this.tbDocWhoGave.Name = "tbDocWhoGave";
             this.tbDocWhoGave.Size = new System.Drawing.Size(373, 23);
             this.tbDocWhoGave.TabIndex = 0;
+            this.tbDocWhoGave.Enter += new System.EventHandler(this.SetDefaultLanguage);
+            this.tbDocWhoGave.Leave += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // groupBox14
             // 
@@ -720,6 +727,7 @@
             this.tbDocSeria.Size = new System.Drawing.Size(180, 23);
             this.tbDocSeria.TabIndex = 0;
             this.tbDocSeria.Enter += new System.EventHandler(this.SetEnglishLanguage);
+            this.tbDocSeria.Leave += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // groupBox11
             // 
@@ -874,6 +882,7 @@
             this.tbBlrPatronymic.Size = new System.Drawing.Size(255, 23);
             this.tbBlrPatronymic.TabIndex = 2;
             this.tbBlrPatronymic.Enter += new System.EventHandler(this.SetBelorussianLanguage);
+            this.tbBlrPatronymic.Leave += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // label4
             // 
@@ -893,6 +902,7 @@
             this.tbBlrName.Size = new System.Drawing.Size(255, 23);
             this.tbBlrName.TabIndex = 1;
             this.tbBlrName.Enter += new System.EventHandler(this.SetBelorussianLanguage);
+            this.tbBlrName.Leave += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // label5
             // 
@@ -912,6 +922,7 @@
             this.tbBlrSurname.Size = new System.Drawing.Size(255, 23);
             this.tbBlrSurname.TabIndex = 0;
             this.tbBlrSurname.Enter += new System.EventHandler(this.SetBelorussianLanguage);
+            this.tbBlrSurname.Leave += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // label6
             // 
@@ -999,10 +1010,10 @@
             // 
             this.tabPage2.Controls.Add(this.groupBox35);
             this.tabPage2.Controls.Add(this.groupBox22);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(976, 453);
+            this.tabPage2.Size = new System.Drawing.Size(976, 455);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Дополнительная информация";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1013,7 +1024,7 @@
             this.groupBox35.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox35.Location = new System.Drawing.Point(3, 179);
             this.groupBox35.Name = "groupBox35";
-            this.groupBox35.Size = new System.Drawing.Size(970, 271);
+            this.groupBox35.Size = new System.Drawing.Size(970, 273);
             this.groupBox35.TabIndex = 1;
             this.groupBox35.TabStop = false;
             this.groupBox35.Text = "Дополнительные сведения";
@@ -1051,13 +1062,13 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(964, 249);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(964, 251);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // gbDateDeal
             // 
             this.gbDateDeal.Controls.Add(this.dtDateDeal);
-            this.gbDateDeal.Location = new System.Drawing.Point(772, 150);
+            this.gbDateDeal.Location = new System.Drawing.Point(772, 153);
             this.gbDateDeal.Name = "gbDateDeal";
             this.gbDateDeal.Size = new System.Drawing.Size(186, 43);
             this.gbDateDeal.TabIndex = 23;
@@ -1079,9 +1090,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.gbWorkPost, 2);
             this.gbWorkPost.Controls.Add(this.tbWorkPost);
             this.gbWorkPost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbWorkPost.Location = new System.Drawing.Point(580, 199);
+            this.gbWorkPost.Location = new System.Drawing.Point(580, 203);
             this.gbWorkPost.Name = "gbWorkPost";
-            this.gbWorkPost.Size = new System.Drawing.Size(381, 47);
+            this.gbWorkPost.Size = new System.Drawing.Size(381, 45);
             this.gbWorkPost.TabIndex = 21;
             this.gbWorkPost.TabStop = false;
             this.gbWorkPost.Text = "Должность";
@@ -1101,9 +1112,9 @@
             // 
             this.gbWorkPlace.Controls.Add(this.tbWorkPlace);
             this.gbWorkPlace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbWorkPlace.Location = new System.Drawing.Point(243, 199);
+            this.gbWorkPlace.Location = new System.Drawing.Point(243, 203);
             this.gbWorkPlace.Name = "gbWorkPlace";
-            this.gbWorkPlace.Size = new System.Drawing.Size(331, 47);
+            this.gbWorkPlace.Size = new System.Drawing.Size(331, 45);
             this.gbWorkPlace.TabIndex = 20;
             this.gbWorkPlace.TabStop = false;
             this.gbWorkPlace.Text = "Место работы";
@@ -1124,9 +1135,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.gbSeniority, 2);
             this.gbSeniority.Controls.Add(this.tbSeniority);
             this.gbSeniority.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbSeniority.Location = new System.Drawing.Point(3, 199);
+            this.gbSeniority.Location = new System.Drawing.Point(3, 203);
             this.gbSeniority.Name = "gbSeniority";
-            this.gbSeniority.Size = new System.Drawing.Size(234, 47);
+            this.gbSeniority.Size = new System.Drawing.Size(234, 45);
             this.gbSeniority.TabIndex = 19;
             this.gbSeniority.TabStop = false;
             this.gbSeniority.Text = "Трудовой стаж (полных месяцев)";
@@ -1146,9 +1157,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.groupBox46, 2);
             this.groupBox46.Controls.Add(this.cbForeignLanguage);
             this.groupBox46.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox46.Location = new System.Drawing.Point(147, 150);
+            this.groupBox46.Location = new System.Drawing.Point(147, 153);
             this.groupBox46.Name = "groupBox46";
-            this.groupBox46.Size = new System.Drawing.Size(427, 43);
+            this.groupBox46.Size = new System.Drawing.Size(427, 44);
             this.groupBox46.TabIndex = 18;
             this.groupBox46.TabStop = false;
             this.groupBox46.Text = "Основной иностранный язык";
@@ -1168,9 +1179,9 @@
             // 
             this.groupBox45.Controls.Add(this.cbBrsm);
             this.groupBox45.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox45.Location = new System.Drawing.Point(3, 150);
+            this.groupBox45.Location = new System.Drawing.Point(3, 153);
             this.groupBox45.Name = "groupBox45";
-            this.groupBox45.Size = new System.Drawing.Size(138, 43);
+            this.groupBox45.Size = new System.Drawing.Size(138, 44);
             this.groupBox45.TabIndex = 11;
             this.groupBox45.TabStop = false;
             this.groupBox45.Text = "БРСМ";
@@ -1181,7 +1192,7 @@
             this.cbBrsm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbBrsm.Location = new System.Drawing.Point(3, 19);
             this.cbBrsm.Name = "cbBrsm";
-            this.cbBrsm.Size = new System.Drawing.Size(132, 21);
+            this.cbBrsm.Size = new System.Drawing.Size(132, 22);
             this.cbBrsm.TabIndex = 0;
             this.cbBrsm.Text = "БРСМ";
             this.cbBrsm.UseVisualStyleBackColor = true;
@@ -1191,9 +1202,9 @@
             // 
             this.gbCurrentUniversity.Controls.Add(this.tbCurrentUniversity);
             this.gbCurrentUniversity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbCurrentUniversity.Location = new System.Drawing.Point(772, 101);
+            this.gbCurrentUniversity.Location = new System.Drawing.Point(772, 103);
             this.gbCurrentUniversity.Name = "gbCurrentUniversity";
-            this.gbCurrentUniversity.Size = new System.Drawing.Size(189, 43);
+            this.gbCurrentUniversity.Size = new System.Drawing.Size(189, 44);
             this.gbCurrentUniversity.TabIndex = 10;
             this.gbCurrentUniversity.TabStop = false;
             this.gbCurrentUniversity.Text = "Наименование учреждения образования";
@@ -1214,9 +1225,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.gbCurrentSpeciality, 2);
             this.gbCurrentSpeciality.Controls.Add(this.tbCurrentSpeciality);
             this.gbCurrentSpeciality.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbCurrentSpeciality.Location = new System.Drawing.Point(243, 101);
+            this.gbCurrentSpeciality.Location = new System.Drawing.Point(243, 103);
             this.gbCurrentSpeciality.Name = "gbCurrentSpeciality";
-            this.gbCurrentSpeciality.Size = new System.Drawing.Size(523, 43);
+            this.gbCurrentSpeciality.Size = new System.Drawing.Size(523, 44);
             this.gbCurrentSpeciality.TabIndex = 8;
             this.gbCurrentSpeciality.TabStop = false;
             this.gbCurrentSpeciality.Text = "Специальность учреждения образования";
@@ -1236,9 +1247,9 @@
             // 
             this.gbCurrentCurs.Controls.Add(this.tbCurrentNumberCurs);
             this.gbCurrentCurs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbCurrentCurs.Location = new System.Drawing.Point(147, 101);
+            this.gbCurrentCurs.Location = new System.Drawing.Point(147, 103);
             this.gbCurrentCurs.Name = "gbCurrentCurs";
-            this.gbCurrentCurs.Size = new System.Drawing.Size(90, 43);
+            this.gbCurrentCurs.Size = new System.Drawing.Size(90, 44);
             this.gbCurrentCurs.TabIndex = 7;
             this.gbCurrentCurs.TabStop = false;
             this.gbCurrentCurs.Text = "Курс";
@@ -1257,9 +1268,9 @@
             // 
             this.groupBox41.Controls.Add(this.cbSecondEducation);
             this.groupBox41.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox41.Location = new System.Drawing.Point(3, 101);
+            this.groupBox41.Location = new System.Drawing.Point(3, 103);
             this.groupBox41.Name = "groupBox41";
-            this.groupBox41.Size = new System.Drawing.Size(138, 43);
+            this.groupBox41.Size = new System.Drawing.Size(138, 44);
             this.groupBox41.TabIndex = 6;
             this.groupBox41.TabStop = false;
             this.groupBox41.Text = "Второе высшее";
@@ -1270,7 +1281,7 @@
             this.cbSecondEducation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbSecondEducation.Location = new System.Drawing.Point(3, 19);
             this.cbSecondEducation.Name = "cbSecondEducation";
-            this.cbSecondEducation.Size = new System.Drawing.Size(132, 21);
+            this.cbSecondEducation.Size = new System.Drawing.Size(132, 22);
             this.cbSecondEducation.TabIndex = 0;
             this.cbSecondEducation.Text = "Второе высшее образование";
             this.cbSecondEducation.UseVisualStyleBackColor = true;
@@ -1281,9 +1292,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.gbSecondarySpeciality, 2);
             this.gbSecondarySpeciality.Controls.Add(this.cbSecondarySpeciality);
             this.gbSecondarySpeciality.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbSecondarySpeciality.Location = new System.Drawing.Point(580, 52);
+            this.gbSecondarySpeciality.Location = new System.Drawing.Point(580, 53);
             this.gbSecondarySpeciality.Name = "gbSecondarySpeciality";
-            this.gbSecondarySpeciality.Size = new System.Drawing.Size(381, 43);
+            this.gbSecondarySpeciality.Size = new System.Drawing.Size(381, 44);
             this.gbSecondarySpeciality.TabIndex = 5;
             this.gbSecondarySpeciality.TabStop = false;
             this.gbSecondarySpeciality.Text = "Специальность второй ступени";
@@ -1305,9 +1316,9 @@
             this.tableLayoutPanel5.SetColumnSpan(this.groupBox39, 3);
             this.groupBox39.Controls.Add(this.tbSchoolAdres);
             this.groupBox39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox39.Location = new System.Drawing.Point(3, 52);
+            this.groupBox39.Location = new System.Drawing.Point(3, 53);
             this.groupBox39.Name = "groupBox39";
-            this.groupBox39.Size = new System.Drawing.Size(571, 43);
+            this.groupBox39.Size = new System.Drawing.Size(571, 44);
             this.groupBox39.TabIndex = 4;
             this.groupBox39.TabStop = false;
             this.groupBox39.Text = "Адрес учебного заведения";
@@ -1329,7 +1340,7 @@
             this.groupBox38.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox38.Location = new System.Drawing.Point(580, 3);
             this.groupBox38.Name = "groupBox38";
-            this.groupBox38.Size = new System.Drawing.Size(381, 43);
+            this.groupBox38.Size = new System.Drawing.Size(381, 44);
             this.groupBox38.TabIndex = 3;
             this.groupBox38.TabStop = false;
             this.groupBox38.Text = "Наименование учебного заведения";
@@ -1350,7 +1361,7 @@
             this.groupBox36.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox36.Location = new System.Drawing.Point(3, 3);
             this.groupBox36.Name = "groupBox36";
-            this.groupBox36.Size = new System.Drawing.Size(138, 43);
+            this.groupBox36.Size = new System.Drawing.Size(138, 44);
             this.groupBox36.TabIndex = 1;
             this.groupBox36.TabStop = false;
             this.groupBox36.Text = "Год окончания";
@@ -1371,7 +1382,7 @@
             this.groupBox37.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox37.Location = new System.Drawing.Point(147, 3);
             this.groupBox37.Name = "groupBox37";
-            this.groupBox37.Size = new System.Drawing.Size(427, 43);
+            this.groupBox37.Size = new System.Drawing.Size(427, 44);
             this.groupBox37.TabIndex = 2;
             this.groupBox37.TabStop = false;
             this.groupBox37.Text = "Тип учебного заведения";
@@ -1390,7 +1401,7 @@
             // gbDecree
             // 
             this.gbDecree.Controls.Add(this.cbDecree);
-            this.gbDecree.Location = new System.Drawing.Point(580, 150);
+            this.gbDecree.Location = new System.Drawing.Point(580, 153);
             this.gbDecree.Name = "gbDecree";
             this.gbDecree.Size = new System.Drawing.Size(186, 43);
             this.gbDecree.TabIndex = 22;

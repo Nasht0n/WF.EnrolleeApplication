@@ -2636,5 +2636,14 @@ namespace WF.EnrolleeApplication.App.Views
             }
             return result;
         }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab == tabControl.TabPages["tabPage3"])//your specific tabname
+            {
+                // your stuff
+                SetSertificateTableStyle();
+            }
+        }
     }
 }
