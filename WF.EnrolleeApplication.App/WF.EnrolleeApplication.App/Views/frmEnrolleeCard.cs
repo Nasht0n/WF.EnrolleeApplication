@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WF.EnrolleeApplication.App.Services;
@@ -130,8 +131,6 @@ namespace WF.EnrolleeApplication.App.Views
         private bool HasEnroll;
         // Список абитуриентов
         private List<Enrollee> enrollees;
-        private static Logger LogMa;
-
         /// <summary>
         /// Конструктор карты абитуриента. 
         /// Используется при добавлении (регистрации) нового абитуриента
@@ -377,6 +376,13 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void SetSertificateTableStyle()
         {
+            SertificateGrid.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+            SertificateGrid.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
+            SertificateGrid.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
+            SertificateGrid.Columns[3].SortMode = DataGridViewColumnSortMode.NotSortable;
+            SertificateGrid.Columns[4].SortMode = DataGridViewColumnSortMode.NotSortable;
+            SertificateGrid.Columns[5].SortMode = DataGridViewColumnSortMode.NotSortable;
+            SertificateGrid.Columns[6].SortMode = DataGridViewColumnSortMode.NotSortable;
             // Установка ширины (весов) столбцов оценок
             SertificateGrid.Columns[0].FillWeight = 10;
             SertificateGrid.Columns[1].FillWeight = 10;
@@ -392,6 +398,22 @@ namespace WF.EnrolleeApplication.App.Views
             SertificateGrid.Columns[6].Visible = false;
             // Установка столбца только для чтения
             SertificateGrid.Columns["Дисциплина"].ReadOnly = true;
+            // Строки дисциплин вступительных испытаний только для чтения
+            foreach(DataGridViewRow row in SertificateGrid.Rows)
+            {
+                int disciplineId = Int32.Parse(row.Cells[0].Value.ToString());
+                var discipline = disciplineService.GetDiscipline(disciplineId);
+                if(discipline.BasisForAssessingId == 2)
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightGray;
+                    row.ReadOnly = true;
+                }
+                else
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.ReadOnly = false;
+                }
+            }
         }
         /// <summary>
         /// Создаем струтуру таблицы данных сертификатов и предметов
@@ -679,26 +701,43 @@ namespace WF.EnrolleeApplication.App.Views
         #endregion
         #region Initialization ComboBoxes
         /// <summary>
-        /// Инициализация выдающих списков данными
+        /// Инициализация выпадающих списков данными
         /// </summary>
         private void InitializeComboBoxes()
         {
+            // Инициализация списка факультетов
             InitializeFacultyComboBox();
+            // Инициализация списка форм обучения
             InitializeFormOfStudyComboBox();
+            // Инициализация списка видов гражданства
             InitializeCitizenshipComboBox();
+            // Инициализация списка типов документов
             InitializeDocumentComboBox();
+            // Инициализация списка стран
             InitializeCountryComboBox();
+            // Инициализация списка областей
             InitializeAreaComboBox();
+            // Инициализация списка районов
             InitializeDistrictComboBox();
+            // Инициализация списка типов населенных пунктов
             InitializeTypeOfSettlementComboBox();
+            // Инициализация списка типов улицы
             InitializeTypeOfStreetComboBox();
+            // Инициализация списка типов учебных заведений
             InitializeTypeOfSchoolComboBox();
+            // Инициализация списка иностранных языков
             InitializeForeignLanguageComboBox();
+            // Инициализация списка типов финансирования
             InitializeTypeOfFinanceComboBox();
+            // Инициализация списка видов конкурса
             InitializeContestComboBox();
+            // Инициализация списка типов состояний абитуриента
             InitializeTypeOfStateComboBox();
+            // Инициализация списка систем перевода
             InitializeTransferSystem();
+            // Инициализация списка приказов
             InitializeDecreeComboBox();
+            // Инициализация списка рабочих мест целевого направления
             InitializeTargetWorkPlace();
         }
         /// <summary>
@@ -706,12 +745,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeTargetWorkPlace()
         {
+            // Отключаем отслеживание изменения 
             cbTargetWorkPlace.SelectedValueChanged -= cbTargetWorkPlace_SelectedValueChanged;
+            // Получаем список рабочих мест по целевому направлению
             var targets = targetWorkPlaceService.GetTargetWorkPlaces();
             cbTargetWorkPlace.DataSource = targets;
             cbTargetWorkPlace.DisplayMember = "Name";
             cbTargetWorkPlace.ValueMember = "TargetId";
+            // Инициализируем рабочее место по целевому первым элементом списка
             if (targets.Count != 0) targetWorkPlace = targets[0];
+            // Включаем отслеживание изменения
             cbTargetWorkPlace.SelectedValueChanged += cbTargetWorkPlace_SelectedValueChanged;
         }
         /// <summary>
@@ -719,12 +762,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeDecreeComboBox()
         {
+            // Отключаем отслеживание изменения
             cbDecree.SelectedValueChanged -= cbDecree_SelectedValueChanged;
+            // Получаем список приказов
             var decrees = decreeService.GetDecrees();
             cbDecree.DataSource = decrees;
             cbDecree.DisplayMember = "DecreeNumber";
             cbDecree.ValueMember = "DecreeId";
+            // Инициализируем приказ первым элементом списка
             if (decrees.Count != 0) decree = decrees[0];
+            // Включаем отслеживание изменения
             cbDecree.SelectedValueChanged += cbDecree_SelectedValueChanged;
         }
         /// <summary>
@@ -732,12 +779,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeDistrictComboBox()
         {
+            // Отключаем отслеживание изменения
             cbDistrict.SelectedValueChanged -= cbDistrict_SelectedValueChanged;
+            // Получаем список районов
             var districts = districtService.GetDistricts();
             cbDistrict.DataSource = districts;
             cbDistrict.DisplayMember = "Name";
             cbDistrict.ValueMember = "DistrictId";
+            // Инициализируем район первым элементом списка
             if (districts.Count != 0) district = districts[0];
+            // Включаем отслеживание изменения
             cbDistrict.SelectedValueChanged += cbDistrict_SelectedValueChanged;
         }
         /// <summary>
@@ -745,12 +796,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeAreaComboBox()
         {
+            // Отключаем отслеживание изменения
             cbArea.SelectedValueChanged -= cbArea_SelectedValueChanged;
+            // Получаем список областей
             var areas = areaService.GetAreas();
             cbArea.DataSource = areas;
             cbArea.DisplayMember = "Name";
             cbArea.ValueMember = "AreaId";
+            // Инициализируем область первым элементом списка
             if (areas.Count != 0) area = areas[0];
+            // Включаем отслеживание изменения
             cbArea.SelectedValueChanged += cbArea_SelectedValueChanged;
         }
         /// <summary>
@@ -758,12 +813,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeCountryComboBox()
         {
+            // Отключаем отслеживание изменения
             cbCountry.SelectedValueChanged -= cbCountry_SelectedValueChanged;
+            // Получаем список стран
             var countries = countryService.GetCountries();
             cbCountry.DataSource = countries;
             cbCountry.DisplayMember = "Name";
             cbCountry.ValueMember = "CountryId";
+            // Инициализируем страну первым элементом списка
             if (countries.Count != 0) country = countries[0];
+            // Включаем отслеживание изменения
             cbCountry.SelectedValueChanged += cbCountry_SelectedValueChanged;
         }
         /// <summary>
@@ -789,12 +848,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeTypeOfStateComboBox()
         {
+            // Отключаем отслеживание изменения
             cbTypeOfState.SelectedValueChanged -= cbTypeOfState_SelectedValueChanged;
+            // Получаем список состояний
             var states = typeOfStateService.GetTypeOfStates().OrderBy(s => s.StateId).ToList();
             cbTypeOfState.DataSource = states;
             cbTypeOfState.DisplayMember = "Name";
             cbTypeOfState.ValueMember = "StateId";
+            // Инициализируем состояние абитуриента первым элементом списка
             if (states.Count != 0) typeOfState = states[0];
+            // Включаем отслеживание изменения
             cbTypeOfState.SelectedValueChanged += cbTypeOfState_SelectedValueChanged;
         }
         /// <summary>
@@ -802,12 +865,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeReasonForAddmissionComboBox()
         {
+            // Отключаем отслеживание изменения
             cbReasonForAddmission.SelectedValueChanged -= cbReasonForAddmission_SelectedValueChanged;
+            // Получаем список оснований зачисления
             var reasons = reasonForAddmissionService.GetReasonForAddmissions(contest);
             cbReasonForAddmission.DataSource = reasons;
             cbReasonForAddmission.DisplayMember = "Fullname";
             cbReasonForAddmission.ValueMember = "ReasonForAddmissionId";
+            // Инициализируем основание зачисления первым элементом списка
             if (reasons.Count != 0) reasonForAddmission = reasons[0];
+            // Включаем отслеживание изменения
             cbReasonForAddmission.SelectedValueChanged += cbReasonForAddmission_SelectedValueChanged;
         }
         /// <summary>
@@ -815,16 +882,21 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeContestComboBox()
         {
+            // Отключаем отслеживание изменения
             cbContest.SelectedValueChanged -= cbContest_SelectedValueChanged;
+            // Получаем список конкурсов
             var contests = contestService.GetContests().OrderBy(c => c.ContestId).ToList();
             cbContest.DataSource = contests;
             cbContest.DisplayMember = "Name";
             cbContest.ValueMember = "ContestId";
+            // Инициализируем конкурс первым элементом списка 
+            // Инициализируем список оснований зачисления
             if (contests.Count != 0)
             {
                 contest = contests[0];
                 InitializeReasonForAddmissionComboBox();
             }
+            // Включаем отслеживание изменения
             cbContest.SelectedValueChanged += cbContest_SelectedValueChanged;
         }
         /// <summary>
@@ -832,12 +904,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeTypeOfFinanceComboBox()
         {
+            // Отключаем отслеживание изменения
             cbTypeOfFinance.SelectedValueChanged -= cbTypeOfFinance_SelectedValueChanged;
+            // Получаем список типов финансирования
             var finances = typeOfFinanceService.GetTypeOfFinances();
             cbTypeOfFinance.DataSource = finances;
             cbTypeOfFinance.DisplayMember = "Fullname";
             cbTypeOfFinance.ValueMember = "FinanceTypeId";
+            // Инициализируем тип финансирования первым элементом списка 
             if (finances.Count != 0) typeOfFinance = finances[0];
+            // Включаем отслеживание изменения
             cbTypeOfFinance.SelectedValueChanged += cbTypeOfFinance_SelectedValueChanged;
         }
         /// <summary>
@@ -845,12 +921,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeForeignLanguageComboBox()
         {
+            // Отключаем отслеживание изменения
             cbForeignLanguage.SelectedValueChanged -= cbForeignLanguage_SelectedValueChanged;
+            // Получаем список иностранных языков
             var languages = foreignLanguageService.GetForeignLanguages();
             cbForeignLanguage.DataSource = languages;
             cbForeignLanguage.DisplayMember = "Name";
             cbForeignLanguage.ValueMember = "LanguageId";
+            // Инициализируем иностранный язык первым элементом списка 
             if (languages.Count != 0) foreignLanguage = languages[0];
+            // Включаем отслеживание изменения
             cbForeignLanguage.SelectedValueChanged += cbForeignLanguage_SelectedValueChanged;
         }
         /// <summary>
@@ -858,22 +938,29 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeSecondarySpecialityComboBox()
         {
+            // Отключаем отслеживание изменения
             cbSecondarySpeciality.SelectedValueChanged -= cbSecondarySpeciality_SelectedValueChanged;
-            List<IntegrationOfSpecialities> integrationOfSpecialities = integrationOfSpecialitiesService.GetIntegrationOfSpecialities(speciality);
-            List<SecondarySpeciality> secondarySpecialities = new List<SecondarySpeciality>();
+            // Получаем список интеграционных специальностей
+            var integrationOfSpecialities = integrationOfSpecialitiesService.GetIntegrationOfSpecialities(speciality);
+            // Заводим список специальностей второй ступени
+            var secondarySpecialities = new List<SecondarySpeciality>();
             foreach (var integration in integrationOfSpecialities)
             {
+                // Добавляем только те специальности, которые интегрированны с текущей специальностью первой ступени
                 var ss = secondarySpecialityService.GetSecondarySpeciality(integration.SecondarySpecialityId);
                 secondarySpecialities.Add(ss);
             }
             cbSecondarySpeciality.DataSource = secondarySpecialities;
             cbSecondarySpeciality.DisplayMember = "Fullname";
             cbSecondarySpeciality.ValueMember = "SecondarySpecialityId";
+            // Инициализируем специальность второй ступени первым элементом списка
+            // Инициализируем таблицу приоритетов
             if (secondarySpecialities.Count != 0)
             {
                 secondarySpeciality = secondarySpecialities[0];
                 InitializePrioritySpecialityGrid();
             }
+            // Включаем отслеживание изменения
             cbSecondarySpeciality.SelectedValueChanged += cbSecondarySpeciality_SelectedValueChanged;
         }
         /// <summary>
@@ -881,12 +968,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeTypeOfSchoolComboBox()
         {
+            // Отключаем отслеживание изменения
             cbTypeOfSchool.SelectedValueChanged -= cbTypeOfSchool_SelectedValueChanged;
+            // Получаем список типов учебных заведений
             var schools = typeOfSchoolService.GetTypeOfSchools().OrderBy(ts => ts.SchoolTypeId).ToList();
             cbTypeOfSchool.DataSource = schools;
             cbTypeOfSchool.DisplayMember = "Name";
             cbTypeOfSchool.ValueMember = "SchoolTypeId";
+            // Инициализируем тип учебного заведения первым элементом списка
             if (schools.Count != 0) typeOfSchool = schools[0];
+            // Включаем отслеживание изменения
             cbTypeOfSchool.SelectedValueChanged += cbTypeOfSchool_SelectedValueChanged;
         }
         /// <summary>
@@ -894,12 +985,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeTypeOfStreetComboBox()
         {
+            // Отключаем отслеживание изменения
             cbTypeOfStreet.SelectedValueChanged -= cbTypeOfStreet_SelectedValueChanged;
+            // Получаем список типов улицы
             var streets = typeOfStreetService.GetTypeOfStreets();
             cbTypeOfStreet.DataSource = streets;
             cbTypeOfStreet.DisplayMember = "Fullname";
             cbTypeOfStreet.ValueMember = "StreetTypeId";
+            // Инициализируем тип улицы первым элементом списка
             if (streets.Count != 0) typeOfStreet = streets[0];
+            // Включаем отслеживание изменения
             cbTypeOfStreet.SelectedValueChanged += cbTypeOfStreet_SelectedValueChanged;
         }
         /// <summary>
@@ -907,12 +1002,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeTypeOfSettlementComboBox()
         {
+            // Отключаем отслеживание изменения
             cbTypeOfSettlement.SelectedValueChanged -= cbTypeOfSettlement_SelectedValueChanged;
+            // Получаем список типов населенного пункта
             var settlements = typeOfSettlementService.GetTypeOfSettlements();
             cbTypeOfSettlement.DataSource = settlements;
             cbTypeOfSettlement.DisplayMember = "Fullname";
             cbTypeOfSettlement.ValueMember = "SettlementTypeId";
+            // Инициализируем тип населенного пункта первым элементом списка
             if (settlements.Count != 0) typeOfSettlement = settlements[0];
+            // Включаем отслеживание изменения
             cbTypeOfSettlement.SelectedValueChanged += cbTypeOfSettlement_SelectedValueChanged;
         }
         /// <summary>
@@ -920,16 +1019,21 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeFacultyComboBox()
         {
+            // Отключаем отслеживание изменения
             cbFaculty.SelectedValueChanged -= cbFaculty_SelectedValueChanged;
+            // Получаем список факультетов
             var faculties = facultyService.GetFaculties();
             cbFaculty.DataSource = faculties;
             cbFaculty.DisplayMember = "Shortname";
             cbFaculty.ValueMember = "FacultyId";
+            // Инициализируем факультет первым элементом списка
+            // Инициализируем список специальностей
             if (faculties.Count != 0)
             {
                 faculty = faculties[0];
                 InitializeSpecialityComboBox();
             }
+            // Включаем отслеживание изменения
             cbFaculty.SelectedValueChanged += cbFaculty_SelectedValueChanged;
         }
         /// <summary>
@@ -937,16 +1041,21 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeFormOfStudyComboBox()
         {
+            // Отключаем отслеживание изменения
             cbFormOfStudy.SelectedValueChanged -= cbFormOfStudy_SelectedValueChanged;
+            // Получаем список форм обучения
             var formsOfStudies = formOfStudyService.GetFormOfStudies();
             cbFormOfStudy.DataSource = formsOfStudies;
             cbFormOfStudy.DisplayMember = "Fullname";
             cbFormOfStudy.ValueMember = "FormOfStudyId";
+            // Инициализируем форму обучения первым элементом списка
+            // Инициализируем список специальностей
             if (formsOfStudies.Count != 0)
             {
                 formOfStudy = formsOfStudies[0];
                 InitializeSpecialityComboBox();
             }
+            // Включаем отслеживание изменения
             cbFormOfStudy.SelectedValueChanged += cbFormOfStudy_SelectedValueChanged;
         }
         /// <summary>
@@ -956,11 +1065,17 @@ namespace WF.EnrolleeApplication.App.Views
         {
             if (faculty != null && formOfStudy != null)
             {
+                // Отключаем отслеживание изменения
                 cbSpeciality.SelectedValueChanged -= cbSpeciality_SelectedValueChanged;
+                // Получаем список специальности выбранного факультета и формы обучения
                 var specialities = specialityService.GetSpecialities(faculty, formOfStudy);
                 cbSpeciality.DataSource = specialities;
                 cbSpeciality.DisplayMember = "Fullname";
                 cbSpeciality.ValueMember = "SpecialityId";
+                // Инициализируем специальность первым элементом списка
+                // Инициализируем список специальностей второй ступени
+                // Инициализируем таблицу сертификатов (оценок)
+                // Инициализируем список приоритетов
                 if (specialities.Count != 0)
                 {
                     speciality = specialities[0];
@@ -968,6 +1083,7 @@ namespace WF.EnrolleeApplication.App.Views
                     InitializeSertificationGrid();
                     InitializePrioritySpecialityGrid();
                 }
+                // Включаем отслеживание изменения
                 cbSpeciality.SelectedValueChanged += cbSpeciality_SelectedValueChanged;
             }
         }
@@ -976,12 +1092,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeCitizenshipComboBox()
         {
+            // Отключаем отслеживание изменения
             cbCitizenship.SelectedValueChanged -= cbCitizenship_SelectedValueChanged;
+            // Получаем список гражданств
             var citizenships = citizenshipService.GetCitizenships();
             cbCitizenship.DataSource = citizenships;
             cbCitizenship.DisplayMember = "Fullname";
             cbCitizenship.ValueMember = "CitizenshipId";
+            // Инициализируем гражданство первым элементом списка
             if (citizenships.Count != 0) citizenship = citizenships[0];
+            // Включаем отслеживание изменения
             cbCitizenship.SelectedValueChanged += cbCitizenship_SelectedValueChanged;
         }
         /// <summary>
@@ -989,12 +1109,16 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void InitializeDocumentComboBox()
         {
+            // Отключаем отслеживание изменения
             cbDocument.SelectedValueChanged -= cbDocument_SelectedValueChanged;
+            // Получаем список документов
             var documents = documentService.GetDocuments().OrderBy(d => d.DocumentId).ToList();
             cbDocument.DataSource = documents;
             cbDocument.DisplayMember = "Name";
             cbDocument.ValueMember = "DocumentId";
+            // Инициализируем тип документа первым элементом списка
             if (documents.Count != 0) document = documents[0];
+            // Включаем отслеживание изменения
             cbDocument.SelectedValueChanged += cbDocument_SelectedValueChanged;
         }
         #endregion
@@ -1006,9 +1130,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbTargetWorkPlace_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbTargetWorkPlace.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbTargetWorkPlace.SelectedValue;
+                // По уникальному идентификатору ищем рабочее место по целевому направлению
                 targetWorkPlace = targetWorkPlaceService.GetTargetWorkPlace(id);
             }
         }
@@ -1019,9 +1146,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbDecree_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbDecree.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbDecree.SelectedValue;
+                // По уникальному идентификатору ищем приказ о зачислении
                 decree = decreeService.GetDecree(id);
             }
         }
@@ -1032,9 +1162,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbCountry_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbCountry.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbCountry.SelectedValue;
+                // По уникальному идентификатору ищем страну
                 country = countryService.GetCountry(id);
             }
         }
@@ -1045,9 +1178,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbArea_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbArea.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbArea.SelectedValue;
+                // По уникальному идентификатору ищем область
                 area = areaService.GetArea(id);
             }
         }
@@ -1058,9 +1194,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbDistrict_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbDistrict.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbDistrict.SelectedValue;
+                // По уникальному идентификатору ищем район
                 district = districtService.GetDistrict(id);
             }
         }
@@ -1072,10 +1211,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbFaculty_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbFaculty.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbFaculty.SelectedValue;
+                // По уникальному идентификатору ищем факультет
                 faculty = facultyService.GetFaculty(id);
+                // Инициализируем специальность
                 InitializeSpecialityComboBox();
             }
         }
@@ -1088,11 +1231,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbFormOfStudy_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbFormOfStudy.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbFormOfStudy.SelectedValue;
+                // По уникальному идентификатору ищем форму обучения
                 formOfStudy = formOfStudyService.GetFormOfStudy(id);
-                // Заполняем специальности
+                // Инициализируем специальности
                 InitializeSpecialityComboBox();
                 // Если сокращенная форма — делаем видимым поле специальности 2 ступени
                 // Если заочная — информация о рабочем месте
@@ -1146,12 +1292,18 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbSpeciality_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbSpeciality.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbSpeciality.SelectedValue;
+                // По уникальному идентификатору ищем специальность первой ступени
                 speciality = specialityService.GetSpeciality(id);
+                // Заполняет таблицу сертификатов
                 InitializeSertificationGrid();
+                // Если абитуриент поступает на сокращенную форму инициализируем специальности второй ступени
                 if (HasSecondarySpeciality) InitializeSecondarySpecialityComboBox();
+                // Иначе инициализируем список приоритетов
                 else InitializePrioritySpecialityGrid();
             }
         }
@@ -1162,9 +1314,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbCitizenship_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbCitizenship.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbCitizenship.SelectedValue;
+                // По уникальному идентификатору ищем гражданство
                 citizenship = citizenshipService.GetCitizenship(id);
             }
         }
@@ -1175,9 +1330,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbDocument_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbDocument.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbDocument.SelectedValue;
+                // По уникальному идентификатору ищем тип документа
                 document = documentService.GetDocument(id);
             }
         }
@@ -1188,9 +1346,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbTypeOfSettlement_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbTypeOfSettlement.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbTypeOfSettlement.SelectedValue;
+                // По уникальному идентификатору ищем тип населенного пункта
                 typeOfSettlement = typeOfSettlementService.GetTypeOfSettlement(id);
             }
         }
@@ -1201,9 +1362,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbTypeOfStreet_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbTypeOfStreet.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbTypeOfStreet.SelectedValue;
+                // По уникальному идентификатору ищем тип улицы
                 typeOfStreet = typeOfStreetService.GetTypeOfStreet(id);
             }
         }
@@ -1214,9 +1378,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbTypeOfSchool_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbTypeOfSchool.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbTypeOfSchool.SelectedValue;
+                // По уникальному идентификатору ищем тип учебного заведения
                 typeOfSchool = typeOfSchoolService.GetTypeOfSchool(id);
             }
         }
@@ -1227,10 +1394,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbSecondarySpeciality_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbSecondarySpeciality.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbSecondarySpeciality.SelectedValue;
+                // По уникальному идентификатору ищем специальность второй ступени
                 secondarySpeciality = secondarySpecialityService.GetSecondarySpeciality(id);
+                // Инициализируем список приоритетов
                 InitializePrioritySpecialityGrid();
             }
         }
@@ -1241,9 +1412,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbForeignLanguage_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbForeignLanguage.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbForeignLanguage.SelectedValue;
+                // По уникальному идентификатору ищем иностранный язык
                 foreignLanguage = foreignLanguageService.GetForeignLanguage(id);
             }
         }
@@ -1254,9 +1428,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbTypeOfFinance_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbTypeOfFinance.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbTypeOfFinance.SelectedValue;
+                // По уникальному идентификатору ищем тип финансирования
                 typeOfFinance = typeOfFinanceService.GetTypeOfFinance(id);
             }
         }
@@ -1267,10 +1444,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbContest_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbContest.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbContest.SelectedValue;
+                // По уникальному идентификатору ищем вид конкурса
                 contest = contestService.GetContest(id);
+                // Инициализируем основания зачисления
                 InitializeReasonForAddmissionComboBox();
             }
         }
@@ -1281,9 +1462,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbReasonForAddmission_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbReasonForAddmission.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbReasonForAddmission.SelectedValue;
+                // По уникальному идентификатору ищем основание зачисления
                 reasonForAddmission = reasonForAddmissionService.GetReasonForAddmission(id);
             }
         }
@@ -1294,9 +1478,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbTypeOfState_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Если список не пуст
             if (cbTypeOfState.SelectedValue != null)
             {
+                // Получаем уникальный идентификатор
                 int id = (int)cbTypeOfState.SelectedValue;
+                // По уникальному идентификатору ищем тип состояния
                 typeOfState = typeOfStateService.GetTypeOfState(id);
             }
         }
@@ -1309,12 +1496,15 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbSecondEducation_CheckedChanged(object sender, EventArgs e)
         {
+            // Если абитуриент поступает на второе высшее образование
             if (cbSecondEducation.Checked)
             {
+                // Показываем поля ввода информации о текущем образовании
                 ShowSecondEducationFields(true);
             }
             else
             {
+                // Иначе скрываем поля ввода информации о текущем образовании
                 ShowSecondEducationFields(false);
             }
         }
@@ -1324,6 +1514,8 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="flag"></param>
         private void ShowComboBoxSecondarySpeciality(bool flag)
         {
+            // Управляем видимостью списка выбора специальности второй ступени
+            // В зависимости от формы обучения
             HasSecondarySpeciality = flag;
             gbSecondarySpeciality.Visible = flag;
         }
@@ -1333,6 +1525,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="flag"></param>
         private void ShowComboBoxesCurrentWorkPlace(bool flag)
         {
+            // В зависимости от формы обучения показываем поля для ввода информации о рабочем стаже, месте работы и должности
             IsWorker = flag;
             gbSeniority.Visible = flag;
             gbWorkPlace.Visible = flag;
@@ -1344,6 +1537,7 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="flag"></param>
         private void ShowSecondEducationFields(bool flag)
         {
+            // Управление видимостью полей ввода о текущем образовании
             gbCurrentCurs.Visible = flag;
             gbCurrentUniversity.Visible = flag;
             gbCurrentSpeciality.Visible = flag;
@@ -1358,14 +1552,19 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbTarget_CheckedChanged(object sender, EventArgs e)
         {
+            // Если выбран пункт "Целевое направление"
             if (cbTarget.Checked)
             {
+                // Показываем список рабочих мест
                 cbTargetWorkPlace.Visible = true;
+                // Выбираем "Целевое направление" в списке атрибутов (льгот) абитуриента
                 SetCheckedAtribute(cbTarget.Text.Trim(), true);
             }
             else
             {
+                // Скрываем список рабочих мест
                 cbTargetWorkPlace.Visible = false;
+                // Отменяем выбор "Целевое направление" в списке атрибутов (льгот) абитуриента
                 SetCheckedAtribute(cbTarget.Text.Trim(), false);
             }
         }
@@ -1376,8 +1575,13 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void cbBrsm_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbBrsm.Checked) SetCheckedAtribute(cbBrsm.Text, true);
-            else SetCheckedAtribute(cbBrsm.Text, false);
+            // Если абитуриент член БРСМ
+            if (cbBrsm.Checked)
+                // Выбираем "БРСМ" в списке атрибутов (льгот) абитуриента
+                SetCheckedAtribute(cbBrsm.Text, true);
+            else
+                // Отменяем выбор "БРСМ" в списке атрибутов (льгот) абитуриента
+                SetCheckedAtribute(cbBrsm.Text, false);
         }
         /// <summary>
         /// Выбор атрибута в списке атрибутов (льгот) 
@@ -1386,13 +1590,17 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="flag">Значение true - выбор атрибута; false - отмена выбора</param>
         private void SetCheckedAtribute(string name, bool flag)
         {
-            // Дополнительные атрибуты
+            // Проход по списку атрибутов
             for (int i = 0; i < chkAtributeList.Items.Count; i++)
             {
+                // Получаем наименование атрибута
                 string nameInListBox = chkAtributeList.Items[i].ToString();
+                // Если наименование атрибута в списке идентично искомому наименованию
                 if (string.Equals(nameInListBox, name))
                 {
+                    // Получаем атрибут по наименованию
                     Atribute atribute = atributeService.GetAtribute(name);
+                    // Если атрибут найден производим выбор атрибута
                     if (atribute.AtributeId != 0 && atribute.Fullname.Trim() == name) chkAtributeList.SetItemChecked(i, flag);
                 }
             }
@@ -1404,55 +1612,61 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void chkAtributeList_ItemCheck(object sender, ItemCheckEventArgs e)
         {
+            // Получаем наименование выбранного атрибута
             string name = chkAtributeList.Items[e.Index].ToString();
+            // Получаем атрибута
             atribute = atributeService.GetAtribute(name);
-            // БРСМ
+            // Если атрибут "БРСМ"
             if (atribute.Fullname == cbBrsm.Text)
             {
-                if (e.NewValue == CheckState.Checked)
-                    cbBrsm.Checked = true;
-                else
-                    cbBrsm.Checked = false;
+                if (e.NewValue == CheckState.Checked) cbBrsm.Checked = true;
+                else cbBrsm.Checked = false;
             }
-
-            // Целевое направление
+            // Если атрибут "Целевое направление"
             if (atribute.Fullname == cbTarget.Text)
             {
-                if (e.NewValue == CheckState.Checked)
-                    cbTarget.Checked = true;
-                else
-                    cbTarget.Checked = false;
+                if (e.NewValue == CheckState.Checked) cbTarget.Checked = true;
+                else cbTarget.Checked = false;
             }
         }
         #endregion
         #region Управление сертификатами
         /// <summary>
-        /// Удаление выбранной дисциплины из таблицы сертификатов
+        /// Обработчик нажатия кнопки "Удаления"
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Кнопка "Удалить дисциплину"</param>
         /// <param name="e"></param>
         private void btDeleteDiscipline_Click(object sender, EventArgs e)
         {
+            // Получаем текущий индекс выбранной строки
             int rowIndex = SertificateGrid.CurrentRow.Index;
+            // Удаляем строку
             sertificateTable.Rows[rowIndex].Delete();
         }
         /// <summary>
-        /// Получение текущей экзаменнационной схемы специальности
+        /// Обработчик нажатия кнопки сброса экзаменнационной схемы
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Кнопка "Экзаменнационная схема"</param>
         /// <param name="e"></param>
         private void btGetExamSchema_Click(object sender, EventArgs e)
         {
+            // Если не режим редактирования
             if (!editMode)
+                // Инициализация списка сертификатов (оценок)
                 InitializeSertificationGrid();
             else
             {
+                // Если режим редактирования
+                // Диалоговое окно 
                 DialogResult examSchemaClearResult = MessageBox.Show(this, "При загрузке экзаменнационной схемы, будет удалена информация о текущих оценках абитуриента. Продолжить?", "Экзаменнационная схема", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (examSchemaClearResult == DialogResult.Yes)
                 {
-                    List<Assessment> assessments = assessmentService.GetAssessments(enrollee);
+                    // Получение список оценок абитуриента
+                    var assessments = assessmentService.GetAssessments(enrollee);
+                    // Удаляем оценки
                     foreach (var assessment in assessments)
                         assessmentService.DeleteAssessment(assessment);
+                    // Инициализация списка сертификатов (оценок)
                     InitializeSertificationGrid();
                 }
             }
@@ -1464,11 +1678,14 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void btChangeDiscipline_Click(object sender, EventArgs e)
         {
+            // Вызов формы замены дисциплины
             frmChangeDiscipline changeDisciplineCard = new frmChangeDiscipline();
             DialogResult changeDisciplineCardResult = changeDisciplineCard.ShowDialog();
             if (changeDisciplineCardResult == DialogResult.OK)
             {
+                // Получаем текущий индекс выбранной строки
                 int rowIndex = SertificateGrid.CurrentRow.Index;
+                // Добавляем информацию о заменяемой дисциплине
                 SertificateGrid.Rows[rowIndex].Cells[6].Value = changeDisciplineCard.discipline.Name;
             }
         }
@@ -1623,53 +1840,73 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="averageString">Поле среднего балла</param>
         private void CalculateEstimation(TextBox firstString, TextBox secondString, ComboBox transferSystem, TextBox averageString)
         {
+            // Если строки оценок равны
             if (firstString.Text.Equals(secondString.Text))
-            {
+            {             
+                // Проверяем систему перевода
                 bool isTen = isTenSystem(firstString.Text);
                 switch (transferSystem.SelectedIndex)
                 {
+                    // Если строка содержит оценки десятибальной системы = true
                     case 0: // из 10 в 100
                         {
+                            // Количество оценок
                             int count = firstString.Text.Length;
+                            // Обнуляем сумму баллов
                             int sum = 0;
+                            // Проходим список оценок
                             for (int i = 0; i < count; i++)
                             {
+                                // Оценка
                                 int mark = (int)Char.GetNumericValue(firstString.Text[i]);
+                                // Если оценка равна 0 - это 10
                                 if (mark == 0) mark = 10;
+                                // Добавляем оценку умноженную на 10
                                 sum += mark * 10;
                             }
-                            double avr = Math.Round((double)sum / count, MidpointRounding.AwayFromZero);
+                            // Считаем средний балл
+                            double avr = Math.Round((double)sum / count, MidpointRounding.AwayFromZero);                            
                             if (!Double.IsNaN(avr))
                             {
+                                // Если число вычисленно записываем в строку среднего балла
                                 averageString.Text = avr.ToString();
                             }
                             else
                             {
+                                // Иначе указываем 0
                                 averageString.Text = "0";
                             }
                             break;
                         }
                     case 1:
                         {
+                            // Если пятибалльная система
                             if (!isTen)
                             {
+                                // Количество оценок
                                 int count = firstString.Text.Length;
+                                // Обнуляем сумму баллов
                                 double sum = 0;
+                                // Проходим список оценок
                                 for (int i = 0; i < count; i++)
                                 {
+                                    // Оценка
                                     int mark = (int)Char.GetNumericValue(firstString.Text[i]);
+                                    // Конвертируем оценку в десятибалльную системы
                                     double ten = conversionSystemService.ConversionToTen(mark);
+                                    // Суммируем
                                     sum += ten;
                                 }
                                 try
                                 {
+                                    // Считаем средний балл
                                     double avr = Math.Round(sum / count, 1);
                                     double ball = avr * 10;
                                     averageString.Text = ball.ToString();
                                 }
                                 catch (Exception ex)
                                 {
-                                    averageString.Text = "";
+                                    averageString.Text = " ";
                                 }
                             }
                             else
@@ -1691,20 +1928,22 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="diplomPtu">Средний балл диплома ПТУ</param>
         private void CalculateAverageEstimation(TextBox attestat, TextBox diplomSsuz, TextBox diplomPtu)
         {
+            // Оценки среднего балла
             double avgAttestat = 0;
             double avgDiplomPTU = 0;
             double avgDiplomSSUZ = 0;
-
+            // Получаем средний балл документов
             if (!string.IsNullOrWhiteSpace(attestat.Text)) avgAttestat = Double.Parse(attestat.Text);
             if (!string.IsNullOrWhiteSpace(diplomSsuz.Text)) avgDiplomSSUZ = Double.Parse(diplomSsuz.Text);
             if (!string.IsNullOrWhiteSpace(diplomPtu.Text)) avgDiplomPTU = Double.Parse(diplomPtu.Text);
-
+            // Получаем количество предоставленных документов
             int count = 0;
             if (avgAttestat != 0) count++;
             if (avgDiplomPTU != 0) count++;
             if (avgDiplomSSUZ != 0) count++;
-
+            // Сумма баллов
             double sum = avgAttestat + avgDiplomSSUZ + avgDiplomPTU;
+            // Средний балл всех документов
             double avr = Math.Round((double)sum / count, MidpointRounding.AwayFromZero);
             if (Double.IsNaN(avr)) tbAverage.Text = String.Empty;
             else tbAverage.Text = avr.ToString();
@@ -1914,6 +2153,12 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void btCancel_Click(object sender, EventArgs e)
         {
+            // Отмена регистрации абитуриента
+            // Закрытие формы регистрации
+            if (!editMode)
+                logger.Info($"Пользователь: {activeEmployee.Fullname.Trim()} отменил регистрацию абитуриента. Закрытие формы регистрации.");
+            else           
+                logger.Info($"Пользователь: {activeEmployee.Fullname.Trim()} отменил редактирование абитуриента ({enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}). Закрытие формы редактирования.");
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
@@ -1924,15 +2169,24 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void btSave_Click(object sender, EventArgs e)
         {
-            Enrollee savedEnrollee = SaveCurrentEnrollee(enrollee);
+            // Сохраняем абитуриент, и получаем запись с уникальным идентификатором
+            var savedEnrollee = SaveCurrentEnrollee(enrollee);
+            // Если сохранение прошло успешно
             if (savedEnrollee.EnrolleeId != 0)
             {
-                List<Assessment> assessments = GetAssessments(savedEnrollee);
+                // Получаем список оценок абитуриента
+                var assessments = GetAssessments(savedEnrollee);
+                // Сохраняем оценки
                 SaveAssessments(assessments);
-                List<AtributeForEnrollee> atributes = GetAtributes(savedEnrollee);
+                // Получаем список атрибутов (льгот) абитуриента
+                var atributes = GetAtributes(savedEnrollee);
+                // Сохраняем льготы
                 SaveAtributes(atributes);
-                List<PriorityOfSpeciality> priorities = GetPriorityList(savedEnrollee);
+                // Получаем список приоритетов
+                var priorities = GetPriorityList(savedEnrollee);
+                // Сохраняем приоритеты абитуриента
                 SavePriorities(priorities);
+                // Закрываем окно регистрации абитуриента
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -1943,14 +2197,20 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="priorities">Список приоритетов</param>
         private void SavePriorities(List<PriorityOfSpeciality> priorities)
         {
+            // Если не режим редактирования
             if (!editMode)
             {
+                logger.Info($"Добавление приоритетов абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 foreach (var priority in priorities)
+                    // Добавляем приоритеты
                     priorityOfSpecialityService.InsertPriorityOfSpeciality(priority);
             }
-            else
+            // Если режим редактирования
+            else 
             {
+                logger.Info($"Обновление приоритетов абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 foreach (var priority in priorities)
+                    // Обновляем приоритеты
                     priorityOfSpecialityService.UpdatePriorityOfSpeciality(priority);
             }
         }
@@ -1960,6 +2220,8 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="atributes">Список льгот</param>
         private void SaveAtributes(List<AtributeForEnrollee> atributes)
         {
+            logger.Info($"Добавление атрибутов (льгот) абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
+            // Добавление атрибутов (льгот)
             foreach (var atribute in atributes)
                 atributeForEnrolleeService.InsertAtributeForEnrollee(atribute);
         }
@@ -1970,13 +2232,18 @@ namespace WF.EnrolleeApplication.App.Views
         /// <returns></returns>
         private List<AtributeForEnrollee> GetAtributes(Enrollee savedEnrollee)
         {
-            List<AtributeForEnrollee> list = atributeForEnrolleeService.GetAtributeForEnrollees(savedEnrollee);
-            if (list.Count != 0)
+            // Получаем список атрибутов (льгот) пользователя
+            var atributes = atributeForEnrolleeService.GetAtributeForEnrollees(savedEnrollee);
+            // Если список не пуст
+            if (atributes.Count != 0)
             {
-                foreach (var atribute in list)
+                // Удаляем все атрибуты
+                foreach (var atribute in atributes)
                     atributeForEnrolleeService.DeleteAtributeForEnrollee(atribute);
             }
-            list = new List<AtributeForEnrollee>();
+            // Очищаем список атрибутов (льгот)
+            atributes = new List<AtributeForEnrollee>();
+            // Формируем новый список
             foreach (int i in chkAtributeList.CheckedIndices)
             {
                 string name = chkAtributeList.Items[i].ToString();
@@ -1984,9 +2251,9 @@ namespace WF.EnrolleeApplication.App.Views
                 AtributeForEnrollee atribute = new AtributeForEnrollee();
                 atribute.AtributeId = currentAtribute.AtributeId;
                 atribute.EnrolleeId = savedEnrollee.EnrolleeId;
-                list.Add(atribute);
+                atributes.Add(atribute);
             }
-            return list;
+            return atributes;
         }
         /// <summary>
         /// Добавление оценок абитуриента
@@ -1994,14 +2261,20 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="assessments">Список оценок</param>
         private void SaveAssessments(List<Assessment> assessments)
         {
+            // Если не режим редактирования
             if (!editMode)
             {
+                logger.Info($"Добавление оценок абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 foreach (var assessment in assessments)
+                    // Добавляем оценки
                     assessmentService.InsertAssessment(assessment);
             }
+            // Если режим редактирования
             else
             {
+                logger.Info($"Редактирование оценок абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 foreach (var assessment in assessments)
+                    // Обновляем оценки
                     assessmentService.UpdateAssessment(assessment);
             }
         }
@@ -2012,40 +2285,50 @@ namespace WF.EnrolleeApplication.App.Views
         /// <returns></returns>
         private List<Assessment> GetAssessments(Enrollee savedEnrollee)
         {
-            List<Assessment> list = new List<Assessment>();
+            // Список оценок
+            var assessments = new List<Assessment>();
+            // Если режим регистрации абитуриента
             if (!editMode)
             {
                 // Оценка документа об образовании
-                Assessment docAssessment = new Assessment();
+                var docAssessment = new Assessment();
                 docAssessment.DisciplineId = 5;
                 docAssessment.EnrolleeId = savedEnrollee.EnrolleeId;
                 docAssessment.Estimation = Int32.Parse(tbAverage.Text);
-                list.Add(docAssessment);
+                assessments.Add(docAssessment);
                 // Оценки таблицы сертификатов
                 foreach (DataGridViewRow row in SertificateGrid.Rows)
                 {
-                    Assessment assessment = new Assessment();
+                    var assessment = new Assessment();
+                    // Получаем дисциплину
                     assessment.DisciplineId = Int32.Parse(row.Cells[0].Value.ToString());
                     assessment.EnrolleeId = savedEnrollee.EnrolleeId;
+                    // Получаем оценку
                     if (string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString())) assessment.Estimation = 0;
                     else assessment.Estimation = Int32.Parse(row.Cells[4].Value.ToString());
+                    // Номер сертификата
                     assessment.SertCode = row.Cells[3].Value.ToString();
+                    // Дата выдачи сертификата
                     assessment.SertDate = row.Cells[5].Value.ToString();
+                    // Изменение дисциплины
                     assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
-                    list.Add(assessment);
+                    assessments.Add(assessment);
                 }
             }
             else
             {
-                list = assessmentService.GetAssessments(savedEnrollee);
-                foreach (var assessment in list)
+                // Список оценок абитуриента
+                assessments = assessmentService.GetAssessments(savedEnrollee);
+                foreach (var assessment in assessments)
                 {
+                    // Документ об образовании
                     if (assessment.DisciplineId == 5)
                     {
                         assessment.Estimation = Int32.Parse(tbAverage.Text);
                     }
                     else
                     {
+                        // Оценки таблицы сертификатов
                         foreach (DataGridViewRow row in SertificateGrid.Rows)
                         {
                             int disciplineId = Int32.Parse(row.Cells[0].Value.ToString());
@@ -2061,7 +2344,7 @@ namespace WF.EnrolleeApplication.App.Views
                     }
                 }
             }
-            return list;
+            return assessments;
         }
         /// <summary>
         /// Получение списка приоритетов специальностей абитуриента
@@ -2070,12 +2353,15 @@ namespace WF.EnrolleeApplication.App.Views
         /// <returns></returns>
         private List<PriorityOfSpeciality> GetPriorityList(Enrollee savedEnrollee)
         {
-            List<PriorityOfSpeciality> list = new List<PriorityOfSpeciality>();
+            // Список специальностей приоритета
+            var list = new List<PriorityOfSpeciality>();
+            // Режим регистрации приоритета
             if (!editMode)
-            {
+            {    
+                // Добавление приоритеты в список
                 foreach (DataGridViewRow row in PriorityGrid.Rows)
                 {
-                    PriorityOfSpeciality priority = new PriorityOfSpeciality();
+                    var priority = new PriorityOfSpeciality();
                     priority.EnrolleeId = savedEnrollee.EnrolleeId;
                     priority.SpecialityId = Int32.Parse(row.Cells[2].Value.ToString());
                     priority.PriorityLevel = Int32.Parse(row.Cells[0].Value.ToString());
@@ -2084,15 +2370,17 @@ namespace WF.EnrolleeApplication.App.Views
             }
             else
             {
+                // Список специальностей приоритета абитуриента
                 list = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                // Обновляем уровень приоритета специальности
                 foreach (var priority in list)
                 {
                     foreach (DataGridViewRow row in PriorityGrid.Rows)
                     {
                         int specialityId = Int32.Parse(row.Cells[2].Value.ToString());
-                        Speciality tempSpeciality = specialityService.GetSpeciality(specialityId);
-                        PriorityOfSpeciality temp = priorityOfSpecialityService.GetPriorityOfSpeciality(savedEnrollee, tempSpeciality);
-                        if (temp.PriorityId == priority.PriorityId)
+                        var tempSpeciality = specialityService.GetSpeciality(specialityId);
+                        var tempPriority = priorityOfSpecialityService.GetPriorityOfSpeciality(savedEnrollee, tempSpeciality);
+                        if (tempPriority.PriorityId == priority.PriorityId)
                         {
                             priority.PriorityLevel = Int32.Parse(row.Cells[0].Value.ToString());
                         }
@@ -2110,119 +2398,139 @@ namespace WF.EnrolleeApplication.App.Views
         {
             if (string.IsNullOrWhiteSpace(tbRuSurname.Text))
             {
+                
                 MessageBox.Show(this, "Введите фамилию абитуриента на русском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbRuSurname.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbRuName.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл имя абитуриента на русском языке.");
                 MessageBox.Show(this, "Введите имя абитуриента на русском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbRuName.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbBlrSurname.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл фамилию абитуриента на белорусском языке.");
                 MessageBox.Show(this, "Введите фамилию абитуриента на белорусском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbBlrSurname.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbBlrName.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл имя абитуриента на белорусском языке.");
                 MessageBox.Show(this, "Введите имя абитуриента на белорусском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbBlrName.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbDocSeria.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл серию документа предоставленного абитуриентом.");
                 MessageBox.Show(this, "Введите серию документа абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbDocSeria.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbDocNumber.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл номер документа предоставленного абитуриентом.");
                 MessageBox.Show(this, "Введите номер документа абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbDocNumber.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbDocWhoGave.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл информацию кто произвел выдачу документа предоставленного абитуриентом.");
                 MessageBox.Show(this, "Введите наименование органа выдавшего документ абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbDocWhoGave.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbDocPersonalNumber.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл персональный номер документа предоставленного абитуриентом.");
                 MessageBox.Show(this, "Введите личный номер абитуриента, согласно предоставленного документа", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbDocPersonalNumber.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbSettlementName.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл наименование населенного пункта абитуриента.");
                 MessageBox.Show(this, "Введите наименование населенного пункта абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbSettlementName.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbSettlementIndex.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл индекс населенного пункта абитуриента.");
                 MessageBox.Show(this, "Введите индекс населенного пункта абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbSettlementIndex.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbStreetName.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл наименование улицы проживания абитуриента.");
                 MessageBox.Show(this, "Введите наименование улицы абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbStreetName.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbNumberHouse.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл номер дома абитуриента.");
                 MessageBox.Show(this, "Введите номер дома абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbNumberHouse.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbMobilePhone.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл мобильный номер телефона абитуриента.");
                 MessageBox.Show(this, "Введите мобильный номер телефона абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbMobilePhone.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbHomePhone.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл домашний номер телефона абитуриента.");
                 MessageBox.Show(this, "Введите домашний номер телефона абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbHomePhone.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbSchoolYear.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл год окончания учебного заведения абитуриентом.");
                 MessageBox.Show(this, "Введите год окончания учебного заведения абитуриентом", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbSchoolYear.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbSchoolName.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл наименование учебного заведения абитуриента.");
                 MessageBox.Show(this, "Введите наименование учебного заведения абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbSchoolName.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbSchoolAdres.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл адрес учебного заведения абитуриента.");
                 MessageBox.Show(this, "Введите адрес учебного заведения абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 1;
                 tbSchoolName.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbPersonInCharge.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл ФИО лица ответственного за приём документов.");
                 MessageBox.Show(this, "Введите лицо отвественное за приём документов", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 2;
                 tbPersonInCharge.Focus();
             }
             else if (string.IsNullOrEmpty(tbAverage.Text))
             {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл оценки абитуриента.");
                 MessageBox.Show(this, "Введите оценки абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 2;
             }
             else
             {
+                // Заполняем поля регистрируемого абитуриента
                 enrollee.SpecialityId = speciality.SpecialityId;
                 enrollee.CitizenshipId = citizenship.CitizenshipId;
                 enrollee.CountryId = country.CountryId;
@@ -2282,18 +2590,26 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee.AttestatEstimationString = tbFirstAttestatString.Text;
                 enrollee.DiplomPtuEstimationString = tbFirstDiplomPtuString.Text;
                 enrollee.DiplomSusEstimationString = tbFirstDiplomSsuzString.Text;
+                // Если режим редактирования
                 if (editMode)
                 {
                     enrollee.NumberOfDeal = Int32.Parse(tbNumberOfDeal.Text);
                     enrollee.DateDeal = dtDateDeal.Value;
                     enrollee.StateDateChange = DateTime.Now;
+                    // Обновляем данные
+                    logger.Info($"Редактирование абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} \n" +
+                                $"Оператор {activeEmployee.Fullname.Trim()}");
                     enrolleeService.UpdateEnrollee(enrollee);
                 }
+                // Режим добавления и регистрации
                 else
                 {
                     enrollee.NumberOfDeal = GetNumberOfDeal();
                     enrollee.DateDeal = DateTime.Now;
                     enrollee.StateDateChange = DateTime.Now;
+                    // Добавление данных
+                    logger.Info($"Регистрация абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} \n" +
+                                $"Оператор {activeEmployee.Fullname.Trim()}");
                     enrolleeService.InsertEnrollee(enrollee);
                 }
             }
@@ -2306,13 +2622,16 @@ namespace WF.EnrolleeApplication.App.Views
         private int GetNumberOfDeal()
         {
             int result = 0;
+            // Список абитуриентов
             var enrollees = enrolleeService.GetEnrollees(speciality).OrderBy(e => e.NumberOfDeal).ToList();
             if (enrollees.Count == 0)
             {
+                // Если список абитуриентов специальности пустой, то номер личного дела = 1
                 result = 1;
             }
             else
             {
+                // Иначе следующий по порядку
                 result = enrollees[enrollees.Count - 1].NumberOfDeal + 1;
             }
             return result;

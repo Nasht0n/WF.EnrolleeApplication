@@ -644,7 +644,7 @@ namespace WF.EnrolleeApplication.App.Views
             enrollee = enrolleeService.GetEnrollee(id);
             // Форма подготовка отчёта расписки
             // enrollee — абитуриент
-            frmReceipt receiptCard = new frmReceipt(enrollee);
+            frmReceipt receiptCard = new frmReceipt();
             DialogResult receiptCardResult = receiptCard.ShowDialog();
             if(receiptCardResult == DialogResult.OK)
             {
@@ -738,7 +738,7 @@ namespace WF.EnrolleeApplication.App.Views
         private void EntryExamView(object sender, EventArgs e)
         {
             logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} выполнил вход в управление вступительными испытаниями.");
-            frmEnrtyExam entryExamView = new frmEnrtyExam();
+            frmEnrtyExam entryExamView = new frmEnrtyExam(activeEmployee);
             entryExamView.ShowDialog();
         }
         /// <summary>
