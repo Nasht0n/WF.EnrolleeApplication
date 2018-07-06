@@ -33,9 +33,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Наименование настройки = {this.Name.Trim()}" +
-                   $"/nЗаговок настройки = {this.Title.Trim()}" +
-                   $"/nЗначение настройки = {this.Value.Trim()}";
+            return $"Наименование настройки = {this.Name.Trim()}" + Environment.NewLine +
+                   $"Заговок настройки = {this.Title.Trim()}" + Environment.NewLine +
+                   $"Значение настройки = {this.Value.Trim()}" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

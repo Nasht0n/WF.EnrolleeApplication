@@ -33,10 +33,10 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код типа населенного пункта = {this.SettlementTypeId}" +
-                   $"\nПолное наименование = {this.Fullname.Trim()}" +
-                   $"\nСокращенное наименование = {this.Shortname.Trim()}" +
-                   $"\nЯвляется городом? {this.IsTown}";
+            return $"Код типа населенного пункта = {this.SettlementTypeId}" + Environment.NewLine +
+                   $"Полное наименование = {this.Fullname.Trim()}" + Environment.NewLine +
+                   $"Сокращенное наименование = {this.Shortname.Trim()}" + Environment.NewLine +
+                   $"Является городом? {this.IsTown}"+ Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

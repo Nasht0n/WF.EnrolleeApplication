@@ -33,24 +33,24 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            string result = $"Код абитуриента = {this.EnrolleeId}" +
-                            $"\nКод специальности = {this.SpecialityId}" +
-                            $"\nКод конкурса = {this.ContestId}" +
-                            $"\nКод основания зачисления = {this.ReasonForAddmissionId}" +
-                            $"\nКод типа финансирования = {this.FinanceTypeId}" +
-                            $"\nКод статуса абитуриента = {this.StateId}" +
-                            $"\nКод оператора = {this.EmployeeId}" +
-                            $"\nНаименование формы обучения = {this.FormOfStudy}" +
-                            $"\nНаименование специальности = {this.Speciality}" +
-                            $"\nФамилия = {this.Surname}" +
-                            $"\nИмя = {this.Name}" +
-                            $"\nТип конкурса = {this.Contest}" +
-                            $"\nВид основания зачисления  = {this.ReasonForAddmission}" +
-                            $"\nТип финансирования = {this.Finance}" +
-                            $"\nНомер личного дела = {this.NumberOfDeal}" +
-                            $"\nСтатус абитуриента = {this.Status.Trim()}" +
-                            $"\nСокращенное наименование специальности = {this.SpecialityShortname.Trim()}" +
-                            $"\nСокращенное наименование формы обучения = {this.FormOfStudyShortname.Trim()}";
+            string result = $"Код абитуриента = {this.EnrolleeId}" + Environment.NewLine+
+                            $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
+                            $"Код конкурса = {this.ContestId}" + Environment.NewLine +
+                            $"Код основания зачисления = {this.ReasonForAddmissionId}" + Environment.NewLine +
+                            $"Код типа финансирования = {this.FinanceTypeId}" + Environment.NewLine +
+                            $"Код статуса абитуриента = {this.StateId}" + Environment.NewLine +
+                            $"Код оператора = {this.EmployeeId}" + Environment.NewLine +
+                            $"Наименование формы обучения = {this.FormOfStudy}" + Environment.NewLine +
+                            $"Наименование специальности = {this.Speciality}" + Environment.NewLine +
+                            $"Фамилия = {this.Surname}" + Environment.NewLine +
+                            $"Имя = {this.Name}" + Environment.NewLine +
+                            $"Тип конкурса = {this.Contest}" + Environment.NewLine +
+                            $"Вид основания зачисления  = {this.ReasonForAddmission}" + Environment.NewLine +
+                            $"Тип финансирования = {this.Finance}" + Environment.NewLine +
+                            $"Номер личного дела = {this.NumberOfDeal}" + Environment.NewLine +
+                            $"Статус абитуриента = {this.Status.Trim()}" + Environment.NewLine +
+                            $"Сокращенное наименование специальности = {this.SpecialityShortname.Trim()}" + Environment.NewLine +
+                            $"Сокращенное наименование формы обучения = {this.FormOfStudyShortname.Trim()}" + Environment.NewLine;
             return result;
         }
         /// <summary>

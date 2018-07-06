@@ -33,19 +33,19 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код специальности = {this.SpecialityId}" +
-                   $"\nКод факультета = {this.FacultyId}" +
-                   $"\nКод формы обучения = {this.FormOfStudyId}" +
-                   $"\nНаименование специальности = {this.Fullname.Trim()}" +
-                   $"\nСпециализация = {this.Specialization.Trim()}" +
-                   $"\nШифр специальности = {this.Cipher.Trim()}" +
-                   $"\nСокращенное наименование специальности = {this.Shortname.Trim()}" +
-                   $"\nПлан набора (Бюджет) = {this.BudgetCountPlace}" +
-                   $"\nПлан набора (Платно) = {this.FeeCountPlace}" +
-                   $"\nПлан набора (Целевые места) = {this.TargetCountPlace}" +
-                   $"\nГруппа специальностей? {this.IsGroup}" +
-                   $"\nСпециальность группы специальностей? {this.IsAlternative}" +
-                   $"\nКод группы специальностей = {this.SpecialityGroupId}";
+            return $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
+                   $"Код факультета = {this.FacultyId}" + Environment.NewLine +
+                   $"Код формы обучения = {this.FormOfStudyId}" + Environment.NewLine +
+                   $"Наименование специальности = {this.Fullname.Trim()}" + Environment.NewLine +
+                   $"Специализация = {this.Specialization.Trim()}" + Environment.NewLine +
+                   $"Шифр специальности = {this.Cipher.Trim()}" + Environment.NewLine +
+                   $"Сокращенное наименование специальности = {this.Shortname.Trim()}" + Environment.NewLine +
+                   $"План набора (Бюджет) = {this.BudgetCountPlace}" + Environment.NewLine +
+                   $"План набора (Платно) = {this.FeeCountPlace}" + Environment.NewLine +
+                   $"План набора (Целевые места) = {this.TargetCountPlace}" + Environment.NewLine +
+                   $"Группа специальностей? {this.IsGroup}" + Environment.NewLine +
+                   $"Специальность группы специальностей? {this.IsAlternative}" + Environment.NewLine +
+                   $"Код группы специальностей = {this.SpecialityGroupId}" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

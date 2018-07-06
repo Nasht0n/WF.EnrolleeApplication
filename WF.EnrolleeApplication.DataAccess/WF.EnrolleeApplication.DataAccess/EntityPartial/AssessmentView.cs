@@ -33,15 +33,15 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код оценки = {this.AssessmentId}" +
-                   $"\nКод дисциплины = {this.DisciplineId}" +
-                   $"\nКод абитуриента = {this.EnrolleeId}" +
-                   $"\nФамилия = {this.RuSurname.Trim()}" +
-                   $"\nИмя = {this.RuName.Trim()}" +
-                   $"\nСпециальность = {this.Speciality.Trim()}" +
-                   $"\nФорма обучения = {this.FormOfStudy.Trim()}" +
-                   $"\nНомер личного дела = {this.NumberOfDeal}" +
-                   $"\nОценка = {this.Estimation}";
+            return $"Код оценки = {this.AssessmentId}" + Environment.NewLine +
+                   $"Код дисциплины = {this.DisciplineId}" + Environment.NewLine +
+                   $"Код абитуриента = {this.EnrolleeId}" + Environment.NewLine +
+                   $"Фамилия = {this.RuSurname.Trim()}" + Environment.NewLine +
+                   $"Имя = {this.RuName.Trim()}" + Environment.NewLine +
+                   $"Специальность = {this.Speciality.Trim()}" + Environment.NewLine +
+                   $"Форма обучения = {this.FormOfStudy.Trim()}" + Environment.NewLine +
+                   $"Номер личного дела = {this.NumberOfDeal}" + Environment.NewLine +
+                   $"Оценка = {this.Estimation}" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

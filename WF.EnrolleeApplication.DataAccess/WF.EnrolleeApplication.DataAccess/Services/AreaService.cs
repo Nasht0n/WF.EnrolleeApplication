@@ -31,7 +31,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению области");
             try
             {
-                logger.Debug($"Поиск записи области для удаления. Удаляемый объект : {area.ToString()}.");
+                logger.Debug($"Поиск записи области для удаления. Удаляемый объект : [{area.Name}].");
                 Area areaToDelete = context.Area.FirstOrDefault(a => a.AreaId == area.AreaId);
                 if (areaToDelete != null)
                 {

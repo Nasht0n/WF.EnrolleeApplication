@@ -33,8 +33,8 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код иностранного языка = {this.LanguageId}" +
-                   $"\nНаименование языка = {this.Name}";
+            return $"Код иностранного языка = {this.LanguageId}" + Environment.NewLine +
+                   $"Наименование языка = {this.Name}" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

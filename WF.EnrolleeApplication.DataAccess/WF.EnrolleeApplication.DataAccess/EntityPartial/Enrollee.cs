@@ -33,67 +33,67 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            string result = $"Код абитуриента = {this.EnrolleeId}" +
-                            $"\nКод специальности = {this.SpecialityId}" +
-                            $"\nКод гражданство = {this.CitizenshipId}" +
-                            $"\nКод страны = {this.CountryId}" +
-                            $"\nКод области = {this.AreaId}" +
-                            $"\nКод района = {this.DistrictId}" +
-                            $"\nКод типа населенного пункта = {this.SettlementTypeId}" +
-                            $"\nКод типа улицы = {this.StreetTypeId}" +
-                            $"\nКод документа = {this.DocumentId}" +
-                            $"\nКод последнего учреждения образования = {this.SchoolTypeId}" +
-                            $"\nКод иностранного языка = {this.ForeignLanguageId}" +
-                            $"\nКод основания зачисления = {this.ReasonForAddmissionId}" +
-                            $"\nКод статуса абитуриента = {this.StateTypeId}" +
-                            $"\nКод оператора, регистрирующего абитуриента = {this.EmployeeId}" +
-                            $"\nКод типа финансирования = {this.FinanceTypeId}";
-            if (this.DecreeId.HasValue) result += $"\nКод приказа о зачислении = {this.DecreeId.Value}";
-            if (this.SecondarySpecialityId.HasValue) result += $"\nКод специальности второй ступени = {this.SecondarySpecialityId}";
-            if (this.TargetWorkPlaceId.HasValue) result += $"\nКод места целевого направления = {this.TargetWorkPlaceId}";
-            result += $"\nФамилия абитуриента (на русском языке) = {this.RuSurname.Trim()}" +
-                      $"\nИмя абитуриента (на русском языке) = {this.RuName.Trim()}" +
-                      $"\nОтчество абитуриента (на русском языке) = {this.RuPatronymic.Trim()}" +
-                      $"\nФамилия абитуриента (на белорусском языке) = {this.BlrSurname.Trim()}" +
-                      $"\nИмя абитуриента (на белорусском языке) = {this.BlrName.Trim()}" +
-                      $"\nОтчество абитуриента (на белорусском языке) = {this.BlrPatronymic.Trim()}" +
-                      $"\nПол абитуриента = {this.Gender.Trim()}" +
-                      $"\nДата рождения = {this.DateOfBirthday.ToShortDateString()}";
-            if (!string.IsNullOrWhiteSpace(this.FatherFullname)) result += $"\nФИО отца абитуриента = {this.FatherFullname.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.FatherAddress)) result += $"\nАдрес проживания отца абитуриента = {this.FatherAddress.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.MotherFullname)) result += $"\nФИО матери абитуриента = {this.MotherFullname.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.MotherAddress)) result += $"\nАдрес проживания матери абитуриента = {this.MotherAddress.Trim()}";
-            result += $"\nНаименование населенного пункта = {this.SettlementName.Trim()}" +
-                      $"\nИндекс населенного пункта = {this.SettlementIndex}" +
-                      $"\nНаименование улицы = {this.StreetName}" +
-                      $"\nНомер дома = {this.NumberHouse}";
-            if (!string.IsNullOrWhiteSpace(this.NumberFlat)) result += $"\nНомер квартиры = {this.NumberFlat.Trim()}";
-            result += $"\nНомер домашнего телефона = {this.HomePhone.Trim()}" +
-                      $"\nНомер мобильного телефона = {this.MobilePhone.Trim()}" +
-                      $"\nСерия документа = {this.DocumentSeria.Trim()}" +
-                      $"\nНомер документа = {this.DocumentNumber.Trim()}" +
-                      $"\nДата выдачи документа = {this.DocumentDate.ToShortDateString()}" +
-                      $"\nОрган выдавший документ = {this.DocumentWhoGave.Trim()}" +
-                      $"\nЛичный номер документа абитуриента = {this.DocumentPersonalNumber.Trim()}" +
-                      $"\nНаименование последнего учреждения об образовании = {this.SchoolName.Trim()}" +
-                      $"\nГод окончания последнего учреждения об образовании = {this.SchoolYear.Trim()}" +
-                      $"\nАдрес последнего учреждения об образовании = {this.SchoolAddress.Trim()}" +
-                      $"\nЯвляется членом БРСМ? {this.IsBRSM}" +
-                      $"\nНомер личного дела = {this.NumberOfDeal}" +
-                      $"\nДата регистрации абитуриента = {this.DateDeal.ToShortDateString()}" +
-                      $"\nДата изменения статуса абитуриента = {this.StateDateChange.ToShortDateString()}" +
-                      $"\nЛицо ответственное за прием документов = {this.PersonInCharge.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.WorkPlace)) result += $"\nМесто работы = {this.WorkPlace.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.WorkPost)) result += $"\nДолжность = {this.WorkPost.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.Seniority)) result += $"\nСтаж работы = {this.Seniority.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.CurrentNumberCurs)) result += $"\nТекущий курс = {this.CurrentNumberCurs.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.CurrentUniversity)) result += $"\nТекущий университет = {this.CurrentUniversity.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.CurrentSpeciality)) result += $"\nТекущая специальность = {this.CurrentSpeciality.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.AttestatEstimationString)) result += $"\nОценки аттестата = {this.AttestatEstimationString.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.DiplomPtuEstimationString)) result += $"\nОценки диплома ПТУ = {this.DiplomPtuEstimationString.Trim()}";
-            if (!string.IsNullOrWhiteSpace(this.DiplomSusEstimationString)) result += $"\nОценки диплома ССУЗ = {this.DiplomSusEstimationString.Trim()}";
-            if (this.BeforeEnrollSpecialityId.HasValue) result += $"\nКод специальности подачи документа (до зачисления) = {this.BeforeEnrollSpecialityId.Value}";
-            if (this.BeforeEnrollNumberOfDeal.HasValue) result += $"\nНомер личного дела специальности подачи документа (до зачисления) = {this.BeforeEnrollNumberOfDeal.Value}";
+            string result = $"Код абитуриента = {this.EnrolleeId}" + Environment.NewLine +
+                            $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
+                            $"Код гражданство = {this.CitizenshipId}" + Environment.NewLine +
+                            $"Код страны = {this.CountryId}" + Environment.NewLine +
+                            $"Код области = {this.AreaId}" + Environment.NewLine +
+                            $"Код района = {this.DistrictId}" + Environment.NewLine +
+                            $"Код типа населенного пункта = {this.SettlementTypeId}" + Environment.NewLine +
+                            $"Код типа улицы = {this.StreetTypeId}" + Environment.NewLine +
+                            $"Код документа = {this.DocumentId}" + Environment.NewLine +
+                            $"Код последнего учреждения образования = {this.SchoolTypeId}" + Environment.NewLine +
+                            $"Код иностранного языка = {this.ForeignLanguageId}" + Environment.NewLine +
+                            $"Код основания зачисления = {this.ReasonForAddmissionId}" + Environment.NewLine +
+                            $"Код статуса абитуриента = {this.StateTypeId}" + Environment.NewLine +
+                            $"Код оператора, регистрирующего абитуриента = {this.EmployeeId}" + Environment.NewLine +
+                            $"Код типа финансирования = {this.FinanceTypeId}" + Environment.NewLine ;
+            if (this.DecreeId.HasValue) result += $"Код приказа о зачислении = {this.DecreeId.Value}" + Environment.NewLine;
+            if (this.SecondarySpecialityId.HasValue) result += $"Код специальности второй ступени = {this.SecondarySpecialityId}" + Environment.NewLine;
+            if (this.TargetWorkPlaceId.HasValue) result += $"Код места целевого направления = {this.TargetWorkPlaceId}" + Environment.NewLine;
+            result += $"Фамилия абитуриента (на русском языке) = {this.RuSurname.Trim()}" + Environment.NewLine +
+                      $"Имя абитуриента (на русском языке) = {this.RuName.Trim()}" + Environment.NewLine +
+                      $"Отчество абитуриента (на русском языке) = {this.RuPatronymic.Trim()}" + Environment.NewLine +
+                      $"Фамилия абитуриента (на белорусском языке) = {this.BlrSurname.Trim()}" + Environment.NewLine +
+                      $"Имя абитуриента (на белорусском языке) = {this.BlrName.Trim()}" + Environment.NewLine +
+                      $"Отчество абитуриента (на белорусском языке) = {this.BlrPatronymic.Trim()}" + Environment.NewLine +
+                      $"Пол абитуриента = {this.Gender.Trim()}" + Environment.NewLine +
+                      $"Дата рождения = {this.DateOfBirthday.ToShortDateString()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.FatherFullname)) result += $"ФИО отца абитуриента = {this.FatherFullname.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.FatherAddress)) result += $"Адрес проживания отца абитуриента = {this.FatherAddress.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.MotherFullname)) result += $"ФИО матери абитуриента = {this.MotherFullname.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.MotherAddress)) result += $"Адрес проживания матери абитуриента = {this.MotherAddress.Trim()}" + Environment.NewLine;
+            result += $"Наименование населенного пункта = {this.SettlementName.Trim()}" + Environment.NewLine +
+                      $"Индекс населенного пункта = {this.SettlementIndex}" + Environment.NewLine +
+                      $"Наименование улицы = {this.StreetName}" + Environment.NewLine +
+                      $"Номер дома = {this.NumberHouse}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.NumberFlat)) result += $"Номер квартиры = {this.NumberFlat.Trim()}" + Environment.NewLine;
+            result += $"Номер домашнего телефона = {this.HomePhone.Trim()}" + Environment.NewLine +
+                      $"Номер мобильного телефона = {this.MobilePhone.Trim()}" + Environment.NewLine +
+                      $"Серия документа = {this.DocumentSeria.Trim()}" + Environment.NewLine +
+                      $"Номер документа = {this.DocumentNumber.Trim()}" + Environment.NewLine +
+                      $"Дата выдачи документа = {this.DocumentDate.ToShortDateString()}" + Environment.NewLine +
+                      $"Орган выдавший документ = {this.DocumentWhoGave.Trim()}" + Environment.NewLine +
+                      $"Личный номер документа абитуриента = {this.DocumentPersonalNumber.Trim()}" + Environment.NewLine +
+                      $"Наименование последнего учреждения об образовании = {this.SchoolName.Trim()}" + Environment.NewLine +
+                      $"Год окончания последнего учреждения об образовании = {this.SchoolYear.Trim()}" + Environment.NewLine +
+                      $"Адрес последнего учреждения об образовании = {this.SchoolAddress.Trim()}" + Environment.NewLine +
+                      $"Является членом БРСМ? {this.IsBRSM}" + Environment.NewLine +
+                      $"Номер личного дела = {this.NumberOfDeal}" + Environment.NewLine +
+                      $"Дата регистрации абитуриента = {this.DateDeal.ToShortDateString()}" + Environment.NewLine +
+                      $"Дата изменения статуса абитуриента = {this.StateDateChange.ToShortDateString()}" + Environment.NewLine +
+                      $"Лицо ответственное за прием документов = {this.PersonInCharge.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.WorkPlace)) result += $"Место работы = {this.WorkPlace.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.WorkPost)) result += $"Должность = {this.WorkPost.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.Seniority)) result += $"Стаж работы = {this.Seniority.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.CurrentNumberCurs)) result += $"Текущий курс = {this.CurrentNumberCurs.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.CurrentUniversity)) result += $"Текущий университет = {this.CurrentUniversity.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.CurrentSpeciality)) result += $"Текущая специальность = {this.CurrentSpeciality.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.AttestatEstimationString)) result += $"Оценки аттестата = {this.AttestatEstimationString.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.DiplomPtuEstimationString)) result += $"Оценки диплома ПТУ = {this.DiplomPtuEstimationString.Trim()}" + Environment.NewLine;
+            if (!string.IsNullOrWhiteSpace(this.DiplomSusEstimationString)) result += $"Оценки диплома ССУЗ = {this.DiplomSusEstimationString.Trim()}" + Environment.NewLine;
+            if (this.BeforeEnrollSpecialityId.HasValue) result += $"Код специальности подачи документа (до зачисления) = {this.BeforeEnrollSpecialityId.Value}" + Environment.NewLine;
+            if (this.BeforeEnrollNumberOfDeal.HasValue) result += $"Номер личного дела специальности подачи документа (до зачисления) = {this.BeforeEnrollNumberOfDeal.Value}" + Environment.NewLine;
             return result;
         }
         /// <summary>

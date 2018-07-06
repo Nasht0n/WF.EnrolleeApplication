@@ -33,12 +33,12 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код приказа = {this.DecreeId}" +
-                   $"\nНомер приказа = {this.DecreeNumber.Trim()}" +
-                   $"\nДата приказа = {this.DecreeDate.ToShortDateString().Trim()}" +
-                   $"\nНомер протокола = {this.ProtocolNumber.Trim()}" +
-                   $"\nДата протокола = {this.ProtocolDate.ToShortDateString().Trim()}" +
-                   $"\nСодержание приказа = {this.Content.Trim()}";
+            return $"Код приказа = {this.DecreeId}" + Environment.NewLine +
+                   $"Номер приказа = {this.DecreeNumber.Trim()}" + Environment.NewLine +
+                   $"Дата приказа = {this.DecreeDate.ToShortDateString().Trim()}" + Environment.NewLine +
+                   $"Номер протокола = {this.ProtocolNumber.Trim()}" + Environment.NewLine +
+                   $"Дата протокола = {this.ProtocolDate.ToShortDateString().Trim()}" + Environment.NewLine +
+                   $"Содержание приказа = {this.Content.Trim()}" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

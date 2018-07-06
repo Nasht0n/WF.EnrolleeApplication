@@ -33,17 +33,17 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код специальности = {this.SpecialityId}" +
-                    $"\nКод факультета = {this.FacultyId}" +
-                    $"\nНаименование факультета = {this.Faculty.Trim()}" +
-                    $"\nКод формы обучения = {this.FormOfStudyId}" +
-                    $"\nНаименование формы обучения = {this.FormOfStudy}" +
-                    $"\nШифр специальности = {this.Cipher.Trim()}" +
-                    $"\nНаименование специальности = {this.Speciality.Trim()}" +
-                    $"\nГруппа специальностей? {this.IsGroup}" +
-                    $"\nПлан набора (Бюджет) = {this.BudgetCountPlace}" +
-                    $"\nПлан набора (Платно) = {this.FeeCountPlace}" +
-                    $"\nПлан набора (Целевые места) = {this.TargetCountPlace}";
+            return $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
+                    $"Код факультета = {this.FacultyId}" + Environment.NewLine +
+                    $"Наименование факультета = {this.Faculty.Trim()}" + Environment.NewLine +
+                    $"Код формы обучения = {this.FormOfStudyId}" + Environment.NewLine +
+                    $"Наименование формы обучения = {this.FormOfStudy}" + Environment.NewLine +
+                    $"Шифр специальности = {this.Cipher.Trim()}" + Environment.NewLine +
+                    $"Наименование специальности = {this.Speciality.Trim()}" + Environment.NewLine +
+                    $"Группа специальностей? {this.IsGroup}" + Environment.NewLine +
+                    $"План набора (Бюджет) = {this.BudgetCountPlace}" + Environment.NewLine +
+                    $"План набора (Платно) = {this.FeeCountPlace}" + Environment.NewLine +
+                    $"План набора (Целевые места) = {this.TargetCountPlace}" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

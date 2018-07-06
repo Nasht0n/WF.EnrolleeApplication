@@ -30,10 +30,11 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <summary>
         /// Переопределенный метод вывода данных класса
         /// </summary>
-        /// <returns>Строку формата [Area - Entity (AreaId. AreaName)]</returns>
+        /// <returns>Строку формата</returns>
         public override string ToString()
         {
-            return $"Area - Entity ({this.AreaId}. {this.Name})";
+            return $"Код области = {this.AreaId}" + Environment.NewLine +
+                   $"Наименование области = {this.Name})" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

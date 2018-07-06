@@ -33,9 +33,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код специальности второй ступени = {this.SecondarySpecialityId}" +
-                   $"\nПолное наименование = {this.Fullname.Trim()}" +
-                   $"\nШифр специальности = {this.Cipher.Trim()}";
+            return $"Код специальности второй ступени = {this.SecondarySpecialityId}" + Environment.NewLine +
+                   $"Полное наименование = {this.Fullname.Trim()}" + Environment.NewLine +
+                   $"Шифр специальности = {this.Cipher.Trim()}" + Environment.NewLine;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта
