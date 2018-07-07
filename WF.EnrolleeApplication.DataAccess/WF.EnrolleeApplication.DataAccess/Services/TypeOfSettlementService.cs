@@ -31,7 +31,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению типа населенного пункта.");
             try
             {
-                logger.Debug($"Поиск записи типа населенного пункта для удаления. Удаляемый объект : {typeOfSettlement.ToString()}.");
                 var typeOfSettlementToDelete = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == typeOfSettlement.SettlementTypeId);
                 if (typeOfSettlementToDelete != null)
                 {
@@ -63,9 +62,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа населенного пункта по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи типа населенного пункта по уникальному идентификатору = {id}.");
                 var typeOfSettlementById = context.TypeOfSettlement.AsNoTracking().FirstOrDefault(ts => ts.SettlementTypeId == id);
-                if (typeOfSettlementById != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfSettlementById.ToString()}.");
+                if (typeOfSettlementById != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfSettlementById.ToString()}.");
                 return typeOfSettlementById;
             }
             catch (SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа населенного пункта по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи типа населенного пункта по наименованию = {fullname}.");
                 var typeOfSettlementByName = context.TypeOfSettlement.AsNoTracking().FirstOrDefault(ts => ts.Fullname == fullname);
-                if (typeOfSettlementByName != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfSettlementByName.ToString()}.");
+                if (typeOfSettlementByName != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfSettlementByName.ToString()}.");
                 return typeOfSettlementByName;
             }
             catch (SqlException sqlEx)
@@ -122,7 +119,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка типов населенных пунктов.");
             try
             {
-                logger.Debug($"Получение списка типов населенных пунктов.");
                 var typeOfSettlements = context.TypeOfSettlement.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {typeOfSettlements.Count}.");
                 return typeOfSettlements;
@@ -152,7 +148,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению типа населенного пункта");
             try
             {
-                logger.Debug($"Добавляемая запись: {typeOfSettlement.ToString()}");
+                logger.Debug($"Добавляемая запись {typeOfSettlement.ToString()}");
                 context.TypeOfSettlement.Add(typeOfSettlement);
                 context.SaveChanges();
                 logger.Debug($"Тип населенного пункта успешно добавлен.");
@@ -171,8 +167,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Error($"Ошибка — {ex.Message}.");
                 return null;
             }
-
-
         }
         /// <summary>
         /// Обновление типа населенного пункта
@@ -186,12 +180,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var typeOfSettlementToUpdate = context.TypeOfSettlement.FirstOrDefault(ts => ts.SettlementTypeId == typeOfSettlement.SettlementTypeId);
-                logger.Debug($"Текущая запись: {typeOfSettlementToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {typeOfSettlementToUpdate.ToString()}");
                 typeOfSettlementToUpdate.Fullname = typeOfSettlement.Fullname;
                 typeOfSettlementToUpdate.Shortname = typeOfSettlement.Shortname;
                 typeOfSettlementToUpdate.IsTown = typeOfSettlement.IsTown;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {typeOfSettlementToUpdate.ToString()}");
+                logger.Debug($"Новая запись {typeOfSettlementToUpdate.ToString()}");
                 return typeOfSettlementToUpdate;
             }
             catch (SqlException sqlEx)

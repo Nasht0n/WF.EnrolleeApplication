@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению вида конкурса.");
             try
             {
-                logger.Debug($"Поиск записи вида конкурса для удаления. Удаляемый объект : {contest.ToString()}.");
-                Contest contestToDelete = context.Contest.FirstOrDefault(c => c.ContestId == contest.ContestId);
+                var contestToDelete = context.Contest.FirstOrDefault(c => c.ContestId == contest.ContestId);
                 if (contestToDelete != null)
                 {
                     context.Contest.Remove(contestToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление вида конкурса успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -61,11 +60,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Contest GetContest(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску вида конкурса.");
+            logger.Trace("Подготовка к поиску вида конкурса по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск вида конкурса по уникальному идентификатору = {id}.");
-                Contest contestById = context.Contest.AsNoTracking().FirstOrDefault(c => c.ContestId == id);
+                var contestById = context.Contest.AsNoTracking().FirstOrDefault(c => c.ContestId == id);
                 if (contestById != null) logger.Debug($"Поиск окончен. Искомая запись: {contestById.ToString()}.");
                 return contestById;
             }
@@ -91,11 +89,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Contest GetContest(string name)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску вида конкурса.");
+            logger.Trace("Подготовка к поиску вида конкурса по наименованию.");
             try
             {
-                logger.Debug($"Поиск вида конкурса по наименованию = {name}.");
-                Contest contestByName = context.Contest.AsNoTracking().FirstOrDefault(c => c.Name == name);
+                var contestByName = context.Contest.AsNoTracking().FirstOrDefault(c => c.Name == name);
                 if (contestByName != null) logger.Debug($"Поиск окончен. Искомая запись: {contestByName.ToString()}.");
                 return contestByName;
             }
@@ -123,9 +120,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка видов конкурса.");
             try
             {
-                logger.Debug($"Получение списка видов конкурса.");
-                List<Contest> contests = context.Contest.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {contests.Count}.");
+                var contests = context.Contest.AsNoTracking().ToList();
+                if (contests.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {contests.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return contests;
             }
             catch (SqlException sqlEx)
@@ -156,7 +153,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {contest.ToString()}");
                 context.Contest.Add(contest);
                 context.SaveChanges();
-                logger.Debug($"Вид конкурса успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return contest;
             }
             catch (SqlException sqlEx)
@@ -184,7 +181,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению вида конкурса.");
             try
             {
-                Contest contestToUpdate = context.Contest.FirstOrDefault(c => c.ContestId == contest.ContestId);
+                var contestToUpdate = context.Contest.FirstOrDefault(c => c.ContestId == contest.ContestId);
                 logger.Debug($"Текущая запись: {contestToUpdate.ToString()}");
                 contestToUpdate.Name = contest.Name;
                 context.SaveChanges();

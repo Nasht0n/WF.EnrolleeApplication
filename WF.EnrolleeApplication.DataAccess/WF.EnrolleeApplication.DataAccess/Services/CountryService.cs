@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению страны.");
             try
             {
-                logger.Debug($"Поиск записи страны для удаления. Удаляемый объект : {country.ToString()}.");
-                Country countryToDelete = context.Country.FirstOrDefault(c => c.CountryId == country.CountryId);
+                var countryToDelete = context.Country.FirstOrDefault(c => c.CountryId == country.CountryId);
                 if (countryToDelete != null)
                 {
                     context.Country.Remove(countryToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи страны успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -62,9 +61,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка стран.");
             try
             {
-                logger.Debug($"Получение списка стран.");
-                List<Country> countries = context.Country.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {countries.Count}.");
+                var countries = context.Country.AsNoTracking().ToList();
+                if (countries.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {countries.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return countries;
             }
             catch (SqlException sqlEx)
@@ -89,12 +88,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Country GetCountry(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску страны.");
+            logger.Trace("Подготовка к поиску страны по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи страны по уникальному идентификатору = {id}.");
-                Country countryById = context.Country.AsNoTracking().FirstOrDefault(c => c.CountryId == id);
-                if (countryById != null) logger.Debug($"Поиск окончен. Искомая запись: {countryById.ToString()}.");
+                var countryById = context.Country.AsNoTracking().FirstOrDefault(c => c.CountryId == id);
+                if (countryById != null) logger.Debug($"Поиск окончен. Запись найдена {countryById.ToString()}.");
                 return countryById;
             }
             catch (SqlException sqlEx)
@@ -119,12 +117,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Country GetCountry(string name)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску страны.");
+            logger.Trace("Подготовка к поиску страны по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи страны по наименованию = {name}.");
-                Country countryByName = context.Country.AsNoTracking().FirstOrDefault(c => c.Name == name);
-                if (countryByName != null) logger.Debug($"Поиск окончен. Искомая запись: {countryByName.ToString()}.");
+                var countryByName = context.Country.AsNoTracking().FirstOrDefault(c => c.Name == name);
+                if (countryByName != null) logger.Debug($"Поиск окончен. Запись найдена {countryByName.ToString()}.");
                 return countryByName;
             }
             catch (SqlException sqlEx)
@@ -152,10 +149,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению страны.");
             try
             {
-                logger.Debug($"Добавляемая запись: {country.ToString()}");
+                logger.Debug($"Добавляемая запись {country.ToString()}");
                 context.Country.Add(country);
                 context.SaveChanges();
-                logger.Debug($"Страна успешно добавлена.");
+                logger.Debug($"Запись успешно добавлена.");
                 return country;
             }
             catch (SqlException sqlEx)
@@ -183,11 +180,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению страны.");
             try
             {
-                Country countryToUpdate = context.Country.FirstOrDefault(c => c.CountryId == country.CountryId);
-                logger.Debug($"Текущая запись: {countryToUpdate.ToString()}");
+                var countryToUpdate = context.Country.FirstOrDefault(c => c.CountryId == country.CountryId);
+                logger.Debug($"Текущая запись {countryToUpdate.ToString()}");
                 countryToUpdate.Name = country.Name;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {countryToUpdate.ToString()}");
+                logger.Debug($"Новая запись {countryToUpdate.ToString()}");
                 return countryToUpdate;
             }
             catch (SqlException sqlEx)

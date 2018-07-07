@@ -33,10 +33,12 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код экзаменнационной схемы = {this.ExamSchemaId}" + Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код экзаменнационной схемы = {this.ExamSchemaId}" + Environment.NewLine +
                    $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
                    $"Код дисциплины = {this.DisciplineId}" + Environment.NewLine +
-                   $"Уровень дисциплины = {this.DisciplineRank}" + Environment.NewLine;
+                   $"Уровень дисциплины = {this.DisciplineRank}" ;
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению данных об оценке.");
             try
             {
-                logger.Debug($"Поиск записи оценки для удаления. Удаляемый объект : {assessment.ToString()}.");
-                Assessment assessmentToDelete = context.Assessment.FirstOrDefault(a => a.AssessmentId == assessment.AssessmentId);
+                var assessmentToDelete = context.Assessment.FirstOrDefault(a => a.AssessmentId == assessment.AssessmentId);
                 if (assessmentToDelete != null)
                 {
                     context.Assessment.Remove(assessmentToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление оценки успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -60,12 +59,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Assessment GetAssessment(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску данных об оценке.");
+            logger.Trace("Подготовка к поиску данных об оценке по уникальному идентификатору.");
             try
             {
-                logger.Debug("Поиск по уникальному идентификатору.");
-                Assessment assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.AssessmentId == id);
-                if (assessment != null) logger.Debug($"Поиск окончен. Найденая запись: {assessment.ToString()}.");
+                var assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.AssessmentId == id);
+                if (assessment != null) logger.Debug($"Поиск окончен. Запись найдена {assessment.ToString()}.");
                 else logger.Debug($"Поиск окончен. Запись не найдена.");
                 return assessment;
             }
@@ -91,12 +89,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Assessment GetAssessment(string sertcode)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску данных об оценке.");
+            logger.Trace("Подготовка к поиску данных об оценке по номеру сертификата.");
             try
             {
-                logger.Debug("Поиск по номеру сертификата.");
-                Assessment assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.SertCode == sertcode);
-                if (assessment != null) logger.Debug($"Поиск окончен. Найденая запись: {assessment.ToString()}.");
+                var assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.SertCode == sertcode);
+                if (assessment != null) logger.Debug($"Поиск окончен. Запись найдена {assessment.ToString()}.");
                 else logger.Debug($"Поиск окончен. Запись не найдена.");
                 return assessment;
             }
@@ -123,12 +120,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Assessment GetAssessment(Discipline discipline, Enrollee enrollee)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску данных об оценке.");
+            logger.Trace("Подготовка к поиску данных об оценке по параметрам дисциплины и абитуриента.");
             try
             {
-                logger.Debug("Поиск по дисциплине и абитуриенту.");
-                Assessment assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.DisciplineId == discipline.DisciplineId && a.EnrolleeId == enrollee.EnrolleeId);
-                if (assessment != null) logger.Debug($"Поиск окончен. Найденая запись: {assessment.ToString()}.");
+                var assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.DisciplineId == discipline.DisciplineId && a.EnrolleeId == enrollee.EnrolleeId);
+                if (assessment != null) logger.Debug($"Поиск окончен. Запись найдена {assessment.ToString()}.");
                 else logger.Debug($"Поиск окончен. Запись не найдена.");
                 return assessment;
             }
@@ -156,12 +152,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Assessment GetAssessment(Discipline discipline, Enrollee enrollee, BasisForAssessing basisForAssessing)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску данных об оценке.");
+            logger.Trace("Подготовка к поиску данных об оценке по параметрам дисциплины, абитуриента и типа оценивания.");
             try
             {
-                logger.Debug("Поиск по дисциплине, абитуриенту и типу оценивания.");
-                Assessment assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.DisciplineId == discipline.DisciplineId && a.EnrolleeId == enrollee.EnrolleeId && a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
-                if (assessment != null) logger.Debug($"Поиск окончен. Найденая запись: {assessment.ToString()}.");
+                var assessment = context.Assessment.AsNoTracking().FirstOrDefault(a => a.DisciplineId == discipline.DisciplineId && a.EnrolleeId == enrollee.EnrolleeId && a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
+                if (assessment != null) logger.Debug($"Поиск окончен. Запись найдена {assessment.ToString()}.");
                 else logger.Debug($"Поиск окончен. Запись не найдена.");
                 return assessment;
             }
@@ -187,12 +182,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Assessment> GetAssessments(Discipline discipline)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка оценок.");
+            logger.Trace("Подготовка к поиску списка оценок по дисциплине.");
             try
             {
-                logger.Debug("Поиск по дисциплине.");
-                List<Assessment> assessments = context.Assessment.AsNoTracking().Where(a => a.DisciplineId == discipline.DisciplineId).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                var assessments = context.Assessment.AsNoTracking().Where(a => a.DisciplineId == discipline.DisciplineId).ToList();
+                if (assessments.Count != 0) logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                else logger.Debug($"Поиск окончен. Список оценок пуст.");
                 return assessments;
             }
             catch (SqlException sqlEx)
@@ -218,12 +213,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Assessment> GetAssessments(Discipline discipline, BasisForAssessing basisForAssessing)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка оценок.");
+            logger.Trace("Подготовка к поиску списка оценок по параметрам дисциплины и типа оценивания.");
             try
             {
-                logger.Debug("Поиск по дисциплине и типу оценивания.");
-                List<Assessment> assessments = context.Assessment.AsNoTracking().Where(a => a.DisciplineId == discipline.DisciplineId && a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                var assessments = context.Assessment.AsNoTracking().Where(a => a.DisciplineId == discipline.DisciplineId && a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
+                if (assessments.Count != 0) logger.Trace($"Поиск окончен. Количество записей: {assessments.Count}.");
+                else logger.Trace($"Поиск окончен. Список оценок пуст.");
                 return assessments;
             }
             catch (SqlException sqlEx)
@@ -248,12 +243,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Assessment> GetAssessments(Enrollee enrollee)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка оценок.");
+            logger.Trace("Подготовка к поиску списка оценок по параметрам абитуриента.");
             try
             {
-                logger.Debug("Поиск по абитуриенту.");
-                List<Assessment> assessments = context.Assessment.AsNoTracking().Where(a => a.EnrolleeId == enrollee.EnrolleeId).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                var assessments = context.Assessment.AsNoTracking().Where(a => a.EnrolleeId == enrollee.EnrolleeId).ToList();
+                if (assessments.Count != 0) logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                else logger.Debug($"Поиск окончен. Список оценок пуст.");
                 return assessments;
             }
             catch (SqlException sqlEx)
@@ -279,12 +274,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Assessment> GetAssessments(Enrollee enrollee, BasisForAssessing basisForAssessing)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка оценок.");
+            logger.Trace("Подготовка к поиску списка оценок по параметрам абитуриента и типа оценивания.");
             try
             {
-                logger.Debug("Поиск по абитуриенту и типу оценивания.");
-                List<Assessment> assessments = context.Assessment.AsNoTracking().Where(a => a.EnrolleeId == enrollee.EnrolleeId && a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                var assessments = context.Assessment.AsNoTracking().Where(a => a.EnrolleeId == enrollee.EnrolleeId && a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
+                if(assessments.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                else logger.Debug($"Поиск окончен. Список оценок пуст.");
                 return assessments;
             }
             catch (SqlException sqlEx)
@@ -309,12 +304,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Assessment> GetAssessments(BasisForAssessing basisForAssessing)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка оценок.");
+            logger.Trace("Подготовка к поиску списка оценок по типу оценивания.");
             try
             {
-                logger.Debug("Поиск по типу оценивания.");
-                List<Assessment> assessments = context.Assessment.AsNoTracking().Where(a => a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                var assessments = context.Assessment.AsNoTracking().Where(a => a.Discipline.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
+                if(assessments.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
+                else logger.Debug($"Поиск окончен. Список оценок пуст.");
                 return assessments;
             }
             catch (SqlException sqlEx)
@@ -345,7 +340,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {assessment.ToString()}");
                 context.Assessment.Add(assessment);
                 context.SaveChanges();
-                logger.Debug($"Новая запись об оценке успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return assessment;
             }
             catch (SqlException sqlEx)
@@ -373,7 +368,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению данных выбранной оценки.");
             try
             {
-                Assessment assessmentToUpdate = context.Assessment.FirstOrDefault(a => a.AssessmentId == assessment.AssessmentId);
+                var assessmentToUpdate = context.Assessment.FirstOrDefault(a => a.AssessmentId == assessment.AssessmentId);
                 logger.Debug($"Текущая оценка: {assessmentToUpdate.ToString()}");
                 assessmentToUpdate.ChangeDiscipline = assessment.ChangeDiscipline;
                 assessmentToUpdate.DisciplineId = assessment.DisciplineId;

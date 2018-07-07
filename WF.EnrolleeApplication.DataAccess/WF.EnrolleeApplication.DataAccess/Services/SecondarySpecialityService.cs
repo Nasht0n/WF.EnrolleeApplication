@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению специальности второй ступени.");
             try
             {
-                logger.Debug($"Поиск записи специальности второй ступени для удаления. Удаляемый объект : {secondarySpeciality.ToString()}.");
                 var secondarySpecialityToDelete = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId);
                 if (secondarySpecialityToDelete != null)
                 {
                     context.SecondarySpeciality.Remove(secondarySpecialityToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи специальности второй ступени успешно завершено.");
+                    logger.Debug("Удаление записи успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -62,7 +61,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка специальностей второй ступени.");
             try
             {
-                logger.Debug($"Получение списка специальностей второй ступени.");
                 var secondarySpecialities = context.SecondarySpeciality.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {secondarySpecialities.Count}.");
                 return secondarySpecialities;
@@ -92,9 +90,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску специальности второй ступени по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи специальности второй ступени по уникальному идентификатору = {id}.");
                 var secondarySpecialityById = context.SecondarySpeciality.AsNoTracking().FirstOrDefault(ss => ss.SecondarySpecialityId == id);
-                if (secondarySpecialityById != null) logger.Debug($"Поиск окончен. Искомая запись: {secondarySpecialityById.ToString()}.");
+                if (secondarySpecialityById != null) logger.Debug($"Поиск окончен. Запись найдена {secondarySpecialityById.ToString()}.");
                 return secondarySpecialityById;
             }
             catch (SqlException sqlEx)
@@ -122,9 +119,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску специальности второй ступени по шифру специальности.");
             try
             {
-                logger.Debug($"Поиск записи специальности второй ступени по шифру специальности = {cipher}.");
                 var secondarySpecialityByCipher = context.SecondarySpeciality.AsNoTracking().FirstOrDefault(ss => ss.Cipher == cipher);
-                if (secondarySpecialityByCipher != null) logger.Debug($"Поиск окончен. Искомая запись: {secondarySpecialityByCipher.ToString()}.");
+                if (secondarySpecialityByCipher != null) logger.Debug($"Поиск окончен. Запись найдена {secondarySpecialityByCipher.ToString()}.");
                 return secondarySpecialityByCipher;
             }
             catch (SqlException sqlEx)
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению специальности второй ступени");
             try
             {
-                logger.Debug($"Добавляемая запись: {secondarySpeciality.ToString()}");
+                logger.Debug($"Добавляемая запись {secondarySpeciality.ToString()}");
                 context.SecondarySpeciality.Add(secondarySpeciality);
                 context.SaveChanges();
-                logger.Debug($"Специальность второй ступени успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return secondarySpeciality;
             }
             catch (SqlException sqlEx)
@@ -184,11 +180,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var secondarySpecialityToUpdate = context.SecondarySpeciality.FirstOrDefault(ss => ss.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId);
-                logger.Debug($"Текущая запись: {secondarySpecialityToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {secondarySpecialityToUpdate.ToString()}");
                 secondarySpecialityToUpdate.Fullname = secondarySpeciality.Fullname;
                 secondarySpecialityToUpdate.Cipher = secondarySpeciality.Cipher;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {secondarySpecialityToUpdate.ToString()}");
+                logger.Debug($"Новая запись {secondarySpecialityToUpdate.ToString()}");
                 return secondarySpecialityToUpdate;
             }
             catch (SqlException sqlEx)

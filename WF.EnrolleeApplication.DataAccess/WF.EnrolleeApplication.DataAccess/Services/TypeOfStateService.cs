@@ -31,7 +31,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению типа состояния.");
             try
             {
-                logger.Debug($"Поиск записи типа состояния для удаления. Удаляемый объект : {typeOfState.ToString()}.");
                 var typeOfStateToDelete = context.TypeOfState.FirstOrDefault(ts => ts.StateId == typeOfState.StateId);
                 if (typeOfStateToDelete != null)
                 {
@@ -63,9 +62,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа состояния по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи типа состояния по уникальному идентификатору = {id}.");
-                var typeOfStateById = context.TypeOfState.AsNoTracking().FirstOrDefault(ts => ts.StateId == id);
-                if (typeOfStateById != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfStateById.ToString()}.");
+                 var typeOfStateById = context.TypeOfState.AsNoTracking().FirstOrDefault(ts => ts.StateId == id);
+                if (typeOfStateById != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfStateById.ToString()}.");
                 return typeOfStateById;
             }
             catch (SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа состояния по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи типа состояния по наименованию = {name}.");
                 var typeOfStateByName = context.TypeOfState.AsNoTracking().FirstOrDefault(ts => ts.Name == name);
-                if (typeOfStateByName != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfStateByName.ToString()}.");
+                if (typeOfStateByName != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfStateByName.ToString()}.");
                 return typeOfStateByName;
             }
             catch (SqlException sqlEx)
@@ -122,7 +119,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка типов состояния абитуриента.");
             try
             {
-                logger.Debug($"Получение списка типов состояния абитуриента.");
                 var typeOfStates = context.TypeOfState.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {typeOfStates.Count}.");
                 return typeOfStates;
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению типа состояния");
             try
             {
-                logger.Debug($"Добавляемая запись: {typeOfState.ToString()}");
+                logger.Debug($"Добавляемая запись {typeOfState.ToString()}");
                 context.TypeOfState.Add(typeOfState);
                 context.SaveChanges();
-                logger.Debug($"Тип состояния успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return typeOfState;
             }
             catch (SqlException sqlEx)
@@ -184,10 +180,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var typeOfStateToUpdate = context.TypeOfState.FirstOrDefault(ts => ts.StateId == typeOfState.StateId);
-                logger.Debug($"Текущая запись: {typeOfStateToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {typeOfStateToUpdate.ToString()}");
                 typeOfStateToUpdate.Name = typeOfState.Name;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {typeOfStateToUpdate.ToString()}");
+                logger.Debug($"Новая запись {typeOfStateToUpdate.ToString()}");
                 return typeOfStateToUpdate;
             }
             catch (SqlException sqlEx)

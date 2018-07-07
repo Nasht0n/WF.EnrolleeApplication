@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению целевого рабочего места.");
             try
             {
-                logger.Debug($"Поиск записи целевого рабочего места для удаления. Удаляемый объект : {targetWorkPlace.ToString()}.");
                 var targetWorkPlaceToDelete = context.TargetWorkPlace.FirstOrDefault(tw => tw.TargetId == targetWorkPlace.TargetId);
                 if (targetWorkPlaceToDelete != null)
                 {
                     context.TargetWorkPlace.Remove(targetWorkPlaceToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи целевого рабочего места успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -64,9 +63,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску целевого рабочего места по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи целевого рабочего места по уникальному идентификатору = {id}.");
                 var targetWorkPlaceById = context.TargetWorkPlace.AsNoTracking().FirstOrDefault(tw => tw.TargetId == id);
-                if (targetWorkPlaceById != null) logger.Debug($"Поиск окончен. Искомая запись: {targetWorkPlaceById.ToString()}.");
+                if (targetWorkPlaceById != null) logger.Debug($"Поиск окончен. Запись найдена {targetWorkPlaceById.ToString()}.");
                 return targetWorkPlaceById;
             }
             catch (SqlException sqlEx)
@@ -94,9 +92,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску целевого рабочего места по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи целевого рабочего места по наименованию = {name}.");
                 var targetWorkPlaceByName = context.TargetWorkPlace.AsNoTracking().FirstOrDefault(tw => tw.Name == name);
-                if (targetWorkPlaceByName != null) logger.Debug($"Поиск окончен. Искомая запись: {targetWorkPlaceByName.ToString()}.");
+                if (targetWorkPlaceByName != null) logger.Debug($"Поиск окончен. Запись найдена {targetWorkPlaceByName.ToString()}.");
                 return targetWorkPlaceByName;
             }
             catch (SqlException sqlEx)
@@ -123,7 +120,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка целевых мест.");
             try
             {
-                logger.Debug($"Получение списка целевых мест.");
                 var targetWorkPlaces = context.TargetWorkPlace.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {targetWorkPlaces.Count}.");
                 return targetWorkPlaces;
@@ -153,10 +149,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению целевого рабочего места");
             try
             {
-                logger.Debug($"Добавляемая запись: {targetWorkPlace.ToString()}");
+                logger.Debug($"Добавляемая запись {targetWorkPlace.ToString()}");
                 context.TargetWorkPlace.Add(targetWorkPlace);
                 context.SaveChanges();
-                logger.Debug($"Новое целевое место успешно добавленo.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return targetWorkPlace;
             }
             catch (SqlException sqlEx)
@@ -185,10 +181,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var targetWorkPlaceToUpdate = context.TargetWorkPlace.FirstOrDefault(tw => tw.TargetId == targetWorkPlace.TargetId);
-                logger.Debug($"Текущая запись: {targetWorkPlaceToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {targetWorkPlaceToUpdate.ToString()}");
                 targetWorkPlaceToUpdate.Name = targetWorkPlace.Name;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {targetWorkPlaceToUpdate.ToString()}");
+                logger.Debug($"Новая запись {targetWorkPlaceToUpdate.ToString()}");
                 return targetWorkPlaceToUpdate;
             }
             catch (SqlException sqlEx)

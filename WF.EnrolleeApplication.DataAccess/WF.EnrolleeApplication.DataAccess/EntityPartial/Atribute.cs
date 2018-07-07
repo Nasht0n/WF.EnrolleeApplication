@@ -33,10 +33,11 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код атрибута = {this.AtributeId}" + Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + $"Код атрибута = {this.AtributeId}" + Environment.NewLine +
                    $"Полное наименование = {this.Fullname.Trim()}" + Environment.NewLine +
                    $"Сокращенное наименование = {this.Shortname.Trim()}" + Environment.NewLine +
-                   $"Является льготой? {this.IsDiscount}" + Environment.NewLine;
+                   $"Является льготой? {this.IsDiscount}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

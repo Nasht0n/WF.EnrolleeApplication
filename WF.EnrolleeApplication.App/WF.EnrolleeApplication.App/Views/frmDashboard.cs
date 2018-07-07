@@ -75,7 +75,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Устанавливаем стиль отображения
             SetStyleEnrolleeGrid(EnrolleeGrid);
             logger.Info("Выполнен вход в АИС Абитуриент.");
-            logger.Info($"Работает пользователь:\n {employee.ToString()}.");
+            logger.Info($"Работает пользователь:\n {employee.Fullname.Trim()}.");
         }
         /// <summary>
         /// Метод установка стиля отображения таблицы данных абитуриентов

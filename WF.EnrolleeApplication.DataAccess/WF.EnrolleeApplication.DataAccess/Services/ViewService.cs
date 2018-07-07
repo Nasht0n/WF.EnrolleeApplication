@@ -31,8 +31,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка оценок.");
             try
             {
-                logger.Debug($"Получение списка оценок.");
-                var assessments = context.AssessmentView.AsNoTracking().ToList();
+                 var assessments = context.AssessmentView.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
                 return assessments;
             }
@@ -61,7 +60,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка оценок по дисциплине.");
             try
             {
-                logger.Debug($"Получение списка оценок. Дисциплина = [{discipline.ToString()}].");
                 var assessments = context.AssessmentView.AsNoTracking().Where(a => a.DisciplineId == discipline.DisciplineId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {assessments.Count}.");
                 return assessments;
@@ -90,7 +88,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка пользователей.");
             try
             {
-                logger.Debug($"Получение списка пользователей.");
                 var employees = context.EmployeeView.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {employees.Count}.");
                 return employees;
@@ -120,7 +117,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка абитуриентов зарегистрированных оператором.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Оператор = {employee.ToString()}");
                 var enrollees = context.EnrolleeView.AsNoTracking().Where(e => e.EmployeeId == employee.EmployeeId).OrderByDescending(e => e.EnrolleeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -150,7 +146,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка абитуриентов специальности.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов специальности. Специальность = {speciality.ToString()}");
                 var enrollees = context.EnrolleeView.AsNoTracking().Where(e => e.SpecialityId == speciality.SpecialityId).OrderBy(e => e.NumberOfDeal).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -180,7 +175,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка приоритетов абитуриента.");
             try
             {
-                logger.Debug($"Получение списка приоритетов абитуриента. Абитуриент = {enrollee.ToString()}");
                 var priorities = context.PriorityView.AsNoTracking().Where(p => p.EnrolleeId == enrollee.EnrolleeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {priorities.Count}.");
                 return priorities;
@@ -209,7 +203,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка специальностей.");
             try
             {
-                logger.Debug($"Получение списка специальностей.");
                 var specialities = context.SpecialityView.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {specialities.Count}.");
                 return specialities;

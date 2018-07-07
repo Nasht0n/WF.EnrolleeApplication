@@ -31,7 +31,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению типа финансирования.");
             try
             {
-                logger.Debug($"Поиск записи типа финансирования для удаления. Удаляемый объект : {typeOfFinance.ToString()}.");
                 var typeOfFinanceToDelete = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == typeOfFinance.FinanceTypeId);
                 if (typeOfFinanceToDelete != null)
                 {
@@ -63,9 +62,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа финансирования по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи типа финансирования по уникальному идентификатору = {id}.");
                 var typeOfFinanceById = context.TypeOfFinance.AsNoTracking().FirstOrDefault(tf => tf.FinanceTypeId == id);
-                if (typeOfFinanceById != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfFinanceById.ToString()}.");
+                if (typeOfFinanceById != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfFinanceById.ToString()}.");
                 return typeOfFinanceById;
             }
             catch (SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа финансирования по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи типа финансирования по наименованию = {fullname}.");
                 var typeOfFinanceByName = context.TypeOfFinance.AsNoTracking().FirstOrDefault(tf => tf.Fullname == fullname);
-                if (typeOfFinanceByName != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfFinanceByName.ToString()}.");
+                if (typeOfFinanceByName != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfFinanceByName.ToString()}.");
                 return typeOfFinanceByName;
             }
             catch (SqlException sqlEx)
@@ -122,7 +119,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка типов финансирования.");
             try
             {
-                logger.Debug($"Получение списка типов финансирования.");
                 var typeOfFinances = context.TypeOfFinance.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {typeOfFinances.Count}.");
                 return typeOfFinances;
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению типа финансирования");
             try
             {
-                logger.Debug($"Добавляемая запись: {typeOfFinance.ToString()}");
+                logger.Debug($"Добавляемая запись {typeOfFinance.ToString()}");
                 context.TypeOfFinance.Add(typeOfFinance);
                 context.SaveChanges();
-                logger.Debug($"Тип финансирования успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return typeOfFinance;
             }
             catch (SqlException sqlEx)
@@ -184,10 +180,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var typeOfFinanceToUpdate = context.TypeOfFinance.FirstOrDefault(tf => tf.FinanceTypeId == typeOfFinance.FinanceTypeId);
-                logger.Debug($"Текущая запись: {typeOfFinanceToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {typeOfFinanceToUpdate.ToString()}");
                 typeOfFinanceToUpdate.Fullname = typeOfFinance.Fullname;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {typeOfFinanceToUpdate.ToString()}");
+                logger.Debug($"Новая запись {typeOfFinanceToUpdate.ToString()}");
                 return typeOfFinanceToUpdate;
             }
             catch (SqlException sqlEx)

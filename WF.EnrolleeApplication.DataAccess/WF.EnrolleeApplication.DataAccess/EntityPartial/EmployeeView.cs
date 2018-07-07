@@ -33,13 +33,15 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код пользователя = {this.EmployeeId}"  + Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код пользователя = {this.EmployeeId}"  + Environment.NewLine +
                    $"Код должности пользователя = {this.PostId}" + Environment.NewLine +
                    $"Должность пользователя = {this.Name.Trim()}" + Environment.NewLine +
                    $"ФИО пользователя = {this.Fullname.Trim()}" + Environment.NewLine +
                    $"Имя входа пользователя = {this.Username.Trim()}" + Environment.NewLine +
                    $"Дата регистрации = {this.CreateDate.ToShortDateString()}" + Environment.NewLine +
-                   $"Учетная запись активирована? = {this.Enabled}" + Environment.NewLine ;
+                   $"Учетная запись активирована? = {this.Enabled}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

@@ -33,7 +33,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            string result = $"Код абитуриента = {this.EnrolleeId}" + Environment.NewLine+
+            string result = Environment.NewLine +
+                            $"Информация об объекте: " + Environment.NewLine + 
+                            $"Код абитуриента = {this.EnrolleeId}" + Environment.NewLine+
                             $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
                             $"Код конкурса = {this.ContestId}" + Environment.NewLine +
                             $"Код основания зачисления = {this.ReasonForAddmissionId}" + Environment.NewLine +
@@ -50,7 +52,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
                             $"Номер личного дела = {this.NumberOfDeal}" + Environment.NewLine +
                             $"Статус абитуриента = {this.Status.Trim()}" + Environment.NewLine +
                             $"Сокращенное наименование специальности = {this.SpecialityShortname.Trim()}" + Environment.NewLine +
-                            $"Сокращенное наименование формы обучения = {this.FormOfStudyShortname.Trim()}" + Environment.NewLine;
+                            $"Сокращенное наименование формы обучения = {this.FormOfStudyShortname.Trim()}";
             return result;
         }
         /// <summary>

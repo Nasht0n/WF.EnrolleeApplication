@@ -33,9 +33,11 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код факультета = {this.FacultyId}"+ Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код факультета = {this.FacultyId}"+ Environment.NewLine +
                    $"Полное наименование = {this.Fullname.Trim()}" + Environment.NewLine +
-                   $"Сокращенное наименование = {this.Shortname.Trim()}" + Environment.NewLine;
+                   $"Сокращенное наименование = {this.Shortname.Trim()}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

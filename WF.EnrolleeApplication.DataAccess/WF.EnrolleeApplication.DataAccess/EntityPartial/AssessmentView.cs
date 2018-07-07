@@ -33,7 +33,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код оценки = {this.AssessmentId}" + Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код оценки = {this.AssessmentId}" + Environment.NewLine +
                    $"Код дисциплины = {this.DisciplineId}" + Environment.NewLine +
                    $"Код абитуриента = {this.EnrolleeId}" + Environment.NewLine +
                    $"Фамилия = {this.RuSurname.Trim()}" + Environment.NewLine +
@@ -41,7 +43,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
                    $"Специальность = {this.Speciality.Trim()}" + Environment.NewLine +
                    $"Форма обучения = {this.FormOfStudy.Trim()}" + Environment.NewLine +
                    $"Номер личного дела = {this.NumberOfDeal}" + Environment.NewLine +
-                   $"Оценка = {this.Estimation}" + Environment.NewLine;
+                   $"Оценка = {this.Estimation}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

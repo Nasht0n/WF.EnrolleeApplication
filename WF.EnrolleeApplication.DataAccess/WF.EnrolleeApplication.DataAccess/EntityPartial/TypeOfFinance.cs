@@ -33,8 +33,10 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код типа финансирования = {this.FinanceTypeId}" + Environment.NewLine +
-                   $"Наименование типа финансирования = {this.Fullname.Trim()}" + Environment.NewLine;
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код типа финансирования = {this.FinanceTypeId}" + Environment.NewLine +
+                   $"Наименование типа финансирования = {this.Fullname.Trim()}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

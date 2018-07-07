@@ -32,8 +32,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению абитуриента.");
             try
             {
-                logger.Debug($"Поиск записи пользователя для удаления. Удаляемый объект : {enrollee.ToString()}.");
-                Enrollee enrolleeToDelete = context.Enrollee.FirstOrDefault(e => e.EnrolleeId == enrollee.EnrolleeId);
+                var enrolleeToDelete = context.Enrollee.FirstOrDefault(e => e.EnrolleeId == enrollee.EnrolleeId);
                 if (enrolleeToDelete != null)
                 {
                     context.Enrollee.Remove(enrolleeToDelete);
@@ -61,12 +60,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Enrollee GetEnrollee(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску абитуриента.");
+            logger.Trace("Подготовка к поиску абитуриента по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи абитуриента по уникальному идентификатору = {id}.");
                 var enrolleeById = context.Enrollee.AsNoTracking().FirstOrDefault(e => e.EnrolleeId == id);
-                if (enrolleeById != null) logger.Debug($"Поиск окончен. Искомая запись: {enrolleeById.ToString()}.");
+                if (enrolleeById != null) logger.Debug($"Поиск окончен. Запись найдена {enrolleeById.ToString()}.");
                 return enrolleeById;
             }
             catch (SqlException sqlEx)
@@ -91,12 +89,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Enrollee GetEnrollee(string documentPersonalNumber)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску абитуриента.");
+            logger.Trace("Подготовка к поиску абитуриента по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи абитуриента по уникальному идентификатору = {documentPersonalNumber}.");
                 var enrolleeByPersonalNumber = context.Enrollee.AsNoTracking().FirstOrDefault(e => e.DocumentPersonalNumber == documentPersonalNumber);
-                if (enrolleeByPersonalNumber != null) logger.Debug($"Поиск окончен. Искомая запись: {enrolleeByPersonalNumber.ToString()}.");
+                if (enrolleeByPersonalNumber != null) logger.Debug($"Поиск окончен. Запись найдена {enrolleeByPersonalNumber.ToString()}.");
                 return enrolleeByPersonalNumber;
             }
             catch (SqlException sqlEx)
@@ -123,7 +120,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка абитуриентов.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов.");
                 var enrollees = context.Enrollee.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -150,10 +146,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(Speciality speciality)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранной специальности.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Специальность = [{speciality.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.SpecialityId == speciality.SpecialityId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -180,10 +175,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(Citizenship citizenship)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранного гражданства.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Вид гражданства = [{citizenship.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.CitizenshipId == citizenship.CitizenshipId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -210,10 +204,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(Country country)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранной страны.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Страна = [{country.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.CountryId == country.CountryId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -240,10 +233,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(Area area)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранной области.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Область = [{area.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.AreaId == area.AreaId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -270,10 +262,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(District district)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранного района.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Район = [{district.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.DistrictId == district.DistrictId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -300,10 +291,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(TypeOfSchool typeOfSchool)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранного типа учебного заведения.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Тип учебного заведения = [{typeOfSchool.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.SchoolTypeId == typeOfSchool.SchoolTypeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -330,10 +320,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(ReasonForAddmission reasonForAddmission)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранного основания зачисления.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Основание зачисления = [{reasonForAddmission.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.ReasonForAddmissionId == reasonForAddmission.ReasonForAddmissionId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -360,10 +349,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(TypeOfState typeOfState)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранного типа состояния.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Тип состояния (статуса) абитуриента = [{typeOfState.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.StateTypeId == typeOfState.StateId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -390,10 +378,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(Employee employee)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов, добавленных выбранным оператором.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов. Оператор, проводящий регистрацию = [{employee.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.EmployeeId == employee.EmployeeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -420,10 +407,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(Decree decree)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов, зачисленных по выбранному приказу.");
             try
             {
-                logger.Debug($"Получение списка зачисленных абитуриентов. Приказ = [{decree.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.DecreeId == decree.DecreeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -450,10 +436,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Enrollee> GetEnrollees(TypeOfFinance typeOfFinance)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка абитуриентов.");
+            logger.Trace("Подготовка к поиску списка абитуриентов выбранного типа финансирования.");
             try
             {
-                logger.Debug($"Получение списка зачисленных абитуриентов. Тип финансирования = [{typeOfFinance.ToString()}]");
                 var enrollees = context.Enrollee.AsNoTracking().Where(e => e.FinanceTypeId == typeOfFinance.FinanceTypeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {enrollees.Count}.");
                 return enrollees;
@@ -486,7 +471,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {enrollee.ToString()}");
                 context.Enrollee.Add(enrollee);
                 context.SaveChanges();
-                logger.Debug($"Пользователь успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return enrollee;
             }
             catch (SqlException sqlEx)
@@ -514,8 +499,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению данных абитуриента.");
             try
             {
-                Enrollee enrolleeToUpdate = context.Enrollee.FirstOrDefault(e => e.EnrolleeId == enrollee.EnrolleeId);
-                logger.Debug($"Текущая запись: {enrolleeToUpdate.ToString()}");
+                var enrolleeToUpdate = context.Enrollee.FirstOrDefault(e => e.EnrolleeId == enrollee.EnrolleeId);
+                logger.Debug($"Текущая запись {enrolleeToUpdate.ToString()}");
                 enrolleeToUpdate.SpecialityId = enrollee.SpecialityId;
                 enrolleeToUpdate.CitizenshipId = enrollee.CitizenshipId;
                 enrolleeToUpdate.CountryId = enrollee.CountryId;
@@ -576,8 +561,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 enrolleeToUpdate.DiplomSusEstimationString = enrollee.DiplomSusEstimationString;
                 enrolleeToUpdate.BeforeEnrollSpecialityId = enrollee.BeforeEnrollSpecialityId;
                 enrolleeToUpdate.BeforeEnrollNumberOfDeal = enrollee.BeforeEnrollNumberOfDeal;
-                context.SaveChanges();
-                logger.Debug($"Новая запись: {enrolleeToUpdate.ToString()}");
+                context.SaveChanges();                
+                logger.Debug($"Новая запись {enrolleeToUpdate.ToString()}");
                 return enrolleeToUpdate;
             }
             catch (SqlException sqlEx)

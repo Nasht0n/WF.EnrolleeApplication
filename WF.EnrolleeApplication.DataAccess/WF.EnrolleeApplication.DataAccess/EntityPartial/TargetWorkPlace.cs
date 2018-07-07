@@ -33,8 +33,10 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код места целевого направления = {this.TargetId}" + Environment.NewLine +
-                   $"Наименование = {this.Name}" + Environment.NewLine;
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код места целевого направления = {this.TargetId}" + Environment.NewLine +
+                   $"Наименование = {this.Name}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

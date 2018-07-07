@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению интеграции специальностей.");
             try
             {
-                logger.Debug($"Поиск записи интеграции специальностей для удаления. Удаляемый объект : {integrationOfSpecialities.ToString()}.");
                 var integrationOfSpecialitiesToDelete = context.IntegrationOfSpecialities.FirstOrDefault(ios => ios.IntegrationId == integrationOfSpecialities.IntegrationId);
                 if (integrationOfSpecialitiesToDelete != null)
                 {
                     context.IntegrationOfSpecialities.Remove(integrationOfSpecialitiesToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи интеграции специальностей успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -63,7 +62,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка интеграций специальностей.");
             try
             {
-                logger.Debug($"Получение списка интеграций специальностей.");
                 var integrationOfSpecialities = context.IntegrationOfSpecialities.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {integrationOfSpecialities.Count}.");
                 return integrationOfSpecialities;
@@ -93,7 +91,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка интеграций специальностей. Фильтр — специальность первой ступени.");
             try
             {
-                logger.Debug($"Получение списка интеграций специальностей. Специальность первой ступени: [{speciality.ToString()}]");
                 var integrationOfSpecialities = context.IntegrationOfSpecialities.AsNoTracking().Where(ios => ios.FirstSpecialityId == speciality.SpecialityId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {integrationOfSpecialities.Count}.");
                 return integrationOfSpecialities;
@@ -123,7 +120,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка интеграций специальностей. Фильтр — специальность второй ступени.");
             try
             {
-                logger.Debug($"Получение списка интеграций специальностей. Специальность второй ступени: [{secondarySpeciality.ToString()}]");
                 var integrationOfSpecialities = context.IntegrationOfSpecialities.AsNoTracking().Where(ios => ios.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {integrationOfSpecialities.Count}.");
                 return integrationOfSpecialities;
@@ -153,9 +149,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску интеграции специальностей по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи интеграции специальностей по уникальному идентификатору = {id}.");
                 var integrationOfSpecialityById = context.IntegrationOfSpecialities.AsNoTracking().FirstOrDefault(ios => ios.IntegrationId == id);
-                if (integrationOfSpecialityById != null) logger.Debug($"Поиск окончен. Искомая запись: {integrationOfSpecialityById.ToString()}.");
+                if (integrationOfSpecialityById != null) logger.Debug($"Поиск окончен. Запись найдена {integrationOfSpecialityById.ToString()}.");
                 return integrationOfSpecialityById;
             }
             catch (SqlException sqlEx)
@@ -184,9 +179,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску интеграции специальностей по параметрам.");
             try
             {
-                logger.Debug($"Поиск записи интеграции специальностей. Специальность первой ступени = [{speciality.ToString()}]. Специальность второй ступени = [{secondarySpeciality.ToString()}].");
                 var integrationOfSpeciality = context.IntegrationOfSpecialities.AsNoTracking().FirstOrDefault(ios => ios.FirstSpecialityId == speciality.SpecialityId && ios.SecondarySpecialityId == secondarySpeciality.SecondarySpecialityId);
-                if (integrationOfSpeciality != null) logger.Debug($"Поиск окончен. Искомая запись: {integrationOfSpeciality.ToString()}.");
+                if (integrationOfSpeciality != null) logger.Debug($"Поиск окончен. Запись найдена {integrationOfSpeciality.ToString()}.");
                 return integrationOfSpeciality;
             }
             catch (SqlException sqlEx)
@@ -214,10 +208,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению интеграции специальностей");
             try
             {
-                logger.Debug($"Добавляемая запись: {integrationOfSpecialities.ToString()}");
+                logger.Debug($"Добавляемая запись {integrationOfSpecialities.ToString()}");
                 context.IntegrationOfSpecialities.Add(integrationOfSpecialities);
                 context.SaveChanges();
-                logger.Debug($"Интеграция специальности успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return integrationOfSpecialities;
             }
             catch (SqlException sqlEx)
@@ -246,11 +240,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var integrationOfSpecialitiesToUpdate = context.IntegrationOfSpecialities.FirstOrDefault(ios => ios.IntegrationId == integrationOfSpecialities.IntegrationId);
-                logger.Debug($"Текущая запись: {integrationOfSpecialitiesToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {integrationOfSpecialitiesToUpdate.ToString()}");
                 integrationOfSpecialitiesToUpdate.FirstSpecialityId = integrationOfSpecialities.FirstSpecialityId;
                 integrationOfSpecialitiesToUpdate.SecondarySpecialityId = integrationOfSpecialities.SecondarySpecialityId;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {integrationOfSpecialitiesToUpdate.ToString()}");
+                logger.Debug($"Новая запись {integrationOfSpecialitiesToUpdate.ToString()}");
                 return integrationOfSpecialitiesToUpdate;
             }
             catch (SqlException sqlEx)

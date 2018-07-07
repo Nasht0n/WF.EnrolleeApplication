@@ -33,12 +33,14 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код группы пользователя = {this.PostId}" + Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код группы пользователя = {this.PostId}" + Environment.NewLine +
                    $"Наименование группы пользователя = {this.Name.Trim()}" + Environment.NewLine +
                    $"Описание = {this.Note.Trim()}" + Environment.NewLine +
                    $"Разрешение регистрации? - {this.RegistrationAllow}" + Environment.NewLine +
                    $"Разрешение зачисления? - {this.EnrollAllow}" + Environment.NewLine +
-                   $"Доступ к справочникам системы? - {this.DictionaryAllow}" + Environment.NewLine;
+                   $"Доступ к справочникам системы? - {this.DictionaryAllow}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

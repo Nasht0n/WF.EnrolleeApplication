@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению атрибута.");
             try
             {
-                logger.Debug($"Поиск записи атрибута для удаления. Удаляемый объект : {atribute.ToString()}.");
-                Atribute atributeToDelete = context.Atribute.FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
+                var atributeToDelete = context.Atribute.FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
                 if (atributeToDelete != null)
                 {
                     context.Atribute.Remove(atributeToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление атрибута абитуриента успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch(SqlException sqlEx)
@@ -60,12 +59,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Atribute GetAtribute(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску атрибута.");
+            logger.Trace("Подготовка к поиску атрибута по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск атрибута по уникальному идентификатору = {id}.");
-                Atribute atributeById = context.Atribute.AsNoTracking().FirstOrDefault(a => a.AtributeId == id);
-                if(atributeById !=null) logger.Debug($"Поиск окончен. Искомая запись: {atributeById.ToString()}.");
+                var atributeById = context.Atribute.AsNoTracking().FirstOrDefault(a => a.AtributeId == id);
+                if(atributeById !=null) logger.Debug($"Поиск окончен. Запись найдена {atributeById.ToString()}.");
                 return atributeById;
             }
             catch(SqlException sqlEx)
@@ -90,12 +88,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Atribute GetAtribute(string fullname)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску атрибута.");
+            logger.Trace("Подготовка к поиску атрибута по наименованию атрибута.");
             try
             {
-                logger.Debug($"Поиск атрибута по наименованию = {fullname}.");
-                Atribute atributeByFullname = context.Atribute.AsNoTracking().FirstOrDefault(a => a.Fullname == fullname);
-                if (atributeByFullname != null) logger.Debug($"Поиск окончен. Искомая запись: {atributeByFullname.ToString()}.");
+                var atributeByFullname = context.Atribute.AsNoTracking().FirstOrDefault(a => a.Fullname == fullname);
+                if (atributeByFullname != null) logger.Debug($"Поиск окончен. Запись найдена {atributeByFullname.ToString()}.");
                 return atributeByFullname;
             }
             catch (SqlException sqlEx)
@@ -122,7 +119,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка атрибутов.");
             try
             {
-                List<Atribute> atributes = context.Atribute.AsNoTracking().ToList();
+                var atributes = context.Atribute.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {atributes.Count}.");
                 return atributes;
             }
@@ -151,7 +148,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка атрибутов, являющихся льготами.");
             try
             {
-                List<Atribute> atributes = context.Atribute.AsNoTracking().Where(a => a.IsDiscount == IsDiscount).ToList();
+                var atributes = context.Atribute.AsNoTracking().Where(a => a.IsDiscount == IsDiscount).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {atributes.Count}.");
                 return atributes;
             }
@@ -183,7 +180,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {atribute.ToString()}");
                 context.Atribute.Add(atribute);
                 context.SaveChanges();
-                logger.Debug($"Атрибут успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return atribute;
             }
             catch(SqlException sqlEx)
@@ -211,7 +208,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению атрибута.");
             try
             {
-                Atribute atributeToUpdate = context.Atribute.FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
+                var atributeToUpdate = context.Atribute.FirstOrDefault(a => a.AtributeId == atribute.AtributeId);
                 logger.Debug($"Текущая запись: {atributeToUpdate.ToString()}");
                 atributeToUpdate.Fullname = atribute.Fullname;
                 atributeToUpdate.Shortname = atribute.Shortname;

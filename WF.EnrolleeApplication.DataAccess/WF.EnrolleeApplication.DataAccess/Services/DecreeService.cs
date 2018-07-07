@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению приказа.");
             try
             {
-                logger.Debug($"Поиск записи приказа для удаления. Удаляемый объект : {decree.ToString()}.");
-                Decree decreeToDelete = context.Decree.FirstOrDefault(d => d.DecreeId == decree.DecreeId);
+                var decreeToDelete = context.Decree.FirstOrDefault(d => d.DecreeId == decree.DecreeId);
                 if (decreeToDelete != null)
                 {
                     context.Decree.Remove(decreeToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи приказа успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -61,12 +60,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Decree GetDecree(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску приказа.");
+            logger.Trace("Подготовка к поиску приказа по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи приказа по уникальному идентификатору = {id}.");
-                Decree decreeById = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeId == id);
-                if (decreeById != null) logger.Debug($"Поиск окончен. Искомая запись: {decreeById.ToString()}.");
+                var decreeById = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeId == id);
+                if (decreeById != null) logger.Debug($"Поиск окончен. Запись найдена {decreeById.ToString()}.");
                 return decreeById;
             }
             catch (SqlException sqlEx)
@@ -91,12 +89,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Decree GetDecree(DateTime decreeDate)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску приказа.");
+            logger.Trace("Подготовка к поиску приказа по дате приказа.");
             try
             {
-                logger.Debug($"Поиск записи приказа по дате приказа = {decreeDate.ToShortDateString().Trim()}.");
-                Decree decreeByDate = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeDate == decreeDate.Date);
-                if (decreeByDate != null) logger.Debug($"Поиск окончен. Искомая запись: {decreeByDate.ToString()}.");
+                var decreeByDate = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeDate == decreeDate.Date);
+                if (decreeByDate != null) logger.Debug($"Поиск окончен. Запись найдена {decreeByDate.ToString()}.");
                 return decreeByDate;
             }
             catch (SqlException sqlEx)
@@ -121,12 +118,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Decree GetDecree(string decreeNumber)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску приказа.");
+            logger.Trace("Подготовка к поиску приказа по номеру приказа.");
             try
             {
-                logger.Debug($"Поиск записи приказа по номеру приказа = {decreeNumber.Trim()}.");
-                Decree decreeByNumber = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeNumber.Trim() == decreeNumber.Trim());
-                if (decreeByNumber != null) logger.Debug($"Поиск окончен. Искомая запись: {decreeByNumber.ToString()}.");
+                var decreeByNumber = context.Decree.AsNoTracking().FirstOrDefault(d => d.DecreeNumber.Trim() == decreeNumber.Trim());
+                if (decreeByNumber != null) logger.Debug($"Поиск окончен. Запись найдена {decreeByNumber.ToString()}.");
                 return decreeByNumber;
             }
             catch (SqlException sqlEx)
@@ -153,9 +149,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка приказов.");
             try
             {
-                logger.Debug($"Получение списка приказов.");
-                List<Decree> decrees = context.Decree.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {decrees.Count}.");
+                var decrees = context.Decree.AsNoTracking().ToList();
+                if (decrees.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {decrees.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return decrees;
             }
             catch (SqlException sqlEx)
@@ -183,10 +179,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению приказа.");
             try
             {
-                logger.Debug($"Добавляемая запись: {decree.ToString()}");
+                logger.Debug($"Добавляемая запись {decree.ToString()}");
                 context.Decree.Add(decree);
                 context.SaveChanges();
-                logger.Debug($"Приказ успешно добавлен.");
+                logger.Debug($"Запись успешно добавлена.");
                 return decree;
             }
             catch (SqlException sqlEx)
@@ -214,15 +210,15 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению приказа.");
             try
             {
-                Decree decreeToUpdate = context.Decree.FirstOrDefault(d => d.DecreeId == decree.DecreeId);
-                logger.Debug($"Текущая запись: {decreeToUpdate.ToString()}");
+                var decreeToUpdate = context.Decree.FirstOrDefault(d => d.DecreeId == decree.DecreeId);
+                logger.Debug($"Текущая запись {decreeToUpdate.ToString()}");
                 decreeToUpdate.DecreeNumber = decree.DecreeNumber;
                 decreeToUpdate.DecreeDate = decree.DecreeDate;
                 decreeToUpdate.Content = decree.Content;
                 decreeToUpdate.ProtocolNumber = decree.ProtocolNumber;
                 decreeToUpdate.ProtocolDate = decree.ProtocolDate;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {decreeToUpdate.ToString()}");
+                logger.Debug($"Новая запись {decreeToUpdate.ToString()}");
                 return decreeToUpdate;
             }
             catch (SqlException sqlEx)

@@ -34,13 +34,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению пользователя.");
             try
             {
-                logger.Debug($"Поиск записи пользователя для удаления. Удаляемый объект : {employee.ToString()}.");
-                Employee employeeToDelete = context.Employee.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
+                var employeeToDelete = context.Employee.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
                 if (employeeToDelete != null)
                 {
                     context.Employee.Remove(employeeToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи пользователя успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -63,12 +62,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Employee GetEmployee(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску пользователя.");
+            logger.Trace("Подготовка к поиску пользователя по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи пользователя по уникальному идентификатору = {id}.");
-                Employee employeeById = context.Employee.AsNoTracking().FirstOrDefault(e => e.EmployeeId == id);
-                if (employeeById != null) logger.Debug($"Поиск окончен. Искомая запись: {employeeById.ToString()}.");
+                var employeeById = context.Employee.AsNoTracking().FirstOrDefault(e => e.EmployeeId == id);
+                if (employeeById != null) logger.Debug($"Поиск окончен. Запись найдена {employeeById.ToString()}.");
                 return employeeById;
             }
             catch (SqlException sqlEx)
@@ -95,12 +93,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Employee GetEmployee(string username, string password)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску пользователя.");
+            logger.Trace("Подготовка к поиску пользователя для авторизации.");
             try
             {
-                logger.Debug($"Поиск записи пользователя по параметрам. Имя входа = [{username}]; Пароль = [{password}].");
-                Employee employeeForAuth = context.Employee.AsNoTracking().FirstOrDefault(e => e.Username == username && e.Password == password);
-                if (employeeForAuth != null) logger.Debug($"Поиск окончен. Искомая запись: {employeeForAuth.ToString()}.");
+                var employeeForAuth = context.Employee.AsNoTracking().FirstOrDefault(e => e.Username == username && e.Password == password);
+                if (employeeForAuth != null) logger.Debug($"Поиск окончен. Запись найдена {employeeForAuth.ToString()}.");
                 return employeeForAuth;
             }
             catch (SqlException sqlEx)
@@ -127,8 +124,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка пользователей.");
             try
             {
-                logger.Debug($"Получение списка пользователей.");
-                List<Employee> employees = context.Employee.AsNoTracking().ToList();
+                var employees = context.Employee.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {employees.Count}.");
                 return employees;
             }
@@ -154,11 +150,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<Employee> GetEmployees(EmployeePost post)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску списка пользователей.");
+            logger.Trace("Подготовка к поиску списка пользователей определенной должности.");
             try
             {
-                logger.Debug($"Получение списка пользователей, определенной должности. Должность = [{post.ToString()}]");
-                List<Employee> employees = context.Employee.AsNoTracking().Where(e => e.PostId == post.PostId).ToList();
+                var employees = context.Employee.AsNoTracking().Where(e => e.PostId == post.PostId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {employees.Count}.");
                 return employees;
             }
@@ -190,7 +185,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {employee.ToString()}");
                 context.Employee.Add(employee);
                 context.SaveChanges();
-                logger.Debug($"Пользователь успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return employee;
             }
             catch (SqlException sqlEx)
@@ -218,7 +213,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению пользователя.");
             try
             {
-                Employee employeeToUpdate = context.Employee.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
+                var employeeToUpdate = context.Employee.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
                 logger.Debug($"Текущая запись: {employeeToUpdate.ToString()}");
                 employeeToUpdate.PostId = employee.PostId;
                 employeeToUpdate.Fullname = employee.Fullname;

@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению настройки системы.");
             try
             {
-                logger.Debug($"Поиск записи настройки системы для удаления. Удаляемый объект : {systemConfiguration.ToString()}.");
                 var systemConfigurationToDelete = context.SystemConfiguration.FirstOrDefault(sc => sc.Name == systemConfiguration.Name);
                 if (systemConfigurationToDelete != null)
                 {
                     context.SystemConfiguration.Remove(systemConfigurationToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи настройки системы успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -59,8 +58,27 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         /// <returns>Запись настройки</returns>
         public SystemConfiguration GetSystemConfiguration(string name)
         {
-            SystemConfiguration systemConfiguration = context.SystemConfiguration.AsNoTracking().FirstOrDefault(sc => sc.Name == name);
-            return systemConfiguration;
+            logger.Trace("Попытка подключения к источнику данных.");
+            logger.Trace("Подготовка к поиску настройки системы по наименованию параметра.");
+            try
+            {
+                var systemConfiguration = context.SystemConfiguration.AsNoTracking().FirstOrDefault(sc => sc.Name == name);
+                if (systemConfiguration != null) logger.Debug($"Поиск окончен. Запись найдена {systemConfiguration.ToString()}.");
+                return systemConfiguration;
+            }
+            catch (SqlException sqlEx)
+            {
+                logger.Error("Ошибка поиска записи настройки системы по наименованию параметра.");
+                logger.Error($"Ошибка SQL Server — {sqlEx.Number}.");
+                logger.Error($"Сообщение об ошибке: {sqlEx.Message}.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Ошибка поиска записи настройки системы по наименованию параметра.");
+                logger.Error($"Ошибка — {ex.Message}.");
+                return null;
+            }
         }
         /// <summary>
         /// Получение списка настроек системы
@@ -72,7 +90,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка настроек системы.");
             try
             {
-                logger.Debug($"Получение списка настроек системы.");
                 var systemConfigurations = context.SystemConfiguration.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {systemConfigurations.Count}.");
                 return systemConfigurations;
@@ -102,10 +119,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению настройки системы");
             try
             {
-                logger.Debug($"Добавляемая запись: {systemConfiguration.ToString()}");
+                logger.Debug($"Добавляемая запись {systemConfiguration.ToString()}");
                 context.SystemConfiguration.Add(systemConfiguration);
                 context.SaveChanges();
-                logger.Debug($"Новая настройка системы успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return systemConfiguration;
             }
             catch (SqlException sqlEx)
@@ -134,11 +151,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var systemConfigurationToUpdate = context.SystemConfiguration.FirstOrDefault(sc => sc.Name == systemConfiguration.Name);
-                logger.Debug($"Текущая запись: {systemConfigurationToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {systemConfigurationToUpdate.ToString()}");
                 systemConfigurationToUpdate.Title = systemConfiguration.Title;
                 systemConfigurationToUpdate.Value = systemConfiguration.Value;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {systemConfigurationToUpdate.ToString()}");
+                logger.Debug($"Новая запись {systemConfigurationToUpdate.ToString()}");
                 return systemConfigurationToUpdate;
             }
             catch (SqlException sqlEx)

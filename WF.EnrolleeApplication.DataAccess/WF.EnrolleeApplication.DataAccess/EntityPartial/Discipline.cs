@@ -33,19 +33,21 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            string result = $"Код дисциплины = {this.DisciplineId}" + Environment.NewLine +
+            string result = Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код дисциплины = {this.DisciplineId}" + Environment.NewLine +
                    $"Код типа оценивания = {this.BasisForAssessingId}" + Environment.NewLine +
                    $"Наименование дисциплины = {this.Name.Trim()}" + Environment.NewLine +
                    $"Группа предметов? {this.IsGroup}" + Environment.NewLine +
-                   $"Дисциплина группы предметов? {this.IsAlternative}" + Environment.NewLine;
+                   $"Дисциплина группы предметов? {this.IsAlternative}";
             if (this.DisciplineGroupId.HasValue)
-                result += $"Код группы специальностей = {this.DisciplineGroupId.Value}" + Environment.NewLine;
+                result += Environment.NewLine + $"Код группы специальностей = {this.DisciplineGroupId.Value}";
             if (!string.IsNullOrWhiteSpace(this.ConsultDate))
-                result += $"Дата консультации = {this.ConsultDate.Trim()}" + Environment.NewLine;
+                result += Environment.NewLine + $"Дата консультации = {this.ConsultDate.Trim()}";
             if (!string.IsNullOrWhiteSpace(this.EntryExamDate))
-                result += $"Дата вступительного испытания = {this.EntryExamDate.Trim()}" + Environment.NewLine;
+                result += Environment.NewLine + $"Дата вступительного испытания = {this.EntryExamDate.Trim()}";
             if (this.StageCount.HasValue)
-                result += $"Количество этапов = {this.StageCount.Value}" + Environment.NewLine;
+                result += Environment.NewLine + $"Количество этапов = {this.StageCount.Value}";
             return result;
         }
         /// <summary>

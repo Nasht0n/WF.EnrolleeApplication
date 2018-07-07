@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению формы обучения.");
             try
             {
-                logger.Debug($"Поиск записи формы обучения для удаления. Удаляемый объект : {formOfStudy.ToString()}.");
                 var formOfStudyToDelete = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
                 if (formOfStudyToDelete != null)
                 {
                     context.FormOfStudy.Remove(formOfStudyToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи формы обучения успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -62,7 +61,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка форм обучения.");
             try
             {
-                logger.Debug($"Получение списка форм обучения.");
                 var formOfStudies = context.FormOfStudy.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {formOfStudies.Count}.");
                 return formOfStudies;
@@ -92,9 +90,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску формы обучения по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи формы обучения по уникальному идентификатору = {id}.");
                 var formOfStudyById = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.FormOfStudyId == id);
-                if (formOfStudyById != null) logger.Debug($"Поиск окончен. Искомая запись: {formOfStudyById.ToString()}.");
+                if (formOfStudyById != null) logger.Debug($"Поиск окончен. Запись найдена {formOfStudyById.ToString()}.");
                 return formOfStudyById;
             }
             catch (SqlException sqlEx)
@@ -122,9 +119,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску формы обучения по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи формы обучения по наименованию = {fullname}.");
                 var formOfStudyByName = context.FormOfStudy.AsNoTracking().FirstOrDefault(f => f.Fullname == fullname);
-                if (formOfStudyByName != null) logger.Debug($"Поиск окончен. Искомая запись: {formOfStudyByName.ToString()}.");
+                if (formOfStudyByName != null) logger.Debug($"Поиск окончен. Запись найдена {formOfStudyByName.ToString()}.");
                 return formOfStudyByName;
             }
             catch (SqlException sqlEx)
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению формы обучения");
             try
             {
-                logger.Debug($"Добавляемая запись: {formOfStudy.ToString()}");
+                logger.Debug($"Добавляемая запись {formOfStudy.ToString()}");
                 context.FormOfStudy.Add(formOfStudy);
                 context.SaveChanges();
-                logger.Debug($"Форма обучения успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return formOfStudy;
             }
             catch (SqlException sqlEx)
@@ -184,11 +180,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var formOfStudyToUpdate = context.FormOfStudy.FirstOrDefault(f => f.FormOfStudyId == formOfStudy.FormOfStudyId);
-                logger.Debug($"Текущая запись: {formOfStudyToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {formOfStudyToUpdate.ToString()}");
                 formOfStudyToUpdate.Fullname = formOfStudy.Fullname;
                 formOfStudyToUpdate.Shortname = formOfStudy.Shortname;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {formOfStudyToUpdate.ToString()}");
+                logger.Debug($"Новая запись {formOfStudyToUpdate.ToString()}");
                 return formOfStudyToUpdate;
             }
             catch (SqlException sqlEx)

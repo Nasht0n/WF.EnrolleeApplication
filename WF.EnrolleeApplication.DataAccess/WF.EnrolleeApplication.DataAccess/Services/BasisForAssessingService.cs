@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению типа оценивания.");
             try
             {
-                logger.Debug($"Поиск записи типа оценивания для удаления. Удаляемый объект : {basisForAssessing.ToString()}.");
-                BasisForAssessing basisForAssessingToDelete = context.BasisForAssessing.FirstOrDefault(b => b.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
+                var basisForAssessingToDelete = context.BasisForAssessing.FirstOrDefault(b => b.BasisForAssessingId == basisForAssessing.BasisForAssessingId);
                 if (basisForAssessingToDelete != null)
                 {
                     context.BasisForAssessing.Remove(basisForAssessingToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление типа оценивания успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch(SqlException sqlEx)
@@ -61,12 +60,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public BasisForAssessing GetBasisForAssessing(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску типа оценивания.");
+            logger.Trace("Подготовка к поиску типа оценивания по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск типа оценивания по уникальному идентификатору = {id}.");
-                BasisForAssessing basisForAssessingById = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.BasisForAssessingId == id);
-                if (basisForAssessingById != null) logger.Debug($"Поиск окончен. Искомая запись: {basisForAssessingById.ToString()}.");
+                var basisForAssessingById = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.BasisForAssessingId == id);
+                if (basisForAssessingById != null) logger.Debug($"Поиск окончен. Запись найдена: {basisForAssessingById.ToString()}.");
                 return basisForAssessingById;
             }
             catch(SqlException sqlEx)
@@ -91,12 +89,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public BasisForAssessing GetBasisForAssessing(string name)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску типа оценивания.");
+            logger.Trace("Подготовка к поиску типа оценивания по наименованию.");
             try
             {
-                logger.Debug($"Поиск типа оценивания по наименованию = {name}.");
-                BasisForAssessing basisForAssessingByName = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.Name == name);
-                if (basisForAssessingByName != null) logger.Debug($"Поиск окончен. Искомая запись: {basisForAssessingByName.ToString()}.");
+                var basisForAssessingByName = context.BasisForAssessing.AsNoTracking().FirstOrDefault(b => b.Name == name);
+                if (basisForAssessingByName != null) logger.Debug($"Поиск окончен. Запись найдена {basisForAssessingByName.ToString()}.");
                 return basisForAssessingByName;
             }
             catch (SqlException sqlEx)
@@ -123,9 +120,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка типов оценивания.");
             try
             {
-                logger.Debug($"Получение списка типов оценивания.");
-                List<BasisForAssessing> basisForAssessings = context.BasisForAssessing.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {basisForAssessings.Count}.");
+                var basisForAssessings = context.BasisForAssessing.AsNoTracking().ToList();
+                if(basisForAssessings.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {basisForAssessings.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return basisForAssessings;
             }
             catch (SqlException sqlEx)
@@ -156,7 +153,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {basisForAssessing.ToString()}");
                 context.BasisForAssessing.Add(basisForAssessing);
                 context.SaveChanges();
-                logger.Debug($"Тип оценивания успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return basisForAssessing;
             }
             catch(SqlException sqlEx)

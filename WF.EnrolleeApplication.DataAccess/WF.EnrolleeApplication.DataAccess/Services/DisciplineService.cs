@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению дисциплины.");
             try
             {
-                logger.Debug($"Поиск записи дисциплины для удаления. Удаляемый объект : {discipline.ToString()}.");
-                Discipline disciplineToDelete = context.Discipline.FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
+                var disciplineToDelete = context.Discipline.FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
                 if (disciplineToDelete != null)
                 {
                     context.Discipline.Remove(disciplineToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи дисциплины успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -61,12 +60,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Discipline GetDiscipline(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску дисциплины.");
+            logger.Trace("Подготовка к поиску дисциплины по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи дисциплины по уникальному идентификатору = {id}.");
-                Discipline disciplineById = context.Discipline.AsNoTracking().FirstOrDefault(d => d.DisciplineId == id);
-                if (disciplineById != null) logger.Debug($"Поиск окончен. Искомая запись: {disciplineById.ToString()}.");
+                var disciplineById = context.Discipline.AsNoTracking().FirstOrDefault(d => d.DisciplineId == id);
+                if (disciplineById != null) logger.Debug($"Поиск окончен. Запись найдена {disciplineById.ToString()}.");
                 return disciplineById;
             }
             catch (SqlException sqlEx)
@@ -91,12 +89,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Discipline GetDiscipline(string name)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску дисциплины.");
+            logger.Trace("Подготовка к поиску дисциплины по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи дисциплины по наименованию = {name}.");
-                Discipline disciplineByName = context.Discipline.AsNoTracking().FirstOrDefault(d => d.Name == name);
-                if (disciplineByName != null) logger.Debug($"Поиск окончен. Искомая запись: {disciplineByName.ToString()}.");
+                var disciplineByName = context.Discipline.AsNoTracking().FirstOrDefault(d => d.Name == name);
+                if (disciplineByName != null) logger.Debug($"Поиск окончен. Запись найдена {disciplineByName.ToString()}.");
                 return disciplineByName;
             }
             catch (SqlException sqlEx)
@@ -123,9 +120,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка дисциплин.");
             try
             {
-                logger.Debug($"Получение списка дисциплин.");
-                List<Discipline> disciplines = context.Discipline.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                var disciplines = context.Discipline.AsNoTracking().ToList();
+                if (disciplines.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return disciplines;
             }
             catch (SqlException sqlEx)
@@ -153,9 +150,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка дисциплин общей группы дисциплин.");
             try
             {
-                logger.Debug($"Получение списка дисциплин общей группы дисциплин.");
-                List<Discipline> disciplines = context.Discipline.AsNoTracking().Where(d => d.IsGroup == IsGroup).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                var disciplines = context.Discipline.AsNoTracking().Where(d => d.IsGroup == IsGroup).ToList();
+                if (disciplines.Count != 0) logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return disciplines;
             }
             catch (SqlException sqlEx)
@@ -184,9 +181,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка дисциплин по параметрам.");
             try
             {
-                logger.Debug($"Получение списка дисциплин по параметрам. Тип оценивания = [{basisForAssessing.ToString()}]; Группа дисциплин? = [{IsGroup}] ");
-                List<Discipline> disciplines = context.Discipline.AsNoTracking().Where(d => d.IsGroup == IsGroup && d.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                var disciplines = context.Discipline.AsNoTracking().Where(d => d.IsGroup == IsGroup && d.BasisForAssessingId == basisForAssessing.BasisForAssessingId).ToList();
+                if (disciplines.Count != 0) logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return disciplines;
             }
             catch (SqlException sqlEx)
@@ -214,9 +211,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка дисциплин, общей группы.");
             try
             {
-                logger.Debug($"Получение списка дисциплин, общей группы. Группа дисциплин? = [{disciplineGroup.ToString()}] ");
-                List<Discipline> disciplines = context.Discipline.AsNoTracking().Where(d => d.DisciplineGroupId == disciplineGroup.DisciplineId).ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                var disciplines = context.Discipline.AsNoTracking().Where(d => d.DisciplineGroupId == disciplineGroup.DisciplineId).ToList();
+                if (disciplines.Count != 0) logger.Debug($"Поиск окончен. Количество записей: {disciplines.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return disciplines;
             }
             catch (SqlException sqlEx)
@@ -244,10 +241,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению дисцпиплины");
             try
             {
-                logger.Debug($"Добавляемая запись: {discipline.ToString()}");
+                logger.Debug($"Добавляемая запись {discipline.ToString()}");
                 context.Discipline.Add(discipline);
                 context.SaveChanges();
-                logger.Debug($"Дисциплина успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return discipline;
             }
             catch (SqlException sqlEx)
@@ -275,8 +272,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению дисциплины.");
             try
             {
-                Discipline disciplineToUpdate = context.Discipline.FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
-                logger.Debug($"Текущая запись: {disciplineToUpdate.ToString()}");
+                var disciplineToUpdate = context.Discipline.FirstOrDefault(d => d.DisciplineId == discipline.DisciplineId);
+                logger.Debug($"Текущая запись {disciplineToUpdate.ToString()}");
                 disciplineToUpdate.BasisForAssessingId = discipline.BasisForAssessingId;
                 disciplineToUpdate.Name = discipline.Name;
                 disciplineToUpdate.IsGroup = discipline.IsGroup;
@@ -286,7 +283,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 disciplineToUpdate.EntryExamDate = discipline.EntryExamDate;
                 disciplineToUpdate.StageCount = discipline.StageCount;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {disciplineToUpdate.ToString()}");
+                logger.Debug($"Новая запись {disciplineToUpdate.ToString()}");
                 return disciplineToUpdate;
             }
             catch (SqlException sqlEx)

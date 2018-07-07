@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению иностранного языка.");
             try
             {
-                logger.Debug($"Поиск записи иностранного языка для удаления. Удаляемый объект : {foreignLanguage.ToString()}.");
                 var foreignLanguageToDelete = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == foreignLanguage.LanguageId);
                 if (foreignLanguageToDelete != null)
                 {
                     context.ForeignLanguage.Remove(foreignLanguageToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи иностранного языка успешно завершено.");
+                    logger.Debug("Удаление записи успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -63,9 +62,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску иностранного языка по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи иностранного языка по уникальному идентификатору = {id}.");
                 var foreignLanguageById = context.ForeignLanguage.AsNoTracking().FirstOrDefault(fl => fl.LanguageId == id);
-                if (foreignLanguageById != null) logger.Debug($"Поиск окончен. Искомая запись: {foreignLanguageById.ToString()}.");
+                if (foreignLanguageById != null) logger.Debug($"Поиск окончен. Запись найдена {foreignLanguageById.ToString()}.");
                 return foreignLanguageById;
             }
             catch (SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску иностранного языка по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи иностранного языка по наименованию = {name}.");
                 var foreignLanguageByName = context.ForeignLanguage.AsNoTracking().FirstOrDefault(fl => fl.Name == name);
-                if (foreignLanguageByName != null) logger.Debug($"Поиск окончен. Искомая запись: {foreignLanguageByName.ToString()}.");
+                if (foreignLanguageByName != null) logger.Debug($"Поиск окончен. Запись найдена {foreignLanguageByName.ToString()}.");
                 return foreignLanguageByName;
             }
             catch (SqlException sqlEx)
@@ -122,7 +119,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка иностранных языков.");
             try
             {
-                logger.Debug($"Получение списка иностранных языков.");
                 var foreignLanguages = context.ForeignLanguage.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {foreignLanguages.Count}.");
                 return foreignLanguages;
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению иностранного языка");
             try
             {
-                logger.Debug($"Добавляемая запись: {foreignLanguage.ToString()}");
+                logger.Debug($"Добавляемая запись {foreignLanguage.ToString()}");
                 context.ForeignLanguage.Add(foreignLanguage);
                 context.SaveChanges();
-                logger.Debug($"Иностранный язык успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return foreignLanguage;
             }
             catch (SqlException sqlEx)
@@ -184,10 +180,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var foreignLanguageToUpdate = context.ForeignLanguage.FirstOrDefault(fl => fl.LanguageId == foreignLanguage.LanguageId);
-                logger.Debug($"Текущая запись: {foreignLanguageToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {foreignLanguageToUpdate.ToString()}");
                 foreignLanguageToUpdate.Name = foreignLanguage.Name;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {foreignLanguageToUpdate.ToString()}");
+                logger.Debug($"Новая запись {foreignLanguageToUpdate.ToString()}");
                 return foreignLanguageToUpdate;
             }
             catch (SqlException sqlEx)

@@ -33,10 +33,12 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код приоритета = {this.PriorityId}" + Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код приоритета = {this.PriorityId}" + Environment.NewLine +
                    $"Код абитуриента = {this.EnrolleeId}" + Environment.NewLine +
                    $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
-                   $"Уровень приоритета = {this.PriorityLevel}" + Environment.NewLine;
+                   $"Уровень приоритета = {this.PriorityLevel}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

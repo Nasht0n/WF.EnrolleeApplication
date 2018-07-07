@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению документа.");
             try
             {
-                logger.Debug($"Поиск записи документа для удаления. Удаляемый объект : {document.ToString()}.");
-                Document documentToDelete = context.Document.FirstOrDefault(d => d.DocumentId == document.DocumentId);
+                var documentToDelete = context.Document.FirstOrDefault(d => d.DocumentId == document.DocumentId);
                 if (documentToDelete != null)
                 {
                     context.Document.Remove(documentToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи документа успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -60,12 +59,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Document GetDocument(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску документа.");
+            logger.Trace("Подготовка к поиску документа по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи документа по уникальному идентификатору = {id}.");
-                Document documentById = context.Document.AsNoTracking().FirstOrDefault(d => d.DocumentId == id);
-                if (documentById != null) logger.Debug($"Поиск окончен. Искомая запись: {documentById.ToString()}.");
+                var documentById = context.Document.AsNoTracking().FirstOrDefault(d => d.DocumentId == id);
+                if (documentById != null) logger.Debug($"Поиск окончен. Запись найдена {documentById.ToString()}.");
                 return documentById;
             }
             catch (SqlException sqlEx)
@@ -90,12 +88,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Document GetDocument(string name)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску документа.");
+            logger.Trace("Подготовка к поиску документа по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи документа по наименованию = {name}.");
-                Document documentByName = context.Document.AsNoTracking().FirstOrDefault(d => d.Name == name);
-                if (documentByName != null) logger.Debug($"Поиск окончен. Искомая запись: {documentByName.ToString()}.");
+                var documentByName = context.Document.AsNoTracking().FirstOrDefault(d => d.Name == name);
+                if (documentByName != null) logger.Debug($"Поиск окончен. Запись найдена {documentByName.ToString()}.");
                 return documentByName;
             }
             catch (SqlException sqlEx)
@@ -122,9 +119,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка документов.");
             try
             {
-                logger.Debug($"Получение списка документов.");
-                List<Document> documents = context.Document.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {documents.Count}.");
+                var documents = context.Document.AsNoTracking().ToList();
+                if(documents.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {documents.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return documents;
             }
             catch (SqlException sqlEx)
@@ -152,10 +149,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению документа");
             try
             {
-                logger.Debug($"Добавляемая запись: {document.ToString()}");
+                logger.Debug($"Добавляемая запись {document.ToString()}");
                 context.Document.Add(document);
                 context.SaveChanges();
-                logger.Debug($"Документ успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return document;
             }
             catch (SqlException sqlEx)
@@ -183,11 +180,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению документа.");
             try
             {
-                Document documentToUpdate = context.Document.FirstOrDefault(d => d.DocumentId == document.DocumentId);
-                logger.Debug($"Текущая запись: {documentToUpdate.ToString()}");
+                var documentToUpdate = context.Document.FirstOrDefault(d => d.DocumentId == document.DocumentId);
+                logger.Debug($"Текущая запись {documentToUpdate.ToString()}");
                 documentToUpdate.Name = document.Name;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {documentToUpdate.ToString()}");
+                logger.Debug($"Новая запись {documentToUpdate.ToString()}");
                 return documentToUpdate;
             }
             catch (SqlException sqlEx)

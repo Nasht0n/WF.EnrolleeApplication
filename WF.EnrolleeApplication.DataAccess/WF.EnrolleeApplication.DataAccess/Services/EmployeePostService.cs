@@ -34,13 +34,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению должности.");
             try
             {
-                logger.Debug($"Поиск записи должности для удаления. Удаляемый объект : {post.ToString()}.");
-                EmployeePost postToDelete = context.EmployeePost.FirstOrDefault(ep => ep.PostId == post.PostId);
+                var postToDelete = context.EmployeePost.FirstOrDefault(ep => ep.PostId == post.PostId);
                 if (postToDelete != null)
                 {
                     context.EmployeePost.Remove(postToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи должности успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -63,12 +62,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public EmployeePost GetEmployeePost(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску должности.");
+            logger.Trace("Подготовка к поиску должности по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи должности по уникальному идентификатору = {id}.");
-                EmployeePost postById = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.PostId == id);
-                if (postById != null) logger.Debug($"Поиск окончен. Искомая запись: {postById.ToString()}.");
+                var postById = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.PostId == id);
+                if (postById != null) logger.Debug($"Поиск окончен. Запись найдена {postById.ToString()}.");
                 return postById;
             }
             catch (SqlException sqlEx)
@@ -93,12 +91,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public EmployeePost GetEmployeePost(string name)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску должности.");
+            logger.Trace("Подготовка к поиску должности по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи должности по наименованию = {name}.");
-                EmployeePost postByName = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.Name == name);
-                if (postByName != null) logger.Debug($"Поиск окончен. Искомая запись: {postByName.ToString()}.");
+                var postByName = context.EmployeePost.AsNoTracking().FirstOrDefault(ep => ep.Name == name);
+                if (postByName != null) logger.Debug($"Поиск окончен. Запись найдена {postByName.ToString()}.");
                 return postByName;
             }
             catch (SqlException sqlEx)
@@ -125,8 +122,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка должностей.");
             try
             {
-                logger.Debug($"Получение списка должностей.");
-                List<EmployeePost> posts = context.EmployeePost.AsNoTracking().ToList();
+                var posts = context.EmployeePost.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {posts.Count}.");
                 return posts;
             }
@@ -155,10 +151,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению должности");
             try
             {
-                logger.Debug($"Добавляемая запись: {post.ToString()}");
+                logger.Debug($"Добавляемая запись {post.ToString()}");
                 context.EmployeePost.Add(post);
                 context.SaveChanges();
-                logger.Debug($"Должность успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return post;
             }
             catch (SqlException sqlEx)
@@ -186,15 +182,15 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению должности.");
             try
             {
-                EmployeePost postToUpdate = context.EmployeePost.FirstOrDefault(ep => ep.PostId == post.PostId);
-                logger.Debug($"Текущая запись: {postToUpdate.ToString()}");
+                var postToUpdate = context.EmployeePost.FirstOrDefault(ep => ep.PostId == post.PostId);
+                logger.Debug($"Текущая запись {postToUpdate.ToString()}");
                 postToUpdate.Name = post.Name;
                 postToUpdate.Note = post.Note;
                 postToUpdate.RegistrationAllow = post.RegistrationAllow;
                 postToUpdate.EnrollAllow = post.EnrollAllow;
                 postToUpdate.DictionaryAllow = post.DictionaryAllow;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {postToUpdate.ToString()}");
+                logger.Debug($"Новая запись {postToUpdate.ToString()}");
                 return postToUpdate;
             }
             catch (SqlException sqlEx)

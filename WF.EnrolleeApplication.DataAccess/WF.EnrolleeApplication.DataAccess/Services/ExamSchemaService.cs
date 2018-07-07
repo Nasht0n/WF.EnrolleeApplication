@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению экзаменнационной схемы.");
             try
             {
-                logger.Debug($"Поиск записи экзаменнационной схемы оценки для удаления. Удаляемый объект : {examSchema.ToString()}.");
                 var examSchemaToDelete = context.ExamSchema.FirstOrDefault(es => es.DisciplineId == examSchema.DisciplineId && es.SpecialityId == examSchema.SpecialityId);
                 if (examSchemaToDelete != null)
                 {
                     context.ExamSchema.Remove(examSchemaToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи экзаменнационной схемы успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -61,12 +60,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public ExamSchema GetExamSchema(Speciality speciality, Discipline discipline)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску экзаменнационной схемы.");
+            logger.Trace("Подготовка к поиску экзаменнационной схемы по параметрам.");
             try
             {
-                logger.Debug($"Поиск записи экзаменнационной схемы. Специальность = [{speciality.ToString()}]; Дисциплина = [{discipline.ToString()}].");
                 var examSchema = context.ExamSchema.AsNoTracking().FirstOrDefault(es => es.DisciplineId == discipline.DisciplineId && es.SpecialityId == speciality.SpecialityId);
-                if (examSchema != null) logger.Debug($"Поиск окончен. Искомая запись: {examSchema.ToString()}.");
+                if (examSchema != null) logger.Debug($"Поиск окончен. Запись найдена {examSchema.ToString()}.");
                 return examSchema;
             }
             catch (SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к получению списка экзаменнационых схем.");
             try
             {
-                logger.Debug($"Поиск списка экзаменнационых схема.");
                 var examSchemas = context.ExamSchema.AsNoTracking().ToList();
-                if (examSchemas != null) logger.Debug($"Поиск окончен. Искомая запись: {examSchemas.ToString()}.");
+                
                 return examSchemas;
             }
             catch (SqlException sqlEx)
@@ -120,12 +117,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public List<ExamSchema> GetExamSchemas(Speciality speciality)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к получению списка экзаменнационых схем.");
+            logger.Trace("Подготовка к получению списка экзаменнационых схем выбранной специальности.");
             try
             {
-                logger.Debug($"Поиск списка экзаменнационых схем. Специальность = [{speciality.ToString()}]");
                 var examSchemas = context.ExamSchema.AsNoTracking().Where(es => es.SpecialityId == speciality.SpecialityId).ToList();
-                if (examSchemas != null) logger.Debug($"Поиск окончен. Искомая запись: {examSchemas.ToString()}.");
+                logger.Debug($"Поиск окончен. Количество записей: {examSchemas.Count}.");
                 return examSchemas;
             }
             catch (SqlException sqlEx)
@@ -153,10 +149,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению экзаменнационной схемы");
             try
             {
-                logger.Debug($"Добавляемая запись: {examSchema.ToString()}");
+                logger.Debug($"Добавляемая запись {examSchema.ToString()}");
                 context.ExamSchema.Add(examSchema);
                 context.SaveChanges();
-                logger.Debug($"Экзаменнационная схема успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return examSchema;
             }
             catch (SqlException sqlEx)

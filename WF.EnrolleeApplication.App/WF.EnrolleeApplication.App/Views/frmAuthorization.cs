@@ -164,7 +164,7 @@ namespace WF.EnrolleeApplication.App.Views
                         if (dashboardResult == DialogResult.Abort)
                         {
                             // Завершение работы пользователя
-                            logger.Info($"Пользователь {employee.ToString()} завершил работу в системе.");
+                            logger.Info($"Пользователь {employee.Fullname.Trim()} завершил работу в системе.");
                             this.Show();
                             tbUsername.Text = null;
                             tbPassword.Text = null;

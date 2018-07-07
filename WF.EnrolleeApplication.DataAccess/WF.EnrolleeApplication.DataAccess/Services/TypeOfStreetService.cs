@@ -31,7 +31,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению типа улицы.");
             try
             {
-                logger.Debug($"Поиск записи типа улицы для удаления. Удаляемый объект : {typeOfStreet.ToString()}.");
                 var typeOfStreetToDelete = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == typeOfStreet.StreetTypeId);
                 if (typeOfStreetToDelete != null)
                 {
@@ -63,9 +62,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа улицы по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи типа улицы по уникальному идентификатору = {id}.");
                 var typeOfStreetId = context.TypeOfStreet.AsNoTracking().FirstOrDefault(ts => ts.StreetTypeId == id);
-                if (typeOfStreetId != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfStreetId.ToString()}.");
+                if (typeOfStreetId != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfStreetId.ToString()}.");
                 return typeOfStreetId;
             }
             catch (SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа улицы по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи типа улицы по наименованию = {fullname}.");
                 var typeOfStreetName = context.TypeOfStreet.AsNoTracking().FirstOrDefault(ts => ts.Fullname == fullname);
-                if (typeOfStreetName != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfStreetName.ToString()}.");
+                if (typeOfStreetName != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfStreetName.ToString()}.");
                 return typeOfStreetName;
             }
             catch (SqlException sqlEx)
@@ -122,7 +119,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка типов улиц.");
             try
             {
-                logger.Debug($"Получение списка типов улиц.");
                 var typeOfStreets = context.TypeOfStreet.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {typeOfStreets.Count}.");
                 return typeOfStreets;
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению типа улицы");
             try
             {
-                logger.Debug($"Добавляемая запись: {typeOfStreet.ToString()}");
+                logger.Debug($"Добавляемая запись {typeOfStreet.ToString()}");
                 context.TypeOfStreet.Add(typeOfStreet);
                 context.SaveChanges();
-                logger.Debug($"Тип улицы успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return typeOfStreet;
             }
             catch (SqlException sqlEx)
@@ -184,11 +180,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var typeOfStreetToUpdate = context.TypeOfStreet.FirstOrDefault(ts => ts.StreetTypeId == typeOfStreet.StreetTypeId);
-                logger.Debug($"Текущая запись: {typeOfStreetToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {typeOfStreetToUpdate.ToString()}");
                 typeOfStreetToUpdate.Fullname = typeOfStreet.Fullname;
                 typeOfStreetToUpdate.Shortname = typeOfStreet.Shortname;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {typeOfStreetToUpdate.ToString()}");
+                logger.Debug($"Новая запись {typeOfStreetToUpdate.ToString()}");
                 return typeOfStreetToUpdate;
             }
             catch (SqlException sqlEx)

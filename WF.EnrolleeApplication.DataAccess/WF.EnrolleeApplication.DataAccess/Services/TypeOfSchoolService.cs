@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению типа учебного заведения.");
             try
             {
-                logger.Debug($"Поиск записи типа учебного заведения для удаления. Удаляемый объект : {typeOfSchool.ToString()}.");
                 var typeOfSchoolToDelete = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == typeOfSchool.SchoolTypeId);
                 if (typeOfSchoolToDelete != null)
                 {
                     context.TypeOfSchool.Remove(typeOfSchoolToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи типа учебного заведения успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -63,9 +62,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа финансирования по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи типа финансирования по уникальному идентификатору = {id}.");
                 var typeOfSchoolById = context.TypeOfSchool.AsNoTracking().FirstOrDefault(ts => ts.SchoolTypeId == id);
-                if (typeOfSchoolById != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfSchoolById.ToString()}.");
+                if (typeOfSchoolById != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfSchoolById.ToString()}.");
                 return typeOfSchoolById;
             }
             catch (SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску типа учебного заведения по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи типа учебного заведения по наименованию = {name}.");
                 var typeOfSchoolByName = context.TypeOfSchool.AsNoTracking().FirstOrDefault(ts => ts.Name == name);
-                if (typeOfSchoolByName != null) logger.Debug($"Поиск окончен. Искомая запись: {typeOfSchoolByName.ToString()}.");
+                if (typeOfSchoolByName != null) logger.Debug($"Поиск окончен. Запись найдена {typeOfSchoolByName.ToString()}.");
                 return typeOfSchoolByName;
             }
             catch (SqlException sqlEx)
@@ -122,7 +119,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка типов учебных заведений.");
             try
             {
-                logger.Debug($"Получение списка типов учебных заведений.");
                 var typeOfSchools = context.TypeOfSchool.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {typeOfSchools.Count}.");
                 return typeOfSchools;
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению типа учебного заведения");
             try
             {
-                logger.Debug($"Добавляемая запись: {typeOfSchool.ToString()}");
+                logger.Debug($"Добавляемая запись {typeOfSchool.ToString()}");
                 context.TypeOfSchool.Add(typeOfSchool);
                 context.SaveChanges();
-                logger.Debug($"Тип учебного заведения успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return typeOfSchool;
             }
             catch (SqlException sqlEx)
@@ -184,10 +180,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var typeOfSchoolToUpdate = context.TypeOfSchool.FirstOrDefault(ts => ts.SchoolTypeId == typeOfSchool.SchoolTypeId);
-                logger.Debug($"Текущая запись: {typeOfSchoolToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {typeOfSchoolToUpdate.ToString()}");
                 typeOfSchoolToUpdate.Name = typeOfSchool.Name;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {typeOfSchoolToUpdate.ToString()}");
+                logger.Debug($"Новая запись {typeOfSchoolToUpdate.ToString()}");
                 return typeOfSchoolToUpdate;
             }
             catch (SqlException sqlEx)

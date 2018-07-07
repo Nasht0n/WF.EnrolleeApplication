@@ -33,8 +33,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к переводу оценки из десятибалльной в пятибалльную систему оценивания.");
             try
             {
-                logger.Debug($"Поиск записи системы оценивания. Оценка в десятибалльной системе : {ten}.");
-                ConversionSystem conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.Ten == ten);
+                var conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.Ten == ten);
                 if (conversionSystem != null) logger.Debug($"Поиск окончен. Оценка в пятибалльной системе: {conversionSystem.Five}.");
                 return conversionSystem.Five;
             }
@@ -63,8 +62,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к переводу оценки из пятибалльной в десятибалльную систему оценивания.");
             try
             {
-                logger.Debug($"Поиск записи системы оценивания. Оценка в пятибалльной системе : {five}.");
-                ConversionSystem conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.Five == five);
+                var conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.Five == five);
                 if (conversionSystem != null) logger.Debug($"Поиск окончен. Оценка в десятибалльной системе: {conversionSystem.Ten}.");
                 return conversionSystem.Ten;
             }
@@ -92,13 +90,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению записи системы перевода оценок.");
             try
             {
-                logger.Debug($"Поиск записи системы перевода оценок для удаления. Удаляемый объект : {conversionSystem.ToString()}.");
-                ConversionSystem conversionSystemToDelete = context.ConversionSystem.FirstOrDefault(cs => cs.Five == conversionSystem.Five && cs.Ten == conversionSystem.Ten);
+                var conversionSystemToDelete = context.ConversionSystem.FirstOrDefault(cs => cs.Five == conversionSystem.Five && cs.Ten == conversionSystem.Ten);
                 if (conversionSystemToDelete != null)
                 {
                     context.ConversionSystem.Remove(conversionSystemToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи системы перевода оценок успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -122,12 +119,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public ConversionSystem GetConversion(double five, double ten)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску записи системы перевода оценок.");
+            logger.Trace("Подготовка к поиску записи системы перевода оценок по оценкам.");
             try
             {
-                logger.Debug($"Поиск записи системы перевода оценок (Пятибалльная система = {five}; Десятибалльная система = {ten}).");
-                ConversionSystem conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.Five == five && cs.Ten == ten);
-                if (conversionSystem != null) logger.Debug($"Поиск окончен. Искомая запись: {conversionSystem.ToString()}.");
+                var conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.Five == five && cs.Ten == ten);
+                if (conversionSystem != null) logger.Debug($"Поиск окончен. Запись найдена {conversionSystem.ToString()}.");
                 return conversionSystem;
             }
             catch (SqlException sqlEx)
@@ -152,12 +148,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public ConversionSystem GetConversion(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску записи системы перевода оценок.");
+            logger.Trace("Подготовка к поиску записи системы перевода оценок по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи системы перевода оценок по уникальному идентификатору = {id}.");
-                ConversionSystem conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.ConversionSystemId == id);
-                if (conversionSystem != null) logger.Debug($"Поиск окончен. Искомая запись: {conversionSystem.ToString()}.");
+                var conversionSystem = context.ConversionSystem.AsNoTracking().FirstOrDefault(cs => cs.ConversionSystemId == id);
+                if (conversionSystem != null) logger.Debug($"Поиск окончен. Запись найдена {conversionSystem.ToString()}.");
                 return conversionSystem;
             }
             catch (SqlException sqlEx)
@@ -184,9 +179,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка записей системы перевода оценок.");
             try
             {
-                logger.Debug($"Получение списка записей системы перевода оценок.");
-                List<ConversionSystem> conversions = context.ConversionSystem.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {conversions.Count}.");
+                var conversions = context.ConversionSystem.AsNoTracking().ToList();
+                if (conversions.Count!=0) logger.Debug($"Поиск окончен. Количество записей: {conversions.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return conversions;
             }
             catch (SqlException sqlEx)
@@ -217,7 +212,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {conversionSystem.ToString()}");
                 context.ConversionSystem.Add(conversionSystem);
                 context.SaveChanges();
-                logger.Debug($"Запись перевода оценки успешно добавлена.");
+                logger.Debug($"Запись успешно добавлена.");
                 return conversionSystem;
             }
             catch (SqlException sqlEx)

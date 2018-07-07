@@ -33,7 +33,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         /// <returns>Форматированная строка</returns>
         public override string ToString()
         {
-            return $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
+            return Environment.NewLine +
+                   $"Информация об объекте: " + Environment.NewLine + 
+                   $"Код специальности = {this.SpecialityId}" + Environment.NewLine +
                    $"Код факультета = {this.FacultyId}" + Environment.NewLine +
                    $"Код формы обучения = {this.FormOfStudyId}" + Environment.NewLine +
                    $"Наименование специальности = {this.Fullname.Trim()}" + Environment.NewLine +
@@ -45,7 +47,7 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
                    $"План набора (Целевые места) = {this.TargetCountPlace}" + Environment.NewLine +
                    $"Группа специальностей? {this.IsGroup}" + Environment.NewLine +
                    $"Специальность группы специальностей? {this.IsAlternative}" + Environment.NewLine +
-                   $"Код группы специальностей = {this.SpecialityGroupId}" + Environment.NewLine;
+                   $"Код группы специальностей = {this.SpecialityGroupId}";
         }
         /// <summary>
         /// Переопределенный метод получения хеш-кода объекта

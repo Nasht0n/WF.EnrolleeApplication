@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению приоритета специальности.");
             try
             {
-                logger.Debug($"Поиск записи приоритета специальности для удаления. Удаляемый объект : {priorityOfSpeciality.ToString()}.");
                 var priorityOfSpecialityToDelete = context.PriorityOfSpeciality.FirstOrDefault(ps => ps.PriorityId == priorityOfSpeciality.PriorityId);
                 if (priorityOfSpecialityToDelete != null)
                 {
                     context.PriorityOfSpeciality.Remove(priorityOfSpecialityToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи приоритета специальности успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -62,7 +61,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка приоритетов.");
             try
             {
-                logger.Debug($"Получение списка приоритетов.");
                 var priorityOfSpecialities = context.PriorityOfSpeciality.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {priorityOfSpecialities.Count}.");
                 return priorityOfSpecialities;
@@ -92,7 +90,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка приоритетов абитуриента.");
             try
             {
-                logger.Debug($"Получение списка приоритетов. Абитуриент = [{enrollee.ToString()}]");
                 var priorityOfSpecialities = context.PriorityOfSpeciality.AsNoTracking().Where(ps => ps.EnrolleeId == enrollee.EnrolleeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {priorityOfSpecialities.Count}.");
                 return priorityOfSpecialities;
@@ -122,9 +119,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску приоритета по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи приоритета по уникальному идентификатору = {id}.");
                 var priorityOfSpecialityById = context.PriorityOfSpeciality.AsNoTracking().FirstOrDefault(ps => ps.EnrolleeId == id);
-                if (priorityOfSpecialityById != null) logger.Debug($"Поиск окончен. Искомая запись: {priorityOfSpecialityById.ToString()}.");
+                if (priorityOfSpecialityById != null) logger.Debug($"Поиск окончен. Запись найдена {priorityOfSpecialityById.ToString()}.");
                 return priorityOfSpecialityById;
             }
             catch (SqlException sqlEx)
@@ -153,9 +149,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску приоритета по параметрам.");
             try
             {
-                logger.Debug($"Поиск записи приоритета по параметрам. Абитуриент = [{enrollee.ToString()}]; Специальность = [{speciality.ToString()}].");
                 var priorityOfSpeciality = context.PriorityOfSpeciality.AsNoTracking().FirstOrDefault(ps => ps.EnrolleeId == enrollee.EnrolleeId && ps.SpecialityId == speciality.SpecialityId);
-                if (priorityOfSpeciality != null) logger.Debug($"Поиск окончен. Искомая запись: {priorityOfSpeciality.ToString()}.");
+                if (priorityOfSpeciality != null) logger.Debug($"Поиск окончен. Запись найдена {priorityOfSpeciality.ToString()}.");
                 return priorityOfSpeciality;
             }
             catch (SqlException sqlEx)
@@ -183,10 +178,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению приоритета специальности");
             try
             {
-                logger.Debug($"Добавляемая запись: {priorityOfSpeciality.ToString()}");
+                logger.Debug($"Добавляемая запись {priorityOfSpeciality.ToString()}");
                 context.PriorityOfSpeciality.Add(priorityOfSpeciality);
                 context.SaveChanges();
-                logger.Debug($"Приоритет специальности успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return priorityOfSpeciality;
             }
             catch (SqlException sqlEx)
@@ -215,12 +210,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var priorityOfSpecialityToUpdate = context.PriorityOfSpeciality.FirstOrDefault(ps => ps.PriorityId == priorityOfSpeciality.PriorityId);
-                logger.Debug($"Текущая запись: {priorityOfSpecialityToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {priorityOfSpecialityToUpdate.ToString()}");
                 priorityOfSpecialityToUpdate.EnrolleeId = priorityOfSpeciality.EnrolleeId;
                 priorityOfSpecialityToUpdate.SpecialityId = priorityOfSpeciality.SpecialityId;
                 priorityOfSpecialityToUpdate.PriorityLevel = priorityOfSpeciality.PriorityLevel;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {priorityOfSpecialityToUpdate.ToString()}");
+                logger.Debug($"Новая запись {priorityOfSpecialityToUpdate.ToString()}");
                 return priorityOfSpecialityToUpdate;
             }
             catch (SqlException sqlEx)

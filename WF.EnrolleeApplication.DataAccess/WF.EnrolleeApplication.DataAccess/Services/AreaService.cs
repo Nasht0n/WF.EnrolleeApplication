@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению области");
             try
             {
-                logger.Debug($"Поиск записи области для удаления. Удаляемый объект : [{area.Name}].");
-                Area areaToDelete = context.Area.FirstOrDefault(a => a.AreaId == area.AreaId);
+                var areaToDelete = context.Area.FirstOrDefault(a => a.AreaId == area.AreaId);
                 if (areaToDelete != null)
                 {
                     context.Area.Remove(areaToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление области успешно завершено");
+                    logger.Debug("Удаление успешно завершено");
                 }
             }            
             catch(SqlException sqlEx)
@@ -63,9 +62,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску области по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Уникальный идентификатор области = [{id}].");
-                Area areaById = context.Area.AsNoTracking().FirstOrDefault(a => a.AreaId == id);
-                if(areaById!=null) logger.Debug($"Область найдена:[{areaById.AreaId}.  {areaById.Name}].");
+                var areaById = context.Area.AsNoTracking().FirstOrDefault(a => a.AreaId == id);
+                if(areaById!=null) logger.Debug($"Запись найдена {areaById.ToString()}");
                 return areaById;
             }
             catch(SqlException sqlEx)
@@ -93,9 +91,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску области по наименованию.");
             try
             {
-                logger.Debug($"Наименование области = [{name}].");
-                Area areaByName = context.Area.AsNoTracking().FirstOrDefault(a => a.Name == name);
-                if (areaByName != null) logger.Debug($"Область найдена:[{areaByName.AreaId}.  {areaByName.Name}].");
+                var areaByName = context.Area.AsNoTracking().FirstOrDefault(a => a.Name == name);
+                if (areaByName != null) logger.Debug($"Запись найдена {areaByName.ToString()}");
                 return areaByName;
             }
             catch(SqlException sqlEx)
@@ -122,8 +119,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к получению списка областей.");
             try
             {
-                List<Area> areas = context.Area.AsNoTracking().ToList();
-                if (areas.Count != 0) logger.Debug("Список областей получен.");
+                var areas = context.Area.AsNoTracking().ToList();
+                if (areas.Count != 0) logger.Debug($"Список получен. Количество записей: [{areas.Count}].");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return areas;
             }
             catch(SqlException sqlEx)
@@ -151,10 +149,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению новой области.");
             try
             {
-                logger.Debug($"Добавляемая запись:" + Environment.NewLine + $"{area.ToString()}");
+                logger.Debug($"Добавляемая область: {area.ToString()}");
                 context.Area.Add(area);
                 context.SaveChanges();
-                logger.Debug($"Новая запись области успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return area;
             }
             catch(SqlException sqlEx)
@@ -179,14 +177,14 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public Area UpdateArea(Area area)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к обновлению данных выбранной области.");
+            logger.Trace("Подготовка к редактированию данных выбранной области.");
             try
             {                
-                Area areaToUpdate = context.Area.FirstOrDefault(a => a.AreaId == area.AreaId);
-                logger.Debug($"Текущая область:" +Environment.NewLine +"{areaToUpdate.ToString()}");              
+                var areaToUpdate = context.Area.FirstOrDefault(a => a.AreaId == area.AreaId);
+                logger.Debug($"Запись до редактирования области: {areaToUpdate.ToString()}");              
                 areaToUpdate.Name = area.Name;
                 context.SaveChanges();
-                logger.Debug($"Отредактированная область:" + Environment.NewLine + "{areaToUpdate.ToString()}");
+                logger.Debug($"Запись после редактирования области: {areaToUpdate.ToString()}");
                 return areaToUpdate;
             }
             catch(SqlException sqlEx)

@@ -1685,6 +1685,7 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 // Получаем текущий индекс выбранной строки
                 int rowIndex = SertificateGrid.CurrentRow.Index;
+                SertificateGrid.Rows[rowIndex].Cells[2].Value += "*";
                 // Добавляем информацию о заменяемой дисциплине
                 SertificateGrid.Rows[rowIndex].Cells[6].Value = changeDisciplineCard.discipline.Name;
             }
@@ -2639,11 +2640,50 @@ namespace WF.EnrolleeApplication.App.Views
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl.SelectedTab == tabControl.TabPages["tabPage3"])//your specific tabname
-            {
-                // your stuff
+            if (tabControl.SelectedTab == tabControl.TabPages["tabPageEnroll"])
+            {                
                 SetSertificateTableStyle();
             }
+        }
+
+        private void SertificateGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int changedDisciplineId = Int32.Parse(SertificateGrid.CurrentRow.Cells[0].Value.ToString());
+            var currentDiscipline = disciplineService.GetDiscipline(changedDisciplineId);
+            bool IsClearRow = CheckedCurrentRowValue(e.RowIndex);
+            string value = SertificateGrid.Rows[e.RowIndex].Cells[3].Value.ToString();
+
+            if (currentDiscipline.IsAlternative && currentDiscipline.DisciplineGroupId.HasValue)
+            {
+                foreach (DataGridViewRow row in SertificateGrid.Rows)
+                {
+                    int disciplineId = Int32.Parse(row.Cells[0].Value.ToString());
+                    var discipline = disciplineService.GetDiscipline(disciplineId);
+
+                    if (discipline.Equals(currentDiscipline)) continue;
+                    if (discipline.IsAlternative && discipline.DisciplineGroupId.HasValue)
+                    {
+                        if(discipline.DisciplineGroupId.Value == currentDiscipline.DisciplineGroupId.Value && !IsClearRow)
+                        {
+                            row.DefaultCellStyle.BackColor = Color.DarkGray;
+                            row.ReadOnly = true;
+                        }
+                        else
+                        {
+                            row.DefaultCellStyle.BackColor = Color.White;
+                            row.ReadOnly = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool CheckedCurrentRowValue(int rowIndex)
+        {
+            string sertcode = SertificateGrid.Rows[rowIndex].Cells[3].Value.ToString();
+            string mark = SertificateGrid.Rows[rowIndex].Cells[4].Value.ToString();
+            if (string.IsNullOrWhiteSpace(sertcode) && string.IsNullOrWhiteSpace(mark)) return true;
+            else return false;
         }
     }
 }

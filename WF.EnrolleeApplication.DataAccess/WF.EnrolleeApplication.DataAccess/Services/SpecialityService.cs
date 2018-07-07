@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению специальности первой ступени.");
             try
             {
-                logger.Debug($"Поиск записи специальности первой ступени для удаления. Удаляемый объект : {speciality.ToString()}.");
                 var specialityToDelete = context.Speciality.FirstOrDefault(s => s.SpecialityId == speciality.SpecialityId);
                 if (specialityToDelete != null)
                 {
                     context.Speciality.Remove(specialityToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи специальности первой ступени успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -62,7 +61,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка специальностей первой ступени.");
             try
             {
-                logger.Debug($"Получение списка специальностей первой ступени.");
                 var specialities = context.Speciality.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {specialities.Count}.");
                 return specialities;
@@ -92,7 +90,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка специальностей первой ступени выбранного факультета.");
             try
             {
-                logger.Debug($"Получение списка специальностей первой ступени. Факультет = [{faculty.ToString()}]");
                 var specialities = context.Speciality.AsNoTracking().Where(s => s.FacultyId == faculty.FacultyId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {specialities.Count}.");
                 return specialities;
@@ -122,7 +119,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка специальностей первой ступени выбранной формы обучения.");
             try
             {
-                logger.Debug($"Получение списка специальностей первой ступени. Форма обучения = [{formOfStudy.ToString()}]");
                 var specialities = context.Speciality.AsNoTracking().Where(s => s.FormOfStudyId == formOfStudy.FormOfStudyId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {specialities.Count}.");
                 return specialities;
@@ -153,7 +149,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка специальностей первой ступени по параметрам.");
             try
             {
-                logger.Debug($"Получение списка специальностей первой ступени по параметрам. Факультет = [{faculty.ToString()}]; Форма обучения = [{formOfStudy.ToString()}]");
                 var specialities = context.Speciality.AsNoTracking().Where(s => s.FormOfStudyId == formOfStudy.FormOfStudyId && s.FacultyId == faculty.FacultyId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {specialities.Count}.");
                 return specialities;
@@ -183,7 +178,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка специальностей первой ступени группы специальностей.");
             try
             {
-                logger.Debug($"Получение списка специальностей первой ступени группы специальностей. Группа специальности = [{groupSpeciality.ToString()}]");
                 var specialities = context.Speciality.AsNoTracking().Where(s => s.SpecialityGroupId == groupSpeciality.SpecialityId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {specialities.Count}.");
                 return specialities;
@@ -213,9 +207,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску специальности первой ступени по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи специальности первой ступени по уникальному идентификатору = {id}.");
                 var specialityById = context.Speciality.AsNoTracking().FirstOrDefault(s => s.SpecialityId == id);
-                if (specialityById != null) logger.Debug($"Поиск окончен. Искомая запись: {specialityById.ToString()}.");
+                if (specialityById != null) logger.Debug($"Поиск окончен. Запись найдена {specialityById.ToString()}.");
                 return specialityById;
             }
             catch (SqlException sqlEx)
@@ -243,10 +236,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску специальности первой ступени по шифру.");
             try
             {
-                logger.Debug($"Поиск записи специальности первой ступени по шифру = {cipher}.");
-                var specialityById = context.Speciality.AsNoTracking().FirstOrDefault(s => s.Cipher == cipher);
-                if (specialityById != null) logger.Debug($"Поиск окончен. Искомая запись: {specialityById.ToString()}.");
-                return specialityById;
+                var specialityByCipher = context.Speciality.AsNoTracking().FirstOrDefault(s => s.Cipher == cipher);
+                if (specialityByCipher != null) logger.Debug($"Поиск окончен. Запись найдена {specialityByCipher.ToString()}.");
+                return specialityByCipher;
             }
             catch (SqlException sqlEx)
             {
@@ -273,10 +265,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению специальности первой ступени");
             try
             {
-                logger.Debug($"Добавляемая запись: {speciality.ToString()}");
+                logger.Debug($"Добавляемая запись {speciality.ToString()}");
                 context.Speciality.Add(speciality);
                 context.SaveChanges();
-                logger.Debug($"Специальность первой ступени успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return speciality;
             }
             catch (SqlException sqlEx)
@@ -305,7 +297,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var specialityToUpdate = context.Speciality.FirstOrDefault(s => s.SpecialityId == speciality.SpecialityId);
-                logger.Debug($"Текущая запись: {specialityToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {specialityToUpdate.ToString()}");
                 specialityToUpdate.FacultyId = speciality.FacultyId;
                 specialityToUpdate.FormOfStudyId = speciality.FormOfStudyId;
                 specialityToUpdate.Fullname = speciality.Fullname;
@@ -318,7 +310,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 specialityToUpdate.IsAlternative = speciality.IsAlternative;
                 specialityToUpdate.SpecialityGroupId = speciality.SpecialityGroupId;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {specialityToUpdate.ToString()}");
+                logger.Debug($"Новая запись {specialityToUpdate.ToString()}");
                 return specialityToUpdate;
             }
             catch (SqlException sqlEx)

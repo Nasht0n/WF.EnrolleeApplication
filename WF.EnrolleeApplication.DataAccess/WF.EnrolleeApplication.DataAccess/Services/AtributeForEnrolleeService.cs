@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению данных атрибута абитуриента.");
             try
             {
-                logger.Debug($"Поиск записи оценки для удаления. Удаляемый объект : {atributeForEnrollee.ToString()}.");
-                AtributeForEnrollee atributeForEnrolleeToDelete = context.AtributeForEnrollee.FirstOrDefault(a => a.Id == atributeForEnrollee.Id);
+                var atributeForEnrolleeToDelete = context.AtributeForEnrollee.FirstOrDefault(a => a.Id == atributeForEnrollee.Id);
                 if (atributeForEnrolleeToDelete != null)
                 {
                     context.AtributeForEnrollee.Remove(atributeForEnrolleeToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление атрибута абитуриента успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }            
             }
             catch(SqlException sqlEx)
@@ -61,12 +60,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public AtributeForEnrollee GetAtributeForEnrollee(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к получению данных атрибута абитуриента.");
+            logger.Trace("Подготовка к получению данных атрибута абитуриента по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск по уникальному идентификатору, id = {id}.");
-                AtributeForEnrollee atributeForEnrollee = context.AtributeForEnrollee.AsNoTracking().FirstOrDefault(a => a.Id == id);
-                if (atributeForEnrollee != null) logger.Debug($"Поиск окончен.\n Запись : {atributeForEnrollee.ToString()}.");
+                var atributeForEnrollee = context.AtributeForEnrollee.AsNoTracking().FirstOrDefault(a => a.Id == id);
+                if (atributeForEnrollee != null) logger.Debug($"Поиск окончен. Запись найдена {atributeForEnrollee.ToString()}.");
                 return atributeForEnrollee;
             }
             catch(SqlException sqlEx)
@@ -95,9 +93,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к получению данных атрибута абитуриента.");
             try
             {
-                logger.Debug($"Поиск по записи абитуриента(Код абитуриента = {enrollee.EnrolleeId}) и атрибута(Код атрибута = {atribute.AtributeId}).");
-                AtributeForEnrollee atributeForEnrollee = context.AtributeForEnrollee.AsNoTracking().FirstOrDefault(a => a.AtributeId == atribute.AtributeId && a.EnrolleeId == enrollee.EnrolleeId);
-                if (atributeForEnrollee != null) logger.Debug($"Поиск окончен.\n Запись : {atributeForEnrollee.ToString()}.");
+                var atributeForEnrollee = context.AtributeForEnrollee.AsNoTracking().FirstOrDefault(a => a.AtributeId == atribute.AtributeId && a.EnrolleeId == enrollee.EnrolleeId);
+                if (atributeForEnrollee != null) logger.Debug($"Поиск окончен. Запись найдена {atributeForEnrollee.ToString()}.");
                 return atributeForEnrollee;
             }
             catch (SqlException sqlEx)
@@ -124,8 +121,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к получению списка данных атрибутов абитуриентов.");
             try
             {
-                logger.Debug($"Получение списка атрибутов абитуриентов");
-                List<AtributeForEnrollee> atributesForEnrollee = context.AtributeForEnrollee.AsNoTracking().ToList();
+                var atributesForEnrollee = context.AtributeForEnrollee.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей : {atributesForEnrollee.Count}.");
                 return atributesForEnrollee;
             }
@@ -154,8 +150,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к получению списка данных атрибутов абитуриента.");
             try
             {
-                logger.Debug($"Получение списка атрибутов абитуриента (Код абитуриента = {enrollee.EnrolleeId}).");
-                List<AtributeForEnrollee> atributesForEnrollee = context.AtributeForEnrollee.AsNoTracking().Where(a => a.EnrolleeId == enrollee.EnrolleeId).ToList();
+                var atributesForEnrollee = context.AtributeForEnrollee.AsNoTracking().Where(a => a.EnrolleeId == enrollee.EnrolleeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей : {atributesForEnrollee.Count}.");
                 return atributesForEnrollee;
             }
@@ -184,8 +179,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к получению списка абитуриентов с атрибутом.");
             try
             {
-                logger.Debug($"Получение списка абитуриентов с атрибутом (Код атрибута = {atribute.AtributeId}).");
-                List<AtributeForEnrollee> atributesForEnrollee = context.AtributeForEnrollee.AsNoTracking().Where(a => a.AtributeId == atribute.AtributeId).ToList();
+                var atributesForEnrollee = context.AtributeForEnrollee.AsNoTracking().Where(a => a.AtributeId == atribute.AtributeId).ToList();
                 logger.Debug($"Поиск окончен. Количество записей : {atributesForEnrollee.Count}.");
                 return atributesForEnrollee;
             }
@@ -217,7 +211,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
                 logger.Debug($"Добавляемая запись: {atributeForEnrollee.ToString()}");
                 context.AtributeForEnrollee.Add(atributeForEnrollee);
                 context.SaveChanges();
-                logger.Debug($"Атрибут успешно добавлен абитуриенту.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return atributeForEnrollee;
             }
             catch(SqlException sqlEx)
@@ -245,7 +239,7 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению атрибутов абитуриента.");
             try
             {
-                AtributeForEnrollee atributeForEnrolleeToUpdate = context.AtributeForEnrollee.FirstOrDefault(a => a.Id == atributeForEnrollee.Id);
+                var atributeForEnrolleeToUpdate = context.AtributeForEnrollee.FirstOrDefault(a => a.Id == atributeForEnrollee.Id);
                 logger.Debug($"Текущая запись: {atributeForEnrolleeToUpdate.ToString()}");
                 atributeForEnrolleeToUpdate.AtributeId = atributeForEnrollee.AtributeId;
                 atributeForEnrolleeToUpdate.EnrolleeId = atributeForEnrollee.EnrolleeId;

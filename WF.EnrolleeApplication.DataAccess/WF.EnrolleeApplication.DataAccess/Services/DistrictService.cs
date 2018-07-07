@@ -32,13 +32,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению района.");
             try
             {
-                logger.Debug($"Поиск записи района для удаления. Удаляемый объект : {district.ToString()}.");
-                District districtToDelete = context.District.FirstOrDefault(d => d.DistrictId == district.DistrictId);
+                var districtToDelete = context.District.FirstOrDefault(d => d.DistrictId == district.DistrictId);
                 if (districtToDelete != null)
                 {
                     context.District.Remove(districtToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи дисциплины успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -61,12 +60,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public District GetDistrict(int id)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску района.");
+            logger.Trace("Подготовка к поиску района по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи района по уникальному идентификатору = {id}.");
-                District districtById = context.District.AsNoTracking().FirstOrDefault(d => d.DistrictId == id);
-                if (districtById != null) logger.Debug($"Поиск окончен. Искомая запись: {districtById.ToString()}.");
+                var districtById = context.District.AsNoTracking().FirstOrDefault(d => d.DistrictId == id);
+                if (districtById != null) logger.Debug($"Поиск окончен. Запись найдена {districtById.ToString()}.");
                 return districtById;
             }
             catch (SqlException sqlEx)
@@ -91,12 +89,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public District GetDistrict(string name)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску района.");
+            logger.Trace("Подготовка к поиску района по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи района по наименованию = {name}.");
-                District districtByName = context.District.AsNoTracking().FirstOrDefault(d => d.Name == name);
-                if (districtByName != null) logger.Debug($"Поиск окончен. Искомая запись: {districtByName.ToString()}.");
+                var districtByName = context.District.AsNoTracking().FirstOrDefault(d => d.Name == name);
+                if (districtByName != null) logger.Debug($"Поиск окончен. Запись найдена {districtByName.ToString()}.");
                 return districtByName;
             }
             catch (SqlException sqlEx)
@@ -123,9 +120,9 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка районов.");
             try
             {
-                logger.Debug($"Получение списка районов.");
-                List<District> districts = context.District.AsNoTracking().ToList();
-                logger.Debug($"Поиск окончен. Количество записей: {districts.Count}.");
+                var districts = context.District.AsNoTracking().ToList();
+                if (districts.Count != 0) logger.Debug($"Поиск окончен. Количество записей: {districts.Count}.");
+                else logger.Debug($"Поиск окончен. Список пуст.");
                 return districts;
             }
             catch (SqlException sqlEx)
@@ -153,10 +150,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению района");
             try
             {
-                logger.Debug($"Добавляемая запись: {district.ToString()}");
+                logger.Debug($"Добавляемая запись {district.ToString()}");
                 context.District.Add(district);
                 context.SaveChanges();
-                logger.Debug($"Район успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return district;
             }
             catch (SqlException sqlEx)
@@ -184,11 +181,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к обновлению района.");
             try
             {
-                District districtToUpdate = context.District.FirstOrDefault(d => d.DistrictId == district.DistrictId);
-                logger.Debug($"Текущая запись: {districtToUpdate.ToString()}");
+                var districtToUpdate = context.District.FirstOrDefault(d => d.DistrictId == district.DistrictId);
+                logger.Debug($"Текущая запись {districtToUpdate.ToString()}");
                 districtToUpdate.Name = district.Name;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {districtToUpdate.ToString()}");
+                logger.Debug($"Новая запись {districtToUpdate.ToString()}");
                 return districtToUpdate;
             }
             catch (SqlException sqlEx)

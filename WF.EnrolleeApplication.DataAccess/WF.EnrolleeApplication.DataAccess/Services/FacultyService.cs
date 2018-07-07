@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению факультета.");
             try
             {
-                logger.Debug($"Поиск записи факультета для удаления. Удаляемый объект : {faculty.ToString()}.");
                 var facultyToDelete = context.Faculty.FirstOrDefault(f => f.FacultyId == faculty.FacultyId);
                 if (facultyToDelete != null)
                 {
                     context.Faculty.Remove(facultyToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи факультета успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -62,7 +61,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка факультетов.");
             try
             {
-                logger.Debug($"Получение списка факультетов.");
                 var faculties = context.Faculty.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {faculties.Count}.");
                 return faculties;
@@ -92,9 +90,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску факультета по уникальному идентификатору.");
             try
             {
-                logger.Debug($"Поиск записи факультета по уникальному идентификатору = {id}.");
                 var facultyById = context.Faculty.AsNoTracking().FirstOrDefault(f => f.FacultyId == id);
-                if (facultyById != null) logger.Debug($"Поиск окончен. Искомая запись: {facultyById.ToString()}.");
+                if (facultyById != null) logger.Debug($"Поиск окончен. Запись найдена {facultyById.ToString()}.");
                 return facultyById;
             }
             catch (SqlException sqlEx)
@@ -122,9 +119,8 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску факультета по наименованию.");
             try
             {
-                logger.Debug($"Поиск записи факультета по наименованию = {fullname}.");
                 var facultyByName = context.Faculty.AsNoTracking().FirstOrDefault(f => f.Fullname == fullname);
-                if (facultyByName != null) logger.Debug($"Поиск окончен. Искомая запись: {facultyByName.ToString()}.");
+                if (facultyByName != null) logger.Debug($"Поиск окончен. Запись найдена {facultyByName.ToString()}.");
                 return facultyByName;
             }
             catch (SqlException sqlEx)
@@ -152,10 +148,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению факультета");
             try
             {
-                logger.Debug($"Добавляемая запись: {faculty.ToString()}");
+                logger.Debug($"Добавляемая запись {faculty.ToString()}");
                 context.Faculty.Add(faculty);
                 context.SaveChanges();
-                logger.Debug($"Факультет успешно добавлен.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return faculty;
             }
             catch (SqlException sqlEx)
@@ -184,11 +180,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             try
             {
                 var facultyToUpdate = context.Faculty.FirstOrDefault(f => f.FacultyId == faculty.FacultyId);
-                logger.Debug($"Текущая запись: {facultyToUpdate.ToString()}");
+                logger.Debug($"Текущая запись {facultyToUpdate.ToString()}");
                 facultyToUpdate.Fullname = faculty.Fullname;
                 facultyToUpdate.Shortname = faculty.Shortname;
                 context.SaveChanges();
-                logger.Debug($"Новая запись: {facultyToUpdate.ToString()}");
+                logger.Debug($"Новая запись {facultyToUpdate.ToString()}");
                 return facultyToUpdate;
             }
             catch (SqlException sqlEx)

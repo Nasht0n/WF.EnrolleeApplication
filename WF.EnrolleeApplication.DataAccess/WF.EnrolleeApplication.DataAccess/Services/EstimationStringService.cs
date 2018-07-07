@@ -31,13 +31,12 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к удалению представления оценки.");
             try
             {
-                logger.Debug($"Поиск записи представления оценки для удаления. Удаляемый объект : {estimationString.ToString()}.");
-                EstimationString estimationStringToDelete = context.EstimationString.FirstOrDefault(es => es.EstimationNumber == estimationString.EstimationNumber && es.EstimationText == estimationString.EstimationText);
+                var estimationStringToDelete = context.EstimationString.FirstOrDefault(es => es.EstimationNumber == estimationString.EstimationNumber && es.EstimationText == estimationString.EstimationText);
                 if (estimationStringToDelete != null)
                 {
                     context.EstimationString.Remove(estimationStringToDelete);
                     context.SaveChanges();
-                    logger.Debug("Удаление записи представления оценки успешно завершено.");
+                    logger.Debug("Удаление успешно завершено.");
                 }
             }
             catch (SqlException sqlEx)
@@ -60,12 +59,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public int EstimationAsNumber(string estimation)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску цифрового представления оценки.");
+            logger.Trace("Подготовка к поиску цифрового представления оценки по строковому представлению.");
             try
             {
-                logger.Debug($"Поиск записи представления оценки по строковому представлению оценки = {estimation.Trim()}.");
                 var estimationString = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationText == estimation);
-                if (estimationString != null) logger.Debug($"Поиск окончен. Искомая запись: {estimationString.ToString()}.");
+                if (estimationString != null) logger.Debug($"Поиск окончен. Запись найдена {estimationString.ToString()}.");
                 return estimationString.EstimationNumber;
             }
             catch (SqlException sqlEx)
@@ -90,12 +88,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public string EstimationAsText(int number)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску цифрового представления оценки.");
+            logger.Trace("Подготовка к поиску цифрового представления оценки по цифровому представлению.");
             try
             {
-                logger.Debug($"Поиск записи представления оценки по цифровому представлению оценки = {number}.");
                 var estimationString = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationNumber == number);
-                if (estimationString != null) logger.Debug($"Поиск окончен. Искомая запись: {estimationString.ToString()}.");
+                if (estimationString != null) logger.Debug($"Поиск окончен. Запись найдена {estimationString.ToString()}.");
                 return estimationString.EstimationText;
             }
             catch (SqlException sqlEx)
@@ -121,12 +118,11 @@ namespace WF.EnrolleeApplication.DataAccess.Services
         public EstimationString GetEstimationString(int number, string text)
         {
             logger.Trace("Попытка подключения к источнику данных.");
-            logger.Trace("Подготовка к поиску представления оценки.");
+            logger.Trace("Подготовка к поиску представления оценки по параметрам.");
             try
             {
-                logger.Debug($"Поиск записи представления оценки. Цифровое представлению оценки = [{number}]; Строковое представление оценки = [{text.Trim()}].");
                 var estimationString = context.EstimationString.AsNoTracking().FirstOrDefault(es => es.EstimationNumber == number && es.EstimationText == text);
-                if (estimationString != null) logger.Debug($"Поиск окончен. Искомая запись: {estimationString.ToString()}.");
+                if (estimationString != null) logger.Debug($"Поиск окончен. Запись найдена {estimationString.ToString()}.");
                 return estimationString;
             }
             catch (SqlException sqlEx)
@@ -153,7 +149,6 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к поиску списка представления оценок.");
             try
             {
-                logger.Debug($"Получение списка представления оценок.");
                 var estimationStrings = context.EstimationString.AsNoTracking().ToList();
                 logger.Debug($"Поиск окончен. Количество записей: {estimationStrings.Count}.");
                 return estimationStrings;
@@ -183,10 +178,10 @@ namespace WF.EnrolleeApplication.DataAccess.Services
             logger.Trace("Подготовка к добавлению представления оценки");
             try
             {
-                logger.Debug($"Добавляемая запись: {estimationString.ToString()}");
+                logger.Debug($"Добавляемая запись {estimationString.ToString()}");
                 context.EstimationString.Add(estimationString);
                 context.SaveChanges();
-                logger.Debug($"Представление оценки успешно добавлена.");
+                logger.Debug($"Новая запись успешно добавлена.");
                 return estimationString;
             }
             catch (SqlException sqlEx)
