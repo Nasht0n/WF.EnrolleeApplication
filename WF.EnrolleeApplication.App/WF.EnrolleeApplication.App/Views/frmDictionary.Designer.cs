@@ -31,16 +31,30 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDictionary));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.DictionaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SystemConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ClearDictionaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DictionaryUniversityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DictionaryEnrollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FacultyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FormOfStudyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.FirstSpecialityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SecondarySpecialityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.IntegrationOfSpecialityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.DisciplineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BasisForAssessingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.ExamSchemasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DictionaryEnrollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AtributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DocumentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CitizenshipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ForeignLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TypeOfStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReasonForAddmissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DecreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TargetWorkPlaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TypeOfSchoolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TypeOfFinanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GeoDictionaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CountryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,29 +62,18 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.TypeOfSettlementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TypeOfStreetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DisciplineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExamSchemasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AtributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ReasonForAddmissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DecreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SecondarySpecialityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.IntegrationOfSpecialityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TargetWorkPlaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TypeOfFinanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TypeOfSchoolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TypeOfStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.BasisForAssessingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.ForeignLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CitizenshipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DocumentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SystemConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ClearDictionaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.ContentPanel = new System.Windows.Forms.Panel();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.ConversionSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EstimationStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -97,33 +100,6 @@
             this.DictionaryToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.DictionaryToolStripMenuItem.Text = "Справочники";
             // 
-            // ServiceToolStripMenuItem
-            // 
-            this.ServiceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SystemConfigurationToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.ClearDictionaryToolStripMenuItem});
-            this.ServiceToolStripMenuItem.Name = "ServiceToolStripMenuItem";
-            this.ServiceToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.ServiceToolStripMenuItem.Text = "Сервис";
-            // 
-            // SystemConfigurationToolStripMenuItem
-            // 
-            this.SystemConfigurationToolStripMenuItem.Name = "SystemConfigurationToolStripMenuItem";
-            this.SystemConfigurationToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.SystemConfigurationToolStripMenuItem.Text = "Параметры системы";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(203, 6);
-            // 
-            // ClearDictionaryToolStripMenuItem
-            // 
-            this.ClearDictionaryToolStripMenuItem.Name = "ClearDictionaryToolStripMenuItem";
-            this.ClearDictionaryToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.ClearDictionaryToolStripMenuItem.Text = "Зачистка справочников";
-            // 
             // DictionaryUniversityToolStripMenuItem
             // 
             this.DictionaryUniversityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -141,6 +117,69 @@
             this.DictionaryUniversityToolStripMenuItem.Name = "DictionaryUniversityToolStripMenuItem";
             this.DictionaryUniversityToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
             this.DictionaryUniversityToolStripMenuItem.Text = "Справочники университета";
+            // 
+            // FacultyToolStripMenuItem
+            // 
+            this.FacultyToolStripMenuItem.Name = "FacultyToolStripMenuItem";
+            this.FacultyToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.FacultyToolStripMenuItem.Text = "Факультеты";
+            // 
+            // FormOfStudyToolStripMenuItem
+            // 
+            this.FormOfStudyToolStripMenuItem.Name = "FormOfStudyToolStripMenuItem";
+            this.FormOfStudyToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.FormOfStudyToolStripMenuItem.Text = "Формы обучения";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(247, 6);
+            // 
+            // FirstSpecialityToolStripMenuItem
+            // 
+            this.FirstSpecialityToolStripMenuItem.Name = "FirstSpecialityToolStripMenuItem";
+            this.FirstSpecialityToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.FirstSpecialityToolStripMenuItem.Text = "Специальности первой ступени";
+            // 
+            // SecondarySpecialityToolStripMenuItem
+            // 
+            this.SecondarySpecialityToolStripMenuItem.Name = "SecondarySpecialityToolStripMenuItem";
+            this.SecondarySpecialityToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.SecondarySpecialityToolStripMenuItem.Text = "Специальности второй ступени";
+            // 
+            // IntegrationOfSpecialityToolStripMenuItem
+            // 
+            this.IntegrationOfSpecialityToolStripMenuItem.Name = "IntegrationOfSpecialityToolStripMenuItem";
+            this.IntegrationOfSpecialityToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.IntegrationOfSpecialityToolStripMenuItem.Text = "Интеграция специальностей";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(247, 6);
+            // 
+            // DisciplineToolStripMenuItem
+            // 
+            this.DisciplineToolStripMenuItem.Name = "DisciplineToolStripMenuItem";
+            this.DisciplineToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.DisciplineToolStripMenuItem.Text = "Дисциплины";
+            // 
+            // BasisForAssessingToolStripMenuItem
+            // 
+            this.BasisForAssessingToolStripMenuItem.Name = "BasisForAssessingToolStripMenuItem";
+            this.BasisForAssessingToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.BasisForAssessingToolStripMenuItem.Text = "Тип оценивания";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(247, 6);
+            // 
+            // ExamSchemasToolStripMenuItem
+            // 
+            this.ExamSchemasToolStripMenuItem.Name = "ExamSchemasToolStripMenuItem";
+            this.ExamSchemasToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.ExamSchemasToolStripMenuItem.Text = "Экзаменнационные схемы";
             // 
             // DictionaryEnrollToolStripMenuItem
             // 
@@ -160,28 +199,71 @@
             this.DictionaryEnrollToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
             this.DictionaryEnrollToolStripMenuItem.Text = "Справочники приёмной комиссии";
             // 
-            // FacultyToolStripMenuItem
+            // AtributeToolStripMenuItem
             // 
-            this.FacultyToolStripMenuItem.Name = "FacultyToolStripMenuItem";
-            this.FacultyToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.FacultyToolStripMenuItem.Text = "Факультеты";
+            this.AtributeToolStripMenuItem.Name = "AtributeToolStripMenuItem";
+            this.AtributeToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.AtributeToolStripMenuItem.Text = "Атрибуты (льготы)";
             // 
-            // FormOfStudyToolStripMenuItem
+            // DocumentsToolStripMenuItem
             // 
-            this.FormOfStudyToolStripMenuItem.Name = "FormOfStudyToolStripMenuItem";
-            this.FormOfStudyToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.FormOfStudyToolStripMenuItem.Text = "Формы обучения";
+            this.DocumentsToolStripMenuItem.Name = "DocumentsToolStripMenuItem";
+            this.DocumentsToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.DocumentsToolStripMenuItem.Text = "Виды документов";
             // 
-            // FirstSpecialityToolStripMenuItem
+            // CitizenshipToolStripMenuItem
             // 
-            this.FirstSpecialityToolStripMenuItem.Name = "FirstSpecialityToolStripMenuItem";
-            this.FirstSpecialityToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.FirstSpecialityToolStripMenuItem.Text = "Специальности первой ступени";
+            this.CitizenshipToolStripMenuItem.Name = "CitizenshipToolStripMenuItem";
+            this.CitizenshipToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.CitizenshipToolStripMenuItem.Text = "Виды гражданства";
             // 
-            // toolStripMenuItem2
+            // ForeignLanguageToolStripMenuItem
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(247, 6);
+            this.ForeignLanguageToolStripMenuItem.Name = "ForeignLanguageToolStripMenuItem";
+            this.ForeignLanguageToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.ForeignLanguageToolStripMenuItem.Text = "Виды иностранных языков";
+            // 
+            // ContestToolStripMenuItem
+            // 
+            this.ContestToolStripMenuItem.Name = "ContestToolStripMenuItem";
+            this.ContestToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.ContestToolStripMenuItem.Text = "Виды конкурса";
+            // 
+            // TypeOfStateToolStripMenuItem
+            // 
+            this.TypeOfStateToolStripMenuItem.Name = "TypeOfStateToolStripMenuItem";
+            this.TypeOfStateToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.TypeOfStateToolStripMenuItem.Text = "Виды состояния абитуриентов";
+            // 
+            // ReasonForAddmissionToolStripMenuItem
+            // 
+            this.ReasonForAddmissionToolStripMenuItem.Name = "ReasonForAddmissionToolStripMenuItem";
+            this.ReasonForAddmissionToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.ReasonForAddmissionToolStripMenuItem.Text = "Основания зачисления";
+            // 
+            // DecreeToolStripMenuItem
+            // 
+            this.DecreeToolStripMenuItem.Name = "DecreeToolStripMenuItem";
+            this.DecreeToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.DecreeToolStripMenuItem.Text = "Приказы о зачислении";
+            // 
+            // TargetWorkPlaceToolStripMenuItem
+            // 
+            this.TargetWorkPlaceToolStripMenuItem.Name = "TargetWorkPlaceToolStripMenuItem";
+            this.TargetWorkPlaceToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.TargetWorkPlaceToolStripMenuItem.Text = "Рабочие места целевого направления";
+            // 
+            // TypeOfSchoolToolStripMenuItem
+            // 
+            this.TypeOfSchoolToolStripMenuItem.Name = "TypeOfSchoolToolStripMenuItem";
+            this.TypeOfSchoolToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.TypeOfSchoolToolStripMenuItem.Text = "Типы учебных заведений";
+            // 
+            // TypeOfFinanceToolStripMenuItem
+            // 
+            this.TypeOfFinanceToolStripMenuItem.Name = "TypeOfFinanceToolStripMenuItem";
+            this.TypeOfFinanceToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.TypeOfFinanceToolStripMenuItem.Text = "Финансирование";
             // 
             // GeoDictionaryToolStripMenuItem
             // 
@@ -231,111 +313,35 @@
             this.TypeOfStreetToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.TypeOfStreetToolStripMenuItem.Text = "Тип улиц";
             // 
-            // DisciplineToolStripMenuItem
+            // ServiceToolStripMenuItem
             // 
-            this.DisciplineToolStripMenuItem.Name = "DisciplineToolStripMenuItem";
-            this.DisciplineToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.DisciplineToolStripMenuItem.Text = "Дисциплины";
+            this.ServiceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SystemConfigurationToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.ConversionSystemToolStripMenuItem,
+            this.EstimationStringToolStripMenuItem,
+            this.toolStripMenuItem6,
+            this.ClearDictionaryToolStripMenuItem});
+            this.ServiceToolStripMenuItem.Name = "ServiceToolStripMenuItem";
+            this.ServiceToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.ServiceToolStripMenuItem.Text = "Сервис";
             // 
-            // ExamSchemasToolStripMenuItem
+            // SystemConfigurationToolStripMenuItem
             // 
-            this.ExamSchemasToolStripMenuItem.Name = "ExamSchemasToolStripMenuItem";
-            this.ExamSchemasToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.ExamSchemasToolStripMenuItem.Text = "Экзаменнационные схемы";
+            this.SystemConfigurationToolStripMenuItem.Name = "SystemConfigurationToolStripMenuItem";
+            this.SystemConfigurationToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.SystemConfigurationToolStripMenuItem.Text = "Параметры системы";
             // 
-            // AtributeToolStripMenuItem
+            // toolStripMenuItem1
             // 
-            this.AtributeToolStripMenuItem.Name = "AtributeToolStripMenuItem";
-            this.AtributeToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.AtributeToolStripMenuItem.Text = "Атрибуты (льготы)";
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(215, 6);
             // 
-            // ContestToolStripMenuItem
+            // ClearDictionaryToolStripMenuItem
             // 
-            this.ContestToolStripMenuItem.Name = "ContestToolStripMenuItem";
-            this.ContestToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.ContestToolStripMenuItem.Text = "Виды конкурса";
-            // 
-            // ReasonForAddmissionToolStripMenuItem
-            // 
-            this.ReasonForAddmissionToolStripMenuItem.Name = "ReasonForAddmissionToolStripMenuItem";
-            this.ReasonForAddmissionToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.ReasonForAddmissionToolStripMenuItem.Text = "Основания зачисления";
-            // 
-            // DecreeToolStripMenuItem
-            // 
-            this.DecreeToolStripMenuItem.Name = "DecreeToolStripMenuItem";
-            this.DecreeToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.DecreeToolStripMenuItem.Text = "Приказы о зачислении";
-            // 
-            // SecondarySpecialityToolStripMenuItem
-            // 
-            this.SecondarySpecialityToolStripMenuItem.Name = "SecondarySpecialityToolStripMenuItem";
-            this.SecondarySpecialityToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.SecondarySpecialityToolStripMenuItem.Text = "Специальности второй ступени";
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(247, 6);
-            // 
-            // IntegrationOfSpecialityToolStripMenuItem
-            // 
-            this.IntegrationOfSpecialityToolStripMenuItem.Name = "IntegrationOfSpecialityToolStripMenuItem";
-            this.IntegrationOfSpecialityToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.IntegrationOfSpecialityToolStripMenuItem.Text = "Интеграция специальностей";
-            // 
-            // TargetWorkPlaceToolStripMenuItem
-            // 
-            this.TargetWorkPlaceToolStripMenuItem.Name = "TargetWorkPlaceToolStripMenuItem";
-            this.TargetWorkPlaceToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.TargetWorkPlaceToolStripMenuItem.Text = "Рабочие места целевого направления";
-            // 
-            // TypeOfFinanceToolStripMenuItem
-            // 
-            this.TypeOfFinanceToolStripMenuItem.Name = "TypeOfFinanceToolStripMenuItem";
-            this.TypeOfFinanceToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.TypeOfFinanceToolStripMenuItem.Text = "Финансирование";
-            // 
-            // TypeOfSchoolToolStripMenuItem
-            // 
-            this.TypeOfSchoolToolStripMenuItem.Name = "TypeOfSchoolToolStripMenuItem";
-            this.TypeOfSchoolToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.TypeOfSchoolToolStripMenuItem.Text = "Типы учебных заведений";
-            // 
-            // TypeOfStateToolStripMenuItem
-            // 
-            this.TypeOfStateToolStripMenuItem.Name = "TypeOfStateToolStripMenuItem";
-            this.TypeOfStateToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.TypeOfStateToolStripMenuItem.Text = "Виды состояния абитуриентов";
-            // 
-            // BasisForAssessingToolStripMenuItem
-            // 
-            this.BasisForAssessingToolStripMenuItem.Name = "BasisForAssessingToolStripMenuItem";
-            this.BasisForAssessingToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.BasisForAssessingToolStripMenuItem.Text = "Тип оценивания";
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(247, 6);
-            // 
-            // ForeignLanguageToolStripMenuItem
-            // 
-            this.ForeignLanguageToolStripMenuItem.Name = "ForeignLanguageToolStripMenuItem";
-            this.ForeignLanguageToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.ForeignLanguageToolStripMenuItem.Text = "Виды иностранных языков";
-            // 
-            // CitizenshipToolStripMenuItem
-            // 
-            this.CitizenshipToolStripMenuItem.Name = "CitizenshipToolStripMenuItem";
-            this.CitizenshipToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.CitizenshipToolStripMenuItem.Text = "Виды гражданства";
-            // 
-            // DocumentsToolStripMenuItem
-            // 
-            this.DocumentsToolStripMenuItem.Name = "DocumentsToolStripMenuItem";
-            this.DocumentsToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.DocumentsToolStripMenuItem.Text = "Виды документов";
+            this.ClearDictionaryToolStripMenuItem.Name = "ClearDictionaryToolStripMenuItem";
+            this.ClearDictionaryToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.ClearDictionaryToolStripMenuItem.Text = "Зачистка справочников";
             // 
             // statusStrip
             // 
@@ -382,6 +388,23 @@
             this.toolStripButton.Name = "toolStripButton";
             this.toolStripButton.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton.Text = "toolStripButton1";
+            // 
+            // ConversionSystemToolStripMenuItem
+            // 
+            this.ConversionSystemToolStripMenuItem.Name = "ConversionSystemToolStripMenuItem";
+            this.ConversionSystemToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.ConversionSystemToolStripMenuItem.Text = "Система перевода оценок";
+            // 
+            // EstimationStringToolStripMenuItem
+            // 
+            this.EstimationStringToolStripMenuItem.Name = "EstimationStringToolStripMenuItem";
+            this.EstimationStringToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.EstimationStringToolStripMenuItem.Text = "Оценки прописью";
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(215, 6);
             // 
             // frmDictionary
             // 
@@ -454,5 +477,8 @@
         private System.Windows.Forms.Panel ContentPanel;
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton toolStripButton;
+        private System.Windows.Forms.ToolStripMenuItem ConversionSystemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EstimationStringToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
     }
 }
