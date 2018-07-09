@@ -753,7 +753,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbTargetWorkPlace.DisplayMember = "Name";
             cbTargetWorkPlace.ValueMember = "TargetId";
             // Инициализируем рабочее место по целевому первым элементом списка
-            if (targets.Count != 0) targetWorkPlace = targets[0];
+            if (targets.Count != 0)
+            {
+                if (targetWorkPlace == null) targetWorkPlace = targets[0];
+                else cbTargetWorkPlace.SelectedValue = targetWorkPlace.TargetId;
+            }
             // Включаем отслеживание изменения
             cbTargetWorkPlace.SelectedValueChanged += cbTargetWorkPlace_SelectedValueChanged;
         }
@@ -770,7 +774,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbDecree.DisplayMember = "DecreeNumber";
             cbDecree.ValueMember = "DecreeId";
             // Инициализируем приказ первым элементом списка
-            if (decrees.Count != 0) decree = decrees[0];
+            if (decrees.Count != 0)
+            {
+                if (decree == null) decree = decrees[0];
+                else cbDecree.SelectedValue = decree.DecreeId;
+            }
             // Включаем отслеживание изменения
             cbDecree.SelectedValueChanged += cbDecree_SelectedValueChanged;
         }
@@ -787,7 +795,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbDistrict.DisplayMember = "Name";
             cbDistrict.ValueMember = "DistrictId";
             // Инициализируем район первым элементом списка
-            if (districts.Count != 0) district = districts[0];
+            if (districts.Count != 0)
+            {
+                if (district == null) district = districts[0];
+                else cbDistrict.SelectedValue = district.DistrictId;
+            }
             // Включаем отслеживание изменения
             cbDistrict.SelectedValueChanged += cbDistrict_SelectedValueChanged;
         }
@@ -804,7 +816,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbArea.DisplayMember = "Name";
             cbArea.ValueMember = "AreaId";
             // Инициализируем область первым элементом списка
-            if (areas.Count != 0) area = areas[0];
+            if (areas.Count != 0)
+            {
+                if (area == null) area = areas[0];
+                else cbArea.SelectedValue = area.AreaId;
+            }
             // Включаем отслеживание изменения
             cbArea.SelectedValueChanged += cbArea_SelectedValueChanged;
         }
@@ -821,7 +837,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbCountry.DisplayMember = "Name";
             cbCountry.ValueMember = "CountryId";
             // Инициализируем страну первым элементом списка
-            if (countries.Count != 0) country = countries[0];
+            if (countries.Count != 0)
+            {
+                if (country == null) country = countries[0];
+                else cbCountry.SelectedValue = country.CountryId;
+            }
             // Включаем отслеживание изменения
             cbCountry.SelectedValueChanged += cbCountry_SelectedValueChanged;
         }
@@ -856,7 +876,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbTypeOfState.DisplayMember = "Name";
             cbTypeOfState.ValueMember = "StateId";
             // Инициализируем состояние абитуриента первым элементом списка
-            if (states.Count != 0) typeOfState = states[0];
+            if (states.Count != 0)
+            {
+                if (typeOfState == null) typeOfState = states[0];
+                else cbTypeOfState.SelectedValue = typeOfState.StateId;
+            }
             // Включаем отслеживание изменения
             cbTypeOfState.SelectedValueChanged += cbTypeOfState_SelectedValueChanged;
         }
@@ -873,7 +897,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbReasonForAddmission.DisplayMember = "Fullname";
             cbReasonForAddmission.ValueMember = "ReasonForAddmissionId";
             // Инициализируем основание зачисления первым элементом списка
-            if (reasons.Count != 0) reasonForAddmission = reasons[0];
+            if (reasons.Count != 0)
+            {
+                if (reasonForAddmission == null) reasonForAddmission = reasons[0];
+                else cbReasonForAddmission.SelectedValue = reasonForAddmission.ReasonForAddmissionId;
+            }
             // Включаем отслеживание изменения
             cbReasonForAddmission.SelectedValueChanged += cbReasonForAddmission_SelectedValueChanged;
         }
@@ -893,7 +921,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем список оснований зачисления
             if (contests.Count != 0)
             {
-                contest = contests[0];
+                if (contest == null) contest = contests[0];
+                else cbContest.SelectedValue = contest.ContestId;
                 InitializeReasonForAddmissionComboBox();
             }
             // Включаем отслеживание изменения
@@ -912,7 +941,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbTypeOfFinance.DisplayMember = "Fullname";
             cbTypeOfFinance.ValueMember = "FinanceTypeId";
             // Инициализируем тип финансирования первым элементом списка 
-            if (finances.Count != 0) typeOfFinance = finances[0];
+            if (finances.Count != 0)
+            {
+                if (typeOfFinance == null) typeOfFinance = finances[0];
+                else cbTypeOfFinance.SelectedValue = typeOfFinance.FinanceTypeId;
+            }
             // Включаем отслеживание изменения
             cbTypeOfFinance.SelectedValueChanged += cbTypeOfFinance_SelectedValueChanged;
         }
@@ -929,7 +962,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbForeignLanguage.DisplayMember = "Name";
             cbForeignLanguage.ValueMember = "LanguageId";
             // Инициализируем иностранный язык первым элементом списка 
-            if (languages.Count != 0) foreignLanguage = languages[0];
+            if (languages.Count != 0)
+            {
+                if (foreignLanguage == null) foreignLanguage = languages[0];
+                else cbForeignLanguage.SelectedValue = foreignLanguage.LanguageId;
+            }
             // Включаем отслеживание изменения
             cbForeignLanguage.SelectedValueChanged += cbForeignLanguage_SelectedValueChanged;
         }
@@ -957,7 +994,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем таблицу приоритетов
             if (secondarySpecialities.Count != 0)
             {
-                secondarySpeciality = secondarySpecialities[0];
+                if (secondarySpeciality == null) secondarySpeciality = secondarySpecialities[0];
+                else cbSecondarySpeciality.SelectedValue = secondarySpeciality.SecondarySpecialityId;
                 InitializePrioritySpecialityGrid();
             }
             // Включаем отслеживание изменения
@@ -976,7 +1014,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbTypeOfSchool.DisplayMember = "Name";
             cbTypeOfSchool.ValueMember = "SchoolTypeId";
             // Инициализируем тип учебного заведения первым элементом списка
-            if (schools.Count != 0) typeOfSchool = schools[0];
+            if (schools.Count != 0)
+            {
+                if (typeOfSchool == null) typeOfSchool = schools[0];
+                else cbTypeOfSchool.SelectedValue = typeOfSchool.SchoolTypeId;
+            }
             // Включаем отслеживание изменения
             cbTypeOfSchool.SelectedValueChanged += cbTypeOfSchool_SelectedValueChanged;
         }
@@ -993,7 +1035,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbTypeOfStreet.DisplayMember = "Fullname";
             cbTypeOfStreet.ValueMember = "StreetTypeId";
             // Инициализируем тип улицы первым элементом списка
-            if (streets.Count != 0) typeOfStreet = streets[0];
+            if (streets.Count != 0)
+            {
+                if (typeOfStreet == null) typeOfStreet = streets[0];
+                else cbTypeOfStreet.SelectedValue = typeOfStreet.StreetTypeId;
+            }
             // Включаем отслеживание изменения
             cbTypeOfStreet.SelectedValueChanged += cbTypeOfStreet_SelectedValueChanged;
         }
@@ -1010,7 +1056,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbTypeOfSettlement.DisplayMember = "Fullname";
             cbTypeOfSettlement.ValueMember = "SettlementTypeId";
             // Инициализируем тип населенного пункта первым элементом списка
-            if (settlements.Count != 0) typeOfSettlement = settlements[0];
+            if (settlements.Count != 0)
+            {
+                if (typeOfSettlement == null) typeOfSettlement = settlements[0];
+                else cbTypeOfSettlement.SelectedValue = typeOfSettlement.SettlementTypeId;
+            }
             // Включаем отслеживание изменения
             cbTypeOfSettlement.SelectedValueChanged += cbTypeOfSettlement_SelectedValueChanged;
         }
@@ -1030,7 +1080,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем список специальностей
             if (faculties.Count != 0)
             {
-                faculty = faculties[0];
+                if (faculty == null) faculty = faculties[0];
+                else cbFaculty.SelectedValue = faculty.FacultyId;
                 InitializeSpecialityComboBox();
             }
             // Включаем отслеживание изменения
@@ -1052,7 +1103,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем список специальностей
             if (formsOfStudies.Count != 0)
             {
-                formOfStudy = formsOfStudies[0];
+                if (formOfStudy == null) formOfStudy = formsOfStudies[0];
+                else cbFormOfStudy.SelectedValue = formOfStudy.FormOfStudyId;
                 InitializeSpecialityComboBox();
             }
             // Включаем отслеживание изменения
@@ -1078,7 +1130,8 @@ namespace WF.EnrolleeApplication.App.Views
                 // Инициализируем список приоритетов
                 if (specialities.Count != 0)
                 {
-                    speciality = specialities[0];
+                    if (speciality == null) speciality = specialities[0];
+                    else cbSpeciality.SelectedValue = speciality.SpecialityId;
                     InitializeSecondarySpecialityComboBox();
                     InitializeSertificationGrid();
                     InitializePrioritySpecialityGrid();
@@ -1100,7 +1153,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbCitizenship.DisplayMember = "Fullname";
             cbCitizenship.ValueMember = "CitizenshipId";
             // Инициализируем гражданство первым элементом списка
-            if (citizenships.Count != 0) citizenship = citizenships[0];
+            if (citizenships.Count != 0)
+            {
+                if (citizenship == null) citizenship = citizenships[0];
+                else cbCitizenship.SelectedValue = citizenship.CitizenshipId;
+            }
             // Включаем отслеживание изменения
             cbCitizenship.SelectedValueChanged += cbCitizenship_SelectedValueChanged;
         }
@@ -1117,7 +1174,11 @@ namespace WF.EnrolleeApplication.App.Views
             cbDocument.DisplayMember = "Name";
             cbDocument.ValueMember = "DocumentId";
             // Инициализируем тип документа первым элементом списка
-            if (documents.Count != 0) document = documents[0];
+            if (documents.Count != 0)
+            {
+                if (document == null) document = documents[0];
+                else cbDocument.SelectedValue = document.DocumentId;
+            }
             // Включаем отслеживание изменения
             cbDocument.SelectedValueChanged += cbDocument_SelectedValueChanged;
         }
@@ -2684,6 +2745,14 @@ namespace WF.EnrolleeApplication.App.Views
             string mark = SertificateGrid.Rows[rowIndex].Cells[4].Value.ToString();
             if (string.IsNullOrWhiteSpace(sertcode) && string.IsNullOrWhiteSpace(mark)) return true;
             else return false;
+        }
+
+        private void GetLastUpdates(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                InitializeComboBoxes();
+            }
         }
     }
 }

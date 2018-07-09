@@ -1056,5 +1056,29 @@ namespace WF.EnrolleeApplication.App.Views
                 InitializeEnrolleeGrid(SearchMode);
             }
         }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAbout about = new frmAbout();
+            about.ShowDialog();
+        }
+
+        private void ShowDictionaryForm(object sender, EventArgs e)
+        {
+            if(activeEmployee.EmployeePost.DictionaryAllow)
+            {
+                frmDictionary dictionary = new frmDictionary(activeEmployee);
+                DialogResult dr = dictionary.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    // 
+                }
+            }
+            else
+            {
+                MessageBox.Show("Нет доступа в справочники системы");
+                logger.Info($"{activeEmployee.Fullname} пытался войти в систему управления справочниками.");
+            }
+        }
     }
 }

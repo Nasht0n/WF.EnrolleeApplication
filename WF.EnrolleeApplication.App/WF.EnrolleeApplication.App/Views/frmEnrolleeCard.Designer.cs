@@ -365,6 +365,7 @@
             this.cbSpeciality.Size = new System.Drawing.Size(481, 23);
             this.cbSpeciality.TabIndex = 0;
             this.cbSpeciality.SelectedValueChanged += new System.EventHandler(this.cbSpeciality_SelectedValueChanged);
+            this.cbSpeciality.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox2
             // 
@@ -387,6 +388,7 @@
             this.cbFormOfStudy.Size = new System.Drawing.Size(283, 23);
             this.cbFormOfStudy.TabIndex = 0;
             this.cbFormOfStudy.SelectedValueChanged += new System.EventHandler(this.cbFormOfStudy_SelectedValueChanged);
+            this.cbFormOfStudy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox1
             // 
@@ -409,6 +411,7 @@
             this.cbFaculty.Size = new System.Drawing.Size(184, 23);
             this.cbFaculty.TabIndex = 0;
             this.cbFaculty.SelectedValueChanged += new System.EventHandler(this.cbFaculty_SelectedValueChanged);
+            this.cbFaculty.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // flowLayoutPanel
             // 
@@ -750,6 +753,7 @@
             this.cbDocument.Size = new System.Drawing.Size(566, 23);
             this.cbDocument.TabIndex = 0;
             this.cbDocument.SelectedValueChanged += new System.EventHandler(this.cbDocument_SelectedValueChanged);
+            this.cbDocument.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox4
             // 
@@ -802,6 +806,7 @@
             this.cbCitizenship.Size = new System.Drawing.Size(471, 23);
             this.cbCitizenship.TabIndex = 0;
             this.cbCitizenship.SelectedValueChanged += new System.EventHandler(this.cbCitizenship_SelectedValueChanged);
+            this.cbCitizenship.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox8
             // 
@@ -1174,6 +1179,7 @@
             this.cbForeignLanguage.Size = new System.Drawing.Size(421, 23);
             this.cbForeignLanguage.TabIndex = 0;
             this.cbForeignLanguage.SelectedValueChanged += new System.EventHandler(this.cbForeignLanguage_SelectedValueChanged);
+            this.cbForeignLanguage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox45
             // 
@@ -1310,6 +1316,7 @@
             this.cbSecondarySpeciality.Size = new System.Drawing.Size(375, 23);
             this.cbSecondarySpeciality.TabIndex = 0;
             this.cbSecondarySpeciality.SelectedValueChanged += new System.EventHandler(this.cbSecondarySpeciality_SelectedValueChanged);
+            this.cbSecondarySpeciality.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox39
             // 
@@ -1397,6 +1404,7 @@
             this.cbTypeOfSchool.Size = new System.Drawing.Size(421, 23);
             this.cbTypeOfSchool.TabIndex = 0;
             this.cbTypeOfSchool.SelectedValueChanged += new System.EventHandler(this.cbTypeOfSchool_SelectedValueChanged);
+            this.cbTypeOfSchool.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // gbDecree
             // 
@@ -1419,6 +1427,7 @@
             this.cbDecree.Size = new System.Drawing.Size(180, 23);
             this.cbDecree.TabIndex = 0;
             this.cbDecree.SelectedValueChanged += new System.EventHandler(this.cbDecree_SelectedValueChanged);
+            this.cbDecree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox22
             // 
@@ -1578,6 +1587,7 @@
             this.cbTypeOfStreet.Size = new System.Drawing.Size(229, 23);
             this.cbTypeOfStreet.TabIndex = 0;
             this.cbTypeOfStreet.SelectedValueChanged += new System.EventHandler(this.cbTypeOfStreet_SelectedValueChanged);
+            this.cbTypeOfStreet.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox28
             // 
@@ -1643,6 +1653,7 @@
             this.cbTypeOfSettlement.Size = new System.Drawing.Size(229, 23);
             this.cbTypeOfSettlement.TabIndex = 0;
             this.cbTypeOfSettlement.SelectedValueChanged += new System.EventHandler(this.cbTypeOfSettlement_SelectedValueChanged);
+            this.cbTypeOfSettlement.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox24
             // 
@@ -1665,6 +1676,7 @@
             this.cbArea.Size = new System.Drawing.Size(229, 23);
             this.cbArea.TabIndex = 0;
             this.cbArea.SelectedValueChanged += new System.EventHandler(this.cbArea_SelectedValueChanged);
+            this.cbArea.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox25
             // 
@@ -1687,6 +1699,7 @@
             this.cbDistrict.Size = new System.Drawing.Size(229, 23);
             this.cbDistrict.TabIndex = 0;
             this.cbDistrict.SelectedValueChanged += new System.EventHandler(this.cbDistrict_SelectedValueChanged);
+            this.cbDistrict.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox23
             // 
@@ -1709,6 +1722,7 @@
             this.cbCountry.Size = new System.Drawing.Size(229, 23);
             this.cbCountry.TabIndex = 0;
             this.cbCountry.SelectedValueChanged += new System.EventHandler(this.cbCountry_SelectedValueChanged);
+            this.cbCountry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // tabPageEnroll
             // 
@@ -1797,6 +1811,7 @@
             this.cbTypeOfState.Size = new System.Drawing.Size(373, 23);
             this.cbTypeOfState.TabIndex = 0;
             this.cbTypeOfState.SelectedValueChanged += new System.EventHandler(this.cbTypeOfState_SelectedValueChanged);
+            this.cbTypeOfState.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // gbNumberOfDeal
             // 
@@ -1863,6 +1878,7 @@
             this.cbTargetWorkPlace.TabIndex = 0;
             this.cbTargetWorkPlace.Visible = false;
             this.cbTargetWorkPlace.SelectedValueChanged += new System.EventHandler(this.cbTargetWorkPlace_SelectedValueChanged);
+            this.cbTargetWorkPlace.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // cbTarget
             // 
@@ -2419,6 +2435,7 @@
             this.cbReasonForAddmission.Size = new System.Drawing.Size(310, 23);
             this.cbReasonForAddmission.TabIndex = 0;
             this.cbReasonForAddmission.SelectedValueChanged += new System.EventHandler(this.cbReasonForAddmission_SelectedValueChanged);
+            this.cbReasonForAddmission.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox52
             // 
@@ -2441,6 +2458,7 @@
             this.cbContest.Size = new System.Drawing.Size(309, 23);
             this.cbContest.TabIndex = 0;
             this.cbContest.SelectedValueChanged += new System.EventHandler(this.cbContest_SelectedValueChanged);
+            this.cbContest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // groupBox51
             // 
@@ -2463,6 +2481,7 @@
             this.cbTypeOfFinance.Size = new System.Drawing.Size(309, 23);
             this.cbTypeOfFinance.TabIndex = 0;
             this.cbTypeOfFinance.SelectedValueChanged += new System.EventHandler(this.cbTypeOfFinance_SelectedValueChanged);
+            this.cbTypeOfFinance.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // tabPage5
             // 
@@ -2590,6 +2609,7 @@
             this.Name = "frmEnrolleeCard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Регистрация абитуриента";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             this.tableLayoutPanel.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
