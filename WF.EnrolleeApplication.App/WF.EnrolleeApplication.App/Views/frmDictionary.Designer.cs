@@ -65,18 +65,14 @@
             this.ServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SystemConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ClearDictionaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ContentPanel = new System.Windows.Forms.Panel();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ConversionSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EstimationStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+            this.ClearDictionaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -337,6 +333,23 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(215, 6);
             // 
+            // ConversionSystemToolStripMenuItem
+            // 
+            this.ConversionSystemToolStripMenuItem.Name = "ConversionSystemToolStripMenuItem";
+            this.ConversionSystemToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.ConversionSystemToolStripMenuItem.Text = "Система перевода оценок";
+            // 
+            // EstimationStringToolStripMenuItem
+            // 
+            this.EstimationStringToolStripMenuItem.Name = "EstimationStringToolStripMenuItem";
+            this.EstimationStringToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.EstimationStringToolStripMenuItem.Text = "Оценки прописью";
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(215, 6);
+            // 
             // ClearDictionaryToolStripMenuItem
             // 
             this.ClearDictionaryToolStripMenuItem.Name = "ClearDictionaryToolStripMenuItem";
@@ -359,65 +372,17 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(177, 17);
             this.toolStripStatusLabel1.Text = "Модуль справочники системы";
             // 
-            // ContentPanel
-            // 
-            this.ContentPanel.BackColor = System.Drawing.Color.Silver;
-            this.ContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentPanel.Location = new System.Drawing.Point(0, 49);
-            this.ContentPanel.Name = "ContentPanel";
-            this.ContentPanel.Size = new System.Drawing.Size(984, 530);
-            this.ContentPanel.TabIndex = 1;
-            // 
-            // toolStrip
-            // 
-            this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton});
-            this.toolStrip.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Padding = new System.Windows.Forms.Padding(10, 0, 1, 0);
-            this.toolStrip.Size = new System.Drawing.Size(984, 25);
-            this.toolStrip.TabIndex = 3;
-            this.toolStrip.Text = "toolStrip1";
-            // 
-            // toolStripButton
-            // 
-            this.toolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton.Image")));
-            this.toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton.Name = "toolStripButton";
-            this.toolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton.Text = "toolStripButton1";
-            // 
-            // ConversionSystemToolStripMenuItem
-            // 
-            this.ConversionSystemToolStripMenuItem.Name = "ConversionSystemToolStripMenuItem";
-            this.ConversionSystemToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.ConversionSystemToolStripMenuItem.Text = "Система перевода оценок";
-            // 
-            // EstimationStringToolStripMenuItem
-            // 
-            this.EstimationStringToolStripMenuItem.Name = "EstimationStringToolStripMenuItem";
-            this.EstimationStringToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.EstimationStringToolStripMenuItem.Text = "Оценки прописью";
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(215, 6);
-            // 
             // frmDictionary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(984, 601);
-            this.Controls.Add(this.ContentPanel);
-            this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "frmDictionary";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -426,8 +391,6 @@
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,9 +437,6 @@
         private System.Windows.Forms.ToolStripMenuItem TypeOfStreetToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.Panel ContentPanel;
-        private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton toolStripButton;
         private System.Windows.Forms.ToolStripMenuItem ConversionSystemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EstimationStringToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
