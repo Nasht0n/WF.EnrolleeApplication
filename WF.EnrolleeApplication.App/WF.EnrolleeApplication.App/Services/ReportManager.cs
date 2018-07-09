@@ -364,7 +364,14 @@ namespace WF.EnrolleeApplication.App.Services
                     }
                     else
                     {
-                        table.Cell(index + 2, 2).Range.Text = assessment.Discipline.Name.Trim();
+                        string stages = "";
+                        if (assessment.Discipline.StageCount.HasValue)
+                        {
+                            int count = assessment.Discipline.StageCount.Value;
+                            stages += $" ({assessment.Discipline.StageCount.Value} - этапа)";
+                        }
+
+                        table.Cell(index + 2, 2).Range.Text = assessment.Discipline.Name.Trim()+stages;
                         table.Cell(index + 2, 3).Range.Text = assessment.SertDate;
                         if (assessment.Estimation == 0)
                         {

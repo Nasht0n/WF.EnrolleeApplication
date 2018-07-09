@@ -520,10 +520,26 @@ namespace WF.EnrolleeApplication.App.Views
         {
             // Список зачисленных абитуриентов специальности
             var enrollees = enrolleeService.GetEnrollees(speciality).Where(e => e.StateTypeId != 2).ToList();
-            ReportManager.ConnectionString = connectionString;
-            // Подготовка выписки
-            logger.Info($"Пользователь {employee.Fullname.Trim()} выполняет печать выписки.");
-            ReportManager.PrintExtract(enrollees);
+            if (enrollees.Count != 0)
+            {
+                ReportManager.ConnectionString = connectionString;
+                // Подготовка выписки
+                logger.Info($"Пользователь {employee.Fullname.Trim()} выполняет печать выписки.");
+                ReportManager.PrintExtract(enrollees);
+            }
+            else
+            {
+                MessageBox.Show($"Ошибка печати: Нет зачисленных абитуриентов.");
+            }
+        }
+
+        private void cbPriority_Format(object sender, ListControlConvertEventArgs e)
+        {
+            PriorityView priority = (PriorityView)e.ListItem;
+            var speciality = specialityService.GetSpeciality(priority.SpecialityId);
+            string shortFormOfStudy = speciality.FormOfStudy.Shortname.Trim();
+            if (string.IsNullOrWhiteSpace(shortFormOfStudy)) e.Value = $"{priority.Fullname.Trim()}";
+            else e.Value = $"{priority.Fullname.Trim()} -{speciality.FormOfStudy.Shortname.Trim()}";
         }
     }
 }

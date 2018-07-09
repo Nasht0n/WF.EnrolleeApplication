@@ -170,8 +170,8 @@ namespace WF.EnrolleeApplication.App.Views
             foreach (var enrollee in enrollees)
             {
                 string numberOfDeal = $"";
-                if (string.IsNullOrWhiteSpace(enrollee.FormOfStudyShortname)) numberOfDeal = $"{enrollee.SpecialityShortname}-{enrollee.NumberOfDeal}";
-                else numberOfDeal = $"{enrollee.SpecialityShortname}{enrollee.FormOfStudyShortname}-{enrollee.NumberOfDeal}";
+                if (string.IsNullOrWhiteSpace(enrollee.FormOfStudyShortname)) numberOfDeal = $"{enrollee.SpecialityShortname.Trim()}-{enrollee.NumberOfDeal}";
+                else numberOfDeal = $"{enrollee.SpecialityShortname.Trim()}{enrollee.FormOfStudyShortname.Trim()}-{enrollee.NumberOfDeal}";
                 enrolleeTable.Rows.Add(enrollee.EnrolleeId, enrollee.SpecialityId, enrollee.ContestId, enrollee.ReasonForAddmissionId, enrollee.FinanceTypeId, enrollee.StateId, enrollee.EmployeeId, numberOfDeal, enrollee.FormOfStudy,enrollee.Speciality,enrollee.Surname,enrollee.Name,enrollee.Contest,enrollee.ReasonForAddmission,enrollee.Finance,enrollee.Status);
             }
         }
@@ -659,8 +659,6 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="e"></param>
         private void PrintNotice(object sender, EventArgs e)
         {
-            // Передаем строку подключения к источнику данных
-            ReportManager.ConnectionString = connectionString;
             // Получаем уникальный идентификатор выбранного абитуриента
             int id = Int32.Parse(EnrolleeGrid.CurrentRow.Cells[0].Value.ToString());
             // Поиск абитуриента
@@ -678,13 +676,15 @@ namespace WF.EnrolleeApplication.App.Views
             else
                 {
                     flag = false;
-                    break;                    
+                   // break;                    
                 }
             // Если абитуриент сдаёт вступительное испытание в вузе 
             // Подготовка извещения к печати
             if (!flag) MessageBox.Show(this, "Абитуриент не сдаёт вступительные испытания в университете", "Печать извещения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
             {
+                // Передаем строку подключения к источнику данных
+                ReportManager.ConnectionString = connectionString;
                 logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает извещение для абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 ReportManager.PrintNotice(enrollee);
             }

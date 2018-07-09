@@ -275,6 +275,7 @@
             this.cbPriority.Name = "cbPriority";
             this.cbPriority.Size = new System.Drawing.Size(511, 23);
             this.cbPriority.TabIndex = 1;
+            this.cbPriority.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.cbPriority_Format);
             this.cbPriority.SelectedValueChanged += new System.EventHandler(this.cbPriority_SelectedValueChanged);
             // 
             // flowLayoutPanel2
