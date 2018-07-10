@@ -131,6 +131,9 @@ namespace WF.EnrolleeApplication.App.Views
         private bool HasEnroll;
         // Список абитуриентов
         private List<Enrollee> enrollees;
+        private List<Country> countries;
+        private List<Area> areas;
+        private List<District> districts;
         /// <summary>
         /// Конструктор карты абитуриента. 
         /// Используется при добавлении (регистрации) нового абитуриента
@@ -277,11 +280,17 @@ namespace WF.EnrolleeApplication.App.Views
              * Вкладка "Дополнительная информация" *
              * **********************************  */
             // Устанавливаем страну абитуриента
-            cbCountry.SelectedValue = editEnrollee.CountryId;
+            country = countryService.GetCountry(editEnrollee.CountryId);
+            tbCountry.Text = country.Name;
+            //cbCountry.SelectedValue = editEnrollee.CountryId;
             // Устанавливаем область абитуриента
-            cbArea.SelectedValue = editEnrollee.AreaId;
+            area = areaService.GetArea(editEnrollee.AreaId);
+            tbArea.Text = area.Name;
+            //cbArea.SelectedValue = editEnrollee.AreaId;
             // Устанавливаем район абитуриента
-            cbDistrict.SelectedValue = editEnrollee.DistrictId;
+            district = districtService.GetDistrict(editEnrollee.DistrictId);
+            tbDistrict.Text = district.Name;
+            //cbDistrict.SelectedValue = editEnrollee.DistrictId;
             // Устанавливаем тип населенного пункта абитуриент
             cbTypeOfSettlement.SelectedValue = editEnrollee.SettlementTypeId;
             // Устанавливаем тип улицы абитуриента
@@ -541,8 +550,8 @@ namespace WF.EnrolleeApplication.App.Views
         private void InitializeSertificationGrid()
         {
             // Режим редактирования отключен
-            if (!editMode)
-            {
+            //if (!editMode)
+            //{
                 // Получение списка дисциплин экзаменнационной схемы
                 var schemas = examSchemaService.GetExamSchemas(speciality).Where(ex => ex.Discipline.BasisForAssessingId != 1).ToList();
                 // Очистка таблицы сертификатов
@@ -570,7 +579,7 @@ namespace WF.EnrolleeApplication.App.Views
                             sertificateTable.Rows.Add(discipline.DisciplineId, discipline.BasisForAssessingId, discipline.Name, "", "", "", "");
                         }
                     }
-                }
+                //}
                 // Задаем стиль отображения таблицы сертификатов
                 SetSertificateTableStyle();
             }
@@ -641,6 +650,10 @@ namespace WF.EnrolleeApplication.App.Views
             // Местожительство родителей
             AutoCompleteStringCollection sourceMotherAdress = new AutoCompleteStringCollection();
             AutoCompleteStringCollection sourceFatherAdress = new AutoCompleteStringCollection();
+            // Место регистрации
+            AutoCompleteStringCollection sourceCountry = new AutoCompleteStringCollection();
+            AutoCompleteStringCollection sourceArea = new AutoCompleteStringCollection();
+            AutoCompleteStringCollection sourceDistrict = new AutoCompleteStringCollection();
             // Населенный пункт
             AutoCompleteStringCollection sourceSettlement = new AutoCompleteStringCollection();
             // Тип улицы
@@ -659,6 +672,9 @@ namespace WF.EnrolleeApplication.App.Views
             AutoCompleteStringCollection sourcePersonInCharge = new AutoCompleteStringCollection();
             // Получаем список абитуриентов
             enrollees = enrolleeService.GetEnrollees();
+            countries = countryService.GetCountries();
+            areas = areaService.GetAreas();
+            districts = districtService.GetDistricts();
             // Заполняем источники данными
             sourceSurnameRus.AddRange(enrollees.Select(s => s.RuSurname).Distinct().ToArray());
             sourceNameRus.AddRange(enrollees.Select(n => n.RuName).Distinct().ToArray());
@@ -669,6 +685,9 @@ namespace WF.EnrolleeApplication.App.Views
             sourceDocumentWhoGave.AddRange(enrollees.Select(d => d.DocumentWhoGave).Distinct().ToArray());
             sourceMotherAdress.Add(tbFatherAdres.Text);
             sourceFatherAdress.Add(tbMotherAdres.Text);
+            sourceCountry.AddRange(countries.Select(c=>c.Name).Distinct().ToArray());
+            sourceArea.AddRange(areas.Select(a=>a.Name).Distinct().ToArray());
+            sourceDistrict.AddRange(districts.Select(d=>d.Name).Distinct().ToArray());
             sourceSettlement.AddRange(enrollees.Where(p => p.SettlementName != null).Select(p => p.SettlementName).Distinct().ToArray());
             sourceStreet.AddRange(enrollees.Where(p => p.StreetName != null).Select(p => p.StreetName).Distinct().ToArray());
             sourceSchoolName.AddRange(enrollees.Where(p => p.SchoolName != null).Select(p => p.SchoolName).Distinct().ToArray());
@@ -688,6 +707,9 @@ namespace WF.EnrolleeApplication.App.Views
             tbDocWhoGave.AutoCompleteCustomSource = sourceDocumentWhoGave;
             tbMotherAdres.AutoCompleteCustomSource = sourceMotherAdress;
             tbFatherAdres.AutoCompleteCustomSource = sourceFatherAdress;
+            tbCountry.AutoCompleteCustomSource = sourceCountry;
+            tbArea.AutoCompleteCustomSource = sourceArea;
+            tbDistrict.AutoCompleteCustomSource = sourceDistrict;
             tbSettlementName.AutoCompleteCustomSource = sourceSettlement;
             tbStreetName.AutoCompleteCustomSource = sourceStreet;
             tbSchoolName.AutoCompleteCustomSource = sourceSchoolName;
@@ -713,12 +735,12 @@ namespace WF.EnrolleeApplication.App.Views
             InitializeCitizenshipComboBox();
             // Инициализация списка типов документов
             InitializeDocumentComboBox();
-            // Инициализация списка стран
-            InitializeCountryComboBox();
-            // Инициализация списка областей
-            InitializeAreaComboBox();
-            // Инициализация списка районов
-            InitializeDistrictComboBox();
+            //// Инициализация списка стран
+            //InitializeCountryComboBox();
+            //// Инициализация списка областей
+            //InitializeAreaComboBox();
+            //// Инициализация списка районов
+            //InitializeDistrictComboBox();
             // Инициализация списка типов населенных пунктов
             InitializeTypeOfSettlementComboBox();
             // Инициализация списка типов улицы
@@ -782,72 +804,72 @@ namespace WF.EnrolleeApplication.App.Views
             // Включаем отслеживание изменения
             cbDecree.SelectedValueChanged += cbDecree_SelectedValueChanged;
         }
-        /// <summary>
-        /// Загрузка данных в список "Районы"
-        /// </summary>
-        private void InitializeDistrictComboBox()
-        {
-            // Отключаем отслеживание изменения
-            cbDistrict.SelectedValueChanged -= cbDistrict_SelectedValueChanged;
-            // Получаем список районов
-            var districts = districtService.GetDistricts();
-            cbDistrict.DataSource = districts;
-            cbDistrict.DisplayMember = "Name";
-            cbDistrict.ValueMember = "DistrictId";
-            // Инициализируем район первым элементом списка
-            if (districts.Count != 0)
-            {
-                if (district == null) district = districts[0];
-                else cbDistrict.SelectedValue = district.DistrictId;
-            }
-            // Включаем отслеживание изменения
-            cbDistrict.SelectedValueChanged += cbDistrict_SelectedValueChanged;
-        }
-        /// <summary>
-        /// Загрузка данных в список "Области"
-        /// </summary>
-        private void InitializeAreaComboBox()
-        {
-            // Отключаем отслеживание изменения
-            cbArea.SelectedValueChanged -= cbArea_SelectedValueChanged;
-            // Получаем список областей
-            var areas = areaService.GetAreas();
-            cbArea.DataSource = areas;
-            cbArea.DisplayMember = "Name";
-            cbArea.ValueMember = "AreaId";
-            // Инициализируем область первым элементом списка
-            if (areas.Count != 0)
-            {
-                if (area == null) area = areas[0];
-                else cbArea.SelectedValue = area.AreaId;
-            }
-            // Включаем отслеживание изменения
-            cbArea.SelectedValueChanged += cbArea_SelectedValueChanged;
-        }
-        /// <summary>
-        /// Загрузка данных в список "Страны"
-        /// </summary>
-        private void InitializeCountryComboBox()
-        {
-            // Отключаем отслеживание изменения
-            cbCountry.SelectedValueChanged -= cbCountry_SelectedValueChanged;
-            // Получаем список стран
-            var countries = countryService.GetCountries();
-            cbCountry.DataSource = countries;
-            cbCountry.DisplayMember = "Name";
-            cbCountry.ValueMember = "CountryId";
-            // Инициализируем страну первым элементом списка
-            if (countries.Count != 0)
-            {
-                if (country == null) country = countries[0];
-                else cbCountry.SelectedValue = country.CountryId;
-            }
-            // Включаем отслеживание изменения
-            cbCountry.SelectedValueChanged += cbCountry_SelectedValueChanged;
-        }
-        /// <summary>
-        /// Загрузка данных в список "Системы перевода"
-        /// </summary>
+        ///// <summary>
+        ///// Загрузка данных в список "Районы"
+        ///// </summary>
+        //private void InitializeDistrictComboBox()
+        //{
+        //    // Отключаем отслеживание изменения
+        //    cbDistrict.SelectedValueChanged -= cbDistrict_SelectedValueChanged;
+        //    // Получаем список районов
+        //    var districts = districtService.GetDistricts();
+        //    cbDistrict.DataSource = districts;
+        //    cbDistrict.DisplayMember = "Name";
+        //    cbDistrict.ValueMember = "DistrictId";
+        //    // Инициализируем район первым элементом списка
+        //    if (districts.Count != 0)
+        //    {
+        //        if (district == null) district = districts[0];
+        //        else cbDistrict.SelectedValue = district.DistrictId;
+        //    }
+        //    // Включаем отслеживание изменения
+        //    cbDistrict.SelectedValueChanged += cbDistrict_SelectedValueChanged;
+        //}
+        ///// <summary>
+        ///// Загрузка данных в список "Области"
+        ///// </summary>
+        //private void InitializeAreaComboBox()
+        //{
+        //    // Отключаем отслеживание изменения
+        //    cbArea.SelectedValueChanged -= cbArea_SelectedValueChanged;
+        //    // Получаем список областей
+        //    var areas = areaService.GetAreas();
+        //    cbArea.DataSource = areas;
+        //    cbArea.DisplayMember = "Name";
+        //    cbArea.ValueMember = "AreaId";
+        //    // Инициализируем область первым элементом списка
+        //    if (areas.Count != 0)
+        //    {
+        //        if (area == null) area = areas[0];
+        //        else cbArea.SelectedValue = area.AreaId;
+        //    }
+        //    // Включаем отслеживание изменения
+        //    cbArea.SelectedValueChanged += cbArea_SelectedValueChanged;
+        //}
+        ///// <summary>
+        ///// Загрузка данных в список "Страны"
+        ///// </summary>
+        //private void InitializeCountryComboBox()
+        //{
+        //    // Отключаем отслеживание изменения
+        //    cbCountry.SelectedValueChanged -= cbCountry_SelectedValueChanged;
+        //    // Получаем список стран
+        //    var countries = countryService.GetCountries();
+        //    cbCountry.DataSource = countries;
+        //    cbCountry.DisplayMember = "Name";
+        //    cbCountry.ValueMember = "CountryId";
+        //    // Инициализируем страну первым элементом списка
+        //    if (countries.Count != 0)
+        //    {
+        //        if (country == null) country = countries[0];
+        //        else cbCountry.SelectedValue = country.CountryId;
+        //    }
+        //    // Включаем отслеживание изменения
+        //    cbCountry.SelectedValueChanged += cbCountry_SelectedValueChanged;
+        //}
+        ///// <summary>
+        ///// Загрузка данных в список "Системы перевода"
+        ///// </summary>
         private void InitializeTransferSystem()
         {
             List<string> listAttestat = new List<string>();
@@ -1130,8 +1152,21 @@ namespace WF.EnrolleeApplication.App.Views
                 // Инициализируем список приоритетов
                 if (specialities.Count != 0)
                 {
-                    if (speciality == null) speciality = specialities[0];
-                    else cbSpeciality.SelectedValue = speciality.SpecialityId;
+                    //speciality = specialities[0];
+                    if(speciality == null)
+                    {
+                        speciality = specialities[0];
+                    }
+                    else if(speciality.Equals(specialities[0]))
+                    {
+                        cbSpeciality.SelectedValue = speciality.SpecialityId;
+                    }
+                    else
+                    {
+                        speciality = specialities[0];
+                    }
+
+
                     InitializeSecondarySpecialityComboBox();
                     InitializeSertificationGrid();
                     InitializePrioritySpecialityGrid();
@@ -1221,49 +1256,49 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         /// <param name="sender">Выпадающий список "Страны"</param>
         /// <param name="e"></param>
-        private void cbCountry_SelectedValueChanged(object sender, EventArgs e)
-        {
-            // Если список не пуст
-            if (cbCountry.SelectedValue != null)
-            {
-                // Получаем уникальный идентификатор
-                int id = (int)cbCountry.SelectedValue;
-                // По уникальному идентификатору ищем страну
-                country = countryService.GetCountry(id);
-            }
-        }
-        /// <summary>
-        /// Получение объекта выпадающего списка
-        /// </summary>
-        /// <param name="sender">Выпадающий список "Области"</param>
-        /// <param name="e"></param>
-        private void cbArea_SelectedValueChanged(object sender, EventArgs e)
-        {
-            // Если список не пуст
-            if (cbArea.SelectedValue != null)
-            {
-                // Получаем уникальный идентификатор
-                int id = (int)cbArea.SelectedValue;
-                // По уникальному идентификатору ищем область
-                area = areaService.GetArea(id);
-            }
-        }
-        /// <summary>
-        /// Получение объекта выпадающего списка
-        /// </summary>
-        /// <param name="sender">Выпадающий список "Районы"</param>
-        /// <param name="e"></param>
-        private void cbDistrict_SelectedValueChanged(object sender, EventArgs e)
-        {
-            // Если список не пуст
-            if (cbDistrict.SelectedValue != null)
-            {
-                // Получаем уникальный идентификатор
-                int id = (int)cbDistrict.SelectedValue;
-                // По уникальному идентификатору ищем район
-                district = districtService.GetDistrict(id);
-            }
-        }
+        //private void cbCountry_SelectedValueChanged(object sender, EventArgs e)
+        //{
+        //    // Если список не пуст
+        //    if (cbCountry.SelectedValue != null)
+        //    {
+        //        // Получаем уникальный идентификатор
+        //        int id = (int)cbCountry.SelectedValue;
+        //        // По уникальному идентификатору ищем страну
+        //        country = countryService.GetCountry(id);
+        //    }
+        //}
+        ///// <summary>
+        ///// Получение объекта выпадающего списка
+        ///// </summary>
+        ///// <param name="sender">Выпадающий список "Области"</param>
+        ///// <param name="e"></param>
+        //private void cbArea_SelectedValueChanged(object sender, EventArgs e)
+        //{
+        //    // Если список не пуст
+        //    if (cbArea.SelectedValue != null)
+        //    {
+        //        // Получаем уникальный идентификатор
+        //        int id = (int)cbArea.SelectedValue;
+        //        // По уникальному идентификатору ищем область
+        //        area = areaService.GetArea(id);
+        //    }
+        //}
+        ///// <summary>
+        ///// Получение объекта выпадающего списка
+        ///// </summary>
+        ///// <param name="sender">Выпадающий список "Районы"</param>
+        ///// <param name="e"></param>
+        //private void cbDistrict_SelectedValueChanged(object sender, EventArgs e)
+        //{
+        //    // Если список не пуст
+        //    if (cbDistrict.SelectedValue != null)
+        //    {
+        //        // Получаем уникальный идентификатор
+        //        int id = (int)cbDistrict.SelectedValue;
+        //        // По уникальному идентификатору ищем район
+        //        district = districtService.GetDistrict(id);
+        //    }
+        //}
         /// <summary>
         /// Получение объекта выпадающего списка
         /// Загрузка данных в выпадающий список "Специальности"
@@ -1366,6 +1401,10 @@ namespace WF.EnrolleeApplication.App.Views
                 if (HasSecondarySpeciality) InitializeSecondarySpecialityComboBox();
                 // Иначе инициализируем список приоритетов
                 else InitializePrioritySpecialityGrid();
+            }
+            else
+            {
+                speciality = null;
             }
         }
         /// <summary>
@@ -2324,21 +2363,21 @@ namespace WF.EnrolleeApplication.App.Views
         private void SaveAssessments(List<Assessment> assessments)
         {
             // Если не режим редактирования
-            if (!editMode)
-            {
+            //if (!editMode)
+            //{
                 logger.Info($"Добавление оценок абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 foreach (var assessment in assessments)
                     // Добавляем оценки
                     assessmentService.InsertAssessment(assessment);
-            }
-            // Если режим редактирования
-            else
-            {
-                logger.Info($"Редактирование оценок абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
-                foreach (var assessment in assessments)
-                    // Обновляем оценки
-                    assessmentService.UpdateAssessment(assessment);
-            }
+            //}
+            //// Если режим редактирования
+            //else
+            //{
+            //    logger.Info($"Редактирование оценок абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
+            //    foreach (var assessment in assessments)
+            //        // Обновляем оценки
+            //        assessmentService.UpdateAssessment(assessment);
+            //}
         }
         /// <summary>
         /// Получение списка оценок абитуриента
@@ -2350,8 +2389,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Список оценок
             var assessments = new List<Assessment>();
             // Если режим регистрации абитуриента
-            if (!editMode)
-            {
+            //if (!editMode)
+            //{
                 // Оценка документа об образовании
                 var docAssessment = new Assessment();
                 docAssessment.DisciplineId = 5;
@@ -2376,36 +2415,36 @@ namespace WF.EnrolleeApplication.App.Views
                     assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
                     assessments.Add(assessment);
                 }
-            }
-            else
-            {
-                // Список оценок абитуриента
-                assessments = assessmentService.GetAssessments(savedEnrollee);
-                foreach (var assessment in assessments)
-                {
-                    // Документ об образовании
-                    if (assessment.DisciplineId == 5)
-                    {
-                        assessment.Estimation = Int32.Parse(tbAverage.Text);
-                    }
-                    else
-                    {
-                        // Оценки таблицы сертификатов
-                        foreach (DataGridViewRow row in SertificateGrid.Rows)
-                        {
-                            int disciplineId = Int32.Parse(row.Cells[0].Value.ToString());
-                            if (assessment.DisciplineId == disciplineId)
-                            {
-                                if (string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString())) assessment.Estimation = 0;
-                                else assessment.Estimation = Int32.Parse(row.Cells[4].Value.ToString());
-                                assessment.SertCode = row.Cells[3].Value.ToString();
-                                assessment.SertDate = row.Cells[5].Value.ToString();
-                                assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
-                            }
-                        }
-                    }
-                }
-            }
+            //}
+            //else
+            //{
+            //    // Список оценок абитуриента
+            //    assessments = assessmentService.GetAssessments(savedEnrollee);
+            //    foreach (var assessment in assessments)
+            //    {
+            //        // Документ об образовании
+            //        if (assessment.DisciplineId == 5)
+            //        {
+            //            assessment.Estimation = Int32.Parse(tbAverage.Text);
+            //        }
+            //        else
+            //        {
+            //            // Оценки таблицы сертификатов
+            //            foreach (DataGridViewRow row in SertificateGrid.Rows)
+            //            {
+            //                int disciplineId = Int32.Parse(row.Cells[0].Value.ToString());
+            //                if (assessment.DisciplineId == disciplineId)
+            //                {
+            //                    if (string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString())) assessment.Estimation = 0;
+            //                    else assessment.Estimation = Int32.Parse(row.Cells[4].Value.ToString());
+            //                    assessment.SertCode = row.Cells[3].Value.ToString();
+            //                    assessment.SertDate = row.Cells[5].Value.ToString();
+            //                    assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
             return assessments;
         }
         /// <summary>
@@ -2752,6 +2791,60 @@ namespace WF.EnrolleeApplication.App.Views
             if (e.KeyCode == Keys.F5)
             {
                 InitializeComboBoxes();
+            }
+        }
+
+        private void tbCountry_Leave(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrWhiteSpace(tbCountry.Text))
+            {
+                string countryName = tbCountry.Text;
+                country = countryService.GetCountry(countryName);
+                if(country==null)
+                {
+                    if (MessageBox.Show(this, $"Добавить '{countryName.Trim()}' в справочник стран?","Добавление страны в справочник",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        var inserted = new Country();
+                        inserted.Name = countryName;
+                        country = countryService.InsertCountry(inserted);
+                    }
+                }
+            }
+        }
+
+        private void tbArea_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(tbArea.Text))
+            {
+                string areaName = tbArea.Text;
+                area = areaService.GetArea(areaName);
+                if (area == null)
+                {
+                    if (MessageBox.Show(this, $"Добавить '{areaName.Trim()}' в справочник области?", "Добавление области в справочник", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        var inserted = new Area();
+                        inserted.Name = areaName;
+                        area = areaService.InsertArea(inserted);
+                    }
+                }
+            }
+        }
+
+        private void tbDistrict_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(tbDistrict.Text))
+            {
+                string districtName = tbDistrict.Text;
+                district = districtService.GetDistrict(districtName);
+                if (district == null)
+                {
+                    if (MessageBox.Show(this, $"Добавить '{districtName.Trim()}' в справочник районы?", "Добавление района в справочник", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        var inserted = new District();
+                        inserted.Name = districtName;
+                        district = districtService.InsertDistrict(inserted);
+                    }
+                }
             }
         }
     }

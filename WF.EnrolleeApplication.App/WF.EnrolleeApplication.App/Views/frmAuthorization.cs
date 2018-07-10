@@ -154,7 +154,7 @@ namespace WF.EnrolleeApplication.App.Views
                     // Пользователь найден.
                     // Проверяем уровень доступа.
                     logger.Info($"Пользователь найден. Проверяем уровень доступа");
-                    if (employee.EmployeePost.DictionaryAllow)
+                    if (employee.EmployeePost.RegistrationAllow)
                     {
                         logger.Info($"Доступ получен. Авторизация пройдена успешно.");
                         this.Hide();

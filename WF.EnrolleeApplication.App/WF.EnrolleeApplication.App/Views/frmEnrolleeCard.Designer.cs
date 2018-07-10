@@ -147,11 +147,8 @@
             this.groupBox26 = new System.Windows.Forms.GroupBox();
             this.cbTypeOfSettlement = new System.Windows.Forms.ComboBox();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
-            this.cbArea = new System.Windows.Forms.ComboBox();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
-            this.cbDistrict = new System.Windows.Forms.ComboBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
-            this.cbCountry = new System.Windows.Forms.ComboBox();
             this.tabPageEnroll = new System.Windows.Forms.TabPage();
             this.groupBox64 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -220,6 +217,9 @@
             this.PriorityGrid = new System.Windows.Forms.DataGridView();
             this.groupBox67 = new System.Windows.Forms.GroupBox();
             this.chkAtributeList = new System.Windows.Forms.CheckedListBox();
+            this.tbCountry = new System.Windows.Forms.TextBox();
+            this.tbArea = new System.Windows.Forms.TextBox();
+            this.tbDistrict = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -509,7 +509,7 @@
             this.groupBox21.Location = new System.Drawing.Point(3, 61);
             this.groupBox21.Name = "groupBox21";
             this.groupBox21.Size = new System.Drawing.Size(476, 53);
-            this.groupBox21.TabIndex = 7;
+            this.groupBox21.TabIndex = 2;
             this.groupBox21.TabStop = false;
             this.groupBox21.Text = "Полное ФИО матери";
             // 
@@ -529,7 +529,7 @@
             this.groupBox20.Location = new System.Drawing.Point(485, 61);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Size = new System.Drawing.Size(476, 53);
-            this.groupBox20.TabIndex = 6;
+            this.groupBox20.TabIndex = 3;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Местожительство матери";
             // 
@@ -549,7 +549,7 @@
             this.groupBox19.Location = new System.Drawing.Point(485, 3);
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(476, 52);
-            this.groupBox19.TabIndex = 5;
+            this.groupBox19.TabIndex = 1;
             this.groupBox19.TabStop = false;
             this.groupBox19.Text = "Местожительство отца";
             // 
@@ -569,7 +569,7 @@
             this.groupBox18.Location = new System.Drawing.Point(3, 3);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(476, 52);
-            this.groupBox18.TabIndex = 3;
+            this.groupBox18.TabIndex = 0;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Полное ФИО отца";
             // 
@@ -1076,7 +1076,7 @@
             this.gbDateDeal.Location = new System.Drawing.Point(772, 150);
             this.gbDateDeal.Name = "gbDateDeal";
             this.gbDateDeal.Size = new System.Drawing.Size(186, 43);
-            this.gbDateDeal.TabIndex = 23;
+            this.gbDateDeal.TabIndex = 12;
             this.gbDateDeal.TabStop = false;
             this.gbDateDeal.Text = "Дата подачи документов";
             this.gbDateDeal.Visible = false;
@@ -1098,7 +1098,7 @@
             this.gbWorkPost.Location = new System.Drawing.Point(580, 199);
             this.gbWorkPost.Name = "gbWorkPost";
             this.gbWorkPost.Size = new System.Drawing.Size(381, 47);
-            this.gbWorkPost.TabIndex = 21;
+            this.gbWorkPost.TabIndex = 15;
             this.gbWorkPost.TabStop = false;
             this.gbWorkPost.Text = "Должность";
             this.gbWorkPost.Visible = false;
@@ -1120,7 +1120,7 @@
             this.gbWorkPlace.Location = new System.Drawing.Point(243, 199);
             this.gbWorkPlace.Name = "gbWorkPlace";
             this.gbWorkPlace.Size = new System.Drawing.Size(331, 47);
-            this.gbWorkPlace.TabIndex = 20;
+            this.gbWorkPlace.TabIndex = 14;
             this.gbWorkPlace.TabStop = false;
             this.gbWorkPlace.Text = "Место работы";
             this.gbWorkPlace.Visible = false;
@@ -1143,7 +1143,7 @@
             this.gbSeniority.Location = new System.Drawing.Point(3, 199);
             this.gbSeniority.Name = "gbSeniority";
             this.gbSeniority.Size = new System.Drawing.Size(234, 47);
-            this.gbSeniority.TabIndex = 19;
+            this.gbSeniority.TabIndex = 13;
             this.gbSeniority.TabStop = false;
             this.gbSeniority.Text = "Трудовой стаж (полных месяцев)";
             this.gbSeniority.Visible = false;
@@ -1165,7 +1165,7 @@
             this.groupBox46.Location = new System.Drawing.Point(147, 150);
             this.groupBox46.Name = "groupBox46";
             this.groupBox46.Size = new System.Drawing.Size(427, 43);
-            this.groupBox46.TabIndex = 18;
+            this.groupBox46.TabIndex = 10;
             this.groupBox46.TabStop = false;
             this.groupBox46.Text = "Основной иностранный язык";
             // 
@@ -1188,7 +1188,7 @@
             this.groupBox45.Location = new System.Drawing.Point(3, 150);
             this.groupBox45.Name = "groupBox45";
             this.groupBox45.Size = new System.Drawing.Size(138, 43);
-            this.groupBox45.TabIndex = 11;
+            this.groupBox45.TabIndex = 9;
             this.groupBox45.TabStop = false;
             this.groupBox45.Text = "БРСМ";
             // 
@@ -1211,9 +1211,9 @@
             this.gbCurrentUniversity.Location = new System.Drawing.Point(772, 101);
             this.gbCurrentUniversity.Name = "gbCurrentUniversity";
             this.gbCurrentUniversity.Size = new System.Drawing.Size(189, 43);
-            this.gbCurrentUniversity.TabIndex = 10;
+            this.gbCurrentUniversity.TabIndex = 8;
             this.gbCurrentUniversity.TabStop = false;
-            this.gbCurrentUniversity.Text = "Наименование учреждения образования";
+            this.gbCurrentUniversity.Text = "Наименование УО";
             this.gbCurrentUniversity.Visible = false;
             // 
             // tbCurrentUniversity
@@ -1234,7 +1234,7 @@
             this.gbCurrentSpeciality.Location = new System.Drawing.Point(243, 101);
             this.gbCurrentSpeciality.Name = "gbCurrentSpeciality";
             this.gbCurrentSpeciality.Size = new System.Drawing.Size(523, 43);
-            this.gbCurrentSpeciality.TabIndex = 8;
+            this.gbCurrentSpeciality.TabIndex = 7;
             this.gbCurrentSpeciality.TabStop = false;
             this.gbCurrentSpeciality.Text = "Специальность учреждения образования";
             this.gbCurrentSpeciality.Visible = false;
@@ -1256,7 +1256,7 @@
             this.gbCurrentCurs.Location = new System.Drawing.Point(147, 101);
             this.gbCurrentCurs.Name = "gbCurrentCurs";
             this.gbCurrentCurs.Size = new System.Drawing.Size(90, 43);
-            this.gbCurrentCurs.TabIndex = 7;
+            this.gbCurrentCurs.TabIndex = 6;
             this.gbCurrentCurs.TabStop = false;
             this.gbCurrentCurs.Text = "Курс";
             this.gbCurrentCurs.Visible = false;
@@ -1277,7 +1277,7 @@
             this.groupBox41.Location = new System.Drawing.Point(3, 101);
             this.groupBox41.Name = "groupBox41";
             this.groupBox41.Size = new System.Drawing.Size(138, 43);
-            this.groupBox41.TabIndex = 6;
+            this.groupBox41.TabIndex = 5;
             this.groupBox41.TabStop = false;
             this.groupBox41.Text = "Второе высшее";
             // 
@@ -1301,7 +1301,7 @@
             this.gbSecondarySpeciality.Location = new System.Drawing.Point(580, 52);
             this.gbSecondarySpeciality.Name = "gbSecondarySpeciality";
             this.gbSecondarySpeciality.Size = new System.Drawing.Size(381, 43);
-            this.gbSecondarySpeciality.TabIndex = 5;
+            this.gbSecondarySpeciality.TabIndex = 4;
             this.gbSecondarySpeciality.TabStop = false;
             this.gbSecondarySpeciality.Text = "Специальность второй ступени";
             this.gbSecondarySpeciality.Visible = false;
@@ -1326,7 +1326,7 @@
             this.groupBox39.Location = new System.Drawing.Point(3, 52);
             this.groupBox39.Name = "groupBox39";
             this.groupBox39.Size = new System.Drawing.Size(571, 43);
-            this.groupBox39.TabIndex = 4;
+            this.groupBox39.TabIndex = 3;
             this.groupBox39.TabStop = false;
             this.groupBox39.Text = "Адрес учебного заведения";
             // 
@@ -1348,7 +1348,7 @@
             this.groupBox38.Location = new System.Drawing.Point(580, 3);
             this.groupBox38.Name = "groupBox38";
             this.groupBox38.Size = new System.Drawing.Size(381, 43);
-            this.groupBox38.TabIndex = 3;
+            this.groupBox38.TabIndex = 2;
             this.groupBox38.TabStop = false;
             this.groupBox38.Text = "Наименование учебного заведения";
             // 
@@ -1369,7 +1369,7 @@
             this.groupBox36.Location = new System.Drawing.Point(3, 3);
             this.groupBox36.Name = "groupBox36";
             this.groupBox36.Size = new System.Drawing.Size(138, 43);
-            this.groupBox36.TabIndex = 1;
+            this.groupBox36.TabIndex = 0;
             this.groupBox36.TabStop = false;
             this.groupBox36.Text = "Год окончания";
             // 
@@ -1390,7 +1390,7 @@
             this.groupBox37.Location = new System.Drawing.Point(147, 3);
             this.groupBox37.Name = "groupBox37";
             this.groupBox37.Size = new System.Drawing.Size(427, 43);
-            this.groupBox37.TabIndex = 2;
+            this.groupBox37.TabIndex = 1;
             this.groupBox37.TabStop = false;
             this.groupBox37.Text = "Тип учебного заведения";
             // 
@@ -1412,7 +1412,7 @@
             this.gbDecree.Location = new System.Drawing.Point(580, 150);
             this.gbDecree.Name = "gbDecree";
             this.gbDecree.Size = new System.Drawing.Size(186, 43);
-            this.gbDecree.TabIndex = 22;
+            this.gbDecree.TabIndex = 11;
             this.gbDecree.TabStop = false;
             this.gbDecree.Text = "Приказ";
             this.gbDecree.Visible = false;
@@ -1476,7 +1476,7 @@
             this.groupBox34.Location = new System.Drawing.Point(726, 105);
             this.groupBox34.Name = "groupBox34";
             this.groupBox34.Size = new System.Drawing.Size(235, 46);
-            this.groupBox34.TabIndex = 25;
+            this.groupBox34.TabIndex = 11;
             this.groupBox34.TabStop = false;
             this.groupBox34.Text = "Мобильный телефон";
             // 
@@ -1495,7 +1495,7 @@
             this.groupBox33.Location = new System.Drawing.Point(485, 105);
             this.groupBox33.Name = "groupBox33";
             this.groupBox33.Size = new System.Drawing.Size(235, 46);
-            this.groupBox33.TabIndex = 24;
+            this.groupBox33.TabIndex = 10;
             this.groupBox33.TabStop = false;
             this.groupBox33.Text = "Домашний телефон";
             // 
@@ -1514,7 +1514,7 @@
             this.groupBox32.Location = new System.Drawing.Point(244, 105);
             this.groupBox32.Name = "groupBox32";
             this.groupBox32.Size = new System.Drawing.Size(235, 46);
-            this.groupBox32.TabIndex = 23;
+            this.groupBox32.TabIndex = 9;
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "Номер квартиры";
             // 
@@ -1533,7 +1533,7 @@
             this.groupBox31.Location = new System.Drawing.Point(726, 54);
             this.groupBox31.Name = "groupBox31";
             this.groupBox31.Size = new System.Drawing.Size(235, 45);
-            this.groupBox31.TabIndex = 22;
+            this.groupBox31.TabIndex = 8;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Номер дома";
             // 
@@ -1552,7 +1552,7 @@
             this.groupBox30.Location = new System.Drawing.Point(485, 54);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.Size = new System.Drawing.Size(235, 45);
-            this.groupBox30.TabIndex = 21;
+            this.groupBox30.TabIndex = 7;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Наименование улицы";
             // 
@@ -1573,7 +1573,7 @@
             this.groupBox29.Location = new System.Drawing.Point(244, 54);
             this.groupBox29.Name = "groupBox29";
             this.groupBox29.Size = new System.Drawing.Size(235, 45);
-            this.groupBox29.TabIndex = 20;
+            this.groupBox29.TabIndex = 6;
             this.groupBox29.TabStop = false;
             this.groupBox29.Text = "Вид улицы";
             // 
@@ -1596,7 +1596,7 @@
             this.groupBox28.Location = new System.Drawing.Point(726, 3);
             this.groupBox28.Name = "groupBox28";
             this.groupBox28.Size = new System.Drawing.Size(235, 45);
-            this.groupBox28.TabIndex = 19;
+            this.groupBox28.TabIndex = 5;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Индекс населенного пункта";
             // 
@@ -1618,7 +1618,7 @@
             this.groupBox27.Location = new System.Drawing.Point(485, 3);
             this.groupBox27.Name = "groupBox27";
             this.groupBox27.Size = new System.Drawing.Size(235, 45);
-            this.groupBox27.TabIndex = 18;
+            this.groupBox27.TabIndex = 4;
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "Наименование населенного пункта";
             // 
@@ -1639,7 +1639,7 @@
             this.groupBox26.Location = new System.Drawing.Point(244, 3);
             this.groupBox26.Name = "groupBox26";
             this.groupBox26.Size = new System.Drawing.Size(235, 45);
-            this.groupBox26.TabIndex = 14;
+            this.groupBox26.TabIndex = 3;
             this.groupBox26.TabStop = false;
             this.groupBox26.Text = "Тип населенного пункта";
             // 
@@ -1657,30 +1657,18 @@
             // 
             // groupBox24
             // 
-            this.groupBox24.Controls.Add(this.cbArea);
+            this.groupBox24.Controls.Add(this.tbArea);
             this.groupBox24.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox24.Location = new System.Drawing.Point(3, 54);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Size = new System.Drawing.Size(235, 45);
-            this.groupBox24.TabIndex = 13;
+            this.groupBox24.TabIndex = 1;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Область";
             // 
-            // cbArea
-            // 
-            this.cbArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbArea.FormattingEnabled = true;
-            this.cbArea.Location = new System.Drawing.Point(3, 19);
-            this.cbArea.Name = "cbArea";
-            this.cbArea.Size = new System.Drawing.Size(229, 23);
-            this.cbArea.TabIndex = 0;
-            this.cbArea.SelectedValueChanged += new System.EventHandler(this.cbArea_SelectedValueChanged);
-            this.cbArea.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
-            // 
             // groupBox25
             // 
-            this.groupBox25.Controls.Add(this.cbDistrict);
+            this.groupBox25.Controls.Add(this.tbDistrict);
             this.groupBox25.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox25.Location = new System.Drawing.Point(3, 105);
             this.groupBox25.Name = "groupBox25";
@@ -1689,21 +1677,9 @@
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Район";
             // 
-            // cbDistrict
-            // 
-            this.cbDistrict.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbDistrict.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDistrict.FormattingEnabled = true;
-            this.cbDistrict.Location = new System.Drawing.Point(3, 19);
-            this.cbDistrict.Name = "cbDistrict";
-            this.cbDistrict.Size = new System.Drawing.Size(229, 23);
-            this.cbDistrict.TabIndex = 0;
-            this.cbDistrict.SelectedValueChanged += new System.EventHandler(this.cbDistrict_SelectedValueChanged);
-            this.cbDistrict.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
-            // 
             // groupBox23
             // 
-            this.groupBox23.Controls.Add(this.cbCountry);
+            this.groupBox23.Controls.Add(this.tbCountry);
             this.groupBox23.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox23.Location = new System.Drawing.Point(3, 3);
             this.groupBox23.Name = "groupBox23";
@@ -1711,18 +1687,6 @@
             this.groupBox23.TabIndex = 0;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Страна";
-            // 
-            // cbCountry
-            // 
-            this.cbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCountry.FormattingEnabled = true;
-            this.cbCountry.Location = new System.Drawing.Point(3, 19);
-            this.cbCountry.Name = "cbCountry";
-            this.cbCountry.Size = new System.Drawing.Size(229, 23);
-            this.cbCountry.TabIndex = 0;
-            this.cbCountry.SelectedValueChanged += new System.EventHandler(this.cbCountry_SelectedValueChanged);
-            this.cbCountry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GetLastUpdates);
             // 
             // tabPageEnroll
             // 
@@ -2554,7 +2518,7 @@
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.PriorityGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.PriorityGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2592,6 +2556,42 @@
             this.chkAtributeList.Size = new System.Drawing.Size(327, 419);
             this.chkAtributeList.TabIndex = 0;
             this.chkAtributeList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkAtributeList_ItemCheck);
+            // 
+            // tbCountry
+            // 
+            this.tbCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCountry.Location = new System.Drawing.Point(3, 19);
+            this.tbCountry.Name = "tbCountry";
+            this.tbCountry.Size = new System.Drawing.Size(229, 23);
+            this.tbCountry.TabIndex = 0;
+            this.tbCountry.Enter += new System.EventHandler(this.SetDefaultLanguage);
+            this.tbCountry.Leave += new System.EventHandler(this.tbCountry_Leave);
+            // 
+            // tbArea
+            // 
+            this.tbArea.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbArea.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbArea.Location = new System.Drawing.Point(3, 19);
+            this.tbArea.Name = "tbArea";
+            this.tbArea.Size = new System.Drawing.Size(229, 23);
+            this.tbArea.TabIndex = 0;
+            this.tbArea.Enter += new System.EventHandler(this.SetDefaultLanguage);
+            this.tbArea.Leave += new System.EventHandler(this.tbArea_Leave);
+            // 
+            // tbDistrict
+            // 
+            this.tbDistrict.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbDistrict.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbDistrict.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDistrict.Location = new System.Drawing.Point(3, 19);
+            this.tbDistrict.Name = "tbDistrict";
+            this.tbDistrict.Size = new System.Drawing.Size(229, 23);
+            this.tbDistrict.TabIndex = 0;
+            this.tbDistrict.Enter += new System.EventHandler(this.SetDefaultLanguage);
+            this.tbDistrict.Leave += new System.EventHandler(this.tbDistrict_Leave);
             // 
             // frmEnrolleeCard
             // 
@@ -2699,8 +2699,11 @@
             this.groupBox27.PerformLayout();
             this.groupBox26.ResumeLayout(false);
             this.groupBox24.ResumeLayout(false);
+            this.groupBox24.PerformLayout();
             this.groupBox25.ResumeLayout(false);
+            this.groupBox25.PerformLayout();
             this.groupBox23.ResumeLayout(false);
+            this.groupBox23.PerformLayout();
             this.tabPageEnroll.ResumeLayout(false);
             this.groupBox64.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
@@ -2944,13 +2947,13 @@
         private System.Windows.Forms.GroupBox gbNumberOfDeal;
         private System.Windows.Forms.TextBox tbNumberOfDeal;
         private System.Windows.Forms.Button btDeleteDiscipline;
-        private System.Windows.Forms.ComboBox cbArea;
-        private System.Windows.Forms.ComboBox cbDistrict;
-        private System.Windows.Forms.ComboBox cbCountry;
         private System.Windows.Forms.GroupBox gbDecree;
         private System.Windows.Forms.ComboBox cbDecree;
         private System.Windows.Forms.ComboBox cbTargetWorkPlace;
         private System.Windows.Forms.GroupBox gbDateDeal;
         private System.Windows.Forms.DateTimePicker dtDateDeal;
+        private System.Windows.Forms.TextBox tbArea;
+        private System.Windows.Forms.TextBox tbDistrict;
+        private System.Windows.Forms.TextBox tbCountry;
     }
 }
