@@ -816,13 +816,21 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="ea"></param>
         private void PrintMonitoringBudget(object sender, EventArgs ea)
         {
-            // Передаем строку подключения к источнику данных
-            ReportManager.ConnectionString = connectionString;
-            // Получаем список абитуриентов
-            var enrollees = enrolleeService.GetEnrollees();
-            // Подготовка отчёта
-            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема на бюджет.");
-            ReportManager.PrintBudgetMonitoring(enrollees);
+            if (activeEmployee.PostId == 1)
+            {
+                // Передаем строку подключения к источнику данных
+                ReportManager.ConnectionString = connectionString;
+                // Получаем список абитуриентов
+                var enrollees = enrolleeService.GetEnrollees();
+                // Подготовка отчёта
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема на бюджет.");
+                ReportManager.PrintBudgetMonitoring(enrollees);
+            }
+            else
+            {
+                MessageBox.Show("Нет доступа к генерации отчёта 'Мониторинг (Бюджетная форма)'.");
+                logger.Info($"{activeEmployee.Fullname} пытался создать отчёт 'Мониторинг (Бюджетная форма)'.");
+            }
         }
         /// <summary>
         /// Печать мониторинга (Платное)
@@ -831,13 +839,21 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="ea"></param>
         private void PrintMonitoringFee(object sender, EventArgs ea)
         {
-            // Передаем строку подключения к источнику данных
-            ReportManager.ConnectionString = connectionString;
-            // Получаем список абитуриентов
-            var enrollees = enrolleeService.GetEnrollees();
-            // Подготовка отчёта
-            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема на платной основе.");
-            ReportManager.PrintFeeMonitoring(enrollees);
+            if (activeEmployee.PostId == 1)
+            {
+                // Передаем строку подключения к источнику данных
+                ReportManager.ConnectionString = connectionString;
+                // Получаем список абитуриентов
+                var enrollees = enrolleeService.GetEnrollees();
+                // Подготовка отчёта
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема на платной основе.");
+                ReportManager.PrintFeeMonitoring(enrollees);
+            }
+            else
+            {
+                MessageBox.Show("Нет доступа к генерации отчёта 'Мониторинг (Платная форма)'.");
+                logger.Info($"{activeEmployee.Fullname} пытался создать отчёт 'Мониторинг (Платная форма)'.");
+            }
         }
         /// <summary>
         /// Печать информации о ходе приема документов
@@ -846,13 +862,21 @@ namespace WF.EnrolleeApplication.App.Views
         /// <param name="ea"></param>
         private void PrintInformationReport(object sender, EventArgs ea)
         {
-            // Передаем строку подключения к источнику данных
-            ReportManager.ConnectionString = connectionString;
-            // Получаем список абитуриентов
-            var enrollees = enrolleeService.GetEnrollees();
-            // Подготовка отчёта
-            logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема.");
-            ReportManager.PrintInformationReport(enrollees);
+            if (activeEmployee.PostId==1)
+            {
+                // Передаем строку подключения к источнику данных
+                ReportManager.ConnectionString = connectionString;
+                // Получаем список абитуриентов
+                var enrollees = enrolleeService.GetEnrollees();
+                // Подготовка отчёта
+                logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает информацию о ходе приема.");
+                ReportManager.PrintInformationReport(enrollees);
+            }
+            else
+            {
+                MessageBox.Show("Нет доступа к генерации отчёта 'Информация о ходе приема'.");
+                logger.Info($"{activeEmployee.Fullname} пытался создать отчёт 'Информация о ходе приема'.");
+            }
         }
         /// <summary>
         /// Вызов контекстного меню на таблице данных абитуриентов
