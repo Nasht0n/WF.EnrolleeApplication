@@ -141,12 +141,15 @@
   <data name="DeleteRecord.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC3SURBVDhPvZGxDcIwEEW9AGtQU1K7xjtQsAETMQLegA7K
-        DEEiqtjiZJeGH3KSkZ1wNDnpyWfZ/8mXKCLahBAcGPskQXG9N+5yPCSA3j+6dN5th721NmmtC74EHDit
-        V0OIe6wiQYxxn0s43Ldtcr0vKASY23V3nwvwEnqSTJCHsXI/JZkUAPR/f0QeAfBvbG5X+QgoBAF6HBpj
-        qmFQFeSFQ1yqhYFYMMcyL6iFwXKCOX4KJHxuK/UCeltTnhCHywAAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC3SURBVDhPvZExDgIhEEW5gNewtrSmljtYeANP5BHkBnZa
+        egeDsVqIBMpx/+okGNh1bHaSF4bAf2F2VYxxlVLy4NOTBMXVb/xpvyOAPjzudNysh721lrTWFV8CDhyW
+        iyHEPVaRIOe8LSUc7pwj34WKSoC5vbuFUoCXxGeUCcowVu7HJKMCgP7vj8gjAP6N18tZPgIKQYAeh8aY
+        Zhg0BWXhEJdaYSAWTDHPC1phMJ9gip8CCe/bSr0AW7dTkoV6TBAAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>25</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAIAEBAAAAEAIABoBAAAJgAAACAgAAABACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAADAE

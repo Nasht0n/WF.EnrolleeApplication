@@ -147,8 +147,11 @@
             this.groupBox26 = new System.Windows.Forms.GroupBox();
             this.cbTypeOfSettlement = new System.Windows.Forms.ComboBox();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
+            this.tbArea = new System.Windows.Forms.TextBox();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
+            this.tbDistrict = new System.Windows.Forms.TextBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
+            this.tbCountry = new System.Windows.Forms.TextBox();
             this.tabPageEnroll = new System.Windows.Forms.TabPage();
             this.groupBox64 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -217,9 +220,6 @@
             this.PriorityGrid = new System.Windows.Forms.DataGridView();
             this.groupBox67 = new System.Windows.Forms.GroupBox();
             this.chkAtributeList = new System.Windows.Forms.CheckedListBox();
-            this.tbCountry = new System.Windows.Forms.TextBox();
-            this.tbArea = new System.Windows.Forms.TextBox();
-            this.tbDistrict = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -1666,6 +1666,18 @@
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Область";
             // 
+            // tbArea
+            // 
+            this.tbArea.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbArea.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbArea.Location = new System.Drawing.Point(3, 19);
+            this.tbArea.Name = "tbArea";
+            this.tbArea.Size = new System.Drawing.Size(229, 23);
+            this.tbArea.TabIndex = 0;
+            this.tbArea.Enter += new System.EventHandler(this.SetDefaultLanguage);
+            this.tbArea.Leave += new System.EventHandler(this.tbArea_Leave);
+            // 
             // groupBox25
             // 
             this.groupBox25.Controls.Add(this.tbDistrict);
@@ -1676,6 +1688,18 @@
             this.groupBox25.TabIndex = 2;
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Район";
+            // 
+            // tbDistrict
+            // 
+            this.tbDistrict.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbDistrict.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbDistrict.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDistrict.Location = new System.Drawing.Point(3, 19);
+            this.tbDistrict.Name = "tbDistrict";
+            this.tbDistrict.Size = new System.Drawing.Size(229, 23);
+            this.tbDistrict.TabIndex = 0;
+            this.tbDistrict.Enter += new System.EventHandler(this.SetDefaultLanguage);
+            this.tbDistrict.Leave += new System.EventHandler(this.tbDistrict_Leave);
             // 
             // groupBox23
             // 
@@ -1688,15 +1712,27 @@
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Страна";
             // 
+            // tbCountry
+            // 
+            this.tbCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCountry.Location = new System.Drawing.Point(3, 19);
+            this.tbCountry.Name = "tbCountry";
+            this.tbCountry.Size = new System.Drawing.Size(229, 23);
+            this.tbCountry.TabIndex = 0;
+            this.tbCountry.Enter += new System.EventHandler(this.SetDefaultLanguage);
+            this.tbCountry.Leave += new System.EventHandler(this.tbCountry_Leave);
+            // 
             // tabPageEnroll
             // 
             this.tabPageEnroll.Controls.Add(this.groupBox64);
             this.tabPageEnroll.Controls.Add(this.groupBox55);
             this.tabPageEnroll.Controls.Add(this.groupBox50);
-            this.tabPageEnroll.Location = new System.Drawing.Point(4, 24);
+            this.tabPageEnroll.Location = new System.Drawing.Point(4, 22);
             this.tabPageEnroll.Name = "tabPageEnroll";
             this.tabPageEnroll.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEnroll.Size = new System.Drawing.Size(976, 453);
+            this.tabPageEnroll.Size = new System.Drawing.Size(976, 455);
             this.tabPageEnroll.TabIndex = 2;
             this.tabPageEnroll.Text = "Поступление";
             this.tabPageEnroll.UseVisualStyleBackColor = true;
@@ -2450,10 +2486,10 @@
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.tableLayoutPanel13);
-            this.tabPage5.Location = new System.Drawing.Point(4, 24);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(976, 453);
+            this.tabPage5.Size = new System.Drawing.Size(976, 455);
             this.tabPage5.TabIndex = 3;
             this.tabPage5.Text = "Разное";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2471,7 +2507,7 @@
             this.tableLayoutPanel13.RowCount = 2;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 447);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(970, 449);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // groupBox72
@@ -2481,7 +2517,7 @@
             this.groupBox72.Location = new System.Drawing.Point(342, 3);
             this.groupBox72.Name = "groupBox72";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox72, 2);
-            this.groupBox72.Size = new System.Drawing.Size(625, 441);
+            this.groupBox72.Size = new System.Drawing.Size(625, 443);
             this.groupBox72.TabIndex = 1;
             this.groupBox72.TabStop = false;
             this.groupBox72.Text = "Приоритет специальностей";
@@ -2499,7 +2535,7 @@
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(619, 419);
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(619, 421);
             this.tableLayoutPanel14.TabIndex = 0;
             // 
             // PriorityGrid
@@ -2529,7 +2565,7 @@
             this.PriorityGrid.RowHeadersVisible = false;
             this.tableLayoutPanel14.SetRowSpan(this.PriorityGrid, 2);
             this.PriorityGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PriorityGrid.Size = new System.Drawing.Size(613, 413);
+            this.PriorityGrid.Size = new System.Drawing.Size(613, 415);
             this.PriorityGrid.TabIndex = 0;
             this.PriorityGrid.VirtualMode = true;
             this.PriorityGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PriorityGrid_KeyDown);
@@ -2541,7 +2577,7 @@
             this.groupBox67.Location = new System.Drawing.Point(3, 3);
             this.groupBox67.Name = "groupBox67";
             this.tableLayoutPanel13.SetRowSpan(this.groupBox67, 2);
-            this.groupBox67.Size = new System.Drawing.Size(333, 441);
+            this.groupBox67.Size = new System.Drawing.Size(333, 443);
             this.groupBox67.TabIndex = 0;
             this.groupBox67.TabStop = false;
             this.groupBox67.Text = "Выбор дополнительных сведений (льгот) ";
@@ -2553,45 +2589,9 @@
             this.chkAtributeList.FormattingEnabled = true;
             this.chkAtributeList.Location = new System.Drawing.Point(3, 19);
             this.chkAtributeList.Name = "chkAtributeList";
-            this.chkAtributeList.Size = new System.Drawing.Size(327, 419);
+            this.chkAtributeList.Size = new System.Drawing.Size(327, 421);
             this.chkAtributeList.TabIndex = 0;
             this.chkAtributeList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkAtributeList_ItemCheck);
-            // 
-            // tbCountry
-            // 
-            this.tbCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCountry.Location = new System.Drawing.Point(3, 19);
-            this.tbCountry.Name = "tbCountry";
-            this.tbCountry.Size = new System.Drawing.Size(229, 23);
-            this.tbCountry.TabIndex = 0;
-            this.tbCountry.Enter += new System.EventHandler(this.SetDefaultLanguage);
-            this.tbCountry.Leave += new System.EventHandler(this.tbCountry_Leave);
-            // 
-            // tbArea
-            // 
-            this.tbArea.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbArea.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbArea.Location = new System.Drawing.Point(3, 19);
-            this.tbArea.Name = "tbArea";
-            this.tbArea.Size = new System.Drawing.Size(229, 23);
-            this.tbArea.TabIndex = 0;
-            this.tbArea.Enter += new System.EventHandler(this.SetDefaultLanguage);
-            this.tbArea.Leave += new System.EventHandler(this.tbArea_Leave);
-            // 
-            // tbDistrict
-            // 
-            this.tbDistrict.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbDistrict.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbDistrict.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDistrict.Location = new System.Drawing.Point(3, 19);
-            this.tbDistrict.Name = "tbDistrict";
-            this.tbDistrict.Size = new System.Drawing.Size(229, 23);
-            this.tbDistrict.TabIndex = 0;
-            this.tbDistrict.Enter += new System.EventHandler(this.SetDefaultLanguage);
-            this.tbDistrict.Leave += new System.EventHandler(this.tbDistrict_Leave);
             // 
             // frmEnrolleeCard
             // 

@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.lbUserInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbEmployee = new System.Windows.Forms.ToolStripStatusLabel();
@@ -481,8 +481,8 @@
             // 
             this.ViewHelpToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ViewHelpToolStripMenuItem.Image")));
             this.ViewHelpToolStripMenuItem.Name = "ViewHelpToolStripMenuItem";
-            this.ViewHelpToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.ViewHelpToolStripMenuItem.Text = "Просмотр справки";
+            this.ViewHelpToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.ViewHelpToolStripMenuItem.Text = "Просмотр руководства пользователя";
             // 
             // HelpSeparator
             // 
@@ -805,14 +805,14 @@
             this.EnrolleeGrid.BackgroundColor = System.Drawing.SystemColors.Control;
             this.EnrolleeGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.EnrolleeGrid.ContextMenuStrip = this.contextMenuEnrolleeGrid;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.EnrolleeGrid.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.EnrolleeGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.EnrolleeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EnrolleeGrid.Location = new System.Drawing.Point(0, 101);
             this.EnrolleeGrid.MultiSelect = false;
