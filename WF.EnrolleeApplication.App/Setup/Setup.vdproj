@@ -15,74 +15,188 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1C3C082222594C789AFE70DD0319CD82"
+        "MsmKey" = "8:_0758F3F66E37AD91230D29DA76592E3B"
+        "OwnerKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0F75D74A323140F09E399C7C54B08915"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_35D8CAB06DD6B6A99B09B146AD479790"
-        "OwnerKey" = "8:_1C3C082222594C789AFE70DD0319CD82"
+        "MsmKey" = "8:_210648D5634B496DBFD668340E481C52"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_71AE80532BCBFB26EAA80162CED315FC"
-        "OwnerKey" = "8:_1C3C082222594C789AFE70DD0319CD82"
+        "MsmKey" = "8:_31778975286B48BE9CE74AB057FCFD00"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4BAB5F38BE042005D5BBFDC02636C040"
+        "OwnerKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4BAB5F38BE042005D5BBFDC02636C040"
+        "OwnerKey" = "8:_0758F3F66E37AD91230D29DA76592E3B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5E062966E74F6DA78030241F5508758F"
+        "OwnerKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5E062966E74F6DA78030241F5508758F"
+        "OwnerKey" = "8:_0758F3F66E37AD91230D29DA76592E3B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5E062966E74F6DA78030241F5508758F"
+        "OwnerKey" = "8:_799F644B5E61CDA735C08C38CCA55FC0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_63162EE1EA6A4C7980BB6E897B65EFFA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6999CE171B02447685C095A0A44F22DE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_715446333E794F5C8AD28DFCDE2B68E2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_73ED12CC7CB140D7B2CD05C010485AC2"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_741FC6DEAA083454E43FD8E5C374BA47"
-        "OwnerKey" = "8:_1C3C082222594C789AFE70DD0319CD82"
+        "OwnerKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_CA0DFA94FDACC5791A2CB4A45F413519"
-        "OwnerKey" = "8:_1C3C082222594C789AFE70DD0319CD82"
+        "MsmKey" = "8:_7807F8F461BD493698275133648A2B9B"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_CA0DFA94FDACC5791A2CB4A45F413519"
-        "OwnerKey" = "8:_71AE80532BCBFB26EAA80162CED315FC"
+        "MsmKey" = "8:_799F644B5E61CDA735C08C38CCA55FC0"
+        "OwnerKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_CA0DFA94FDACC5791A2CB4A45F413519"
-        "OwnerKey" = "8:_35D8CAB06DD6B6A99B09B146AD479790"
+        "MsmKey" = "8:_7E96B3EF86944ACF97323A84CC275031"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9207916DE5504DECB668C3062E710409"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A2DC835DF0F9D6D1D38FAF5BD6AF3678"
+        "OwnerKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A2DC835DF0F9D6D1D38FAF5BD6AF3678"
+        "OwnerKey" = "8:_4BAB5F38BE042005D5BBFDC02636C040"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B40D2A322C1E4E7E9BDE8E0517AC2082"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D46FE13673B2439BB1CF86480D6312D6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DA777A6F82E44D34BC01C70C05E8DBEF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A2DC835DF0F9D6D1D38FAF5BD6AF3678"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E5A06B76BC064F9180682A8F8778B924"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0758F3F66E37AD91230D29DA76592E3B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4BAB5F38BE042005D5BBFDC02636C040"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_799F644B5E61CDA735C08C38CCA55FC0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5E062966E74F6DA78030241F5508758F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_741FC6DEAA083454E43FD8E5C374BA47"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1C3C082222594C789AFE70DD0319CD82"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_71AE80532BCBFB26EAA80162CED315FC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_35D8CAB06DD6B6A99B09B146AD479790"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CA0DFA94FDACC5791A2CB4A45F413519"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -103,6 +217,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -119,23 +249,31 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_9D53B05688804921820B23A6F3C85DC1"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_D67DD7BF4C8F4C19A1CF9B9ECE20EE5D"
             {
             "Name" = "8:Основные выходные файлы from WF.EnrolleeApplication.App (Active)"
             "Condition" = "8:"
-            "Object" = "8:_1C3C082222594C789AFE70DD0319CD82"
+            "Object" = "8:_E5A06B76BC064F9180682A8F8778B924"
             "FileType" = "3:2"
             "InstallAction" = "3:1"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_CD664A24_AE9D_47C4_A850_A956F0ACCC93"
+            "Identifier" = "8:_18DED006_8AFB_43CD_A3EE_A1638583F9BB"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:/DataSource=\"[DATASOURCE]\" /InitialCatalog=\"[INITIALCATALOG]\" /UserID=\"[USERID]\" /Password=\"[PASSWORD]\""
             }
@@ -162,45 +300,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_35D8CAB06DD6B6A99B09B146AD479790"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_35D8CAB06DD6B6A99B09B146AD479790"
-                    {
-                    "Name" = "8:EntityFramework.SqlServer.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:EntityFramework.SqlServer.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_71AE80532BCBFB26EAA80162CED315FC"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0758F3F66E37AD91230D29DA76592E3B"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:WF.EnrolleeApplication.DataAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_71AE80532BCBFB26EAA80162CED315FC"
+                    "_0758F3F66E37AD91230D29DA76592E3B"
                     {
                     "Name" = "8:WF.EnrolleeApplication.DataAccess.dll"
                     "Attributes" = "3:512"
@@ -222,6 +329,208 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0F75D74A323140F09E399C7C54B08915"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Экзаменнационная ведомость.dotx"
+            "TargetName" = "8:Экзаменнационная ведомость.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_210648D5634B496DBFD668340E481C52"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Экзаменнационный лист.dotx"
+            "TargetName" = "8:Экзаменнационный лист.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_31778975286B48BE9CE74AB057FCFD00"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Титульный лист.dotx"
+            "TargetName" = "8:Титульный лист.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4BAB5F38BE042005D5BBFDC02636C040"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_4BAB5F38BE042005D5BBFDC02636C040"
+                    {
+                    "Name" = "8:NLog.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:NLog.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5E062966E74F6DA78030241F5508758F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5E062966E74F6DA78030241F5508758F"
+                    {
+                    "Name" = "8:EntityFramework.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:EntityFramework.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_63162EE1EA6A4C7980BB6E897B65EFFA"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Извещение.dotx"
+            "TargetName" = "8:Извещение.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6999CE171B02447685C095A0A44F22DE"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Заявление абитуриента.dotx"
+            "TargetName" = "8:Заявление абитуриента.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_715446333E794F5C8AD28DFCDE2B68E2"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\bin\\Debug\\NLog.config"
+            "TargetName" = "8:NLog.config"
+            "Tag" = "8:"
+            "Folder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_73ED12CC7CB140D7B2CD05C010485AC2"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Мониторинг (Бюджетная форма).xlsx"
+            "TargetName" = "8:Мониторинг (Бюджетная форма).xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_741FC6DEAA083454E43FD8E5C374BA47"
@@ -255,20 +564,40 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CA0DFA94FDACC5791A2CB4A45F413519"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7807F8F461BD493698275133648A2B9B"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\icons8_Graduation_Cap.ico"
+            "TargetName" = "8:icons8_Graduation_Cap.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_799F644B5E61CDA735C08C38CCA55FC0"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_CA0DFA94FDACC5791A2CB4A45F413519"
+                    "_799F644B5E61CDA735C08C38CCA55FC0"
                     {
-                    "Name" = "8:EntityFramework.dll"
+                    "Name" = "8:EntityFramework.SqlServer.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:EntityFramework.dll"
+            "SourcePath" = "8:EntityFramework.SqlServer.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
@@ -286,6 +615,137 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7E96B3EF86944ACF97323A84CC275031"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Сводная экзаменнационная ведомость.dotx"
+            "TargetName" = "8:Сводная экзаменнационная ведомость.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9207916DE5504DECB668C3062E710409"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Информация о ходе приема.xlsx"
+            "TargetName" = "8:Информация о ходе приема.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A2DC835DF0F9D6D1D38FAF5BD6AF3678"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                "ScatterAssemblies"
+                {
+                    "_A2DC835DF0F9D6D1D38FAF5BD6AF3678"
+                    {
+                    "Name" = "8:System.IO.Compression.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.IO.Compression.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B40D2A322C1E4E7E9BDE8E0517AC2082"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Расписка.dotx"
+            "TargetName" = "8:Расписка.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D46FE13673B2439BB1CF86480D6312D6"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Мониторинг (Платная форма).xlsx"
+            "TargetName" = "8:Мониторинг (Платная форма).xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DA777A6F82E44D34BC01C70C05E8DBEF"
+            {
+            "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\doc\\Templates\\Выписка.dotx"
+            "TargetName" = "8:Выписка.dotx"
+            "Tag" = "8:"
+            "Folder" = "8:_E97A6797596B44D7B597347D8A548709"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -301,17 +761,6 @@
             "Property" = "8:DesktopFolder"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_534A471DDDFB4B919168F8F3629126C5"
-                    {
-                    "Name" = "8:Абитуриент"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_94C8BB3AF2D2431E9797DC01DE166ABD"
-                        "Folders"
-                        {
-                        }
-                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_B379CB6457254DBBABFF2281A61CC62F"
@@ -324,6 +773,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_E97A6797596B44D7B597347D8A548709"
+                    {
+                    "Name" = "8:Templates"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_00A7500C69D0479399FC7A88290EB676"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_DC63A6FF12B24BAAA86085977EBB86E9"
@@ -352,25 +812,25 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Setup"
-        "ProductCode" = "8:{7BB937CB-6E27-424A-B5B2-D9641CAFF3EA}"
-        "PackageCode" = "8:{8A6C8982-AC5F-4140-A3CF-D6BB8805D858}"
+        "ProductName" = "8:АИС Абитуриент"
+        "ProductCode" = "8:{9EE090EC-30A8-43F5-9EFF-FCF82E2707FD}"
+        "PackageCode" = "8:{F74B6E69-340C-456A-ACED-85D4373714AA}"
         "UpgradeCode" = "8:{876414E9-4BA9-499F-BC88-03B0B7A12C49}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Барановичский государственный университет"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Setup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Корзун Антон Витальевич"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPCOMMENTS" = "8:АИС Абитуриент БарГУ"
+        "ARPURLINFOABOUT" = "8:https://www.barsu.by/"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -474,18 +934,18 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_04822E5451F34303BB745A3EB7359557"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_833DC232257F402CB67F10B4256A6A78"
             {
-            "Name" = "8:Регистрация"
+            "Name" = "8:Регистрация абитуриента"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_1C3C082222594C789AFE70DD0319CD82"
-            "Folder" = "8:_534A471DDDFB4B919168F8F3629126C5"
+            "Target" = "8:_E5A06B76BC064F9180682A8F8778B924"
+            "Folder" = "8:_A1AFE6F486B54E49BBB65D26E848E963"
             "WorkingFolder" = "8:_B379CB6457254DBBABFF2281A61CC62F"
-            "Icon" = "8:"
+            "Icon" = "8:_7807F8F461BD493698275133648A2B9B"
             "Feature" = "8:"
             }
         }
@@ -809,7 +1269,7 @@
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
-                            "Value" = "8:(local)"
+                            "Value" = "8:192.168.10.200"
                             "DefaultValue" = "8:"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -861,7 +1321,7 @@
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
-                            "Value" = "8:dbEnrollee"
+                            "Value" = "8:dbEnrollee2018"
                             "DefaultValue" = "8:"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -1143,7 +1603,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_1C3C082222594C789AFE70DD0319CD82"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E5A06B76BC064F9180682A8F8778B924"
             {
             "SourcePath" = "8:..\\WF.EnrolleeApplication.App\\obj\\Debug\\WF.EnrolleeApplication.App.exe"
             "TargetName" = "8:"
