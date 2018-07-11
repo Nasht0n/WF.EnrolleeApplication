@@ -428,7 +428,7 @@ namespace WF.EnrolleeApplication.App.Views
                 enrollee.StateDateChange = DateTime.Now;
                 // Устанавливаем специальность и номер личного дела
                 enrollee.SpecialityId = priority.SpecialityId;
-                enrollee.NumberOfDeal = GetNumberOfDeal(priority);
+                if(!priority.Equals(speciality)) enrollee.NumberOfDeal = GetNumberOfDeal(priority);
                 // Зачисление абитуриента
                 enrolleeService.UpdateEnrollee(enrollee);
                 logger.Info($"Пользователь {employee.Fullname.Trim()} выполнил зачисление абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} по приказу {decree.DecreeNumber.Trim()}.");

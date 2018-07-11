@@ -395,24 +395,24 @@ namespace WF.EnrolleeApplication.App.Views
             // Установка ширины (весов) столбцов оценок
             SertificateGrid.Columns[0].FillWeight = 10;
             SertificateGrid.Columns[1].FillWeight = 10;
-            SertificateGrid.Columns[2].FillWeight = 60;
+            SertificateGrid.Columns[2].FillWeight = 50;
             SertificateGrid.Columns[3].FillWeight = 20;
             SertificateGrid.Columns[4].FillWeight = 20;
-            SertificateGrid.Columns[5].FillWeight = 10;
+            SertificateGrid.Columns[5].FillWeight = 20;
             SertificateGrid.Columns[6].FillWeight = 10;
             // Установка видимости столбцов оценок
             SertificateGrid.Columns[0].Visible = false;
             SertificateGrid.Columns[1].Visible = false;
-            SertificateGrid.Columns[5].Visible = false;
+          //  SertificateGrid.Columns[5].Visible = false;
             SertificateGrid.Columns[6].Visible = false;
             // Установка столбца только для чтения
             SertificateGrid.Columns["Дисциплина"].ReadOnly = true;
             // Строки дисциплин вступительных испытаний только для чтения
-            foreach(DataGridViewRow row in SertificateGrid.Rows)
+            foreach (DataGridViewRow row in SertificateGrid.Rows)
             {
                 int disciplineId = Int32.Parse(row.Cells[0].Value.ToString());
                 var discipline = disciplineService.GetDiscipline(disciplineId);
-                if(discipline.BasisForAssessingId == 2)
+                if (discipline.BasisForAssessingId == 2)
                 {
                     row.DefaultCellStyle.BackColor = Color.LightGray;
                     row.ReadOnly = true;
@@ -434,9 +434,9 @@ namespace WF.EnrolleeApplication.App.Views
             result.Columns.Add(new DataColumn("КодДисциплины", typeof(int)));
             result.Columns.Add(new DataColumn("КодОснования", typeof(int)));
             result.Columns.Add(new DataColumn("Дисциплина", typeof(string)));
+            result.Columns.Add(new DataColumn("Год выдачи", typeof(string)));
             result.Columns.Add(new DataColumn("Сертификат", typeof(string)));
-            result.Columns.Add(new DataColumn("Оценка", typeof(string)));
-            result.Columns.Add(new DataColumn("Дата сертификата", typeof(string)));
+            result.Columns.Add(new DataColumn("Оценка", typeof(string)));            
             result.Columns.Add(new DataColumn("Замена", typeof(string)));
             return result;
         }
@@ -480,7 +480,7 @@ namespace WF.EnrolleeApplication.App.Views
                     // Очищаем таблицу данных приоритетов
                     priorityTable.Rows.Clear();
                     // Если выбранная специальность общего конкурса
-                    if (speciality.IsGroup) 
+                    if (speciality.IsGroup)
                     {
                         // Получаем список специальностей входящих в группу общего конкурса
                         var specialities = specialityService.GetSpecialities(speciality);
@@ -552,33 +552,33 @@ namespace WF.EnrolleeApplication.App.Views
             // Режим редактирования отключен
             //if (!editMode)
             //{
-                // Получение списка дисциплин экзаменнационной схемы
-                var schemas = examSchemaService.GetExamSchemas(speciality).Where(ex => ex.Discipline.BasisForAssessingId != 1).ToList();
-                // Очистка таблицы сертификатов
-                sertificateTable.Rows.Clear();
-                // Если список не пуст
-                if (schemas.Count != 0)
+            // Получение списка дисциплин экзаменнационной схемы
+            var schemas = examSchemaService.GetExamSchemas(speciality).Where(ex => ex.Discipline.BasisForAssessingId != 1).ToList();
+            // Очистка таблицы сертификатов
+            sertificateTable.Rows.Clear();
+            // Если список не пуст
+            if (schemas.Count != 0)
+            {
+                // Проход по элементам экзаменнационной схемы
+                foreach (var schema in schemas)
                 {
-                    // Проход по элементам экзаменнационной схемы
-                    foreach (var schema in schemas)
+                    // Поиск дисциплины
+                    var discipline = disciplineService.GetDiscipline(schema.DisciplineId);
+                    // Если дисциплина найдена и является группой дисциплин
+                    if (discipline != null && discipline.IsGroup)
                     {
-                        // Поиск дисциплины
-                        var discipline = disciplineService.GetDiscipline(schema.DisciplineId);
-                        // Если дисциплина найдена и является группой дисциплин
-                        if (discipline != null && discipline.IsGroup)
-                        {
-                            // Поиск альтернатив
-                            var alternatives = disciplineService.GetDisciplines(discipline);
-                            // Запись в таблицу данных об оценках
-                            foreach (var alternative in alternatives)
-                                sertificateTable.Rows.Add(alternative.DisciplineId, alternative.BasisForAssessingId, alternative.Name, "", "", "", "");
-                        }
-                        else
-                        {
-                            // Запись дисциплины в таблицу данных об оценках
-                            sertificateTable.Rows.Add(discipline.DisciplineId, discipline.BasisForAssessingId, discipline.Name, "", "", "", "");
-                        }
+                        // Поиск альтернатив
+                        var alternatives = disciplineService.GetDisciplines(discipline);
+                        // Запись в таблицу данных об оценках
+                        foreach (var alternative in alternatives)
+                            sertificateTable.Rows.Add(alternative.DisciplineId, alternative.BasisForAssessingId, alternative.Name, "", "", "", "");
                     }
+                    else
+                    {
+                        // Запись дисциплины в таблицу данных об оценках
+                        sertificateTable.Rows.Add(discipline.DisciplineId, discipline.BasisForAssessingId, discipline.Name, "", "", "", "");
+                    }
+                }
                 //}
                 // Задаем стиль отображения таблицы сертификатов
                 SetSertificateTableStyle();
@@ -596,7 +596,7 @@ namespace WF.EnrolleeApplication.App.Views
             sertificateTable.Rows.Clear();
             // Запись оценок в таблицу сертификатов (оценок)
             foreach (var assessment in assessments)
-                sertificateTable.Rows.Add(assessment.DisciplineId, assessment.Discipline.BasisForAssessingId, assessment.Discipline.Name, assessment.SertCode, assessment.Estimation, assessment.SertDate, assessment.ChangeDiscipline);
+                sertificateTable.Rows.Add(assessment.DisciplineId, assessment.Discipline.BasisForAssessingId, assessment.Discipline.Name, assessment.SertDate, assessment.SertCode, assessment.Estimation, assessment.ChangeDiscipline);
             // Задаем стиль отображения таблицы сертификатов (оценок)
             SetSertificateTableStyle();
         }
@@ -685,9 +685,9 @@ namespace WF.EnrolleeApplication.App.Views
             sourceDocumentWhoGave.AddRange(enrollees.Select(d => d.DocumentWhoGave).Distinct().ToArray());
             sourceMotherAdress.Add(tbFatherAdres.Text);
             sourceFatherAdress.Add(tbMotherAdres.Text);
-            sourceCountry.AddRange(countries.Select(c=>c.Name).Distinct().ToArray());
-            sourceArea.AddRange(areas.Select(a=>a.Name).Distinct().ToArray());
-            sourceDistrict.AddRange(districts.Select(d=>d.Name).Distinct().ToArray());
+            sourceCountry.AddRange(countries.Select(c => c.Name).Distinct().ToArray());
+            sourceArea.AddRange(areas.Select(a => a.Name).Distinct().ToArray());
+            sourceDistrict.AddRange(districts.Select(d => d.Name).Distinct().ToArray());
             sourceSettlement.AddRange(enrollees.Where(p => p.SettlementName != null).Select(p => p.SettlementName).Distinct().ToArray());
             sourceStreet.AddRange(enrollees.Where(p => p.StreetName != null).Select(p => p.StreetName).Distinct().ToArray());
             sourceSchoolName.AddRange(enrollees.Where(p => p.SchoolName != null).Select(p => p.SchoolName).Distinct().ToArray());
@@ -777,8 +777,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем рабочее место по целевому первым элементом списка
             if (targets.Count != 0)
             {
-                if (targetWorkPlace == null) targetWorkPlace = targets[0];
-                else cbTargetWorkPlace.SelectedValue = targetWorkPlace.TargetId;
+                targetWorkPlace = targets[0];
             }
             // Включаем отслеживание изменения
             cbTargetWorkPlace.SelectedValueChanged += cbTargetWorkPlace_SelectedValueChanged;
@@ -798,8 +797,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем приказ первым элементом списка
             if (decrees.Count != 0)
             {
-                if (decree == null) decree = decrees[0];
-                else cbDecree.SelectedValue = decree.DecreeId;
+                decree = decrees[0];
             }
             // Включаем отслеживание изменения
             cbDecree.SelectedValueChanged += cbDecree_SelectedValueChanged;
@@ -900,8 +898,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем состояние абитуриента первым элементом списка
             if (states.Count != 0)
             {
-                if (typeOfState == null) typeOfState = states[0];
-                else cbTypeOfState.SelectedValue = typeOfState.StateId;
+                typeOfState = states[0];
             }
             // Включаем отслеживание изменения
             cbTypeOfState.SelectedValueChanged += cbTypeOfState_SelectedValueChanged;
@@ -921,8 +918,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем основание зачисления первым элементом списка
             if (reasons.Count != 0)
             {
-                if (reasonForAddmission == null) reasonForAddmission = reasons[0];
-                else cbReasonForAddmission.SelectedValue = reasonForAddmission.ReasonForAddmissionId;
+                reasonForAddmission = reasons[0];
+
             }
             // Включаем отслеживание изменения
             cbReasonForAddmission.SelectedValueChanged += cbReasonForAddmission_SelectedValueChanged;
@@ -943,8 +940,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем список оснований зачисления
             if (contests.Count != 0)
             {
-                if (contest == null) contest = contests[0];
-                else cbContest.SelectedValue = contest.ContestId;
+                contest = contests[0];
+
                 InitializeReasonForAddmissionComboBox();
             }
             // Включаем отслеживание изменения
@@ -965,8 +962,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем тип финансирования первым элементом списка 
             if (finances.Count != 0)
             {
-                if (typeOfFinance == null) typeOfFinance = finances[0];
-                else cbTypeOfFinance.SelectedValue = typeOfFinance.FinanceTypeId;
+                typeOfFinance = finances[0];
+
             }
             // Включаем отслеживание изменения
             cbTypeOfFinance.SelectedValueChanged += cbTypeOfFinance_SelectedValueChanged;
@@ -986,8 +983,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем иностранный язык первым элементом списка 
             if (languages.Count != 0)
             {
-                if (foreignLanguage == null) foreignLanguage = languages[0];
-                else cbForeignLanguage.SelectedValue = foreignLanguage.LanguageId;
+                foreignLanguage = languages[0];
+
             }
             // Включаем отслеживание изменения
             cbForeignLanguage.SelectedValueChanged += cbForeignLanguage_SelectedValueChanged;
@@ -1016,8 +1013,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем таблицу приоритетов
             if (secondarySpecialities.Count != 0)
             {
-                if (secondarySpeciality == null) secondarySpeciality = secondarySpecialities[0];
-                else cbSecondarySpeciality.SelectedValue = secondarySpeciality.SecondarySpecialityId;
+                secondarySpeciality = secondarySpecialities[0];
+
                 InitializePrioritySpecialityGrid();
             }
             // Включаем отслеживание изменения
@@ -1038,8 +1035,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем тип учебного заведения первым элементом списка
             if (schools.Count != 0)
             {
-                if (typeOfSchool == null) typeOfSchool = schools[0];
-                else cbTypeOfSchool.SelectedValue = typeOfSchool.SchoolTypeId;
+                typeOfSchool = schools[0];
+
             }
             // Включаем отслеживание изменения
             cbTypeOfSchool.SelectedValueChanged += cbTypeOfSchool_SelectedValueChanged;
@@ -1059,8 +1056,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем тип улицы первым элементом списка
             if (streets.Count != 0)
             {
-                if (typeOfStreet == null) typeOfStreet = streets[0];
-                else cbTypeOfStreet.SelectedValue = typeOfStreet.StreetTypeId;
+                typeOfStreet = streets[0];
+
             }
             // Включаем отслеживание изменения
             cbTypeOfStreet.SelectedValueChanged += cbTypeOfStreet_SelectedValueChanged;
@@ -1080,8 +1077,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем тип населенного пункта первым элементом списка
             if (settlements.Count != 0)
             {
-                if (typeOfSettlement == null) typeOfSettlement = settlements[0];
-                else cbTypeOfSettlement.SelectedValue = typeOfSettlement.SettlementTypeId;
+                typeOfSettlement = settlements[0];
+
             }
             // Включаем отслеживание изменения
             cbTypeOfSettlement.SelectedValueChanged += cbTypeOfSettlement_SelectedValueChanged;
@@ -1102,8 +1099,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем список специальностей
             if (faculties.Count != 0)
             {
-                if (faculty == null) faculty = faculties[0];
-                else cbFaculty.SelectedValue = faculty.FacultyId;
+                faculty = faculties[0];
+
                 InitializeSpecialityComboBox();
             }
             // Включаем отслеживание изменения
@@ -1125,8 +1122,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем список специальностей
             if (formsOfStudies.Count != 0)
             {
-                if (formOfStudy == null) formOfStudy = formsOfStudies[0];
-                else cbFormOfStudy.SelectedValue = formOfStudy.FormOfStudyId;
+                formOfStudy = formsOfStudies[0];
+
                 InitializeSpecialityComboBox();
             }
             // Включаем отслеживание изменения
@@ -1152,19 +1149,19 @@ namespace WF.EnrolleeApplication.App.Views
                 // Инициализируем список приоритетов
                 if (specialities.Count != 0)
                 {
-                    //speciality = specialities[0];
-                    if(speciality == null)
-                    {
-                        speciality = specialities[0];
-                    }
-                    else if(speciality.Equals(specialities[0]))
-                    {
-                        cbSpeciality.SelectedValue = speciality.SpecialityId;
-                    }
-                    else
-                    {
-                        speciality = specialities[0];
-                    }
+                    speciality = specialities[0];
+                    //if(speciality == null)
+                    //{
+                    //    speciality = specialities[0];
+                    //}
+                    //else if(speciality.Equals(specialities[0]))
+                    //{
+                    //    cbSpeciality.SelectedValue = speciality.SpecialityId;
+                    //}
+                    //else
+                    //{
+                    //    speciality = specialities[0];
+                    //}
 
 
                     InitializeSecondarySpecialityComboBox();
@@ -1190,8 +1187,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем гражданство первым элементом списка
             if (citizenships.Count != 0)
             {
-                if (citizenship == null) citizenship = citizenships[0];
-                else cbCitizenship.SelectedValue = citizenship.CitizenshipId;
+                citizenship = citizenships[0];
+
             }
             // Включаем отслеживание изменения
             cbCitizenship.SelectedValueChanged += cbCitizenship_SelectedValueChanged;
@@ -1211,8 +1208,8 @@ namespace WF.EnrolleeApplication.App.Views
             // Инициализируем тип документа первым элементом списка
             if (documents.Count != 0)
             {
-                if (document == null) document = documents[0];
-                else cbDocument.SelectedValue = document.DocumentId;
+                document = documents[0];
+
             }
             // Включаем отслеживание изменения
             cbDocument.SelectedValueChanged += cbDocument_SelectedValueChanged;
@@ -1784,8 +1781,7 @@ namespace WF.EnrolleeApplication.App.Views
             if (changeDisciplineCardResult == DialogResult.OK)
             {
                 // Получаем текущий индекс выбранной строки
-                int rowIndex = SertificateGrid.CurrentRow.Index;
-                SertificateGrid.Rows[rowIndex].Cells[2].Value += "*";
+                int rowIndex = SertificateGrid.CurrentRow.Index;           
                 // Добавляем информацию о заменяемой дисциплине
                 SertificateGrid.Rows[rowIndex].Cells[6].Value = changeDisciplineCard.discipline.Name;
             }
@@ -1943,7 +1939,7 @@ namespace WF.EnrolleeApplication.App.Views
         {
             // Если строки оценок равны
             if (firstString.Text.Equals(secondString.Text))
-            {             
+            {
                 // Проверяем систему перевода
                 bool isTen = isTenSystem(firstString.Text);
                 switch (transferSystem.SelectedIndex)
@@ -1966,7 +1962,7 @@ namespace WF.EnrolleeApplication.App.Views
                                 sum += mark * 10;
                             }
                             // Считаем средний балл
-                            double avr = Math.Round((double)sum / count, MidpointRounding.AwayFromZero);                            
+                            double avr = Math.Round((double)sum / count, MidpointRounding.AwayFromZero);
                             if (!Double.IsNaN(avr))
                             {
                                 // Если число вычисленно записываем в строку среднего балла
@@ -2258,7 +2254,7 @@ namespace WF.EnrolleeApplication.App.Views
             // Закрытие формы регистрации
             if (!editMode)
                 logger.Info($"Пользователь: {activeEmployee.Fullname.Trim()} отменил регистрацию абитуриента. Закрытие формы регистрации.");
-            else           
+            else
                 logger.Info($"Пользователь: {activeEmployee.Fullname.Trim()} отменил редактирование абитуриента ({enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}). Закрытие формы редактирования.");
             this.DialogResult = DialogResult.Cancel;
             this.Close();
@@ -2307,7 +2303,7 @@ namespace WF.EnrolleeApplication.App.Views
                     priorityOfSpecialityService.InsertPriorityOfSpeciality(priority);
             }
             // Если режим редактирования
-            else 
+            else
             {
                 logger.Info($"Обновление приоритетов абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
                 foreach (var priority in priorities)
@@ -2365,10 +2361,10 @@ namespace WF.EnrolleeApplication.App.Views
             // Если не режим редактирования
             //if (!editMode)
             //{
-                logger.Info($"Добавление оценок абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
-                foreach (var assessment in assessments)
-                    // Добавляем оценки
-                    assessmentService.InsertAssessment(assessment);
+            logger.Info($"Добавление оценок абитуриента {enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()}.");
+            foreach (var assessment in assessments)
+                // Добавляем оценки
+                assessmentService.InsertAssessment(assessment);
             //}
             //// Если режим редактирования
             //else
@@ -2386,35 +2382,41 @@ namespace WF.EnrolleeApplication.App.Views
         /// <returns></returns>
         private List<Assessment> GetAssessments(Enrollee savedEnrollee)
         {
+            var assessments = assessmentService.GetAssessments(savedEnrollee);
+            if (assessments.Count!=0)
+            {
+                foreach (var assessment in assessments)
+                    assessmentService.DeleteAssessment(assessment);
+            }
             // Список оценок
-            var assessments = new List<Assessment>();
+            assessments = new List<Assessment>();
             // Если режим регистрации абитуриента
             //if (!editMode)
             //{
-                // Оценка документа об образовании
-                var docAssessment = new Assessment();
-                docAssessment.DisciplineId = 5;
-                docAssessment.EnrolleeId = savedEnrollee.EnrolleeId;
-                docAssessment.Estimation = Int32.Parse(tbAverage.Text);
-                assessments.Add(docAssessment);
-                // Оценки таблицы сертификатов
-                foreach (DataGridViewRow row in SertificateGrid.Rows)
-                {
-                    var assessment = new Assessment();
-                    // Получаем дисциплину
-                    assessment.DisciplineId = Int32.Parse(row.Cells[0].Value.ToString());
-                    assessment.EnrolleeId = savedEnrollee.EnrolleeId;
-                    // Получаем оценку
-                    if (string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString())) assessment.Estimation = 0;
-                    else assessment.Estimation = Int32.Parse(row.Cells[4].Value.ToString());
-                    // Номер сертификата
-                    assessment.SertCode = row.Cells[3].Value.ToString();
-                    // Дата выдачи сертификата
-                    assessment.SertDate = row.Cells[5].Value.ToString();
-                    // Изменение дисциплины
-                    assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
-                    assessments.Add(assessment);
-                }
+            // Оценка документа об образовании
+            var docAssessment = new Assessment();
+            docAssessment.DisciplineId = 5;
+            docAssessment.EnrolleeId = savedEnrollee.EnrolleeId;
+            docAssessment.Estimation = Int32.Parse(tbAverage.Text);
+            assessments.Add(docAssessment);
+            // Оценки таблицы сертификатов
+            foreach (DataGridViewRow row in SertificateGrid.Rows)
+            {
+                var assessment = new Assessment();
+                // Получаем дисциплину
+                assessment.DisciplineId = Int32.Parse(row.Cells[0].Value.ToString());
+                assessment.EnrolleeId = savedEnrollee.EnrolleeId;
+                // Получаем оценку
+                if (string.IsNullOrWhiteSpace(row.Cells[5].Value.ToString())) assessment.Estimation = 0;
+                else assessment.Estimation = Int32.Parse(row.Cells[5].Value.ToString());
+                // Номер сертификата
+                assessment.SertCode = row.Cells[4].Value.ToString();
+                // Дата выдачи сертификата
+                assessment.SertDate = row.Cells[3].Value.ToString();
+                // Изменение дисциплины
+                assessment.ChangeDiscipline = row.Cells[6].Value.ToString();
+                assessments.Add(assessment);
+            }
             //}
             //else
             //{
@@ -2458,7 +2460,7 @@ namespace WF.EnrolleeApplication.App.Views
             var list = new List<PriorityOfSpeciality>();
             // Режим регистрации приоритета
             if (!editMode)
-            {    
+            {
                 // Добавление приоритеты в список
                 foreach (DataGridViewRow row in PriorityGrid.Rows)
                 {
@@ -2499,7 +2501,6 @@ namespace WF.EnrolleeApplication.App.Views
         {
             if (string.IsNullOrWhiteSpace(tbRuSurname.Text))
             {
-                
                 MessageBox.Show(this, "Введите фамилию абитуриента на русском языке", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbRuSurname.Focus();
@@ -2552,6 +2553,27 @@ namespace WF.EnrolleeApplication.App.Views
                 MessageBox.Show(this, "Введите личный номер абитуриента, согласно предоставленного документа", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 0;
                 tbDocPersonalNumber.Focus();
+            }
+            else if (string.IsNullOrWhiteSpace(tbCountry.Text))
+            {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл наименование страны абитуриента.");
+                MessageBox.Show(this, "Введите наименование страны абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl.SelectedIndex = 1;
+                tbCountry.Focus();
+            }
+            else if (string.IsNullOrWhiteSpace(tbArea.Text))
+            {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл наименование области абитуриента.");
+                MessageBox.Show(this, "Введите наименование области абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl.SelectedIndex = 1;
+                tbArea.Focus();
+            }
+            else if (string.IsNullOrWhiteSpace(tbDistrict.Text))
+            {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл наименование района абитуриента.");
+                MessageBox.Show(this, "Введите наименование района абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl.SelectedIndex = 1;
+                tbDistrict.Focus();
             }
             else if (string.IsNullOrWhiteSpace(tbSettlementName.Text))
             {
@@ -2741,7 +2763,7 @@ namespace WF.EnrolleeApplication.App.Views
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl.SelectedTab == tabControl.TabPages["tabPageEnroll"])
-            {                
+            {
                 SetSertificateTableStyle();
             }
         }
@@ -2763,7 +2785,7 @@ namespace WF.EnrolleeApplication.App.Views
                     if (discipline.Equals(currentDiscipline)) continue;
                     if (discipline.IsAlternative && discipline.DisciplineGroupId.HasValue)
                     {
-                        if(discipline.DisciplineGroupId.Value == currentDiscipline.DisciplineGroupId.Value && !IsClearRow)
+                        if (discipline.DisciplineGroupId.Value == currentDiscipline.DisciplineGroupId.Value && !IsClearRow)
                         {
                             row.DefaultCellStyle.BackColor = Color.DarkGray;
                             row.ReadOnly = true;
@@ -2796,13 +2818,13 @@ namespace WF.EnrolleeApplication.App.Views
 
         private void tbCountry_Leave(object sender, EventArgs e)
         {
-            if(!string.IsNullOrWhiteSpace(tbCountry.Text))
+            if (!string.IsNullOrWhiteSpace(tbCountry.Text))
             {
                 string countryName = tbCountry.Text;
                 country = countryService.GetCountry(countryName);
-                if(country==null)
+                if (country == null)
                 {
-                    if (MessageBox.Show(this, $"Добавить '{countryName.Trim()}' в справочник стран?","Добавление страны в справочник",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show(this, $"Добавить '{countryName.Trim()}' в справочник стран?", "Добавление страны в справочник", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         var inserted = new Country();
                         inserted.Name = countryName;

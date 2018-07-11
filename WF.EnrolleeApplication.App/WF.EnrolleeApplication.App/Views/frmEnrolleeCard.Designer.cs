@@ -624,11 +624,14 @@
             // 
             // tbDocPersonalNumber
             // 
+            this.tbDocPersonalNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbDocPersonalNumber.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbDocPersonalNumber.Location = new System.Drawing.Point(3, 19);
             this.tbDocPersonalNumber.Name = "tbDocPersonalNumber";
             this.tbDocPersonalNumber.Size = new System.Drawing.Size(375, 23);
             this.tbDocPersonalNumber.TabIndex = 0;
+            this.tbDocPersonalNumber.Enter += new System.EventHandler(this.SetEnglishLanguage);
+            this.tbDocPersonalNumber.Leave += new System.EventHandler(this.SetDefaultLanguage);
             // 
             // groupBox15
             // 
@@ -1729,10 +1732,10 @@
             this.tabPageEnroll.Controls.Add(this.groupBox64);
             this.tabPageEnroll.Controls.Add(this.groupBox55);
             this.tabPageEnroll.Controls.Add(this.groupBox50);
-            this.tabPageEnroll.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEnroll.Location = new System.Drawing.Point(4, 24);
             this.tabPageEnroll.Name = "tabPageEnroll";
             this.tabPageEnroll.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEnroll.Size = new System.Drawing.Size(976, 455);
+            this.tabPageEnroll.Size = new System.Drawing.Size(976, 453);
             this.tabPageEnroll.TabIndex = 2;
             this.tabPageEnroll.Text = "Поступление";
             this.tabPageEnroll.UseVisualStyleBackColor = true;

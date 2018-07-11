@@ -40,12 +40,12 @@ namespace WF.EnrolleeApplication.App.Services
                 wordDocument.Variables["ФИО абитуриента"].Value = $"{enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} {enrollee.RuPatronymic.Trim()}";
                 wordDocument.Variables["Страна"].Value = enrollee.Country.Name;
                 wordDocument.Variables["Область"].Value = enrollee.Area.Name;
-                wordDocument.Variables["Район"].Value = enrollee.District.Name;
+                wordDocument.Variables["Район"].Value = $"{enrollee.District.Name} р-н";
                 wordDocument.Variables["Индекс"].Value = enrollee.SettlementIndex.ToString();
                 wordDocument.Variables["Город"].Value = $"{enrollee.TypeOfSettlement.Shortname.Trim()} {enrollee.SettlementName.Trim()}";
-                wordDocument.Variables["Улица"].Value = enrollee.StreetName.Trim();
-                wordDocument.Variables["Номер дома"].Value = $"д. {enrollee.NumberHouse}";
-                wordDocument.Variables["Номер квартиры"].Value = $"кв. {enrollee.NumberFlat}";
+                wordDocument.Variables["Улица"].Value = $"{enrollee.TypeOfStreet.Shortname.Trim()} {enrollee.StreetName.Trim()}";
+                wordDocument.Variables["Номер дома"].Value = $"д.{enrollee.NumberHouse}";
+                wordDocument.Variables["Номер квартиры"].Value = $"кв.{enrollee.NumberFlat}";
                 wordDocument.Variables["Домашний телефон"].Value = $"{enrollee.HomePhone} (дом.)";
                 wordDocument.Variables["Мобильный телефон"].Value = $"{enrollee.MobilePhone} (моб.)";
                 wordDocument.Variables["Последнее УО"].Value = $"{enrollee.SchoolYear.Trim()}, {enrollee.SchoolName} г. {enrollee.SchoolAddress}";
@@ -173,12 +173,12 @@ namespace WF.EnrolleeApplication.App.Services
                 else wordDocument.Variables["Целевое направление"].Value = enrollee.TargetWorkPlace.Name.Trim();
                 wordDocument.Variables["Страна"].Value = enrollee.Country.Name;
                 wordDocument.Variables["Область"].Value = enrollee.Area.Name;
-                wordDocument.Variables["Район"].Value = enrollee.District.Name;
+                wordDocument.Variables["Район"].Value = $"{enrollee.District.Name} р-н";
                 wordDocument.Variables["Индекс"].Value = enrollee.SettlementIndex.ToString();
                 wordDocument.Variables["Город"].Value = $"{enrollee.TypeOfSettlement.Shortname.Trim()} {enrollee.SettlementName.Trim()}";
-                wordDocument.Variables["Улица"].Value = enrollee.StreetName.Trim();
-                wordDocument.Variables["Номер дома"].Value = $"д. {enrollee.NumberHouse.Trim()}";
-                wordDocument.Variables["Номер квартиры"].Value = $"кв. {enrollee.NumberFlat.Trim()}";
+                wordDocument.Variables["Улица"].Value = $"{enrollee.TypeOfStreet.Shortname.Trim()} {enrollee.StreetName.Trim()}";
+                wordDocument.Variables["Номер дома"].Value = $"д.{enrollee.NumberHouse.Trim()}";
+                wordDocument.Variables["Номер квартиры"].Value = $"кв.{enrollee.NumberFlat.Trim()}";
                 wordDocument.Variables["Телефон домашний"].Value = $"{enrollee.HomePhone} (дом.)";
                 wordDocument.Variables["Телефон мобильный"].Value = $"{enrollee.MobilePhone} (моб.)";
                 wordDocument.Variables["Иностранный язык"].Value = $"{enrollee.ForeignLanguage.Name} ";
@@ -503,11 +503,11 @@ namespace WF.EnrolleeApplication.App.Services
                 wordDocument.Variables["ФИО Абитуриента"].Value = string.Format("{0} {1} {2}", enrollee.RuSurname.ToUpper().Trim(), enrollee.RuName.Trim(), enrollee.RuPatronymic.Trim());
                 wordDocument.Variables["Страна"].Value = enrollee.Country.Name.Trim();
                 wordDocument.Variables["Область"].Value = enrollee.Area.Name.Trim();
-                wordDocument.Variables["Район"].Value = enrollee.District.Name.Trim();
+                wordDocument.Variables["Район"].Value = $"{enrollee.District.Name} р-н";
                 wordDocument.Variables["Город"].Value = $"{enrollee.TypeOfSettlement.Shortname.Trim()} {enrollee.SettlementName.Trim()}";
-                wordDocument.Variables["Улица"].Value = enrollee.StreetName.Trim();
-                wordDocument.Variables["Номер дома"].Value = $"д. {enrollee.NumberHouse}";
-                wordDocument.Variables["Номер квартиры"].Value = $"кв. {enrollee.NumberFlat} ";
+                wordDocument.Variables["Улица"].Value = $"{enrollee.TypeOfStreet.Shortname.Trim()} {enrollee.StreetName.Trim()}";
+                wordDocument.Variables["Номер дома"].Value = $"д.{enrollee.NumberHouse}";
+                wordDocument.Variables["Номер квартиры"].Value = $"кв.{enrollee.NumberFlat} ";
                 wordDocument.Variables["Номер протокола"].Value = "1";
                 for (int j = 1; j < 4; j++)
                 {
@@ -685,7 +685,7 @@ namespace WF.EnrolleeApplication.App.Services
                     }
                     table.Cell(index + 4, 15).Range.Text = atributeList;
                     PriorityOfSpecialityService priorityOfSpecialityService = new PriorityOfSpecialityService(ConnectionString);
-                    var priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                    var priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p=>p.PriorityLevel).ToList();
                     string priorityList = "";
                     foreach (var priority in priorities)
                     {
@@ -755,8 +755,8 @@ namespace WF.EnrolleeApplication.App.Services
                                 if (string.IsNullOrWhiteSpace(enrollee.RuPatronymic)) table.Cell(index + 2, 2).Range.Text = $"{enrollee.RuSurname.Trim()} {enrollee.RuName[0]}.";
                                 else table.Cell(index + 2, 2).Range.Text = $"{enrollee.RuSurname.Trim()} {enrollee.RuName[0]}.{enrollee.RuPatronymic[0]}.";
                                 table.Cell(index + 2, 3).Range.Text = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}—{enrollee.NumberOfDeal}";
-                                table.Cell(index + 2, 5).Range.Text = assessment.Estimation.Value.ToString();
-                                table.Cell(index + 2, 6).Range.Text = estimationStringService.EstimationAsText(assessment.Estimation.Value).Trim();
+                                //table.Cell(index + 2, 5).Range.Text = assessment.Estimation.Value.ToString();
+                                //table.Cell(index + 2, 6).Range.Text = estimationStringService.EstimationAsText(assessment.Estimation.Value).Trim();
                             }
                             index++;
                         }
