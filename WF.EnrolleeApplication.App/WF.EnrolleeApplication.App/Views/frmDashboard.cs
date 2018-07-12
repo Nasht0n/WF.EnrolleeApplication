@@ -117,6 +117,23 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeGrid.Columns[13].FillWeight = 5;
             enrolleeGrid.Columns[14].FillWeight = 10;
             enrolleeGrid.Columns[15].FillWeight = 10;
+            // Запрет сортировки
+            enrolleeGrid.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[3].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[4].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[5].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[6].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[7].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[8].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[9].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[10].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[11].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[12].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[13].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[14].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[15].SortMode = DataGridViewColumnSortMode.NotSortable;
         }
         /// <summary>
         /// Создание структуры таблицы данных
@@ -506,6 +523,7 @@ namespace WF.EnrolleeApplication.App.Views
                     $"выполнил регистрацию абитуриента: {enrolleeCard.enrollee.RuSurname} {enrolleeCard.enrollee.RuName}");
                 // Обновляем список абитуриентов
                 InitializeEnrolleeGrid(SearchMode);
+                InitializeStatusStrip();
             }
         }
         /// <summary>
@@ -536,6 +554,7 @@ namespace WF.EnrolleeApplication.App.Views
                     $"выполнил редактирование профиля абитуриента: {enrolleeCard.enrollee.RuSurname} {enrolleeCard.enrollee.RuName}.");
                     // Обновляем список абитуриентов
                     InitializeEnrolleeGrid(SearchMode);
+                    InitializeStatusStrip();
                 }
             }
         }

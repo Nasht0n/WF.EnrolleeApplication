@@ -445,13 +445,19 @@ namespace WF.EnrolleeApplication.App.Views
         /// </summary>
         private void SetPriorityTableStyle()
         {
+            PriorityGrid.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+            PriorityGrid.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
+            PriorityGrid.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
+            PriorityGrid.Columns[3].SortMode = DataGridViewColumnSortMode.NotSortable;
             // Установка видимости столбцов приоритета специальности
             PriorityGrid.Columns[2].Visible = false;
             // Установка ширины (весов) столбцов приоритета специальности
             PriorityGrid.Columns[0].FillWeight = 5;
-            PriorityGrid.Columns[1].FillWeight = 20;
+            PriorityGrid.Columns[1].FillWeight = 35;
             PriorityGrid.Columns[2].FillWeight = 5;
-            PriorityGrid.Columns[3].FillWeight = 70;
+            PriorityGrid.Columns[3].FillWeight = 55;
+
+            PriorityGrid.Columns[3].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
         /// <summary>
         /// Создаем структуру таблицы данных списка приоритетов специальностей
@@ -2649,6 +2655,23 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} не ввёл оценки абитуриента.");
                 MessageBox.Show(this, "Введите оценки абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl.SelectedIndex = 2;
+            }
+            /*
+             * 
+             * ПРОВЕРИТЬ!!!!
+             * 
+             * */
+            else if ((typeOfFinance.FinanceTypeId==1 || typeOfFinance.FinanceTypeId == 3) && speciality.BudgetCountPlace==0)
+            {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} пытается добавить абитуриента на специальность, в которой нет бюджетных мест.");
+                MessageBox.Show(this, $"На специальности {speciality.Fullname.Trim()} нет бюджетных мест. Проверьте тип финансирования.", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl.SelectedIndex = 2;
+            }
+            else if ((typeOfFinance.FinanceTypeId == 2 || typeOfFinance.FinanceTypeId == 3) && speciality.FeeCountPlace == 0)
+            {
+                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} пытается добавить абитуриента на специальность, в которой нет бюджетных мест.");
+                MessageBox.Show(this, $"На специальности {speciality.Fullname.Trim()} нет мест на платной основе. Проверьте тип финансирования.", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 2;
             }
             else
