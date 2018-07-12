@@ -76,7 +76,18 @@ namespace WF.EnrolleeApplication.App.Views
             SetStyleEnrolleeGrid(EnrolleeGrid);
             logger.Info("Выполнен вход в АИС Абитуриент.");
             logger.Info($"Работает пользователь:\n {employee.Fullname.Trim()}.");
+            SetVisibleConfiguration(employee);
         }
+
+        private void SetVisibleConfiguration(Employee employee)
+        {
+            switch(employee.PostId)
+            {
+                case 1: { PrintToolStripMenuItem.Visible = true; break; }
+                case 2: { PrintToolStripMenuItem.Visible = false; break; }
+            }
+        }
+
         /// <summary>
         /// Метод установка стиля отображения таблицы данных абитуриентов
         /// </summary>
@@ -173,7 +184,8 @@ namespace WF.EnrolleeApplication.App.Views
             if (searchMode)
             {
                 logger.Debug($"Обновление таблицы абитуриентов. Включен режим поиска.");
-                enrollees = viewService.GetEnrollees(currentSpeciality);
+                if (activeEmployee.PostId == 1) enrollees = viewService.GetEnrollees(currentSpeciality);
+                else enrollees = viewService.GetEnrollees(currentSpeciality).Where(e => e.EmployeeId == activeEmployee.EmployeeId).ToList();
             }
             else
             {
