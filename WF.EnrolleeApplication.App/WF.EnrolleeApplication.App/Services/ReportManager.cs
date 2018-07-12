@@ -689,7 +689,7 @@ namespace WF.EnrolleeApplication.App.Services
                     string priorityList = "";
                     foreach (var priority in priorities)
                     {
-                        priorityList += $"{priority.PriorityLevel} — {priority.Speciality.Shortname.Trim()}; ";
+                        priorityList += $"{priority.PriorityLevel} — {priority.Speciality.Shortname.Trim()}({priority.Speciality.FormOfStudy.Shortname.Trim()}); ";
                     }
                     table.Cell(index + 4, 16).Range.Text = priorityList;
                     index++;

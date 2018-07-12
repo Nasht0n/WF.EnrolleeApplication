@@ -821,6 +821,7 @@ namespace WF.EnrolleeApplication.App.Views
                 ReportManager.ConnectionString = connectionString;
                 // Получение списка абитуриентов
                 var enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality)
+                    .Where(e=>e.StateTypeId == 1)
                     .OrderByDescending(e => e.ReasonForAddmission.ContestId)
                     .ThenByDescending(e => e.Assessment.Sum(a => a.Estimation))
                     .ToList();
