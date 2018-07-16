@@ -1178,5 +1178,6 @@ namespace WF.EnrolleeApplication.App.Views
             string path = Environment.CurrentDirectory + "\\Руководство пользователя.pdf";
             System.Diagnostics.Process.Start(path);
         }
+
     }
 }
