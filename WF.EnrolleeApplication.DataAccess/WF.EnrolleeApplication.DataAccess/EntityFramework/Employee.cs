@@ -19,6 +19,8 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
 
         public int PostId { get; set; }
 
+        public int? FacultyId { get; set; }
+
         [Required]
         [StringLength(255)]
         public string Fullname { get; set; }

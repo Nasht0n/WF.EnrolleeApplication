@@ -97,5 +97,9 @@ namespace WF.EnrolleeApplication.DataAccess.EntityFramework
         [Column(Order = 17)]
         [StringLength(10)]
         public string FormOfStudyShortname { get; set; }
+        [Key]
+        [Column(Order = 18)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Faculty { get; set; }
     }
 }

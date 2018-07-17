@@ -111,6 +111,7 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeGrid.Columns[13].Visible = false;
             enrolleeGrid.Columns[14].Visible = true;
             enrolleeGrid.Columns[15].Visible = true;
+            enrolleeGrid.Columns[16].Visible = false;
             // Установка весов (ширины) столбцов
             enrolleeGrid.Columns[0].FillWeight = 5;
             enrolleeGrid.Columns[1].FillWeight = 5;
@@ -128,6 +129,7 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeGrid.Columns[13].FillWeight = 5;
             enrolleeGrid.Columns[14].FillWeight = 10;
             enrolleeGrid.Columns[15].FillWeight = 10;
+            enrolleeGrid.Columns[16].FillWeight = 5;
             // Запрет сортировки
             enrolleeGrid.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
             enrolleeGrid.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -145,6 +147,7 @@ namespace WF.EnrolleeApplication.App.Views
             enrolleeGrid.Columns[13].SortMode = DataGridViewColumnSortMode.NotSortable;
             enrolleeGrid.Columns[14].SortMode = DataGridViewColumnSortMode.NotSortable;
             enrolleeGrid.Columns[15].SortMode = DataGridViewColumnSortMode.NotSortable;
+            enrolleeGrid.Columns[16].SortMode = DataGridViewColumnSortMode.NotSortable;
         }
         /// <summary>
         /// Создание структуры таблицы данных
@@ -169,6 +172,7 @@ namespace WF.EnrolleeApplication.App.Views
             result.Columns.Add(new DataColumn("Основание зачисления", typeof(string)));
             result.Columns.Add(new DataColumn("Тип финансирования", typeof(string)));
             result.Columns.Add(new DataColumn("Статус", typeof(string)));
+            result.Columns.Add(new DataColumn("КодФакультета", typeof(int)));
             return result;
         }
         /// <summary>
@@ -185,7 +189,12 @@ namespace WF.EnrolleeApplication.App.Views
             {
                 logger.Debug($"Обновление таблицы абитуриентов. Включен режим поиска.");
                 if (activeEmployee.PostId == 1) enrollees = viewService.GetEnrollees(currentSpeciality);
-                else enrollees = viewService.GetEnrollees(currentSpeciality).Where(e => e.EmployeeId == activeEmployee.EmployeeId).ToList();
+                else
+                {
+                    if (activeEmployee.FacultyId.HasValue)
+                        enrollees = viewService.GetEnrollees(currentSpeciality).Where(e => e.Faculty == activeEmployee.FacultyId.Value).ToList();
+                    else enrollees = viewService.GetEnrollees(currentSpeciality);
+                }
             }
             else
             {
@@ -195,14 +204,17 @@ namespace WF.EnrolleeApplication.App.Views
             // Очищаем таблицу данных
             enrolleeTable.Clear();
             logger.Debug($"Заполняем данными таблицу абитуриентов.");
-            // Заполняем таблицу данных списком абитуриентов
-            foreach (var enrollee in enrollees)
-            {
-                string numberOfDeal = $"";
-                if (string.IsNullOrWhiteSpace(enrollee.FormOfStudyShortname)) numberOfDeal = $"{enrollee.SpecialityShortname.Trim()}-{enrollee.NumberOfDeal}";
-                else numberOfDeal = $"{enrollee.SpecialityShortname.Trim()}{enrollee.FormOfStudyShortname.Trim()}-{enrollee.NumberOfDeal}";
-                enrolleeTable.Rows.Add(enrollee.EnrolleeId, enrollee.SpecialityId, enrollee.ContestId, enrollee.ReasonForAddmissionId, enrollee.FinanceTypeId, enrollee.StateId, enrollee.EmployeeId, numberOfDeal, enrollee.FormOfStudy, enrollee.Speciality, enrollee.Surname, enrollee.Name, enrollee.Contest, enrollee.ReasonForAddmission, enrollee.Finance, enrollee.Status);
-            }
+            if (enrollees.Count != 0 || currentSpeciality!=null)
+                // Заполняем таблицу данных списком абитуриентов
+                foreach (var enrollee in enrollees)
+                {
+                    string numberOfDeal = $"";
+                    if (string.IsNullOrWhiteSpace(enrollee.FormOfStudyShortname)) numberOfDeal = $"{enrollee.SpecialityShortname.Trim()}-{enrollee.NumberOfDeal}";
+                    else numberOfDeal = $"{enrollee.SpecialityShortname.Trim()}{enrollee.FormOfStudyShortname.Trim()}-{enrollee.NumberOfDeal}";
+                    enrolleeTable.Rows.Add(enrollee.EnrolleeId, enrollee.SpecialityId, enrollee.ContestId, enrollee.ReasonForAddmissionId, enrollee.FinanceTypeId, enrollee.StateId, enrollee.EmployeeId, numberOfDeal, enrollee.FormOfStudy, enrollee.Speciality, enrollee.Surname, enrollee.Name, enrollee.Contest, enrollee.ReasonForAddmission, enrollee.Finance, enrollee.Status);
+                }
+            else
+                enrolleeTable.Rows.Clear();
         }
         /// <summary>
         /// Метод загрузки сохраненных параметров приложения пользователем
@@ -221,6 +233,8 @@ namespace WF.EnrolleeApplication.App.Views
             SearchToolBox.Visible = SearchToolBoxVisible;
             FilterToolBox.Visible = FilterToolBoxVisible;
             StatusStrip.Visible = StatusStripVisible;
+
+            SearchMode = SearchToolBoxVisible;
         }
         /// <summary>
         /// Инициализация выпадающих списков поиска по специальности
