@@ -345,12 +345,47 @@ namespace WF.EnrolleeApplication.App.Views
             // Устанавливаем тип основания зачисления
             cbReasonForAddmission.SelectedValue = editEnrollee.ReasonForAddmissionId;
             // Заполняем поля оценками документа (-ов), предоставленного (-ыми) абитуриентом
+            bool attestatTenSystem = false;
             tbFirstAttestatString.Text = editEnrollee.AttestatEstimationString;
             tbSecondAttestatString.Text = editEnrollee.AttestatEstimationString;
+            foreach (char c in editEnrollee.AttestatEstimationString)
+            {
+                if (c == '6' || c == '7' || c == '8' || c == '9' || c == '0')
+                {
+                    attestatTenSystem = true;
+                    break;
+                }
+            }
+            if (attestatTenSystem) cbSystemAttestat.SelectedIndex = 0;
+            else cbSystemAttestat.SelectedIndex = 1;
+
+            bool diplomPtuTenSystem = false;
             tbFirstDiplomPtuString.Text = editEnrollee.DiplomPtuEstimationString;
             tbSecondDiplomPtuString.Text = editEnrollee.DiplomPtuEstimationString;
+            foreach (char c in editEnrollee.DiplomPtuEstimationString)
+            {
+                if (c == '6' || c == '7' || c == '8' || c == '9' || c == '0')
+                {
+                    diplomPtuTenSystem = true;
+                    break;
+                }
+            }
+            if (diplomPtuTenSystem) cbSystemDiplomPtu.SelectedIndex = 0;
+            else cbSystemDiplomPtu.SelectedIndex = 1;
+
+            bool diplomSsuzTenSystem = false;
             tbFirstDiplomSsuzString.Text = editEnrollee.DiplomSusEstimationString;
             tbSecondDiplomSsuzString.Text = editEnrollee.DiplomSusEstimationString;
+            foreach(char c in editEnrollee.DiplomSusEstimationString)
+            {
+                if (c == '6' || c == '7' || c == '8' || c == '9' || c == '0')
+                {
+                    diplomSsuzTenSystem = true;
+                    break;
+                }
+            }
+            if (diplomSsuzTenSystem) cbSystemDiplomSsuz.SelectedIndex = 0;
+            else cbSystemDiplomSsuz.SelectedIndex = 1;
             // Устанавливаем данные о целевом направлении
             if (editEnrollee.TargetWorkPlaceId.HasValue)
             {
@@ -2005,7 +2040,14 @@ namespace WF.EnrolleeApplication.App.Views
                                     // Считаем средний балл
                                     double avr = Math.Round(sum / count, 1);
                                     double ball = avr * 10;
-                                    averageString.Text = ball.ToString();
+                                    if (!Double.IsNaN(ball))
+                                    {
+                                        averageString.Text = ball.ToString();
+                                    }
+                                    else
+                                    {
+                                        averageString.Text = "0";
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -2657,23 +2699,23 @@ namespace WF.EnrolleeApplication.App.Views
                 MessageBox.Show(this, "Введите оценки абитуриента", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl.SelectedIndex = 2;
             }
-            /*
-             * 
-             * ПРОВЕРИТЬ!!!!
-             * 
-             * */
-            else if ((typeOfFinance.FinanceTypeId==1 || typeOfFinance.FinanceTypeId == 3) && speciality.BudgetCountPlace==0)
-            {
-                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} пытается добавить абитуриента на специальность, в которой нет бюджетных мест.");
-                MessageBox.Show(this, $"На специальности {speciality.Fullname.Trim()} нет бюджетных мест. Проверьте тип финансирования.", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 2;
-            }
-            else if ((typeOfFinance.FinanceTypeId == 2 || typeOfFinance.FinanceTypeId == 3) && speciality.FeeCountPlace == 0)
-            {
-                logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} пытается добавить абитуриента на специальность, в которой нет бюджетных мест.");
-                MessageBox.Show(this, $"На специальности {speciality.Fullname.Trim()} нет мест на платной основе. Проверьте тип финансирования.", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tabControl.SelectedIndex = 2;
-            }
+            ///*
+            // * 
+            // * ПРОВЕРИТЬ!!!!
+            // * 
+            // * */
+            //else if ((typeOfFinance.FinanceTypeId==1 || typeOfFinance.FinanceTypeId == 3) && speciality.BudgetCountPlace==0)
+            //{
+            //    logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} пытается добавить абитуриента на специальность, в которой нет бюджетных мест.");
+            //    MessageBox.Show(this, $"На специальности {speciality.Fullname.Trim()} нет бюджетных мест. Проверьте тип финансирования.", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    tabControl.SelectedIndex = 2;
+            //}
+            //else if ((typeOfFinance.FinanceTypeId == 2 || typeOfFinance.FinanceTypeId == 3) && speciality.FeeCountPlace == 0)
+            //{
+            //    logger.Warn($"Пользователь: {activeEmployee.Fullname.Trim()} пытается добавить абитуриента на специальность, в которой нет бюджетных мест.");
+            //    MessageBox.Show(this, $"На специальности {speciality.Fullname.Trim()} нет мест на платной основе. Проверьте тип финансирования.", "Сохранение абитуриента", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    tabControl.SelectedIndex = 2;
+            //}
             else
             {
                 // Заполняем поля регистрируемого абитуриента

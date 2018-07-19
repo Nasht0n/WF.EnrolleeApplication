@@ -55,15 +55,23 @@ namespace WF.EnrolleeApplication.App.Services
                 wordDocument.Variables["Иностранный язык"].Value = enrollee.ForeignLanguage.Name;
                 wordDocument.Variables["Факультет"].Value = enrollee.Speciality.Faculty.Fullname;
                 PriorityOfSpecialityService priorityOfSpecialityService = new PriorityOfSpecialityService(ConnectionString);
-                List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee);
+                List<PriorityOfSpeciality> priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p=>p.PriorityLevel).ToList();
                 if (priorities.Count != 0)
                 {
                     int i = 1;
                     foreach (var priority in priorities)
                     {
                         string field = string.Format("Приоритет {0}", i);
-                        if (!string.IsNullOrWhiteSpace(priority.Speciality.FormOfStudy.Shortname)) wordDocument.Variables[field].Value = $"{priority.Speciality.Cipher} {priority.Speciality.Fullname}({priority.Speciality.Specialization}) -{priority.Speciality.FormOfStudy.Shortname.Trim()}";
-                        else wordDocument.Variables[field].Value = $"{priority.Speciality.Cipher} {priority.Speciality.Fullname}({priority.Speciality.Specialization})";
+                        if (!string.IsNullOrWhiteSpace(priority.Speciality.FormOfStudy.Shortname))
+                        {
+                            if(string.IsNullOrWhiteSpace(priority.Speciality.Specialization)) wordDocument.Variables[field].Value = $"{priority.Speciality.Cipher} {priority.Speciality.Fullname}-{priority.Speciality.FormOfStudy.Shortname.Trim()}";
+                            else wordDocument.Variables[field].Value = $"{priority.Speciality.Cipher} {priority.Speciality.Fullname}-{priority.Speciality.FormOfStudy.Shortname.Trim()}";
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(priority.Speciality.Specialization)) wordDocument.Variables[field].Value = $"{priority.Speciality.Cipher} {priority.Speciality.Fullname}";
+                            else wordDocument.Variables[field].Value = $"{priority.Speciality.Cipher} {priority.Speciality.Fullname}({priority.Speciality.Specialization})";
+                        }
                         i++;
                     }
                     for (int j = priorities.Count + 1; j < 10; j++)
@@ -670,12 +678,21 @@ namespace WF.EnrolleeApplication.App.Services
                     int? sum = assessments.Sum(a => a.Estimation);
                     if (sum.HasValue) table.Cell(index + 4, 12).Range.Text = sum.Value.ToString();
                     else table.Cell(index + 4, 12).Range.Text = "0";
+                    // Вид финансирования
+                    string finance = "";
+                    switch (enrollee.FinanceTypeId)
+                    {
+                        case 1: { finance = "Б"; break; }
+                        case 2: { finance = "П"; break; }
+                        case 3: { finance = "Б/П"; break; }
+                    }
+                    table.Cell(index + 4, 13).Range.Text = finance;
                     // Конкурс
                     char contestFirstChar = enrollee.ReasonForAddmission.Contest.Name[0];
-                    table.Cell(index + 4, 13).Range.Text = contestFirstChar.ToString();
+                    table.Cell(index + 4, 14).Range.Text = contestFirstChar.ToString();
                     // Город/Село
-                    if (enrollee.TypeOfSettlement.IsTown) table.Cell(index + 4, 14).Range.Text = "Г";
-                    else table.Cell(index + 4, 14).Range.Text = "C";
+                    if (enrollee.TypeOfSettlement.IsTown) table.Cell(index + 4, 15).Range.Text = "Г";
+                    else table.Cell(index + 4, 15).Range.Text = "C";
                     AtributeForEnrolleeService atributeForEnrolleeService = new AtributeForEnrolleeService(ConnectionString);
                     var atributes = atributeForEnrolleeService.GetAtributeForEnrollees(enrollee);
                     string atributeList = "";
@@ -683,15 +700,16 @@ namespace WF.EnrolleeApplication.App.Services
                     {
                         atributeList += $"{atribute.Atribute.Shortname.Trim()} ";
                     }
-                    table.Cell(index + 4, 15).Range.Text = atributeList;
+                    table.Cell(index + 4, 16).Range.Text = atributeList;
                     PriorityOfSpecialityService priorityOfSpecialityService = new PriorityOfSpecialityService(ConnectionString);
                     var priorities = priorityOfSpecialityService.GetPriorityOfSpecialities(enrollee).OrderBy(p=>p.PriorityLevel).ToList();
                     string priorityList = "";
                     foreach (var priority in priorities)
                     {
-                        priorityList += $"{priority.PriorityLevel} — {priority.Speciality.Shortname.Trim()}({priority.Speciality.FormOfStudy.Shortname.Trim()}); ";
+                        if (string.IsNullOrWhiteSpace(priority.Speciality.FormOfStudy.Shortname.Trim())) priorityList += $"{priority.PriorityLevel} — {priority.Speciality.Shortname.Trim()}; ";
+                        else priorityList += $"{priority.PriorityLevel} — {priority.Speciality.Shortname.Trim()}({priority.Speciality.FormOfStudy.Shortname.Trim()}); ";
                     }
-                    table.Cell(index + 4, 16).Range.Text = priorityList;
+                    table.Cell(index + 4, 17).Range.Text = priorityList;
                     index++;
                 }
                 wordDocument.Variables["Секретарь приемной комиссии"].Value = systemConfigurationService.GetSystemConfiguration("SOKR_SEKR").Value;
@@ -716,6 +734,7 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
+
         // Экзаменнационная ведомость
         public static void PrintExaminationSheet(List<ExamSchema> exams, List<Enrollee> enrollees)
         {
@@ -961,202 +980,202 @@ namespace WF.EnrolleeApplication.App.Services
                             excelWorkSheet.Cells[row, 9] = countDealRecord;
                             int countTargetDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.TargetWorkPlaceId.HasValue && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
                             excelWorkSheet.Cells[row, 10] = countTargetDealRecord;
-                            int countWithoutExamDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.ReasonForAddmission.ContestId ==2 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
+                            int countWithoutExamDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && !e.TargetWorkPlaceId.HasValue && e.ReasonForAddmission.ContestId ==2 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
                             excelWorkSheet.Cells[row, 11] = countWithoutExamDealRecord;
-                            int countOutOfContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.ReasonForAddmission.ContestId == 3 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
+                            int countOutOfContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && !e.TargetWorkPlaceId.HasValue && e.ReasonForAddmission.ContestId == 3 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
                             excelWorkSheet.Cells[row, 12] = countOutOfContestDealRecord;
-                            int countInContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.ReasonForAddmission.ContestId == 1 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
+                            int countInContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && !e.TargetWorkPlaceId.HasValue && e.ReasonForAddmission.ContestId == 1 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
                             excelWorkSheet.Cells[row, 13] = countInContestDealRecord;
 
                             #region Получение оценок
                             int more340 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 && 
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a=>a.Estimation)>340);
                             excelWorkSheet.Cells[row, 14] = more340;
 
                             int between331to340 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 331 && e.Assessment.Sum(a => a.Estimation) <= 340);
                             excelWorkSheet.Cells[row, 15] = between331to340;
 
-                            int between321to330 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between321to330 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 321 && e.Assessment.Sum(a => a.Estimation) <= 330);
                             excelWorkSheet.Cells[row, 16] = between321to330;
 
-                            int between311to320 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between311to320 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 311 && e.Assessment.Sum(a => a.Estimation) <= 320);
                             excelWorkSheet.Cells[row, 17] = between311to320;
 
-                            int between301to310 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between301to310 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 301 && e.Assessment.Sum(a => a.Estimation) <= 310);
                             excelWorkSheet.Cells[row, 18] = between301to310;
 
-                            int between291to300 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between291to300 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 291 && e.Assessment.Sum(a => a.Estimation) <= 300);
                             excelWorkSheet.Cells[row, 19] = between291to300;
 
-                            int between281to290 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between281to290 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 281 && e.Assessment.Sum(a => a.Estimation) <= 290);
                             excelWorkSheet.Cells[row, 20] = between281to290;
 
-                            int between271to280 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between271to280 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 271 && e.Assessment.Sum(a => a.Estimation) <= 280);
                             excelWorkSheet.Cells[row, 21] = between271to280;
 
-                            int between261to270 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between261to270 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 261 && e.Assessment.Sum(a => a.Estimation) <= 270);
                             excelWorkSheet.Cells[row, 22] = between261to270;
 
-                            int between251to260 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between251to260 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 251 && e.Assessment.Sum(a => a.Estimation) <= 260);
                             excelWorkSheet.Cells[row, 23] = between251to260;
 
-                            int between241to250 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between241to250 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 241 && e.Assessment.Sum(a => a.Estimation) <= 250);
                             excelWorkSheet.Cells[row, 24] = between241to250;
 
-                            int between231to240 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between231to240 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 231 && e.Assessment.Sum(a => a.Estimation) <= 240);
                             excelWorkSheet.Cells[row, 25] = between231to240;
 
-                            int between221to230 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between221to230 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 221 && e.Assessment.Sum(a => a.Estimation) <= 230);
                             excelWorkSheet.Cells[row, 26] = between221to230;
 
-                            int between211to220 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between211to220 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 211 && e.Assessment.Sum(a => a.Estimation) <= 220);
                             excelWorkSheet.Cells[row, 27] = between211to220;
 
-                            int between201to210 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between201to210 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                           e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                           e.Assessment.Sum(a => a.Estimation) >= 201 && e.Assessment.Sum(a => a.Estimation) <= 210);
                             excelWorkSheet.Cells[row, 28] = between201to210;
 
-                            int between191to200 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between191to200 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                          e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                          e.Assessment.Sum(a => a.Estimation) >= 191 && e.Assessment.Sum(a => a.Estimation) <= 200);
                             excelWorkSheet.Cells[row, 29] = between191to200;
 
-                            int between181to190 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between181to190 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                          e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                          e.Assessment.Sum(a => a.Estimation) >= 181 && e.Assessment.Sum(a => a.Estimation) <= 190);
                             excelWorkSheet.Cells[row, 30] = between181to190;
 
-                            int between171to180 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between171to180 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 171 && e.Assessment.Sum(a => a.Estimation) <= 180);
                             excelWorkSheet.Cells[row, 31] = between171to180;
 
-                            int between161to170 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between161to170 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 161 && e.Assessment.Sum(a => a.Estimation) <= 170);
                             excelWorkSheet.Cells[row, 32] = between161to170;
 
-                            int between151to160 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between151to160 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 151 && e.Assessment.Sum(a => a.Estimation) <= 160);
                             excelWorkSheet.Cells[row, 33] = between151to160;
 
-                            int between141to150 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between141to150 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 141 && e.Assessment.Sum(a => a.Estimation) <= 150);
                             excelWorkSheet.Cells[row, 34] = between141to150;
 
-                            int between131to140 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between131to140 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 131 && e.Assessment.Sum(a => a.Estimation) <= 140);
                             excelWorkSheet.Cells[row, 35] = between131to140;
 
                             int between121to130 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 121 && e.Assessment.Sum(a => a.Estimation) <= 130);
                             excelWorkSheet.Cells[row, 36] = between121to130;
 
                             int between111to120 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 111 && e.Assessment.Sum(a => a.Estimation) <= 120);
                             excelWorkSheet.Cells[row, 37] = between111to120;
 
                             int between101to110 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 101 && e.Assessment.Sum(a => a.Estimation) <= 110);
                             excelWorkSheet.Cells[row, 38] = between101to110;
 
                             int between91to100 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 91 && e.Assessment.Sum(a => a.Estimation) <= 100);
                             excelWorkSheet.Cells[row, 39] = between91to100;
 
                             int between81to90 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                         e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                         e.Assessment.Sum(a => a.Estimation) >= 81 && e.Assessment.Sum(a => a.Estimation) <= 90);
                             excelWorkSheet.Cells[row, 40] = between81to90;
 
-                            int between71to80 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between71to80 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                        e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                        e.Assessment.Sum(a => a.Estimation) >= 71 && e.Assessment.Sum(a => a.Estimation) <= 80);
                             excelWorkSheet.Cells[row, 41] = between71to80;
 
-                            int between61to70 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between61to70 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                        e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                        e.Assessment.Sum(a => a.Estimation) >= 61 && e.Assessment.Sum(a => a.Estimation) <= 70);
                             excelWorkSheet.Cells[row, 42] = between61to70;
 
                             int between51to60 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 51 && e.Assessment.Sum(a => a.Estimation) <= 60);
                             excelWorkSheet.Cells[row, 43] = between51to60;
 
-                            int between41to50 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            int between41to50 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 41 && e.Assessment.Sum(a => a.Estimation) <= 50);
                             excelWorkSheet.Cells[row, 44] = between41to50;
 
                             int less41 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                            //e.ReasonForAddmission.ContestId == 1 &&
+                            e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) < 41);
                             excelWorkSheet.Cells[row, 45] = less41;
@@ -1179,202 +1198,202 @@ namespace WF.EnrolleeApplication.App.Services
                         excelWorkSheet.Cells[row, 9] = countDealRecord;
                         int countTargetDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.TargetWorkPlaceId.HasValue && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId));
                         excelWorkSheet.Cells[row, 10] = countTargetDealRecord;
-                        int countWithoutExamDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.ReasonForAddmission.ContestId == 2 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId));
+                        int countWithoutExamDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && !e.TargetWorkPlaceId.HasValue && e.ReasonForAddmission.ContestId == 2 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId));
                         excelWorkSheet.Cells[row, 11] = countWithoutExamDealRecord;
-                        int countOutOfContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.ReasonForAddmission.ContestId == 3 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId));
+                        int countOutOfContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && !e.TargetWorkPlaceId.HasValue && e.ReasonForAddmission.ContestId == 3 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId));
                         excelWorkSheet.Cells[row, 12] = countOutOfContestDealRecord;
-                        int countInContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.ReasonForAddmission.ContestId == 1 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId));
+                        int countInContestDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && !e.TargetWorkPlaceId.HasValue && e.ReasonForAddmission.ContestId == 1 && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId));
                         excelWorkSheet.Cells[row, 13] = countInContestDealRecord;
 
                         #region Получение оценок
-                        int more340 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int more340 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 340);
                         excelWorkSheet.Cells[row, 14] = more340;
 
-                        int between331to340 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between331to340 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 331 && e.Assessment.Sum(a => a.Estimation) <= 340);
                         excelWorkSheet.Cells[row, 15] = between331to340;
 
-                        int between321to330 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between321to330 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 321 && e.Assessment.Sum(a => a.Estimation) <= 330);
                         excelWorkSheet.Cells[row, 16] = between321to330;
 
-                        int between311to320 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between311to320 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 311 && e.Assessment.Sum(a => a.Estimation) <= 320);
                         excelWorkSheet.Cells[row, 17] = between311to320;
 
-                        int between301to310 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between301to310 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 301 && e.Assessment.Sum(a => a.Estimation) <= 310);
                         excelWorkSheet.Cells[row, 18] = between301to310;
 
-                        int between291to300 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between291to300 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 291 && e.Assessment.Sum(a => a.Estimation) <= 300);
                         excelWorkSheet.Cells[row, 19] = between291to300;
 
-                        int between281to290 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between281to290 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 281 && e.Assessment.Sum(a => a.Estimation) <= 290);
                         excelWorkSheet.Cells[row, 20] = between281to290;
 
                         int between271to280 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 271 && e.Assessment.Sum(a => a.Estimation) <= 280);
                         excelWorkSheet.Cells[row, 21] = between271to280;
 
-                        int between261to270 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between261to270 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 261 && e.Assessment.Sum(a => a.Estimation) <= 270);
                         excelWorkSheet.Cells[row, 22] = between261to270;
 
-                        int between251to260 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between251to260 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 251 && e.Assessment.Sum(a => a.Estimation) <= 260);
                         excelWorkSheet.Cells[row, 23] = between251to260;
 
-                        int between241to250 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between241to250 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 241 && e.Assessment.Sum(a => a.Estimation) <= 250);
                         excelWorkSheet.Cells[row, 24] = between241to250;
 
                         int between231to240 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 231 && e.Assessment.Sum(a => a.Estimation) <= 240);
                         excelWorkSheet.Cells[row, 25] = between231to240;
 
-                        int between221to230 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between221to230 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 221 && e.Assessment.Sum(a => a.Estimation) <= 230);
                         excelWorkSheet.Cells[row, 26] = between221to230;
 
-                        int between211to220 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between211to220 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 211 && e.Assessment.Sum(a => a.Estimation) <= 220);
                         excelWorkSheet.Cells[row, 27] = between211to220;
 
-                        int between201to210 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between201to210 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                       e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                       e.Assessment.Sum(a => a.Estimation) >= 201 && e.Assessment.Sum(a => a.Estimation) <= 210);
                         excelWorkSheet.Cells[row, 28] = between201to210;
 
-                        int between191to200 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between191to200 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                      e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                      e.Assessment.Sum(a => a.Estimation) >= 191 && e.Assessment.Sum(a => a.Estimation) <= 200);
                         excelWorkSheet.Cells[row, 29] = between191to200;
 
                         int between181to190 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                      e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                      e.Assessment.Sum(a => a.Estimation) >= 181 && e.Assessment.Sum(a => a.Estimation) <= 190);
                         excelWorkSheet.Cells[row, 30] = between181to190;
 
                         int between171to180 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 171 && e.Assessment.Sum(a => a.Estimation) <= 180);
                         excelWorkSheet.Cells[row, 31] = between171to180;
 
-                        int between161to170 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between161to170 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 161 && e.Assessment.Sum(a => a.Estimation) <= 170);
                         excelWorkSheet.Cells[row, 32] = between161to170;
 
-                        int between151to160 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between151to160 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 151 && e.Assessment.Sum(a => a.Estimation) <= 160);
                         excelWorkSheet.Cells[row, 33] = between151to160;
 
-                        int between141to150 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between141to150 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 141 && e.Assessment.Sum(a => a.Estimation) <= 150);
                         excelWorkSheet.Cells[row, 34] = between141to150;
 
-                        int between131to140 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between131to140 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 131 && e.Assessment.Sum(a => a.Estimation) <= 140);
                         excelWorkSheet.Cells[row, 35] = between131to140;
 
-                        int between121to130 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between121to130 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 121 && e.Assessment.Sum(a => a.Estimation) <= 130);
                         excelWorkSheet.Cells[row, 36] = between121to130;
 
-                        int between111to120 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between111to120 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 111 && e.Assessment.Sum(a => a.Estimation) <= 120);
                         excelWorkSheet.Cells[row, 37] = between111to120;
 
                         int between101to110 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 101 && e.Assessment.Sum(a => a.Estimation) <= 110);
                         excelWorkSheet.Cells[row, 38] = between101to110;
 
-                        int between91to100 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between91to100 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 91 && e.Assessment.Sum(a => a.Estimation) <= 100);
                         excelWorkSheet.Cells[row, 39] = between91to100;
 
-                        int between81to90 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between81to90 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                     e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                     e.Assessment.Sum(a => a.Estimation) >= 81 && e.Assessment.Sum(a => a.Estimation) <= 90);
                         excelWorkSheet.Cells[row, 40] = between81to90;
 
-                        int between71to80 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between71to80 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                    e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                    e.Assessment.Sum(a => a.Estimation) >= 71 && e.Assessment.Sum(a => a.Estimation) <= 80);
                         excelWorkSheet.Cells[row, 41] = between71to80;
 
-                        int between61to70 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between61to70 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                    e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                    e.Assessment.Sum(a => a.Estimation) >= 61 && e.Assessment.Sum(a => a.Estimation) <= 70);
                         excelWorkSheet.Cells[row, 42] = between61to70;
 
-                        int between51to60 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between51to60 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                   e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                   e.Assessment.Sum(a => a.Estimation) >= 51 && e.Assessment.Sum(a => a.Estimation) <= 60);
                         excelWorkSheet.Cells[row, 43] = between51to60;
 
-                        int between41to50 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int between41to50 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                   e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                   e.Assessment.Sum(a => a.Estimation) >= 41 && e.Assessment.Sum(a => a.Estimation) <= 50);
                         excelWorkSheet.Cells[row, 44] = between41to50;
 
-                        int less41 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
-                        //e.ReasonForAddmission.ContestId == 1 &&
+                        int less41 = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId &&
+                        e.ReasonForAddmission.ContestId == 1 &&
                                                   e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == speciality.SpecialityId) &&
                                                   e.Assessment.Sum(a => a.Estimation) < 41);
                         excelWorkSheet.Cells[row, 45] = less41;
@@ -2023,6 +2042,7 @@ namespace WF.EnrolleeApplication.App.Services
                 GC.WaitForPendingFinalizers();
             }
         }
+
 
     }
 
