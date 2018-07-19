@@ -188,13 +188,7 @@ namespace WF.EnrolleeApplication.App.Views
             if (searchMode)
             {
                 logger.Debug($"Обновление таблицы абитуриентов. Включен режим поиска.");
-                if (activeEmployee.PostId == 1) enrollees = viewService.GetEnrollees(currentSpeciality);
-                else
-                {
-                    if (activeEmployee.FacultyId.HasValue)
-                        enrollees = viewService.GetEnrollees(currentSpeciality).Where(e => e.Faculty == activeEmployee.FacultyId.Value).ToList();
-                    else enrollees = viewService.GetEnrollees(currentSpeciality);
-                }
+                enrollees = viewService.GetEnrollees(currentSpeciality);
             }
             else
             {
