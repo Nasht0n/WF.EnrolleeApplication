@@ -39,6 +39,7 @@ namespace WF.EnrolleeApplication.App.Views
         private SpecialityService specialityService;
         private DisciplineService disciplineService;
         private AssessmentService assessmentService;
+        private EnrolleeService enrolleeService;
         private ExamSchemaService examSchemaService;
         private ViewService viewService;
         /// <summary>
@@ -163,8 +164,14 @@ namespace WF.EnrolleeApplication.App.Views
             var assessments = viewService.GetAssessments(discipline);
             // Заполнение таблицы данными
             foreach (var assessment in assessments)
-                if (string.IsNullOrWhiteSpace(assessment.FormOfStudy)) enrolleeTable.Rows.Add(assessment.AssessmentId, $"{assessment.Speciality.Trim()}-{assessment.NumberOfDeal}", assessment.RuSurname, assessment.RuName, assessment.Estimation);
-                else enrolleeTable.Rows.Add(assessment.AssessmentId, $"{assessment.Speciality.Trim()}{assessment.FormOfStudy.Trim()}-{assessment.NumberOfDeal}", assessment.RuSurname, assessment.RuName, assessment.Estimation);
+            {
+                var enrollee = enrolleeService.GetEnrollee(assessment.EnrolleeId);
+                if (enrollee.StateTypeId != 2 && enrollee.Speciality.FormOfStudyId == formOfStudy.FormOfStudyId && enrollee.ReasonForAddmission.ContestId != 2)
+                {
+                    if (string.IsNullOrWhiteSpace(assessment.FormOfStudy)) enrolleeTable.Rows.Add(assessment.AssessmentId, $"{assessment.Speciality.Trim()}-{assessment.NumberOfDeal}", assessment.RuSurname, assessment.RuName, assessment.Estimation);
+                    else enrolleeTable.Rows.Add(assessment.AssessmentId, $"{assessment.Speciality.Trim()}{assessment.FormOfStudy.Trim()}-{assessment.NumberOfDeal}", assessment.RuSurname, assessment.RuName, assessment.Estimation);
+                }
+            }
         }
         /// <summary>
         /// Метод настройки отображения таблицы абитуриентов
@@ -223,6 +230,7 @@ namespace WF.EnrolleeApplication.App.Views
             string connectionString = ConfigurationManager.ConnectionStrings["EnrolleeContext"].ConnectionString;
             // Инициализация сервисов доступа данных
             assessmentService = new AssessmentService(connectionString);
+            enrolleeService = new EnrolleeService(connectionString);
             examSchemaService = new ExamSchemaService(connectionString);
             disciplineService = new DisciplineService(connectionString);
             facultyService = new FacultyService(connectionString);

@@ -201,12 +201,15 @@ namespace WF.EnrolleeApplication.App.Views
         {
             enrolleeTable.Clear();
             // Получение списка абитуриентов
-            var enrollees = enrolleeService.GetEnrollees(speciality).OrderByDescending(e => e.ReasonForAddmission.ContestId)
+            var enrollees = enrolleeService.GetEnrollees(speciality)
+                    .Where(e=>e.StateTypeId != 2)
+                    .OrderByDescending(e => e.ReasonForAddmission.ContestId)
                     .ThenByDescending(e => e.Assessment.Sum(a => a.Estimation))
                     .ToList();
             // Заполнение таблицы абитуриентов
             foreach (var enrollee in enrollees)
             {
+                
                 string numberOfDeal = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}-{enrollee.NumberOfDeal}";
                 string fullname = $"{enrollee.RuSurname.Trim()} {enrollee.RuName.Trim()} {enrollee.RuPatronymic.Trim()}";
                 int sum = enrollee.Assessment.Sum(a=>a.Estimation).Value;
@@ -214,6 +217,7 @@ namespace WF.EnrolleeApplication.App.Views
                 if (enrollee.DecreeId.HasValue) enroll = true;
                 else enroll = false;
                 enrolleeTable.Rows.Add(enrollee.EnrolleeId, numberOfDeal, enrollee.ReasonForAddmission.Contest.Name.Trim(), fullname, sum, enroll);
+
             }
         }
         /// <summary>

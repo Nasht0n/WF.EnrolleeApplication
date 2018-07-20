@@ -225,7 +225,9 @@ namespace WF.EnrolleeApplication.App.Services
                         else
                         {
                             string fieldSubject = string.Format("Предмет {0}", index);
+                            string fieldEstimation = string.Format("Оценка {0}", index);
                             wordDocument.Variables[fieldSubject].Value = assessment.Discipline.Name.Trim();
+                            if(assessment.Estimation.HasValue) wordDocument.Variables[fieldEstimation].Value = assessment.Estimation.ToString();
                             index++;
                         }
                     }
@@ -776,8 +778,8 @@ namespace WF.EnrolleeApplication.App.Services
                                 table.Cell(index + 2, 3).Range.Text = $"{enrollee.Speciality.Shortname.Trim()}{enrollee.Speciality.FormOfStudy.Shortname.Trim()}—{enrollee.NumberOfDeal}";
                                 //table.Cell(index + 2, 5).Range.Text = assessment.Estimation.Value.ToString();
                                 //table.Cell(index + 2, 6).Range.Text = estimationStringService.EstimationAsText(assessment.Estimation.Value).Trim();
-                            }
-                            index++;
+                                index++;
+                            }                            
                         }
                         wordDocument.Variables["Секретарь приемной комиссии"].Value = systemConfigurationService.GetSystemConfiguration("SOKR_SEKR").Value;
                         wordDocument.Fields.Update();
@@ -1452,7 +1454,9 @@ namespace WF.EnrolleeApplication.App.Services
                             else excelWorkSheet.Cells[row, 6] = $"{specialityInGroup.Fullname.Trim()} -{specialityInGroup.FormOfStudy.Shortname.Trim()}";
                             excelWorkSheet.Cells[row, 7] = specialityInGroup.FeeCountPlace;
                             excelWorkSheet.Cells[row, 8] = specialityInGroup.TargetCountPlace;
-                            int countDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
+                            int countDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && 
+                            e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && 
+                            p.SpecialityId == specialityInGroup.SpecialityId));
                             excelWorkSheet.Cells[row, 9] = countDealRecord;
                             int countTargetDealRecord = enrollees.Count(e => e.SpecialityId == speciality.SpecialityId && e.TargetWorkPlaceId.HasValue && e.PriorityOfSpeciality.Any(p => p.PriorityLevel == 1 && p.SpecialityId == specialityInGroup.SpecialityId));
                             excelWorkSheet.Cells[row, 10] = countTargetDealRecord;

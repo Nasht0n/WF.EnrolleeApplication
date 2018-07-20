@@ -873,7 +873,7 @@ namespace WF.EnrolleeApplication.App.Views
                 if (flag)
                 {
                     // Получаем список абитуриентов сдающих вступительные испытания
-                    var enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality);
+                    var enrollees = enrolleeService.GetEnrollees(chooseSpeciality.speciality).Where(en=>en.ReasonForAddmission.ContestId!=2 && en.StateTypeId!=2).OrderBy(en=>en.RuSurname).ToList();
                     // Подготовка отчёта экзаменнационной ведомости
                     logger.Info($"Пользователь {activeEmployee.Fullname.Trim()} печатает экзаменнационную ведомость специальности {chooseSpeciality.speciality.Fullname.Trim()}.");
                     ReportManager.PrintExaminationSheet(exams, enrollees);
